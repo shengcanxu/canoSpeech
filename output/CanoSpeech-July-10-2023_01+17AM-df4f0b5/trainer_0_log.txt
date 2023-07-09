@@ -1,0 +1,17 @@
+ > Training Environment:
+ | > Current device: 0
+ | > Num. of GPUs: 1
+ | > Num. of CPUs: 12
+ | > Num. of Torch Threads: 6
+ | > Torch seed: 54321
+ | > Torch CUDNN: True
+ | > Torch CUDNN deterministic: False
+ | > Torch CUDNN benchmark: False
+ > Start Tensorboard: tensorboard --logdir=output\CanoSpeech-July-10-2023_01+17AM-df4f0b5
+
+ > Model has 57465740 parameters
+
+[4m[1m > EPOCH: 0/1000[0m
+ --> output\CanoSpeech-July-10-2023_01+17AM-df4f0b5
+
+[1m > TRAINING (2023-07-10 01:17:20) [0m
