@@ -131,3 +131,4 @@ class AudioEncoder(nn.Module):
         mean, log_scale = torch.split(stats, self.out_channels, dim=1)
         z = (mean + torch.randn_like(mean) * torch.exp(log_scale)) * x_mask
         return z, mean, log_scale, x_mask
+

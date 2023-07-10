@@ -14,46 +14,20 @@ from scipy.signal import get_window
 from scipy.io.wavfile import read
 from librosa.filters import mel as librosa_mel_fn
 
-MAX_WAV_VALUE = 32768.0
-
-
-def dynamic_range_compression_torch(x, C=1, clip_val=1e-5):
-    """
-    PARAMS
-    ------
-    C: compression factor
-    """
-    return torch.log(torch.clamp(x, min=clip_val) * C)
-
-
-def dynamic_range_decompression_torch(x, C=1):
-    """
-    PARAMS
-    ------
-    C: compression factor used to compress
-    """
-    return torch.exp(x) / C
-
-
-def spectral_normalize_torch(magnitudes):
-    output = dynamic_range_compression_torch(magnitudes)
-    return output
-
-
-def spectral_de_normalize_torch(magnitudes):
-    output = dynamic_range_decompression_torch(magnitudes)
-    return output
-
-
 mel_basis = {}
 hann_window = {}
 
+def _amp_to_db(x, C=1, clip_val=1e-5):
+    return torch.log(torch.clamp(x, min=clip_val) * C)
+
+def amp_to_db(magnitudes):
+    output = _amp_to_db(magnitudes)
+    return output
 
 def wav_to_spec(wav, n_fft, hop_size, win_size, center=False):
     """
     Args Shapes:
         - wav : :math:`[B, 1, T]`
-
     Return Shapes:
         - spec : :math:`[B,C,T]`
     """
@@ -79,8 +53,8 @@ def wav_to_spec(wav, n_fft, hop_size, win_size, center=False):
     wav = wav.squeeze(1)
 
     spec = torch.stft(
-        wav,
-        n_fft,
+        input=wav,
+        n_fft=n_fft,
         hop_length=hop_size,
         win_length=win_size,
         window=hann_window[wnsize_dtype_device],
@@ -97,28 +71,30 @@ def wav_to_spec(wav, n_fft, hop_size, win_size, center=False):
 
 def spec_to_mel(spec, n_fft, num_mels, sample_rate, fmin, fmax):
     """
-        Args Shapes:
-            - spec : :math:`[B,C,T]`
-
-        Return Shapes:
-            - mel : :math:`[B,C,T]`
-        """
+    Args Shapes:
+        - spec : :math:`[B,C,T]`
+    Return Shapes:
+        - mel : :math:`[B,C,T]`
+    """
     global mel_basis
     dtype_device = str(spec.dtype) + "_" + str(spec.device)
     fmax_dtype_device = str(fmax) + "_" + dtype_device
     if fmax_dtype_device not in mel_basis:
         mel = librosa_mel_fn(sr=sample_rate, n_fft=n_fft, n_mels=num_mels, fmin=fmin, fmax=fmax)
-        mel_basis[fmax_dtype_device] = torch.from_numpy(mel).to(
-            dtype=spec.dtype, device=spec.device
-        )
-    spec = torch.matmul(mel_basis[fmax_dtype_device], spec)
-    spec = spectral_normalize_torch(spec)
-    return spec
+        mel_basis[fmax_dtype_device] = torch.from_numpy(mel).to(dtype=spec.dtype, device=spec.device)
+    mel = torch.matmul(mel_basis[fmax_dtype_device], spec)
+    mel = amp_to_db(mel)
+    return mel
 
 
-def mel_spectrogram_torch(
-    y, n_fft, num_mels, sample_rate, hop_size, win_size, fmin, fmax, center=False
-):
+def wav_to_mel(y, n_fft, num_mels, sample_rate, hop_length, win_length, fmin, fmax, center=False):
+    """
+    Args Shapes:
+        - y : :math:`[B, 1, T]`
+    Return Shapes:
+        - spec : :math:`[B,C,T]`
+    """
+    y = y.squeeze(1)
     if torch.min(y) < -1.0:
         print("min value is ", torch.min(y))
     if torch.max(y) > 1.0:
@@ -127,29 +103,25 @@ def mel_spectrogram_torch(
     global mel_basis, hann_window
     dtype_device = str(y.dtype) + "_" + str(y.device)
     fmax_dtype_device = str(fmax) + "_" + dtype_device
-    wnsize_dtype_device = str(win_size) + "_" + dtype_device
+    wnsize_dtype_device = str(win_length) + "_" + dtype_device
     if fmax_dtype_device not in mel_basis:
         mel = librosa_mel_fn(sr=sample_rate, n_fft=n_fft, n_mels=num_mels, fmin=fmin, fmax=fmax)
-        mel_basis[fmax_dtype_device] = torch.from_numpy(mel).to(
-            dtype=y.dtype, device=y.device
-        )
+        mel_basis[fmax_dtype_device] = torch.from_numpy(mel).to(dtype=y.dtype, device=y.device)
     if wnsize_dtype_device not in hann_window:
-        hann_window[wnsize_dtype_device] = torch.hann_window(win_size).to(
-            dtype=y.dtype, device=y.device
-        )
+        hann_window[wnsize_dtype_device] = torch.hann_window(win_length).to(dtype=y.dtype, device=y.device)
 
     y = torch.nn.functional.pad(
         y.unsqueeze(1),
-        (int((n_fft - hop_size) / 2), int((n_fft - hop_size) / 2)),
+        (int((n_fft - hop_length) / 2), int((n_fft - hop_length) / 2)),
         mode="reflect",
     )
     y = y.squeeze(1)
 
     spec = torch.stft(
-        y,
-        n_fft,
-        hop_length=hop_size,
-        win_length=win_size,
+        input=y,
+        n_fft=n_fft,
+        hop_length=hop_length,
+        win_length=win_length,
         window=hann_window[wnsize_dtype_device],
         center=center,
         pad_mode="reflect",
@@ -159,8 +131,6 @@ def mel_spectrogram_torch(
     )
 
     spec = torch.sqrt(spec.pow(2).sum(-1) + 1e-6)
-
     spec = torch.matmul(mel_basis[fmax_dtype_device], spec)
-    spec = spectral_normalize_torch(spec)
-
+    spec = amp_to_db(spec)
     return spec

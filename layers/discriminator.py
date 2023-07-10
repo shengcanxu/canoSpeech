@@ -6,11 +6,9 @@ from layers.hifigan_discriminator import DiscriminatorP, MultiPeriodDiscriminato
 
 class DiscriminatorS(torch.nn.Module):
     """HiFiGAN Scale Discriminator. Channel sizes are different from the original HiFiGAN.
-
     Args:
         use_spectral_norm (bool): if `True` swith to spectral norm instead of weight norm.
     """
-
     def __init__(self, use_spectral_norm=False):
         super().__init__()
         norm_f = nn.utils.spectral_norm if use_spectral_norm else nn.utils.weight_norm
@@ -27,10 +25,8 @@ class DiscriminatorS(torch.nn.Module):
         self.conv_post = norm_f(Conv1d(1024, 1, 3, 1, padding=1))
 
     def forward(self, x):
-        """
-        Args:
+        """Args:
             x (Tensor): input waveform.
-
         Returns:
             Tensor: discriminator scores.
             List[Tensor]: list of features from the convolutiona layers.
@@ -48,15 +44,12 @@ class DiscriminatorS(torch.nn.Module):
 
 class VitsDiscriminator(nn.Module):
     """VITS discriminator wrapping one Scale Discriminator and a stack of Period Discriminator.
-
     ::
         waveform -> ScaleDiscriminator() -> scores_sd, feats_sd --> append() -> scores, feats
                |--> MultiPeriodDiscriminator() -> scores_mpd, feats_mpd ^
-
     Args:
         use_spectral_norm (bool): if `True` swith to spectral norm instead of weight norm.
     """
-
     def __init__(self, periods=(2, 3, 5, 7, 11), use_spectral_norm=False):
         super().__init__()
         self.nets = nn.ModuleList()
@@ -64,11 +57,9 @@ class VitsDiscriminator(nn.Module):
         self.nets.extend([DiscriminatorP(i, use_spectral_norm=use_spectral_norm) for i in periods])
 
     def forward(self, x, x_hat=None):
-        """
-        Args:
+        """Args:
             x (Tensor): ground truth waveform.
             x_hat (Tensor): predicted waveform.
-
         Returns:
             List[Tensor]: discriminator scores.
             List[List[Tensor]]: list of list of features from each layers of each discriminator.

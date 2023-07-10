@@ -51,7 +51,7 @@ def main():
     )
     config.load_json("./config/train.json")
     data_config = config.dataset_config
-    print(config)
+    # print(config)
 
     train_datas = get_metas_from_filelist(data_config.meta_file_train)
     test_datas = get_metas_from_filelist(data_config.meta_file_val)

@@ -8,20 +8,15 @@ LRELU_SLOPE = 0.1
 
 class DiscriminatorP(torch.nn.Module):
     """HiFiGAN Periodic Discriminator
-
     Takes every Pth value from the input waveform and applied a stack of convoluations.
-
     Note:
         if `period` is 2
         `waveform = [1, 2, 3, 4, 5, 6 ...] --> [1, 3, 5 ... ] --> convs -> score, feat`
-
     Args:
         x (Tensor): input waveform.
-
     Returns:
         [Tensor]: discriminator scores per sample in the batch.
         [List[Tensor]]: list of features from each convolutional layer.
-
     Shapes:
         x: [B, 1, T]
     """
@@ -46,11 +41,9 @@ class DiscriminatorP(torch.nn.Module):
         """
         Args:
             x (Tensor): input waveform.
-
         Returns:
             [Tensor]: discriminator scores per sample in the batch.
             [List[Tensor]]: list of features from each convolutional layer.
-
         Shapes:
             x: [B, 1, T]
         """
@@ -80,7 +73,6 @@ class MultiPeriodDiscriminator(torch.nn.Module):
     Wrapper for the `PeriodDiscriminator` to apply it in different periods.
     Periods are suggested to be prime numbers to reduce the overlap between each discriminator.
     """
-
     def __init__(self, use_spectral_norm=False):
         super().__init__()
         self.discriminators = nn.ModuleList(
@@ -94,14 +86,11 @@ class MultiPeriodDiscriminator(torch.nn.Module):
         )
 
     def forward(self, x):
-        """
-        Args:
+        """Args:
             x (Tensor): input waveform.
-
         Returns:
         [List[Tensor]]: list of scores from each discriminator.
             [List[List[Tensor]]]: list of list of features from each discriminator's each convolutional layer.
-
         Shapes:
             x: [B, 1, T]
         """
@@ -117,12 +106,9 @@ class MultiPeriodDiscriminator(torch.nn.Module):
 class DiscriminatorS(torch.nn.Module):
     """HiFiGAN Scale Discriminator.
     It is similar to `MelganDiscriminator` but with a specific architecture explained in the paper.
-
     Args:
         use_spectral_norm (bool): if `True` swith to spectral norm instead of weight norm.
-
     """
-
     def __init__(self, use_spectral_norm=False):
         super().__init__()
         norm_f = nn.utils.spectral_norm if use_spectral_norm else nn.utils.weight_norm
@@ -163,7 +149,6 @@ class MultiScaleDiscriminator(torch.nn.Module):
     """HiFiGAN Multi-Scale Discriminator.
     It is similar to `MultiScaleMelganDiscriminator` but specially tailored for HiFiGAN as in the paper.
     """
-
     def __init__(self):
         super().__init__()
         self.discriminators = nn.ModuleList(
@@ -176,10 +161,8 @@ class MultiScaleDiscriminator(torch.nn.Module):
         self.meanpools = nn.ModuleList([nn.AvgPool1d(4, 2, padding=2), nn.AvgPool1d(4, 2, padding=2)])
 
     def forward(self, x):
-        """
-        Args:
+        """Args:
             x (Tensor): input waveform.
-
         Returns:
             List[Tensor]: discriminator scores.
             List[List[Tensor]]: list of list of features from each layers of each discriminator.
@@ -197,17 +180,14 @@ class MultiScaleDiscriminator(torch.nn.Module):
 
 class HifiganDiscriminator(nn.Module):
     """HiFiGAN discriminator wrapping MPD and MSD."""
-
     def __init__(self):
         super().__init__()
         self.mpd = MultiPeriodDiscriminator()
         self.msd = MultiScaleDiscriminator()
 
     def forward(self, x):
-        """
-        Args:
+        """Args:
             x (Tensor): input waveform.
-
         Returns:
             List[Tensor]: discriminator scores.
             List[List[Tensor]]: list of list of features from each layers of each discriminator.

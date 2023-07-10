@@ -53,18 +53,13 @@ class TTSDatasetConfig(Coqpit):
     text_cleaners:List[str] = None
 
 @dataclass
-class DiscriminatorConfig(Coqpit):
-    periods_multi_period_discriminator:List[int] = field(default_factory=lambda: [2, 3, 5, 7, 11])
-    use_spectral_norm_disriminator:bool = False
-
-@dataclass
 class TextEncoderConfig(Coqpit):
     num_chars:int = 165
     hidden_channels_ffn_text_encoder:int = 768
     num_heads_text_encoder:int = 2
     num_layers_text_encoder:int = 10
     kernel_size_text_encoder:int = 3
-    dropout_p_text_encoder:int = 0.1
+    dropout_p_text_encoder:float = 0.1
 
 @dataclass
 class AudioEncoderConfig(Coqpit):
@@ -73,14 +68,53 @@ class AudioEncoderConfig(Coqpit):
     num_layers_audio_encoder:int = 16
 
 @dataclass
+class FlowConfig(Coqpit):
+    kernel_size_flow:int = 5
+    dilation_rate_flow:int = 1
+    num_layers_flow:int = 4
+
+@dataclass
+class DurationPredictorConfig(Coqpit):
+    dropout_p_duration_predictor:float = 0.5
+
+@dataclass
+class WaveformDecoderConfig(Coqpit):
+    resblock_type_decoder:str = "2"
+    resblock_dilation_sizes_decoder:List[List[int]] = field(default_factory=lambda: [
+                [ 1, 3, 5 ],
+                [ 1, 3, 5 ],
+                [ 1, 3, 5 ]
+            ])
+    resblock_kernel_sizes_decoder:List[int] = field(default_factory=lambda: [ 3, 7, 11 ])
+    upsample_kernel_sizes_decoder:List[int] = field(default_factory=lambda: [ 16, 16, 4, 4 ])
+    upsample_initial_channel_decoder:int = 512
+    upsample_rates_decoder:List[int] = field(default_factory=lambda: [ 8, 8, 2, 2 ])
+
+@dataclass
+class DiscriminatorConfig(Coqpit):
+    periods_multi_period_discriminator:List[int] = field(default_factory=lambda: [2, 3, 5, 7, 11])
+    use_spectral_norm_disriminator:bool = False
+
+@dataclass
 class TTSModelConfig(Coqpit):
     hidden_channels: int = 192
     out_channels:int = 513
+    spec_segment_size:int = 32
+
     embedded_language_dim: int = 4
-    embedded_speaker_dim:int = 256
-    discriminator: DiscriminatorConfig = field(default_factory=lambda: DiscriminatorConfig())
+    use_language_embedding:bool = False
+    language_ids_file:str = None
+    num_speakers:int = 0
+    speaker_embedding_channels:int = 256
+    use_speaker_embedding:bool = False
+    use_speaker_encoder_as_loss:bool = False
+
     text_encoder: TextEncoderConfig = field(default_factory=lambda: TextEncoderConfig())
     audio_encoder: AudioEncoderConfig = field(default_factory=lambda: AudioEncoderConfig())
+    flow:FlowConfig = field(default_factory=lambda:FlowConfig())
+    duration_predictor:DurationPredictorConfig = field(default_factory=lambda: DurationPredictorConfig())
+    waveform_decoder:WaveformDecoderConfig = field(default_factory=lambda: WaveformDecoderConfig())
+    discriminator: DiscriminatorConfig = field(default_factory=lambda: DiscriminatorConfig())
 
 @dataclass
 class TrainTTSConfig(TrainerConfig):
