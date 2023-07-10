@@ -1,7 +1,8 @@
 import math
+import platform
 from itertools import chain
 from typing import Dict, List, Union, Tuple
-
+from trainer.torch import DistributedSampler
 import torchaudio
 from torch.cuda.amp.autocast_mode import autocast
 import torch
@@ -9,7 +10,7 @@ from torch.nn import functional as F
 import torch.distributed as dist
 from coqpit import Coqpit
 from torch import nn
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, RandomSampler
 from trainer import TrainerModel
 from trainer.trainer_utils import get_optimizer, get_scheduler
 from config.config import TrainTTSConfig
@@ -195,53 +196,24 @@ class SpeechModel(TrainerModel):
         if num_gpus > 1:
             dist.barrier()
 
-        # get samplers and collate
-        sampler = DistributedBucketSampler(
-            dataset=dataset,
-            batch_size=config.batch_size,
-            boundaries=[32, 300, 400, 500, 600, 700, 800, 900, 1000],
-            num_replicas=num_gpus,
-            rank=rank,
-            shuffle=True
-        )
+        sampler = DistributedSampler(dataset) if num_gpus > 1 else RandomSampler(dataset)
         collate_fn = TextAudioCollate()
 
-        if num_gpus > 1:
-            loader = DataLoader(
-                dataset=dataset,
-                sampler=sampler,
-                batch_size=config.eval_batch_size if is_eval else config.batch_size,
-                collate_fn=collate_fn,
-                num_workers=config.dataset_config.num_eval_loader_workers if is_eval else config.dataset_config.num_loader_workers,
-                pin_memory=False,
-            )
-        else:
-            loader = DataLoader(
-                dataset=dataset,
-                batch_sampler=sampler,
-                collate_fn=collate_fn,
-                num_workers=config.dataset_config.num_eval_loader_workers if is_eval else config.dataset_config.num_loader_workers,
-                pin_memory=False,
-            )
-        # if is_eval:
-        #     loader = DataLoader(
-        #         dataset=dataset,
-        #         batch_size=config.eval_batch_size,
-        #         num_workers=config.num_eval_loader_workers,
-        #         shuffle=False,
-        #         pin_memory=False,
-        #         collate_fn=collate_fn,
-        #
-        #     )
-        # else:
-        #     loader = DataLoader(
-        #         dataset=dataset,
-        #         num_workers=config.batch_size,
-        #         shuffle=False,
-        #         pin_memory=False,
-        #         collate_fn=collate_fn,
-        #         batch_sampler=sampler,
-        #     )
+        # set num_workers>0 the DataLoader will be very slow in windows, because it re-start
+        # all processes every epoch. https://github.com/JaidedAI/EasyOCR/issues/274
+        num_workers = config.dataset_config.num_eval_loader_workers if is_eval else config.dataset_config.num_loader_workers
+        if platform.system() == "Windows":
+            num_workers = 0
+        loader = DataLoader(
+            dataset=dataset,
+            sampler=sampler,
+            batch_size=config.eval_batch_size if is_eval else config.batch_size,
+            collate_fn=collate_fn,
+            num_workers=num_workers,
+            pin_memory=False,
+            drop_last=True,
+            # persistent_workers=True,
+        )
         return loader
 
     def format_batch_on_device(self, batch):
@@ -532,7 +504,6 @@ class SpeechModel(TrainerModel):
         optimizer0 = get_optimizer(self.config.optimizer, self.config.optimizer_params, self.config.lr, self.discriminator)
 
         gen_parameters = chain(params for k, params in self.named_parameters() if not k.startswith("discriminator."))
-        # print([k for k, params in self.named_parameters()])
         optimizer1 = get_optimizer(
             self.config.optimizer, self.config.optimizer_params, self.config.lr, parameters=gen_parameters
         )
