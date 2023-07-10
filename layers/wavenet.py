@@ -20,7 +20,6 @@ class WN(torch.nn.Module):
     res -|- conv1d(dilation) -> dropout -> + -|            * -> conv1d1x1 -> split -|- + -> res
     g -------------------------------------|  |-> sigmoid -|                        |
     o --------------------------------------------------------------------------- + --------- o
-
     Args:
         in_channels (int): number of input channels.
         hidden_channes (int): number of hidden channels.
@@ -32,7 +31,6 @@ class WN(torch.nn.Module):
         dropout_p (float): dropout rate.
         weight_norm (bool): enable/disable weight norm for convolution layers.
     """
-
     def __init__(
         self,
         in_channels,

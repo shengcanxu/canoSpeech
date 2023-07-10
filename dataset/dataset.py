@@ -73,15 +73,15 @@ class TextAudioDataset(Dataset):
     def __init__(self, samples, config):
         self.samples = samples
 
-        self.hop_length = config.hop_length
-        self.win_length = config.win_length
-        self.sample_rate = config.sample_rate
+        self.hop_length = config.audio.hop_length
+        self.win_length = config.audio.win_length
+        self.sample_rate = config.audio.sample_rate
 
-        self.cleaned_text = getattr(config, "cleaned_text", False)
-        self.text_cleaners = config.text_cleaners
-        self.add_blank = config.add_blank
-        self.min_text_len = getattr(config, "min_text_len", 1)
-        self.max_text_len = getattr(config, "max_text_len", 190)
+        self.cleaned_text = getattr(config.text, "cleaned_text", False)
+        self.text_cleaners = config.text.text_cleaners
+        self.add_blank = config.text.add_blank
+        self.min_text_len = getattr(config.text, "min_text_len", 1)
+        self.max_text_len = getattr(config.text, "max_text_len", 190)
 
         random.seed(1234)
         random.shuffle(self.samples)

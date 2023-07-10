@@ -20,6 +20,7 @@ if __name__ == "__main__":
     train_config = TrainTTSConfig()
     train_config.load_json("./config/train.json")
     config = train_config.dataset_config
+    text_config = train_config.text
 
     # load dataset metas
     data_items = load_file_metas(config)
@@ -48,7 +49,7 @@ if __name__ == "__main__":
 
             for i in range(len(filepaths_and_text)):
                 original_text = filepaths_and_text[i][2]
-                cleaned_text = text._clean_text(original_text, config.text_cleaners)
+                cleaned_text = text._clean_text(original_text, text_config.text_cleaners)
                 filepaths_and_text[i][2] = cleaned_text
 
             new_filelist = filelist + ".cleaned"

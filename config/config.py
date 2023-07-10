@@ -36,8 +36,20 @@ class TTSDatasetConfig(Coqpit):
     meta_file_val: str = ""
     ignored_speakers: List[str] = None
     language: str = "en"
-    # phonemizer: str = ""
 
+    num_loader_workers:int = 8
+    num_eval_loader_workers:int = 8
+
+@dataclass
+class TextConfig(Coqpit):
+    min_text_len:int = 1
+    max_text_len:int = 190
+    add_blank:bool = True
+    cleaned_text:bool = True
+    text_cleaners:List[str] = None
+
+@dataclass
+class AudioConfig(Coqpit):
     mel_fmin: float = 0
     mel_fmax = None
     hop_length:int = 256
@@ -45,12 +57,6 @@ class TTSDatasetConfig(Coqpit):
     sample_rate:int = 16000
     fft_length:int = 1024
     num_mels:int = 80
-
-    min_text_len:int = 1
-    max_text_len:int = 190
-    add_blank:bool = True
-    cleaned_text:bool = True
-    text_cleaners:List[str] = None
 
 @dataclass
 class TextEncoderConfig(Coqpit):
@@ -101,7 +107,7 @@ class TTSModelConfig(Coqpit):
     out_channels:int = 513
     spec_segment_size:int = 32
 
-    embedded_language_dim: int = 4
+    language_embedding_channels: int = 4
     use_language_embedding:bool = False
     language_ids_file:str = None
     num_speakers:int = 0
@@ -117,18 +123,7 @@ class TTSModelConfig(Coqpit):
     discriminator: DiscriminatorConfig = field(default_factory=lambda: DiscriminatorConfig())
 
 @dataclass
-class TrainTTSConfig(TrainerConfig):
-    """
-    General training config, here you can change the batch size and others useful parameters
-    """
-    # dataset config
-    dataset_config: TTSDatasetConfig = field(default_factory=lambda: TTSDatasetConfig())
-
-    # the max size of eval dataset
-    eval_split_max_size: int = 256
-    # the percentage of dataset to be eval dataset
-    eval_split_size: float = 0.01
-
+class LossConfig(Coqpit):
     kl_loss_alpha:int = 1.0
     disc_loss_alpha = 1.0
     gen_loss_alpha = 1.0
@@ -136,6 +131,23 @@ class TrainTTSConfig(TrainerConfig):
     mel_loss_alpha = 45.0
     dur_loss_alpha = 1.0
     speaker_encoder_loss_alpha = 9.0
+
+@dataclass
+class TrainTTSConfig(TrainerConfig):
+    """
+    General training config, here you can change the batch size and others useful parameters
+    """
+    dataset_config: TTSDatasetConfig = field(default_factory=lambda: TTSDatasetConfig())
+    audio:AudioConfig = field(default_factory=lambda: AudioConfig())
+    text:TextConfig = field(default_factory=lambda: TextConfig())
+
+    # the max size of eval dataset
+    eval_split_max_size: int = 256
+    # the percentage of dataset to be eval dataset
+    eval_split_size: float = 0.01
+
+    #loss
+    loss:LossConfig = field(default_factory=lambda: LossConfig())
 
     # model config
     model: TTSModelConfig = field(default_factory=lambda: TTSModelConfig())

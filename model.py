@@ -50,7 +50,7 @@ class SpeechModel(TrainerModel):
             num_layers=self.model_config.text_encoder.num_layers_text_encoder,
             kernel_size=self.model_config.text_encoder.kernel_size_text_encoder,
             dropout_p=self.model_config.text_encoder.dropout_p_text_encoder,
-            language_emb_dim=self.model_config.embedded_language_dim,
+            language_emb_dim=self.embedded_language_dim,
         )
 
         self.audio_encoder = AudioEncoder(
@@ -78,7 +78,7 @@ class SpeechModel(TrainerModel):
             kernel_size=3,
             dropout_p=self.model_config.duration_predictor.dropout_p_duration_predictor,
             cond_channels=self.embedded_speaker_dim,
-            language_emb_dim=self.model_config.embedded_language_dim,
+            language_emb_dim=self.embedded_language_dim,
         )
 
         self.waveform_decoder = HifiganGenerator(
@@ -160,7 +160,7 @@ class SpeechModel(TrainerModel):
         if self.model_config.use_language_embedding and self.language_manager:
             print(" > initialization of language-embedding layers.")
             self.num_languages = self.language_manager.num_languages
-            self.embedded_language_dim = self.model_config.embedded_language_dim
+            self.embedded_language_dim = self.model_config.language_embedding_channels
             self.emb_l = nn.Embedding(self.num_languages, self.embedded_language_dim)
             torch.nn.init.xavier_uniform_(self.emb_l.weight)
         else:
@@ -189,7 +189,7 @@ class SpeechModel(TrainerModel):
             loader = None
             return loader
 
-        dataset = TextAudioDataset(samples, config.dataset_config)
+        dataset = TextAudioDataset(samples, config)
 
         # wait all the DDP process to be ready
         if num_gpus > 1:
@@ -197,55 +197,73 @@ class SpeechModel(TrainerModel):
 
         # get samplers and collate
         sampler = DistributedBucketSampler(
-            dataset,
-            config.batch_size,
-            [32, 300, 400, 500, 600, 700, 800, 900, 1000],
+            dataset=dataset,
+            batch_size=config.batch_size,
+            boundaries=[32, 300, 400, 500, 600, 700, 800, 900, 1000],
             num_replicas=num_gpus,
             rank=rank,
             shuffle=True
         )
         collate_fn = TextAudioCollate()
 
-        if is_eval:
+        if num_gpus > 1:
             loader = DataLoader(
-                dataset,
-                num_workers=config.num_eval_loader_workers,
-                shuffle=False,
-                pin_memory=False,
+                dataset=dataset,
+                sampler=sampler,
+                batch_size=config.eval_batch_size if is_eval else config.batch_size,
                 collate_fn=collate_fn,
-                batch_size=config.eval_batch_size,
+                num_workers=config.dataset_config.num_eval_loader_workers if is_eval else config.dataset_config.num_loader_workers,
+                pin_memory=False,
             )
         else:
             loader = DataLoader(
-                dataset,
-                num_workers=config.batch_size,
-                shuffle=False,
-                pin_memory=False,
-                collate_fn=collate_fn,
+                dataset=dataset,
                 batch_sampler=sampler,
+                collate_fn=collate_fn,
+                num_workers=config.dataset_config.num_eval_loader_workers if is_eval else config.dataset_config.num_loader_workers,
+                pin_memory=False,
             )
+        # if is_eval:
+        #     loader = DataLoader(
+        #         dataset=dataset,
+        #         batch_size=config.eval_batch_size,
+        #         num_workers=config.num_eval_loader_workers,
+        #         shuffle=False,
+        #         pin_memory=False,
+        #         collate_fn=collate_fn,
+        #
+        #     )
+        # else:
+        #     loader = DataLoader(
+        #         dataset=dataset,
+        #         num_workers=config.batch_size,
+        #         shuffle=False,
+        #         pin_memory=False,
+        #         collate_fn=collate_fn,
+        #         batch_sampler=sampler,
+        #     )
         return loader
 
     def format_batch_on_device(self, batch):
-        """Compute spectrograms on the device."""
+        """Compute spectrograms on the device. datas are send to GPU before calling this func"""
         wav = batch["waveform"]
-        dataset_config = self.config.dataset_config
+        audio_config = self.config.audio
         spec = wav_to_spec(
             wav=wav,
-            n_fft=dataset_config.fft_length,
-            hop_size=dataset_config.hop_length,
-            win_size=dataset_config.win_length,
+            n_fft=audio_config.fft_length,
+            hop_size=audio_config.hop_length,
+            win_size=audio_config.win_length,
             center=False
         )
         batch["spec"] = spec
 
         mel = spec_to_mel(
             spec=spec,
-            n_fft=dataset_config.fft_length,
-            num_mels=dataset_config.num_mels,
-            sample_rate=dataset_config.sample_rate,
-            fmin=dataset_config.mel_fmin,
-            fmax=dataset_config.mel_fmax
+            n_fft=audio_config.fft_length,
+            num_mels=audio_config.num_mels,
+            sample_rate=audio_config.sample_rate,
+            fmin=audio_config.mel_fmin,
+            fmax=audio_config.mel_fmax
         )
         batch["mel"] = mel
 
@@ -378,10 +396,10 @@ class SpeechModel(TrainerModel):
         attn_durations = attn.sum(3)
         attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
         log_durations = self.duration_predictor(
-            x.detach() if self.args.detach_dp_input else x,
+            x.detach(),
             x_mask,
-            g=g.detach() if self.args.detach_dp_input and g is not None else g,
-            lang_emb=lang_emb.detach() if self.args.detach_dp_input and lang_emb is not None else lang_emb,
+            g=g.detach() if g is not None else g,
+            lang_emb=lang_emb.detach() if lang_emb is not None else lang_emb,
         )
         loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
         outputs["loss_duration"] = loss_duration
@@ -389,24 +407,22 @@ class SpeechModel(TrainerModel):
 
     def upsampling_z(self, z, slice_ids=None, y_lengths=None, y_mask=None):
         spec_segment_size = self.spec_segment_size
-        if self.args.encoder_sample_rate:
-            # recompute the slices and spec_segment_size if needed
-            slice_ids = slice_ids * int(self.interpolate_factor) if slice_ids is not None else slice_ids
-            spec_segment_size = spec_segment_size * int(self.interpolate_factor)
-            # interpolate z if needed
-            if self.args.interpolate_z:
-                z = torch.nn.functional.interpolate(z, scale_factor=[self.interpolate_factor], mode="linear").squeeze(0)
-                # recompute the mask if needed
-                if y_lengths is not None and y_mask is not None:
-                    y_mask = (
-                        sequence_mask(y_lengths * self.interpolate_factor, None).to(y_mask.dtype).unsqueeze(1)
-                    )  # [B, 1, T_dec_resampled]
+        # if self.model_config.encoder_sample_rate:
+        #     # recompute the slices and spec_segment_size if needed
+        #     slice_ids = slice_ids * int(self.interpolate_factor) if slice_ids is not None else slice_ids
+        #     spec_segment_size = spec_segment_size * int(self.interpolate_factor)
+        #     # interpolate z if needed
+        #     if self.model_config.interpolate_z:
+        #         z = torch.nn.functional.interpolate(z, scale_factor=[self.interpolate_factor], mode="linear").squeeze(0)
+        #         # recompute the mask if needed
+        #         if y_lengths is not None and y_mask is not None:
+        #             y_mask = (
+        #                 sequence_mask(y_lengths * self.interpolate_factor, None).to(y_mask.dtype).unsqueeze(1)
+        #             )  # [B, 1, T_dec_resampled]
 
         return z, spec_segment_size, slice_ids, y_mask
 
     def train_step(self, batch: Dict, criterion: nn.Module, optimizer_idx: int) -> Tuple[Dict, Dict]:
-        print("batch size: %i" % len(batch))
-
         spec_lens = batch["spec_lens"]
         if optimizer_idx == 0:
             tokens = batch["tokens"]
@@ -457,7 +473,7 @@ class SpeechModel(TrainerModel):
                 )
                 mel_slice_hat = wav_to_mel(
                     y=self.model_outputs_cache["model_outputs"].float(),
-                    n_fft=self.config.audio.fft_size,
+                    n_fft=self.config.audio.fft_length,
                     sample_rate=self.config.audio.sample_rate,
                     num_mels=self.config.audio.num_mels,
                     hop_length=self.config.audio.hop_length,
@@ -497,8 +513,9 @@ class SpeechModel(TrainerModel):
         raise ValueError(" [!] Unexpected `optimizer_idx`.")
 
 
-    def eval_step(self, batch: Dict, criterion: nn.Module) -> Tuple[Dict, Dict]:
-        pass
+    @torch.no_grad()
+    def eval_step(self, batch: dict, criterion: nn.Module, optimizer_idx: int):
+        return self.train_step(batch, criterion, optimizer_idx)
 
 
     def get_criterion(self):

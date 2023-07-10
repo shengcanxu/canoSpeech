@@ -9,12 +9,12 @@ from util.helper import sequence_mask
 class VitsGeneratorLoss(nn.Module):
     def __init__(self, config: Coqpit):
         super().__init__()
-        self.kl_loss_alpha = config.kl_loss_alpha
-        self.gen_loss_alpha = config.gen_loss_alpha
-        self.feat_loss_alpha = config.feat_loss_alpha
-        self.dur_loss_alpha = config.dur_loss_alpha
-        self.mel_loss_alpha = config.mel_loss_alpha
-        self.spk_encoder_loss_alpha = config.speaker_encoder_loss_alpha
+        self.kl_loss_alpha = config.loss.kl_loss_alpha
+        self.gen_loss_alpha = config.loss.gen_loss_alpha
+        self.feat_loss_alpha = config.loss.feat_loss_alpha
+        self.dur_loss_alpha = config.loss.dur_loss_alpha
+        self.mel_loss_alpha = config.loss.mel_loss_alpha
+        self.spk_encoder_loss_alpha = config.loss.speaker_encoder_loss_alpha
         # self.stft = TorchSTFT(
         #     c.audio.fft_size,
         #     c.audio.hop_length,
@@ -136,7 +136,7 @@ class VitsGeneratorLoss(nn.Module):
 class VitsDiscriminatorLoss(nn.Module):
     def __init__(self, config: Coqpit):
         super().__init__()
-        self.disc_loss_alpha = config.disc_loss_alpha
+        self.disc_loss_alpha = config.loss.disc_loss_alpha
 
     @staticmethod
     def discriminator_loss(scores_real, scores_fake):
