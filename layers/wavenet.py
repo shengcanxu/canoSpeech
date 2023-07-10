@@ -12,7 +12,7 @@ def fused_add_tanh_sigmoid_multiply(input_a, input_b, n_channels):
     return acts
 
 
-class WN(torch.nn.Module):
+class WaveNet(torch.nn.Module):
     """Wavenet layers with weight norm and no input conditioning.
 
          |-----------------------------------------------------------------------------|
@@ -120,12 +120,10 @@ class WN(torch.nn.Module):
             torch.nn.utils.remove_weight_norm(l)
 
 
-class WNBlocks(nn.Module):
+class WaveNetBlocks(nn.Module):
     """Wavenet blocks.
-
     Note: After each block dilation resets to 1 and it increases in each block
         along the dilation rate.
-
     Args:
         in_channels (int): number of input channels.
         hidden_channes (int): number of hidden channels.
@@ -138,7 +136,6 @@ class WNBlocks(nn.Module):
         dropout_p (float): dropout rate.
         weight_norm (bool): enable/disable weight norm for convolution layers.
     """
-
     def __init__(
         self,
         in_channels,
@@ -154,7 +151,7 @@ class WNBlocks(nn.Module):
         super().__init__()
         self.wn_blocks = nn.ModuleList()
         for idx in range(num_blocks):
-            layer = WN(
+            layer = WaveNet(
                 in_channels=in_channels if idx == 0 else hidden_channels,
                 hidden_channels=hidden_channels,
                 kernel_size=kernel_size,

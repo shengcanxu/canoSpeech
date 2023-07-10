@@ -12,7 +12,7 @@ def get_padding(k, d):
     return int((k * d - d) / 2)
 
 
-class ResBlock1(torch.nn.Module):
+class ResidualBlock1(torch.nn.Module):
     """Residual Block Type 1. It has 3 convolutional layers in each convolutional block.
     Network::
         x -> lrelu -> conv1_1 -> conv1_2 -> conv1_3 -> z -> lrelu -> conv2_1 -> conv2_2 -> conv2_3 -> o -> + -> o
@@ -96,7 +96,7 @@ class ResBlock1(torch.nn.Module):
             remove_weight_norm(l)
 
 
-class ResBlock2(torch.nn.Module):
+class ResidualBlock2(torch.nn.Module):
     """Residual Block Type 2. It has 1 convolutional layers in each convolutional block.
     Network::
         x -> lrelu -> conv1-> -> z -> lrelu -> conv2-> o -> + -> o
@@ -185,7 +185,7 @@ class HifiganGenerator(torch.nn.Module):
         self.num_upsamples = len(upsample_factors)
         # initial upsampling layers
         self.conv_pre = weight_norm(Conv1d(in_channels, upsample_initial_channel, 7, 1, padding=3))
-        resblock = ResBlock1 if resblock_type == "1" else ResBlock2
+        resblock = ResidualBlock1 if resblock_type == "1" else ResidualBlock2
         # upsampling layers
         self.ups = nn.ModuleList()
         for i, (u, k) in enumerate(zip(upsample_factors, upsample_kernel_sizes)):

@@ -6,7 +6,7 @@ from torch.nn import functional as F
 LRELU_SLOPE = 0.1
 
 
-class DiscriminatorP(torch.nn.Module):
+class DiscriminatorPeriodic(torch.nn.Module):
     """HiFiGAN Periodic Discriminator
     Takes every Pth value from the input waveform and applied a stack of convoluations.
     Note:
@@ -77,11 +77,11 @@ class MultiPeriodDiscriminator(torch.nn.Module):
         super().__init__()
         self.discriminators = nn.ModuleList(
             [
-                DiscriminatorP(2, use_spectral_norm=use_spectral_norm),
-                DiscriminatorP(3, use_spectral_norm=use_spectral_norm),
-                DiscriminatorP(5, use_spectral_norm=use_spectral_norm),
-                DiscriminatorP(7, use_spectral_norm=use_spectral_norm),
-                DiscriminatorP(11, use_spectral_norm=use_spectral_norm),
+                DiscriminatorPeriodic(2, use_spectral_norm=use_spectral_norm),
+                DiscriminatorPeriodic(3, use_spectral_norm=use_spectral_norm),
+                DiscriminatorPeriodic(5, use_spectral_norm=use_spectral_norm),
+                DiscriminatorPeriodic(7, use_spectral_norm=use_spectral_norm),
+                DiscriminatorPeriodic(11, use_spectral_norm=use_spectral_norm),
             ]
         )
 
@@ -103,7 +103,7 @@ class MultiPeriodDiscriminator(torch.nn.Module):
         return scores, feats
 
 
-class DiscriminatorS(torch.nn.Module):
+class DiscriminatorScale(torch.nn.Module):
     """HiFiGAN Scale Discriminator.
     It is similar to `MelganDiscriminator` but with a specific architecture explained in the paper.
     Args:
@@ -153,9 +153,9 @@ class MultiScaleDiscriminator(torch.nn.Module):
         super().__init__()
         self.discriminators = nn.ModuleList(
             [
-                DiscriminatorS(use_spectral_norm=True),
-                DiscriminatorS(),
-                DiscriminatorS(),
+                DiscriminatorScale(use_spectral_norm=True),
+                DiscriminatorScale(),
+                DiscriminatorScale(),
             ]
         )
         self.meanpools = nn.ModuleList([nn.AvgPool1d(4, 2, padding=2), nn.AvgPool1d(4, 2, padding=2)])

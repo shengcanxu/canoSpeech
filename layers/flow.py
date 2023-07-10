@@ -2,7 +2,7 @@ import math
 import torch
 from torch import nn
 
-from layers.wavenet import WN
+from layers.wavenet import WaveNet
 
 
 class ResidualCouplingBlock(nn.Module):
@@ -24,7 +24,7 @@ class ResidualCouplingBlock(nn.Module):
         # input layer
         self.pre = nn.Conv1d(self.half_channels, hidden_channels, 1)
         # coupling layers
-        self.enc = WN(
+        self.enc = WaveNet(
             hidden_channels,
             hidden_channels,
             kernel_size,

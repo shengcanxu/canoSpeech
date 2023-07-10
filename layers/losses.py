@@ -2,7 +2,6 @@
 import torch
 from coqpit import Coqpit
 from torch import nn
-
 from util.helper import sequence_mask
 
 
@@ -15,17 +14,6 @@ class VitsGeneratorLoss(nn.Module):
         self.dur_loss_alpha = config.loss.dur_loss_alpha
         self.mel_loss_alpha = config.loss.mel_loss_alpha
         self.spk_encoder_loss_alpha = config.loss.speaker_encoder_loss_alpha
-        # self.stft = TorchSTFT(
-        #     c.audio.fft_size,
-        #     c.audio.hop_length,
-        #     c.audio.win_length,
-        #     sample_rate=c.audio.sample_rate,
-        #     mel_fmin=c.audio.mel_fmin,
-        #     mel_fmax=c.audio.mel_fmax,
-        #     n_mels=c.audio.num_mels,
-        #     use_mel=True,
-        #     do_amp_to_db=True,
-        # )
 
     @staticmethod
     def feature_loss(feats_real, feats_generated):

@@ -2,7 +2,7 @@ import math
 import torch
 from torch import nn
 
-from layers.wavenet import WN
+from layers.wavenet import WaveNet
 from layers.transformer import RelativePositionTransformer
 from util.helper import sequence_mask
 
@@ -113,7 +113,7 @@ class AudioEncoder(nn.Module):
         self.cond_channels = cond_channels
 
         self.pre = nn.Conv1d(in_channels, hidden_channels, 1)
-        self.enc = WN(
+        self.enc = WaveNet(
             hidden_channels, hidden_channels, kernel_size, dilation_rate, num_layers, c_in_channels=cond_channels
         )
         self.proj = nn.Conv1d(hidden_channels, out_channels * 2, 1)

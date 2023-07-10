@@ -1,45 +1,5 @@
-import torch
 from torch import nn
-from torch.nn.modules.conv import Conv1d
-from layers.hifigan_discriminator import DiscriminatorP, MultiPeriodDiscriminator
-
-
-class DiscriminatorS(torch.nn.Module):
-    """HiFiGAN Scale Discriminator. Channel sizes are different from the original HiFiGAN.
-    Args:
-        use_spectral_norm (bool): if `True` swith to spectral norm instead of weight norm.
-    """
-    def __init__(self, use_spectral_norm=False):
-        super().__init__()
-        norm_f = nn.utils.spectral_norm if use_spectral_norm else nn.utils.weight_norm
-        self.convs = nn.ModuleList(
-            [
-                norm_f(Conv1d(1, 16, 15, 1, padding=7)),
-                norm_f(Conv1d(16, 64, 41, 4, groups=4, padding=20)),
-                norm_f(Conv1d(64, 256, 41, 4, groups=16, padding=20)),
-                norm_f(Conv1d(256, 1024, 41, 4, groups=64, padding=20)),
-                norm_f(Conv1d(1024, 1024, 41, 4, groups=256, padding=20)),
-                norm_f(Conv1d(1024, 1024, 5, 1, padding=2)),
-            ]
-        )
-        self.conv_post = norm_f(Conv1d(1024, 1, 3, 1, padding=1))
-
-    def forward(self, x):
-        """Args:
-            x (Tensor): input waveform.
-        Returns:
-            Tensor: discriminator scores.
-            List[Tensor]: list of features from the convolutiona layers.
-        """
-        feat = []
-        for l in self.convs:
-            x = l(x)
-            x = torch.nn.functional.leaky_relu(x, 0.1)
-            feat.append(x)
-        x = self.conv_post(x)
-        feat.append(x)
-        x = torch.flatten(x, 1, -1)
-        return x, feat
+from layers.hifigan_discriminator import DiscriminatorPeriodic, DiscriminatorScale
 
 
 class VitsDiscriminator(nn.Module):
@@ -53,8 +13,8 @@ class VitsDiscriminator(nn.Module):
     def __init__(self, periods=(2, 3, 5, 7, 11), use_spectral_norm=False):
         super().__init__()
         self.nets = nn.ModuleList()
-        self.nets.append(DiscriminatorS(use_spectral_norm=use_spectral_norm))
-        self.nets.extend([DiscriminatorP(i, use_spectral_norm=use_spectral_norm) for i in periods])
+        self.nets.append(DiscriminatorScale(use_spectral_norm=use_spectral_norm))
+        self.nets.extend([DiscriminatorPeriodic(i, use_spectral_norm=use_spectral_norm) for i in periods])
 
     def forward(self, x, x_hat=None):
         """Args:
