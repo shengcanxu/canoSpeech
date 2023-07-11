@@ -14,7 +14,8 @@ from torch.utils.data import DataLoader, RandomSampler
 from trainer import TrainerModel
 from trainer.trainer_utils import get_optimizer, get_scheduler
 from config.config import VitsConfig
-from dataset.dataset import TextAudioDataset, DistributedBucketSampler, TextAudioCollate
+from dataset.dataset import TextAudioDataset
+from dataset.sampler import DistributedBucketSampler
 from language.languages import LanguageManager
 from layers.discriminator import VitsDiscriminator
 from layers.duration_predictor import DurationPredictor
@@ -377,7 +378,6 @@ class VitsTrain(TrainerModel):
             dist.barrier()
 
         sampler = DistributedSampler(dataset) if num_gpus > 1 else RandomSampler(dataset)
-        collate_fn = TextAudioCollate()
 
         # set num_workers>0 the DataLoader will be very slow in windows, because it re-start
         # all processes every epoch. https://github.com/JaidedAI/EasyOCR/issues/274
@@ -388,7 +388,7 @@ class VitsTrain(TrainerModel):
             dataset=dataset,
             sampler=sampler,
             batch_size=config.eval_batch_size if is_eval else config.batch_size,
-            collate_fn=collate_fn,
+            collate_fn=dataset.collate_fn,
             num_workers=num_workers,
             pin_memory=False,
             drop_last=True,
@@ -427,7 +427,6 @@ class VitsTrain(TrainerModel):
         batch["spec"] = batch["spec"] * sequence_mask(batch["spec_lens"]).unsqueeze(1)
         batch["mel"] = batch["mel"] * sequence_mask(batch["mel_lens"]).unsqueeze(1)
         return batch
-
 
     def train_step(self, batch: Dict, criterion: nn.Module, optimizer_idx: int) -> Tuple[Dict, Dict]:
         spec_lens = batch["spec_lens"]

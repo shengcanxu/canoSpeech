@@ -1,18 +1,12 @@
-import math
-import os
-import random
-import torch
-from torch import nn
-import torch.nn.functional as F
-import torch.utils.data
-import numpy as np
-import librosa
-import librosa.util as librosa_util
-from librosa.util import normalize, pad_center, tiny
 
-from scipy.signal import get_window
-from scipy.io.wavfile import read
+import torch
+import torch.utils.data
 from librosa.filters import mel as librosa_mel_fn
+
+"""
+do the similar audio process with util.audio_processor.py, but do it in GPU. all the functions here should be call in GPU
+so that it's suitable to call in the format_batch_on_device callback in Trainer
+"""
 
 mel_basis = {}
 hann_window = {}

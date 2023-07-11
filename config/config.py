@@ -29,9 +29,9 @@ class TTSDatasetConfig(Coqpit):
             train the duration predictor.
     """
 
-    formatter: str = ""
     dataset_name: str = ""
     path: str = ""
+    use_cache:bool = False
     meta_file_train: str = ""
     meta_file_val: str = ""
     ignored_speakers: List[str] = None

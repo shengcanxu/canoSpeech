@@ -33,17 +33,6 @@ MAX_AUDIO_LEN_IN_SECONDS = 10
 
 
 def main():
-    #TODO: public environment for hacking, should be removed
-    rank = 0
-    n_gpus = torch.cuda.device_count()
-    if n_gpus == 1:
-        os.environ["MASTER_ADDR"] = "localhost"
-        os.environ["MASTER_PORT"] = "63331"
-        dist.init_process_group(
-            # backend="nccl", init_method="env://", world_size=n_gpus, rank=rank
-            backend="gloo", init_method="env://", world_size=n_gpus, rank=rank  # use gloo in windows
-        )
-
     config = VitsConfig(
         batch_size=BATCH_SIZE,
         eval_batch_size=BATCH_SIZE,

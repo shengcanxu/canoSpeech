@@ -3,11 +3,11 @@
     "run_description": "Cano Speech running on VCTK dataset",
 
     "dataset_config": {
-        "formatter":"vctk",
         "dataset_name":"vctk",
         "meta_file_train":"./filelists/vctk_train_filelist.txt.cleaned",
         "meta_file_val":"./filelists/vctk_test_filelist.txt.cleaned",
         "path":"D:\\dataset\\VCTK",
+        "use_cache": true,
         "language":"en",
         "ignored_speakers":[ "p261", "p225", "p294", "p347", "p238", "p234", "p248", "p335", "p245", "p326", "p302"],
         "num_loader_workers": 8,
