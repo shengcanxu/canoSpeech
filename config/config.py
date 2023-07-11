@@ -102,7 +102,7 @@ class DiscriminatorConfig(Coqpit):
     use_spectral_norm_disriminator:bool = False
 
 @dataclass
-class TTSModelConfig(Coqpit):
+class VitsModelConfig(Coqpit):
     hidden_channels: int = 192
     out_channels:int = 513
     spec_segment_size:int = 32
@@ -123,7 +123,7 @@ class TTSModelConfig(Coqpit):
     discriminator: DiscriminatorConfig = field(default_factory=lambda: DiscriminatorConfig())
 
 @dataclass
-class LossConfig(Coqpit):
+class VitsLossConfig(Coqpit):
     kl_loss_alpha:int = 1.0
     disc_loss_alpha = 1.0
     gen_loss_alpha = 1.0
@@ -133,7 +133,7 @@ class LossConfig(Coqpit):
     speaker_encoder_loss_alpha = 9.0
 
 @dataclass
-class TrainTTSConfig(TrainerConfig):
+class VitsConfig(TrainerConfig):
     """
     General training config, here you can change the batch size and others useful parameters
     """
@@ -147,7 +147,7 @@ class TrainTTSConfig(TrainerConfig):
     eval_split_size: float = 0.01
 
     #loss
-    loss:LossConfig = field(default_factory=lambda: LossConfig())
+    loss:VitsLossConfig = field(default_factory=lambda: VitsLossConfig())
 
     # model config
-    model: TTSModelConfig = field(default_factory=lambda: TTSModelConfig())
+    model: VitsModelConfig = field(default_factory=lambda: VitsModelConfig())

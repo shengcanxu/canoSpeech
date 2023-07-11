@@ -1,14 +1,13 @@
 import os
 import torch
-from trainer import Trainer, TrainerArgs, TrainerConfig
+from trainer import Trainer, TrainerArgs
 import torch.distributed as dist
 # dataset path
-from config.config import TTSDatasetConfig, TrainTTSConfig
+from config.config import VitsConfig
 
 # Name of the run for the Trainer
-from dataset.VCTK import load_file_metas
-from dataset.dataset import split_dataset_metas, get_metas_from_filelist
-from model import SpeechModel
+from dataset.dataset import get_metas_from_filelist
+from recipes.vits.vits import VitsTrain
 
 RUN_NAME = "CanoSpeech"
 
@@ -45,11 +44,11 @@ def main():
             backend="gloo", init_method="env://", world_size=n_gpus, rank=rank  # use gloo in windows
         )
 
-    config = TrainTTSConfig(
+    config = VitsConfig(
         batch_size=BATCH_SIZE,
         eval_batch_size=BATCH_SIZE,
     )
-    config.load_json("./config/train.json")
+    config.load_json("./config/vits_train.json")
     data_config = config.dataset_config
     # print(config)
 
@@ -57,14 +56,14 @@ def main():
     test_datas = get_metas_from_filelist(data_config.meta_file_val)
 
     # init the model
-    model = SpeechModel(config=config)
+    train_model = VitsTrain(config=config)
 
     # init the trainer and train
     trainer = Trainer(
         TrainerArgs(restore_path=RESTORE_PATH, skip_train_epoch=SKIP_TRAIN_EPOCH),
         config,
         output_path=OUT_PATH,
-        model=model,
+        model=train_model,
         train_samples=train_datas,
         eval_samples=test_datas,
     )

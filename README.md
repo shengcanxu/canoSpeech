@@ -7,7 +7,9 @@ text to speech, a repro for producing human natural speech
 # usefull script
 1. re-sample audio file: dataset/resample.py
 2. tokenize text and change to phonone: preprocess.py
-3. 
+
+# run scripts
+all run scripts are in recipes folder. each model one folder
 
 # reference:
 1. https://github.com/yangdongchao/AcademiCodec 

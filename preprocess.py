@@ -1,9 +1,12 @@
 import argparse
 import text
-from config.config import TrainTTSConfig
+from config.config import VitsConfig
 from dataset.VCTK import load_file_metas as load_vctk_metas
 from dataset.dataset import split_dataset_metas
 
+"""
+generate train and test filelist. 
+"""
 
 def load_file_metas(config):
     dataset_name = config.dataset_name
@@ -14,11 +17,11 @@ def load_file_metas(config):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="./config/train.json")
+    parser.add_argument("--config", type=str, default="./config/vits_train.json")
     args = parser.parse_args()
 
-    train_config = TrainTTSConfig()
-    train_config.load_json("./config/train.json")
+    train_config = VitsConfig()
+    train_config.load_json("./config/vits_train.json")
     config = train_config.dataset_config
     text_config = train_config.text
 

@@ -13,13 +13,13 @@ from torch import nn
 from torch.utils.data import DataLoader, RandomSampler
 from trainer import TrainerModel
 from trainer.trainer_utils import get_optimizer, get_scheduler
-from config.config import TrainTTSConfig
+from config.config import VitsConfig
 from dataset.dataset import TextAudioDataset, DistributedBucketSampler, TextAudioCollate
 from language.languages import LanguageManager
 from layers.discriminator import VitsDiscriminator
 from layers.duration_predictor import DurationPredictor
 from layers.flow import ResidualCouplingBlocks
-from layers.hifigan_generator import HifiganGenerator
+from layers.generator import HifiganGenerator
 from layers.losses import VitsDiscriminatorLoss, VitsGeneratorLoss
 from layers.encoder import TextEncoder, AudioEncoder
 from monotonic_align.maximum_path import maximum_path
@@ -28,8 +28,8 @@ from util.helper import sequence_mask, segment, rand_segments
 from util.mel_processing import wav_to_spec, spec_to_mel, wav_to_mel
 
 
-class SpeechModel(TrainerModel):
-    def __init__(self,config:TrainTTSConfig, speaker_manager: SpeakerManager = None, language_manager: LanguageManager = None,):
+class VitsModel(nn.Module):
+    def __init__(self, config:VitsConfig, speaker_manager: SpeakerManager = None, language_manager: LanguageManager = None, ):
         super().__init__()
         self.config = config
         self.model_config = config.model
@@ -98,16 +98,11 @@ class SpeechModel(TrainerModel):
             conv_post_bias=False,
         )
 
-        self.discriminator = VitsDiscriminator(
-            periods=self.model_config.discriminator.periods_multi_period_discriminator,
-            use_spectral_norm=self.model_config.discriminator.use_spectral_norm_disriminator,
-        )
-
     def _init_speaker_embedding(self):
         if self.num_speakers > 0:
             print(" > initialization of speaker-embedding layers.")
             self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
-            self.emb_g = nn.Embedding(self.num_speakers, self.embedded_speaker_dim)
+            self.speaker_embedding = nn.Embedding(self.num_speakers, self.embedded_speaker_dim)
 
     def init_multispeaker(self, config: Coqpit):
         """Initialize multi-speaker modules of a model. A model can be trained either with a speaker embedding layer
@@ -162,8 +157,8 @@ class SpeechModel(TrainerModel):
             print(" > initialization of language-embedding layers.")
             self.num_languages = self.language_manager.num_languages
             self.embedded_language_dim = self.model_config.language_embedding_channels
-            self.emb_l = nn.Embedding(self.num_languages, self.embedded_language_dim)
-            torch.nn.init.xavier_uniform_(self.emb_l.weight)
+            self.language_embedding = nn.Embedding(self.num_languages, self.embedded_language_dim)
+            torch.nn.init.xavier_uniform_(self.language_embedding.weight)
         else:
             self.embedded_language_dim = 0
 
@@ -176,78 +171,6 @@ class SpeechModel(TrainerModel):
         #     )
         pass
 
-    def get_data_loader(
-        self,
-        config: Coqpit,
-        assets: Dict,
-        is_eval: bool,
-        samples: Union[List[Dict], List[List]],
-        verbose: bool,
-        num_gpus: int,
-        rank: int = None,
-    ) -> "DataLoader":
-        if is_eval and not config.run_eval:
-            loader = None
-            return loader
-
-        dataset = TextAudioDataset(samples, config)
-
-        # wait all the DDP process to be ready
-        if num_gpus > 1:
-            dist.barrier()
-
-        sampler = DistributedSampler(dataset) if num_gpus > 1 else RandomSampler(dataset)
-        collate_fn = TextAudioCollate()
-
-        # set num_workers>0 the DataLoader will be very slow in windows, because it re-start
-        # all processes every epoch. https://github.com/JaidedAI/EasyOCR/issues/274
-        num_workers = config.dataset_config.num_eval_loader_workers if is_eval else config.dataset_config.num_loader_workers
-        if platform.system() == "Windows":
-            num_workers = 0
-        loader = DataLoader(
-            dataset=dataset,
-            sampler=sampler,
-            batch_size=config.eval_batch_size if is_eval else config.batch_size,
-            collate_fn=collate_fn,
-            num_workers=num_workers,
-            pin_memory=False,
-            drop_last=True,
-            # persistent_workers=True,
-        )
-        return loader
-
-    def format_batch_on_device(self, batch):
-        """Compute spectrograms on the device. datas are send to GPU before calling this func"""
-        wav = batch["waveform"]
-        audio_config = self.config.audio
-        spec = wav_to_spec(
-            wav=wav,
-            n_fft=audio_config.fft_length,
-            hop_size=audio_config.hop_length,
-            win_size=audio_config.win_length,
-            center=False
-        )
-        batch["spec"] = spec
-
-        mel = spec_to_mel(
-            spec=spec,
-            n_fft=audio_config.fft_length,
-            num_mels=audio_config.num_mels,
-            sample_rate=audio_config.sample_rate,
-            fmin=audio_config.mel_fmin,
-            fmax=audio_config.mel_fmax
-        )
-        batch["mel"] = mel
-
-        # compute spectrogram frame lengths
-        batch["spec_lens"] = (batch["spec"].shape[2] * batch["waveform_rel_lens"]).int()
-        batch["mel_lens"] = (batch["mel"].shape[2] * batch["waveform_rel_lens"]).int()
-
-        # zero the padding frames
-        batch["spec"] = batch["spec"] * sequence_mask(batch["spec_lens"]).unsqueeze(1)
-        batch["mel"] = batch["mel"] * sequence_mask(batch["mel_lens"]).unsqueeze(1)
-        return batch
-
     def forward(
         self,
         x: torch.tensor,
@@ -255,7 +178,9 @@ class SpeechModel(TrainerModel):
         y: torch.tensor,
         y_lengths: torch.tensor,
         waveform: torch.tensor,
-        aux_input={"d_vectors": None, "speaker_ids": None, "language_ids": None},
+        d_vectors = None,
+        speaker_ids = None,
+        language_ids = None
     ) -> Dict:
         """Forward pass of the model.
         Args:
@@ -281,15 +206,15 @@ class SpeechModel(TrainerModel):
             - syn_spk_emb: :math:`[B, 1, speaker_encoder.proj_dim]`
         """
         outputs = {}
-        sid, g, lid, _ = self._set_cond_input(aux_input)
+        sid, g, lid = self._set_cond_input(d_vectors, speaker_ids, language_ids)
         # speaker embedding
         if self.model_config.use_speaker_embedding and sid is not None:
-            g = self.emb_g(sid).unsqueeze(-1)  # [b, h, 1]
+            g = self.speaker_embedding(sid).unsqueeze(-1)  # [b, h, 1]
 
         # language embedding
         lang_emb = None
         if self.model_config.use_language_embedding and lid is not None:
-            lang_emb = self.emb_l(lid).unsqueeze(-1)
+            lang_emb = self.language_embedding(lid).unsqueeze(-1)
 
         x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
 
@@ -394,6 +319,116 @@ class SpeechModel(TrainerModel):
 
         return z, spec_segment_size, slice_ids, y_mask
 
+    @staticmethod
+    def _set_cond_input(d_vectors, speaker_ids, language_ids):
+        """Set the speaker conditioning input based on the multi-speaker mode."""
+        sid, g, lid, durations = None, None, None, None
+        if speaker_ids is not None:
+            sid = speaker_ids
+            if sid.ndim == 0:
+                sid = sid.unsqueeze_(0)
+        if d_vectors is not None:
+            g = F.normalize(d_vectors).unsqueeze(-1)
+            if g.ndim == 2:
+                g = g.unsqueeze_(0)
+
+        if language_ids is not None:
+            lid = language_ids
+            if lid.ndim == 0:
+                lid = lid.unsqueeze_(0)
+        return sid, g, lid
+
+
+class VitsTrain(TrainerModel):
+    def __init__(self, config:VitsConfig, speaker_manager: SpeakerManager = None, language_manager: LanguageManager = None, ):
+        super().__init__()
+        self.config = config
+        self.model_config = config.model
+
+        self.generator = VitsModel(
+            config=config,
+            speaker_manager=speaker_manager,
+            language_manager=language_manager
+        )
+
+        self.discriminator = VitsDiscriminator(
+            periods=self.model_config.discriminator.periods_multi_period_discriminator,
+            use_spectral_norm=self.model_config.discriminator.use_spectral_norm_disriminator,
+        )
+
+    def get_data_loader(
+        self,
+        config: Coqpit,
+        assets: Dict,
+        is_eval: bool,
+        samples: Union[List[Dict], List[List]],
+        verbose: bool,
+        num_gpus: int,
+        rank: int = None,
+    ) -> "DataLoader":
+        if is_eval and not config.run_eval:
+            loader = None
+            return loader
+
+        dataset = TextAudioDataset(samples, config)
+
+        # wait all the DDP process to be ready
+        if num_gpus > 1:
+            dist.barrier()
+
+        sampler = DistributedSampler(dataset) if num_gpus > 1 else RandomSampler(dataset)
+        collate_fn = TextAudioCollate()
+
+        # set num_workers>0 the DataLoader will be very slow in windows, because it re-start
+        # all processes every epoch. https://github.com/JaidedAI/EasyOCR/issues/274
+        num_workers = config.dataset_config.num_eval_loader_workers if is_eval else config.dataset_config.num_loader_workers
+        if platform.system() == "Windows":
+            num_workers = 0
+        loader = DataLoader(
+            dataset=dataset,
+            sampler=sampler,
+            batch_size=config.eval_batch_size if is_eval else config.batch_size,
+            collate_fn=collate_fn,
+            num_workers=num_workers,
+            pin_memory=False,
+            drop_last=True,
+            # persistent_workers=True,
+        )
+        return loader
+
+    def format_batch_on_device(self, batch):
+        """Compute spectrograms on the device. datas are send to GPU before calling this func"""
+        wav = batch["waveform"]
+        audio_config = self.config.audio
+        spec = wav_to_spec(
+            wav=wav,
+            n_fft=audio_config.fft_length,
+            hop_size=audio_config.hop_length,
+            win_size=audio_config.win_length,
+            center=False
+        )
+        batch["spec"] = spec
+
+        mel = spec_to_mel(
+            spec=spec,
+            n_fft=audio_config.fft_length,
+            num_mels=audio_config.num_mels,
+            sample_rate=audio_config.sample_rate,
+            fmin=audio_config.mel_fmin,
+            fmax=audio_config.mel_fmax
+        )
+        batch["mel"] = mel
+
+        # compute spectrogram frame lengths
+        batch["spec_lens"] = (batch["spec"].shape[2] * batch["waveform_rel_lens"]).int()
+        batch["mel_lens"] = (batch["mel"].shape[2] * batch["waveform_rel_lens"]).int()
+
+        # zero the padding frames
+        batch["spec"] = batch["spec"] * sequence_mask(batch["spec_lens"]).unsqueeze(1)
+        batch["mel"] = batch["mel"] * sequence_mask(batch["mel_lens"]).unsqueeze(1)
+        return batch
+
+
     def train_step(self, batch: Dict, criterion: nn.Module, optimizer_idx: int) -> Tuple[Dict, Dict]:
         spec_lens = batch["spec_lens"]
         if optimizer_idx == 0:
@@ -406,13 +441,15 @@ class SpeechModel(TrainerModel):
             waveform = batch["waveform"]
 
             # generator pass
-            outputs = self.forward(
+            outputs = self.generator(
                 x=tokens,
                 x_lengths=token_lens,
                 y=spec,
                 y_lengths=spec_lens,
                 waveform=waveform,
-                aux_input={"d_vectors": d_vectors, "speaker_ids": speaker_ids, "language_ids": language_ids},
+                d_vectors=None,
+                speaker_ids=None,
+                language_ids=None
             )
 
             # cache tensors for the generator pass
@@ -440,7 +477,7 @@ class SpeechModel(TrainerModel):
                 mel_slice = segment(
                     x=mel.float(),
                     segment_indices=self.model_outputs_cache["slice_ids"],
-                    segment_size=self.spec_segment_size,
+                    segment_size=self.model_config.spec_segment_size,
                     pad_short=True
                 )
                 mel_slice_hat = wav_to_mel(
@@ -484,28 +521,30 @@ class SpeechModel(TrainerModel):
 
         raise ValueError(" [!] Unexpected `optimizer_idx`.")
 
-
     @torch.no_grad()
     def eval_step(self, batch: dict, criterion: nn.Module, optimizer_idx: int):
         return self.train_step(batch, criterion, optimizer_idx)
-
 
     def get_criterion(self):
         """Get criterions for each optimizer. The index in the output list matches the optimizer idx used in train_step()`"""
         return [VitsDiscriminatorLoss(self.config), VitsGeneratorLoss(self.config)]
 
     def get_optimizer(self) -> List:
-        """Initiate and return the GAN optimizers based on the config parameters.
-        It returnes 2 optimizers in a list. First one is for the generator and the second one is for the discriminator.
-        Returns:
-            List: optimizers.
-        """
+        """Initiate and return the GAN optimizers based on the config parameters."""
         # select generator parameters
-        optimizer0 = get_optimizer(self.config.optimizer, self.config.optimizer_params, self.config.lr, self.discriminator)
+        optimizer0 = get_optimizer(
+            optimizer_name=self.config.optimizer,
+            optimizer_params=self.config.optimizer_params,
+            lr=self.config.lr,
+            model=self.discriminator
+        )
 
-        gen_parameters = chain(params for k, params in self.named_parameters() if not k.startswith("discriminator."))
+        # gen_parameters = chain(params for k, params in self.named_parameters() if not k.startswith("discriminator."))
         optimizer1 = get_optimizer(
-            self.config.optimizer, self.config.optimizer_params, self.config.lr, parameters=gen_parameters
+            optimizer_name=self.config.optimizer,
+            optimizer_params=self.config.optimizer_params,
+            lr=self.config.lr,
+            model=self.generator
         )
         return [optimizer0, optimizer1]
 
@@ -524,25 +563,6 @@ class SpeechModel(TrainerModel):
         scheduler_G = get_scheduler("ExponentialLR", lr_scheduler_params, optimizer[1])
         return [scheduler_D, scheduler_G]
 
-    @staticmethod
-    def _set_cond_input(aux_input: Dict):
-        """Set the speaker conditioning input based on the multi-speaker mode."""
-        sid, g, lid, durations = None, None, None, None
-        if "speaker_ids" in aux_input and aux_input["speaker_ids"] is not None:
-            sid = aux_input["speaker_ids"]
-            if sid.ndim == 0:
-                sid = sid.unsqueeze_(0)
-        if "d_vectors" in aux_input and aux_input["d_vectors"] is not None:
-            g = F.normalize(aux_input["d_vectors"]).unsqueeze(-1)
-            if g.ndim == 2:
-                g = g.unsqueeze_(0)
-
-        if "language_ids" in aux_input and aux_input["language_ids"] is not None:
-            lid = aux_input["language_ids"]
-            if lid.ndim == 0:
-                lid = lid.unsqueeze_(0)
-
-        if "durations" in aux_input and aux_input["durations"] is not None:
-            durations = aux_input["durations"]
-
-        return sid, g, lid, durations
+    def forward(self, input: torch.Tensor, *args, aux_input={}, **kwargs) -> Dict:
+        print("nothing to do! doing the real train code in train_step. ")
+        return input
