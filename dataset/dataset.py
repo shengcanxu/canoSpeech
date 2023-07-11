@@ -8,6 +8,8 @@ from text import cleaned_text_to_sequence, _clean_text
 import torch
 from torch.utils.data import Dataset
 
+from util.audio_processor import AudioProcessor
+
 
 def split_dataset_metas(items, eval_split_max_size=None, eval_split_size=0.01):
     """Split a dataset into train and eval. Consider speaker distribution in multi-speaker training.
@@ -72,10 +74,23 @@ class TextAudioDataset(Dataset):
     def __init__(self, samples, config):
         self.samples = samples
         self.use_cache = getattr(config.dataset_config, "use_cache", False)
+        self.add_spec = getattr(config.dataset_config, "add_spec", False)
+        self.add_mel = getattr(config.dataset_config, "add_mel", False)
 
         self.hop_length = config.audio.hop_length
         self.win_length = config.audio.win_length
         self.sample_rate = config.audio.sample_rate
+
+        self.processor = AudioProcessor(
+            hop_length=config.audio.hop_length,
+            win_length=config.audio.win_length,
+            sample_rate=config.audio.sample_rate,
+            mel_fmin=config.audio.mel_fmin,
+            mel_fmax=config.audio.mel_fmax,
+            fft_size=config.audio.fft_length,
+            num_mels=config.audio.num_mels,
+            verbose=False
+        )
 
         self.cleaned_text = getattr(config.text, "cleaned_text", False)
         self.text_cleaners = config.text.text_cleaners
@@ -128,7 +143,18 @@ class TextAudioDataset(Dataset):
 
     def get_audio_text_duration_f0(self, sample):
         tokens, phoneme = self._get_text(sample["text"])
-        wav = self._get_audio(sample["audio"])
+        wav = self.processor.load_wav(sample["audio"], sr=self.sample_rate)
+        wav_t = torch.FloatTensor(wav)
+        wav_t = wav_t.unsqueeze(0)
+
+        spec = None
+        if self.add_spec:
+            spec = self.processor.spectrogram(wav)
+            spec = torch.FloatTensor(spec)
+        mel = None
+        if self.add_mel:
+            mel = self.processor.melspectrogram(wav)
+            mel = torch.FloatTensor(mel)
 
         #TODO:change code here
         duration = torch.zeros_like(tokens)
@@ -138,19 +164,21 @@ class TextAudioDataset(Dataset):
             "phoneme": phoneme,
             "tokens": tokens,
             "token_len": len(tokens),
-            "wav": wav,
+            "wav": wav_t,
+            "spec": spec,
+            "mel": mel,
             "audio_file": sample["audio"],
             "speaker": sample["speaker"],
             "duration": duration,
             "f0": f0
         }
 
-    def _get_audio(self, filename):
-        wav, sample_rate = torchaudio.load(filename)
-
-        if sample_rate != self.sample_rate:
-            raise ValueError( "{} SR doesn't match target {} SR".format( sample_rate, self.sample_rate) )
-        return wav
+    # def _get_audio(self, filename):
+    #     wav, sample_rate = torchaudio.load(filename)
+    #
+    #     if sample_rate != self.sample_rate:
+    #         raise ValueError( "{} SR doesn't match target {} SR".format( sample_rate, self.sample_rate) )
+    #     return wav
 
     def _get_text(self, text):
         """format text and add blank"""
@@ -172,45 +200,59 @@ class TextAudioDataset(Dataset):
         return result
 
     def collate_fn(self, batch):
-        """Zero-pads model inputs, audios and targets and pad a batch
+        """Zero-pads model inputs, audios and targets and pad a batch and sort by wav decreasing
         """
-        # convert list of dicts to dict of lists
         B = len(batch)
-        batch = {k: [dic[k] for dic in batch] for k in batch[0]}
-
         # Right zero-pad all one-hot text sequences to max input length
         _, ids_sorted_decreasing = torch.sort(
-            torch.LongTensor([x.size(1) for x in batch["wav"]]), dim=0, descending=True
+            torch.LongTensor([x["wav"].size(1) for x in batch]), dim=0, descending=True
         )
 
-        max_text_len = max([len(x) for x in batch["tokens"]])
-        token_lens = torch.LongTensor(batch["token_len"])
-        token_rel_lens = token_lens / token_lens.max()
-        wav_lens = [w.shape[1] for w in batch["wav"]]
-        wav_lens = torch.LongTensor(wav_lens)
+        max_text_len = max([x["tokens"].size(0) for x in batch])
+        token_lens = torch.LongTensor([x["token_len"] for x in batch])
+        wav_lens = torch.LongTensor([x["wav"].size(1) for x in batch])
         wav_lens_max = torch.max(wav_lens)
-        wav_rel_lens = wav_lens / wav_lens_max
+        spec_feat_len = batch[0]["spec"].size(0) if self.add_spec else 10
+        spec_lens = torch.LongTensor([x["spec"].size(1) for x in batch]) if self.add_spec else torch.LongTensor([10 for x in batch])
+        spec_lens_max = torch.max(spec_lens)
+        mel_feat_len = batch[0]["mel"].size(0) if self.add_mel else 10
+        mel_lens = torch.LongTensor([x["mel"].size(1) for x in batch]) if self.add_mel else torch.LongTensor([10 for x in batch])
+        mel_lens_max = torch.max(mel_lens)
 
         token_padded = torch.LongTensor(B, max_text_len)
         wav_padded = torch.FloatTensor(B, 1, wav_lens_max)
+        spec_padded = torch.FloatTensor(B, spec_feat_len, spec_lens_max)
+        mel_padded = torch.FloatTensor(B, mel_feat_len, mel_lens_max)
+
         token_padded = token_padded.zero_()
         wav_padded = wav_padded.zero_()
+        spec_padded = spec_padded.zero_()
+        mel_padded = mel_padded.zero_()
 
         for i in range(len(ids_sorted_decreasing)):
-            tokens = batch["tokens"][i]
-            token_padded[i, : batch["token_len"][i]] = torch.LongTensor(tokens)
+            item = batch[ids_sorted_decreasing[i]]
 
-            wav = batch["wav"][i]
+            tokens = item["tokens"]
+            token_padded[i, : tokens.size(0)] = torch.LongTensor(tokens)
+            wav = item["wav"]
             wav_padded[i, :, : wav.size(1)] = torch.FloatTensor(wav)
+            if self.add_spec:
+                spec = item["spec"]
+                spec_padded[i, :, :spec.size(1)] = torch.FloatTensor(spec)
+            if self.add_mel:
+                mel = item["mel"]
+                mel_padded[i, :, :mel.size(1)] = torch.FloatTensor(mel)
 
         return {
             "tokens": token_padded, # [B, T]
             "token_lens": token_lens, # [B]
-            "token_rel_lens": token_rel_lens, # [B]
-            "waveform": wav_padded, # [B, 1, T]
+            "waveform": wav_padded, # [B, 1, T_wav]
             "waveform_lens": wav_lens,# [B]
-            "waveform_rel_lens": wav_rel_lens,# [B]
-            "speakers": batch["speaker"],# [B]
-            "audio_files": batch["audio_file"],# [B]
-            "raw_texts": batch["raw_text"]# [B]
+            "spec": spec_padded, #[B, C, T_spec]
+            "spec_lens": spec_lens, # [B]
+            "mel": mel_padded, # [B, C, T_mel]
+            "mel_lens": mel_lens, # [B]
+            "speakers": [x["speaker"] for x in batch],# [B]
+            "audio_files": [x["audio_file"] for x in batch],# [B]
+            "raw_texts": [x["raw_text"] for x in batch] # [B]
         }

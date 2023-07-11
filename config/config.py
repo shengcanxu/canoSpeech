@@ -39,6 +39,8 @@ class TTSDatasetConfig(Coqpit):
 
     num_loader_workers:int = 8
     num_eval_loader_workers:int = 8
+    add_spec:bool = False
+    add_mel:bool = False
 
 @dataclass
 class TextConfig(Coqpit):

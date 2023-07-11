@@ -396,37 +396,37 @@ class VitsTrain(TrainerModel):
         )
         return loader
 
-    def format_batch_on_device(self, batch):
-        """Compute spectrograms on the device. datas are send to GPU before calling this func"""
-        wav = batch["waveform"]
-        audio_config = self.config.audio
-        spec = wav_to_spec(
-            wav=wav,
-            n_fft=audio_config.fft_length,
-            hop_size=audio_config.hop_length,
-            win_size=audio_config.win_length,
-            center=False
-        )
-        batch["spec"] = spec
-
-        mel = spec_to_mel(
-            spec=spec,
-            n_fft=audio_config.fft_length,
-            num_mels=audio_config.num_mels,
-            sample_rate=audio_config.sample_rate,
-            fmin=audio_config.mel_fmin,
-            fmax=audio_config.mel_fmax
-        )
-        batch["mel"] = mel
-
-        # compute spectrogram frame lengths
-        batch["spec_lens"] = (batch["spec"].shape[2] * batch["waveform_rel_lens"]).int()
-        batch["mel_lens"] = (batch["mel"].shape[2] * batch["waveform_rel_lens"]).int()
-
-        # zero the padding frames
-        batch["spec"] = batch["spec"] * sequence_mask(batch["spec_lens"]).unsqueeze(1)
-        batch["mel"] = batch["mel"] * sequence_mask(batch["mel_lens"]).unsqueeze(1)
-        return batch
+    # def format_batch_on_device(self, batch):
+    #     """Compute spectrograms on the device. datas are send to GPU before calling this func"""
+    #     wav = batch["waveform"]
+    #     audio_config = self.config.audio
+    #     spec = wav_to_spec(
+    #         wav=wav,
+    #         n_fft=audio_config.fft_length,
+    #         hop_size=audio_config.hop_length,
+    #         win_size=audio_config.win_length,
+    #         center=False
+    #     )
+    #     batch["spec"] = spec
+    #
+    #     mel = spec_to_mel(
+    #         spec=spec,
+    #         n_fft=audio_config.fft_length,
+    #         num_mels=audio_config.num_mels,
+    #         sample_rate=audio_config.sample_rate,
+    #         fmin=audio_config.mel_fmin,
+    #         fmax=audio_config.mel_fmax
+    #     )
+    #     batch["mel"] = mel
+    #
+    #     # compute spectrogram frame lengths
+    #     batch["spec_lens"] = (batch["spec"].shape[2] * batch["waveform_rel_lens"]).int()
+    #     batch["mel_lens"] = (batch["mel"].shape[2] * batch["waveform_rel_lens"]).int()
+    #
+    #     # zero the padding frames
+    #     batch["spec"] = batch["spec"] * sequence_mask(batch["spec_lens"]).unsqueeze(1)
+    #     batch["mel"] = batch["mel"] * sequence_mask(batch["mel_lens"]).unsqueeze(1)
+    #     return batch
 
     def train_step(self, batch: Dict, criterion: nn.Module, optimizer_idx: int) -> Tuple[Dict, Dict]:
         spec_lens = batch["spec_lens"]
