@@ -74,8 +74,7 @@ class TextAudioDataset(Dataset):
     def __init__(self, samples, config):
         self.samples = samples
         self.use_cache = getattr(config.dataset_config, "use_cache", False)
-        self.add_spec = getattr(config.dataset_config, "add_spec", False)
-        self.add_mel = getattr(config.dataset_config, "add_mel", False)
+        self.melspec_use_GPU = getattr(config.dataset_config, "melspec_use_GPU", False)
 
         self.hop_length = config.audio.hop_length
         self.win_length = config.audio.win_length
@@ -147,13 +146,11 @@ class TextAudioDataset(Dataset):
         wav_t = torch.FloatTensor(wav)
         wav_t = wav_t.unsqueeze(0)
 
-        spec = None
-        if self.add_spec:
+        spec, mel = None, None
+        if not self.melspec_use_GPU:
             spec = self.processor.spectrogram(wav)
+            mel = self.processor.out_linear_to_mel(spec)
             spec = torch.FloatTensor(spec)
-        mel = None
-        if self.add_mel:
-            mel = self.processor.melspectrogram(wav)
             mel = torch.FloatTensor(mel)
 
         #TODO:change code here
@@ -212,11 +209,16 @@ class TextAudioDataset(Dataset):
         token_lens = torch.LongTensor([x["token_len"] for x in batch])
         wav_lens = torch.LongTensor([x["wav"].size(1) for x in batch])
         wav_lens_max = torch.max(wav_lens)
-        spec_feat_len = batch[0]["spec"].size(0) if self.add_spec else 10
-        spec_lens = torch.LongTensor([x["spec"].size(1) for x in batch]) if self.add_spec else torch.LongTensor([10 for x in batch])
+        wav_rel_lens = wav_lens / wav_lens_max
+
+        spec_lens, mel_lens = torch.LongTensor([10 for x in batch]), torch.LongTensor([10 for x in batch])
+        spec_feat_len, mel_feat_len = 10, 10
+        if not self.melspec_use_GPU:  # if mel spec generated using GPU, it will be generate in format_batch_on_device callback
+            spec_feat_len = batch[0]["spec"].size(0)
+            spec_lens = torch.LongTensor([x["spec"].size(1) for x in batch])
+            mel_feat_len = batch[0]["mel"].size(0)
+            mel_lens = torch.LongTensor([x["mel"].size(1) for x in batch])
         spec_lens_max = torch.max(spec_lens)
-        mel_feat_len = batch[0]["mel"].size(0) if self.add_mel else 10
-        mel_lens = torch.LongTensor([x["mel"].size(1) for x in batch]) if self.add_mel else torch.LongTensor([10 for x in batch])
         mel_lens_max = torch.max(mel_lens)
 
         token_padded = torch.LongTensor(B, max_text_len)
@@ -236,10 +238,9 @@ class TextAudioDataset(Dataset):
             token_padded[i, : tokens.size(0)] = torch.LongTensor(tokens)
             wav = item["wav"]
             wav_padded[i, :, : wav.size(1)] = torch.FloatTensor(wav)
-            if self.add_spec:
+            if not self.melspec_use_GPU:
                 spec = item["spec"]
                 spec_padded[i, :, :spec.size(1)] = torch.FloatTensor(spec)
-            if self.add_mel:
                 mel = item["mel"]
                 mel_padded[i, :, :mel.size(1)] = torch.FloatTensor(mel)
 
@@ -248,6 +249,7 @@ class TextAudioDataset(Dataset):
             "token_lens": token_lens, # [B]
             "waveform": wav_padded, # [B, 1, T_wav]
             "waveform_lens": wav_lens,# [B]
+            "waveform_rel_lens": wav_rel_lens, #[B], wave len in percentage
             "spec": spec_padded, #[B, C, T_spec]
             "spec_lens": spec_lens, # [B]
             "mel": mel_padded, # [B, C, T_mel]
