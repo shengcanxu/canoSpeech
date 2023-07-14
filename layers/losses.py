@@ -49,8 +49,11 @@ class VitsGeneratorLoss(nn.Module):
         logs_p = logs_p.float()
         z_mask = z_mask.float()
 
-        # kl_loss 的介绍在视频 https://www.bilibili.com/video/BV1VG411h75N/?spm_id_from=333.788&vd_source=d38c9d5cf896f215d746bb79474d6606 的 1:38:43 开始处
-        # 对于kl_loss 通过mean 和standard deviation计算的方法来计算两个高斯分布的KL散度， 详细解释看：https://zhuanlan.zhihu.com/p/345095899 或者 https://stats.stackexchange.com/questions/7440/kl-divergence-between-two-univariate-gaussians
+        # kl_loss 的介绍在视频 https://www.bilibili.com/video/BV1VG411h75N/?spm_id_from=333.788&vd_source=d38c9d5cf896f215d746bb79474d6606
+        # 的 1:38:43 开始处
+        # 对于kl_loss 通过mean 和standard deviation计算的方法来计算两个高斯分布的KL散度， 详细解释看：
+        # https://zhuanlan.zhihu.com/p/345095899
+        # 或者 https://stats.stackexchange.com/questions/7440/kl-divergence-between-two-univariate-gaussians
         kl = logs_p - logs_q - 0.5
         kl += 0.5 * ((z_p - m_p) ** 2) * torch.exp(-2.0 * logs_p)
         kl = torch.sum(kl * z_mask)

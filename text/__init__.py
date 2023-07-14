@@ -8,35 +8,35 @@ _symbol_to_id = {s: i for i, s in enumerate(symbols)}
 _id_to_symbol = {i: s for i, s in enumerate(symbols)}
 
 
-def text_to_sequence(text, cleaner_names):
-    """Converts a string of text to a sequence of IDs corresponding to the symbols in the text.
+def text_to_tokens(text, cleaner_names=["english_cleaners2"]):
+    """Converts a string of text to a tokens of IDs corresponding to the symbols in the text.
     Args:
-      text: string to convert to a sequence
+      text: string to convert to a tokens
       cleaner_names: names of the cleaner functions to run the text through
     Returns:
       List of integers corresponding to the symbols in the text
     """
-    sequence = []
+    tokens = []
 
     clean_text = _clean_text(text, cleaner_names)
     for symbol in clean_text:
         symbol_id = _symbol_to_id[symbol]
-        sequence += [symbol_id]
-    return sequence
+        tokens += [symbol_id]
+    return tokens
 
 
-def cleaned_text_to_sequence(cleaned_text):
-    """Converts a string of text to a sequence of IDs corresponding to the symbols in the text.
+def cleaned_text_to_tokens(cleaned_text):
+    """Converts a string of text to a tokens of IDs corresponding to the symbols in the text.
     Args:
-      text: string to convert to a sequence
+      text: string to convert to a tokens
     Returns:
       List of integers corresponding to the symbols in the text
     """
-    sequence = [_symbol_to_id[symbol] for symbol in cleaned_text]
-    return sequence
+    tokens = [_symbol_to_id[symbol] for symbol in cleaned_text]
+    return tokens
 
 
-def sequence_to_text(sequence):
+def tokens_to_text(sequence):
     """Converts a sequence of IDs back to a string"""
     result = ""
     for symbol_id in sequence:

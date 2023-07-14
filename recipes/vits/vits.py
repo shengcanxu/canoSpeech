@@ -18,13 +18,15 @@ from dataset.dataset import TextAudioDataset
 from dataset.sampler import DistributedBucketSampler
 from language.languages import LanguageManager
 from layers.discriminator import VitsDiscriminator
-from layers.duration_predictor import DurationPredictor
+from layers.duration_predictor import DurationPredictor, generate_path, StochasticDurationPredictor
 from layers.flow import ResidualCouplingBlocks
 from layers.generator import HifiganGenerator
 from layers.losses import VitsDiscriminatorLoss, VitsGeneratorLoss
 from layers.encoder import TextEncoder, AudioEncoder
 from monotonic_align.maximum_path import maximum_path
 from speaker.speakers import SpeakerManager
+from text import text_to_tokens
+from util.audio_processor import AudioProcessor
 from util.helper import sequence_mask, segment, rand_segments
 from util.mel_processing import wav_to_spec, spec_to_mel, wav_to_mel
 
@@ -74,14 +76,24 @@ class VitsModel(nn.Module):
             cond_channels=self.embedded_speaker_dim,
         )
 
-        self.duration_predictor = DurationPredictor(
-            in_channels=self.model_config.hidden_channels,
-            hidden_channels=256,
-            kernel_size=3,
-            dropout_p=self.model_config.duration_predictor.dropout_p_duration_predictor,
-            cond_channels=self.embedded_speaker_dim,
-            language_emb_dim=self.embedded_language_dim,
-        )
+        if self.model_config.duration_predictor.use_stochastic_dp:
+            self.duration_predictor = StochasticDurationPredictor(
+                in_channels=self.model_config.hidden_channels,
+                hidden_channels=192,
+                kernel_size=3,
+                dropout_p=self.model_config.duration_predictor.dropout_p_duration_predictor,
+                cond_channels=self.embedded_speaker_dim,
+                language_emb_dim=self.embedded_language_dim,
+            )
+        else:
+            self.duration_predictor = DurationPredictor(
+                in_channels=self.model_config.hidden_channels,
+                hidden_channels=256,
+                kernel_size=3,
+                dropout_p=self.model_config.duration_predictor.dropout_p_duration_predictor,
+                cond_channels=self.embedded_speaker_dim,
+                language_emb_dim=self.embedded_language_dim,
+            )
 
         self.waveform_decoder = HifiganGenerator(
             in_channels=self.model_config.hidden_channels,
@@ -219,7 +231,7 @@ class VitsModel(nn.Module):
 
         x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
 
-        # posterior encoder
+        # audio encoder, encode audio to embedding layer z's dimension
         z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=g)
 
         # flow layers
@@ -228,7 +240,7 @@ class VitsModel(nn.Module):
         # duration predictor
         outputs, attn = self.forward_mas(outputs, z_p, m_p, logs_p, x, x_mask, y_mask, g=g, lang_emb=lang_emb)
 
-        # expand prior
+        # expand text token_size to audio token_size
         m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
         logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])
 
@@ -292,14 +304,25 @@ class VitsModel(nn.Module):
 
         # duration predictor
         attn_durations = attn.sum(3)
-        attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
-        log_durations = self.duration_predictor(
-            x.detach(),
-            x_mask,
-            g=g.detach() if g is not None else g,
-            lang_emb=lang_emb.detach() if lang_emb is not None else lang_emb,
-        )
-        loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
+        if self.model_config.duration_predictor.use_stochastic_dp:
+            loss_duration = self.duration_predictor(
+                x.detach(),
+                x_mask,
+                attn_durations,
+                g=g.detach() if g is not None else g,
+                lang_emb=lang_emb.detach() if lang_emb is not None else lang_emb,
+            )
+            loss_duration = loss_duration / torch.sum(x_mask)
+        else:
+            attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
+            log_durations = self.duration_predictor(
+                x.detach(),
+                x_mask,
+                g=g.detach() if g is not None else g,
+                lang_emb=lang_emb.detach() if lang_emb is not None else lang_emb,
+            )
+            loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
+
         outputs["loss_duration"] = loss_duration
         return outputs, attn
 
@@ -338,6 +361,67 @@ class VitsModel(nn.Module):
             if lid.ndim == 0:
                 lid = lid.unsqueeze_(0)
         return sid, g, lid
+
+    @torch.no_grad()
+    def infer(
+        self,
+        x,  # [B, T_seq]
+        x_lengths = None,  # [B]
+        speaker_ids = None,  # [B]
+        language_ids = None  # [B]
+    ):
+        if x_lengths is None:
+            x_lengths = torch.LongTensor([len(a) for a in x])
+        sid, g, lid = speaker_ids, None, language_ids
+
+        # speaker embedding
+        if self.model_config.use_speaker_embedding and sid is not None:
+            g = self.emb_g(sid).unsqueeze(-1)
+
+        # language embedding
+        lang_emb = None
+        if self.model_config.use_language_embedding and lid is not None:
+            lang_emb = self.emb_l(lid).unsqueeze(-1)
+
+        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
+
+        if self.model_config.duration_predictor.use_stochastic_dp:
+            logw = self.duration_predictor(
+                x=x,
+                x_mask=x_mask,
+                g=g if g is not None else g,
+                reverse=True,
+                noise_scale=self.model_config.inference_noise_scale_dp,
+                lang_emb=lang_emb,
+            )
+        else:
+            logw = self.duration_predictor(
+                x=x,
+                x_mask=x_mask,
+                g=g if g is not None else g,
+                lang_emb=lang_emb
+            )
+        w = torch.exp(logw) * x_mask * self.model_config.length_scale
+
+        w_ceil = torch.ceil(w)
+        y_lengths = torch.clamp_min(torch.sum(w_ceil, [1, 2]), 1).long()
+        y_mask = sequence_mask(y_lengths, None).to(x_mask.dtype).unsqueeze(1)  # [B, 1, T_dec]
+
+        attn_mask = x_mask * y_mask.transpose(1, 2)  # [B, 1, T_enc] * [B, T_dec, 1]
+        attn = generate_path(w_ceil.squeeze(1), attn_mask.squeeze(1).transpose(1, 2))
+
+        m_p = torch.matmul(attn.transpose(1, 2), m_p.transpose(1, 2)).transpose(1, 2)
+        logs_p = torch.matmul(attn.transpose(1, 2), logs_p.transpose(1, 2)).transpose(1, 2)
+
+        z_p = m_p + torch.randn_like(m_p) * torch.exp(logs_p) * self.model_config.inference_noise_scale
+        z = self.flow(z_p, y_mask, g=g, reverse=True)
+
+        # upsampling if needed
+        z, _, _, y_mask = self.upsampling_z(z, y_lengths=y_lengths, y_mask=y_mask)
+
+        z = (z * y_mask)[:, :, : self.model_config.max_inference_len]
+        wav = self.waveform_decoder(z, g=g)
+        return wav
 
 
 class VitsTrain(TrainerModel):
@@ -563,6 +647,16 @@ class VitsTrain(TrainerModel):
         scheduler_G = get_scheduler("ExponentialLR", lr_scheduler_params, optimizer[1])
         return [scheduler_D, scheduler_G]
 
-    def forward(self, input: torch.Tensor, *args, aux_input={}, **kwargs) -> Dict:
+    def forward(self, input: torch.Tensor) -> Dict:
         print("nothing to do! doing the real train code in train_step. ")
         return input
+
+    def infer(self, text:str):
+        tokens = text_to_tokens(text)
+        tokens = torch.LongTensor(tokens).unsqueeze(dim=0)
+        wav = self.generator.infer(tokens)
+        return wav
+
+    # def save_wav(wav, path, rate):
+    #     wav *= 32767 / max(0.01, np.max(np.abs(wav))) * 0.6
+    #     wavfile.write(path, rate, wav.astype(np.int16))

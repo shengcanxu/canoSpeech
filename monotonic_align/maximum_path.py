@@ -14,7 +14,8 @@ def maximum_path(value, mask):
         return maximum_path_cython(value, mask)
     return maximum_path_numpy(value, mask)
 
-
+# "monotonic alignment search" algorithm introduced in paper:
+# Glow-TTS: A Generative Flow for Text-to-Speech via Monotonic Alignment Search
 def maximum_path_cython(value, mask):
     """Cython optimised version.
     Shapes:

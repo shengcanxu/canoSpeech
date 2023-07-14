@@ -40,6 +40,7 @@ class TTSDatasetConfig(Coqpit):
     num_loader_workers:int = 8
     num_eval_loader_workers:int = 8
     melspec_use_GPU:bool = False
+    add_pitch:bool = False
 
 @dataclass
 class TextConfig(Coqpit):
@@ -47,17 +48,19 @@ class TextConfig(Coqpit):
     max_text_len:int = 190
     add_blank:bool = True
     cleaned_text:bool = True
-    text_cleaners:List[str] = None
+    text_cleaners:List[str] = field(default_factory=lambda: ["english_cleaners2"])
 
 @dataclass
 class AudioConfig(Coqpit):
-    mel_fmin: float = 0
+    mel_fmin: float = 0.0
     mel_fmax = None
     hop_length:int = 256
     win_length:int = 1024
     sample_rate:int = 16000
     fft_length:int = 1024
     num_mels:int = 80
+    pitch_fmax:float = 640.0
+    pitch_fmin:float = 1.0
 
 @dataclass
 class TextEncoderConfig(Coqpit):
@@ -82,6 +85,7 @@ class FlowConfig(Coqpit):
 
 @dataclass
 class DurationPredictorConfig(Coqpit):
+    use_stochastic_dp:bool = True
     dropout_p_duration_predictor:float = 0.5
 
 @dataclass
@@ -115,6 +119,10 @@ class VitsModelConfig(Coqpit):
     speaker_embedding_channels:int = 256
     use_speaker_embedding:bool = False
     use_speaker_encoder_as_loss:bool = False
+    inference_noise_scale_dp: float = 1.0
+    inference_noise_scale:float = 0.667
+    length_scale:float = 1.0
+    max_inference_len:int = None
 
     text_encoder: TextEncoderConfig = field(default_factory=lambda: TextEncoderConfig())
     audio_encoder: AudioEncoderConfig = field(default_factory=lambda: AudioEncoderConfig())

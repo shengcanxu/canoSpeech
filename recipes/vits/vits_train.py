@@ -37,12 +37,12 @@ def main():
         batch_size=BATCH_SIZE,
         eval_batch_size=BATCH_SIZE,
     )
-    config.load_json("./config/vits_train.json")
+    config.load_json("./config/vits.json")
     data_config = config.dataset_config
     # print(config)
 
-    train_datas = get_metas_from_filelist(data_config.meta_file_train)
-    test_datas = get_metas_from_filelist(data_config.meta_file_val)
+    train_samples = get_metas_from_filelist(data_config.meta_file_train)
+    test_samples = get_metas_from_filelist(data_config.meta_file_val)
 
     # init the model
     train_model = VitsTrain(config=config)
@@ -53,8 +53,8 @@ def main():
         config,
         output_path=OUT_PATH,
         model=train_model,
-        train_samples=train_datas,
-        eval_samples=test_datas,
+        train_samples=train_samples,
+        eval_samples=test_samples,
     )
     trainer.fit()
 

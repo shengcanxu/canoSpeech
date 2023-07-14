@@ -17,11 +17,11 @@ def load_file_metas(config):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="./config/vits_train.json")
+    parser.add_argument("--config", type=str, default="./config/vits.json")
     args = parser.parse_args()
 
     train_config = VitsConfig()
-    train_config.load_json("./config/vits_train.json")
+    train_config.load_json("./config/vits.json")
     config = train_config.dataset_config
     text_config = train_config.text
 
@@ -40,9 +40,9 @@ if __name__ == "__main__":
         "filelists/%s_test_filelist.txt" % config.dataset_name
     ]
     with open(filelists[0], "w", encoding="utf-8") as f:
-        f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["text"].strip() + "\n" for x in train_datas])
+        f.writelines([x["audio"] + "|" + x["speaker"] + "|en|" + x["text"].strip() + "\n" for x in train_datas])
     with open(filelists[1], "w", encoding="utf-8") as f:
-        f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["text"].strip() + "\n" for x in test_datas])
+        f.writelines([x["audio"] + "|" + x["speaker"] + "|en|" + x["text"].strip() + "\n" for x in test_datas])
 
     # clean text and save to filelist file
     for filelist in filelists:

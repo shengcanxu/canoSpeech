@@ -1,6 +1,6 @@
+import logging
 import os
-from typing import Any, Callable, Dict, Union
-import fsspec
+
 import numpy as np
 import torch
 
@@ -129,3 +129,25 @@ class StandardScaler:
         X *= self.scale_
         X += self.mean_
         return X
+
+def load_checkpoint(path:str, model:torch.nn.Module):
+    assert os.path.isfile(path)
+    print("loading checkpoint {}".format(path))
+    checkpoint_dict = torch.load(path, map_location="cpu")
+    saved_state_dict = checkpoint_dict["model"]
+    if hasattr(model, "module"):
+        state_dict = model.module.state_dict()
+    else:
+        state_dict = model.state_dict()
+    new_state_dict = {}
+    for k, v in state_dict.items():
+        try:
+            new_state_dict[k] = saved_state_dict[k]
+        except:
+            print("%s is not in the checkpoint" % k)
+            new_state_dict[k] = v
+    if hasattr(model, "module"):
+        model.module.load_state_dict(new_state_dict)
+    else:
+        model.load_state_dict(new_state_dict)
+    return model

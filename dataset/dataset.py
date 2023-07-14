@@ -1,10 +1,12 @@
 import os
 import random
+import time
+
 import numpy as np
 from collections import Counter
 import torchaudio
 import pickle
-from text import cleaned_text_to_sequence, _clean_text
+from text import cleaned_text_to_tokens, _clean_text
 import torch
 from torch.utils.data import Dataset
 
@@ -55,13 +57,14 @@ def split_dataset_metas(items, eval_split_max_size=None, eval_split_size=0.01):
 
 
 def get_metas_from_filelist(filelist:str):
-    """get meta from filelist, filelist is generated from preprocess.py"""
+    """get meta from filelist, filelist is generated from gen_filelist.py"""
     metas = []
     with open(filelist, encoding="utf-8") as f:
         for line in f:
             items = line.strip().split("|")
             metas.append({
-                "text": items[2],
+                "text": items[3],
+                "language": items[2],
                 "speaker": items[1],
                 "audio": items[0],
             })
@@ -75,6 +78,7 @@ class TextAudioDataset(Dataset):
         self.samples = samples
         self.use_cache = getattr(config.dataset_config, "use_cache", False)
         self.melspec_use_GPU = getattr(config.dataset_config, "melspec_use_GPU", False)
+        self.add_pitch = getattr(config.dataset_config, "add_pitch", False)
 
         self.hop_length = config.audio.hop_length
         self.win_length = config.audio.win_length
@@ -88,6 +92,8 @@ class TextAudioDataset(Dataset):
             mel_fmax=config.audio.mel_fmax,
             fft_size=config.audio.fft_length,
             num_mels=config.audio.num_mels,
+            pitch_fmax=config.audio.pitch_fmax,
+            pitch_fmin=config.audio.pitch_fmin,
             verbose=False
         )
 
@@ -153,9 +159,13 @@ class TextAudioDataset(Dataset):
             spec = torch.FloatTensor(spec)
             mel = torch.FloatTensor(mel)
 
-        #TODO:change code here
-        duration = torch.zeros_like(tokens)
-        f0 = torch.zeros_like(tokens)
+        pitch = None
+        if self.add_pitch:
+            start_time = time.time()
+            pitch = self.processor.compute_f0(wav)  # very slow
+            pitch = torch.FloatTensor(pitch)
+            print("compute f0 time: ", time.time() - start_time)
+
         return {
             "raw_text": sample["text"],
             "phoneme": phoneme,
@@ -166,8 +176,7 @@ class TextAudioDataset(Dataset):
             "mel": mel,
             "audio_file": sample["audio"],
             "speaker": sample["speaker"],
-            "duration": duration,
-            "f0": f0
+            "pitch": pitch
         }
 
     # def _get_audio(self, filename):
@@ -181,10 +190,10 @@ class TextAudioDataset(Dataset):
         """format text and add blank"""
         if self.cleaned_text:
             cleaned_text = text
-            tokens = cleaned_text_to_sequence(cleaned_text)
+            tokens = cleaned_text_to_tokens(cleaned_text)
         else:
             cleaned_text = _clean_text(text, self.text_cleaners)
-            tokens = cleaned_text_to_sequence(cleaned_text)
+            tokens = cleaned_text_to_tokens(cleaned_text)
         if self.add_blank:
             tokens = self._intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens)

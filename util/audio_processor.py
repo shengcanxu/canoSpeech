@@ -634,7 +634,7 @@ class AudioProcessor(object):
         Args:
             filename (str): Path to the wav file.
         """
-        return librosa.get_duration(filename=filename)
+        return librosa.get_duration(path=filename)
 
     @staticmethod
     def mulaw_encode(wav: np.ndarray, qc: int) -> np.ndarray:

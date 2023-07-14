@@ -7,11 +7,18 @@ text to speech, a repro for producing human natural speech
 # usefull script
 1. re-sample audio file: dataset/resample.py
 2. tokenize text and change to phonone: preprocess.py
+3. generate pitch from audio using preprocess.gen_pitch.py
 
 # run scripts
 all run scripts are in recipes folder. each model one folder
 
 # reference:
+#- pitch(f0)
+can be generated using two methods
+1. using pysptk.sptk.rapt from pysptk project
+2. using librosa.pyin from librosa project. util.audio_process.py has the function of compute_f0() for it.
+
+#- projects
 1. https://github.com/yangdongchao/AcademiCodec 
 2. https://github.com/CODEJIN/NaturalSpeech2 
 3. https://github.com/heatz123/naturalspeech 
