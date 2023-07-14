@@ -10,7 +10,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     config = VitsConfig()
-    config.load_json("../config/vits.json")
+    config.load_json(args.config)
     dataset_config = config.dataset_config
 
     processor = AudioProcessor(

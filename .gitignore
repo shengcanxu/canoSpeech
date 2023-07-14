@@ -6,3 +6,4 @@ nohup.out
 .idea
 output
 monotonic_align.build
+*.pth
