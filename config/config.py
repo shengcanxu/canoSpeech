@@ -57,10 +57,12 @@ class AudioConfig(Coqpit):
     hop_length:int = 256
     win_length:int = 1024
     sample_rate:int = 16000
-    fft_length:int = 1024
+    fft_size:int = 1024
     num_mels:int = 80
     pitch_fmax:float = 640.0
     pitch_fmin:float = 1.0
+
+    preemphasis: float = 0.0
 
 @dataclass
 class TextEncoderConfig(Coqpit):

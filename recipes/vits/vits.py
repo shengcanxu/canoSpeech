@@ -32,14 +32,20 @@ from util.mel_processing import wav_to_spec, spec_to_mel, wav_to_mel
 
 
 class VitsModel(nn.Module):
-    def __init__(self, config:VitsConfig, speaker_manager: SpeakerManager = None, language_manager: LanguageManager = None, ):
+    def __init__(self, config:VitsConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None, ):
         super().__init__()
         self.config = config
         self.model_config = config.model
-        self.speaker_manager = speaker_manager
+        self.speaker_embed = speaker_embed
         self.language_manager = language_manager
 
-        self.init_multispeaker(config)
+        # init multi-speaker, speaker_embedding is used when the speaker_embed is not provided
+        self.num_speakers = self.model_config.num_speakers
+        self.audio_transform = None
+        self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
+        if self.num_speakers > 0:
+            self.speaker_embedding = nn.Embedding(self.num_speakers, self.embedded_speaker_dim)
+
         self.init_multilingual(config)
         self.init_upsampling()
 
@@ -110,53 +116,6 @@ class VitsModel(nn.Module):
             conv_post_weight_norm=False,
             conv_post_bias=False,
         )
-
-    def _init_speaker_embedding(self):
-        if self.num_speakers > 0:
-            print(" > initialization of speaker-embedding layers.")
-            self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
-            self.speaker_embedding = nn.Embedding(self.num_speakers, self.embedded_speaker_dim)
-
-    def init_multispeaker(self, config: Coqpit):
-        """Initialize multi-speaker modules of a model. A model can be trained either with a speaker embedding layer
-        or with external `d_vectors` computed from a speaker encoder model.
-        You must provide a `speaker_manager` at initialization to set up the multi-speaker modules.
-        Args:
-            config (Coqpit): Model configuration.
-            data (List, optional): Dataset items to infer number of speakers. Defaults to None.
-        """
-        self.embedded_speaker_dim = 0
-        self.num_speakers = self.model_config.num_speakers
-        self.audio_transform = None
-
-        if self.speaker_manager:
-            self.num_speakers = self.speaker_manager.num_speakers
-
-        if self.model_config.use_speaker_embedding:
-            self._init_speaker_embedding()
-
-        # if self.model_config.use_d_vector_file:
-        #     self._init_d_vector()
-
-        # if self.model_config.use_speaker_encoder_as_loss:
-            # if self.speaker_manager.encoder is None and (
-            #     not self.model_config.speaker_encoder_model_path or not self.model_config.speaker_encoder_config_path
-            # ):
-            #     raise RuntimeError(
-            #         " [!] To use the speaker consistency loss (SCL) you need to specify speaker_encoder_model_path and speaker_encoder_config_path !!"
-            #     )
-            #
-            # self.speaker_manager.encoder.eval()
-            # print(" > External Speaker Encoder Loaded !!")
-            #
-            # if (
-            #     hasattr(self.speaker_manager.encoder, "audio_config")
-            #     and self.config.audio.sample_rate != self.speaker_manager.encoder.audio_config["sample_rate"]
-            # ):
-            #     self.audio_transform = torchaudio.transforms.Resample(
-            #         orig_freq=self.config.audio.sample_rate,
-            #         new_freq=self.speaker_manager.encoder.audio_config["sample_rate"],
-            #     )
 
     def init_multilingual(self, config: Coqpit):
         """Initialize multilingual modules of a model.
@@ -259,20 +218,7 @@ class VitsModel(nn.Module):
             pad_short=True,
         )
 
-        if self.model_config.use_speaker_encoder_as_loss and self.speaker_manager.encoder is not None:
-            # concate generated and GT waveforms
-            wavs_batch = torch.cat((wav_seg, o), dim=0)
-
-            # resample audio to speaker encoder sample_rate
-            if self.audio_transform is not None:
-                wavs_batch = self.audio_transform(wavs_batch)
-
-            pred_embs = self.speaker_manager.encoder.forward(wavs_batch, l2_norm=True)
-
-            # split generated and GT speaker embeddings
-            gt_spk_emb, syn_spk_emb = torch.chunk(pred_embs, 2, dim=0)
-        else:
-            gt_spk_emb, syn_spk_emb = None, None
+        gt_spk_emb, syn_spk_emb = None, None
 
         outputs.update({
             "model_outputs": o,
@@ -425,14 +371,14 @@ class VitsModel(nn.Module):
 
 
 class VitsTrain(TrainerModel):
-    def __init__(self, config:VitsConfig, speaker_manager: SpeakerManager = None, language_manager: LanguageManager = None, ):
+    def __init__(self, config:VitsConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None, ):
         super().__init__()
         self.config = config
         self.model_config = config.model
 
         self.generator = VitsModel(
             config=config,
-            speaker_manager=speaker_manager,
+            speaker_embed=speaker_embed,
             language_manager=language_manager
         )
 
@@ -487,7 +433,7 @@ class VitsTrain(TrainerModel):
             audio_config = self.config.audio
             spec = wav_to_spec(
                 wav=wav,
-                n_fft=audio_config.fft_length,
+                n_fft=audio_config.fft_size,
                 hop_size=audio_config.hop_length,
                 win_size=audio_config.win_length,
                 center=False
@@ -496,7 +442,7 @@ class VitsTrain(TrainerModel):
 
             mel = spec_to_mel(
                 spec=spec,
-                n_fft=audio_config.fft_length,
+                n_fft=audio_config.fft_size,
                 num_mels=audio_config.num_mels,
                 sample_rate=audio_config.sample_rate,
                 fmin=audio_config.mel_fmin,
@@ -566,7 +512,7 @@ class VitsTrain(TrainerModel):
                 )
                 mel_slice_hat = wav_to_mel(
                     y=self.model_outputs_cache["model_outputs"].float(),
-                    n_fft=self.config.audio.fft_length,
+                    n_fft=self.config.audio.fft_size,
                     sample_rate=self.config.audio.sample_rate,
                     num_mels=self.config.audio.num_mels,
                     hop_length=self.config.audio.hop_length,

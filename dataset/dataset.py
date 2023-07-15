@@ -90,7 +90,7 @@ class TextAudioDataset(Dataset):
             sample_rate=config.audio.sample_rate,
             mel_fmin=config.audio.mel_fmin,
             mel_fmax=config.audio.mel_fmax,
-            fft_size=config.audio.fft_length,
+            fft_size=config.audio.fft_size,
             num_mels=config.audio.num_mels,
             pitch_fmax=config.audio.pitch_fmax,
             pitch_fmin=config.audio.pitch_fmin,

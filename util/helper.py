@@ -1,16 +1,14 @@
-import logging
+import json
 import os
-
+import fsspec
 import numpy as np
 import torch
+from typing import Any, Union, Callable
+from pathlib import Path
+from typing import Dict
+import sys
 
 # from https://gist.github.com/jihunchoi/f1434a77df9db1bb337417854b398df1
-from coqpit import Coqpit
-
-from speaker.lstm_speaker import LSTMSpeakerEncoder
-from speaker.resnet_speaker import ResNetSpeakerEncoder
-
-
 def sequence_mask(sequence_length, max_len=None):
     """Create a sequence mask for filtering padding in a sequence tensor.
     Args:
@@ -83,25 +81,6 @@ def rand_segments(x: torch.tensor, x_lengths: torch.tensor = None, segment_size=
     ret = segment(x, segment_indices, segment_size, pad_short=pad_short)
     return ret, segment_indices
 
-def setup_encoder_model(config: Coqpit):
-    if config.model_params["model_name"].lower() == "lstm":
-        model = LSTMSpeakerEncoder(
-            config.model_params["input_dim"],
-            config.model_params["proj_dim"],
-            config.model_params["lstm_dim"],
-            config.model_params["num_lstm_layers"],
-            use_torch_spec=config.model_params.get("use_torch_spec", False),
-            audio_config=config.audio,
-        )
-    elif config.model_params["model_name"].lower() == "resnet":
-        model = ResNetSpeakerEncoder(
-            input_dim=config.model_params["input_dim"],
-            proj_dim=config.model_params["proj_dim"],
-            log_input=config.model_params.get("log_input", False),
-            use_torch_spec=config.model_params.get("use_torch_spec", False),
-            audio_config=config.audio,
-        )
-    return model
 
 class StandardScaler:
     """StandardScaler for mean-scale normalization with the given mean and scale values."""
@@ -151,3 +130,57 @@ def load_checkpoint(path:str, model:torch.nn.Module):
     else:
         model.load_state_dict(new_state_dict)
     return model
+
+def save_file(obj: Any, path: str):
+    if path.endswith(".json"):
+        with fsspec.open(path, "w") as f:
+            json.dump(obj, f, indent=4)
+    elif path.endswith(".pth"):
+        with fsspec.open(path, "wb") as f:
+            torch.save(obj, f)
+    else:
+        raise ValueError("Unsupported file type")
+
+def get_user_data_dir(appname):
+    if sys.platform == "win32":
+        import winreg
+
+        key = winreg.OpenKey(
+            winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders"
+        )
+        dir_, _ = winreg.QueryValueEx(key, "Local AppData")
+        ans = Path(dir_).resolve(strict=False)
+    elif sys.platform == "darwin":
+        ans = Path("~/Library/Application Support/").expanduser()
+    else:
+        ans = Path.home().joinpath(".local/share")
+    return ans.joinpath(appname)
+
+def load_fsspec(
+    path: str,
+    map_location: Union[str, Callable, torch.device, Dict[Union[str, torch.device], Union[str, torch.device]]] = None,
+    cache: bool = True,
+    **kwargs,
+) -> Any:
+    """Like torch.load but can load from other locations (e.g. s3:// , gs://).
+
+    Args:
+        path: Any path or url supported by fsspec.
+        map_location: torch.device or str.
+        cache: If True, cache a remote file locally for subsequent calls. It is cached under `get_user_data_dir()/tts_cache`. Defaults to True.
+        **kwargs: Keyword arguments forwarded to torch.load.
+
+    Returns:
+        Object stored in path.
+    """
+    is_local = os.path.isdir(path) or os.path.isfile(path)
+    if cache and not is_local:
+        with fsspec.open(
+            f"filecache::{path}",
+            filecache={"cache_storage": str(get_user_data_dir("tts_cache"))},
+            mode="rb",
+        ) as f:
+            return torch.load(f, map_location=map_location, **kwargs)
+    else:
+        with fsspec.open(path, "rb") as f:
+            return torch.load(f, map_location=map_location, **kwargs)

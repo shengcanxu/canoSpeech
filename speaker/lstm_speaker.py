@@ -1,6 +1,8 @@
 import torch
 from torch import nn
 
+from speaker.base_encoder import BaseEncoder
+
 
 class LSTMWithProjection(nn.Module):
     def __init__(self, input_size, hidden_size, proj_size):
@@ -29,7 +31,7 @@ class LSTMWithoutProjection(nn.Module):
         return self.relu(self.linear(hidden[-1]))
 
 
-class LSTMSpeakerEncoder(object):
+class LSTMSpeakerEncoder(BaseEncoder):
     def __init__(
         self,
         input_dim,

@@ -4,8 +4,8 @@
 
     "dataset_config": {
         "dataset_name":"vctk",
-        "meta_file_train":"D:/project/canoSpeech/filelists/vctk_train_filelist.txt.cleaned",
-        "meta_file_val":"D:/project/canoSpeech/filelists/vctk_test_filelist.txt.cleaned",
+        "meta_file_train":"D:/project/canoSpeech/filelists/vctk_train_filelist.txt",
+        "meta_file_val":"D:/project/canoSpeech/filelists/vctk_test_filelist.txt",
         "path":"D:\\dataset\\VCTK",
         "use_cache": false,
         "language":"en",
@@ -19,7 +19,7 @@
         "min_text_len": 1,
         "max_text_len": 190,
         "add_blank": true,
-        "cleaned_text": true,
+        "cleaned_text": false,
         "text_cleaners":["english_cleaners2"]
     },
     "audio": {
@@ -28,7 +28,7 @@
         "hop_length": 256,
         "win_length": 1024,
         "sample_rate": 16000,
-        "fft_length": 1024,
+        "fft_size": 1024,
         "num_mels": 80,
         "pitch_fmax": 640.0,
         "pitch_fmin": 1.0

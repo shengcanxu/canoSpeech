@@ -1,6 +1,9 @@
 import torch
 from torch import nn
 
+from speaker.base_encoder import BaseEncoder
+
+
 class SELayer(nn.Module):
     def __init__(self, channel, reduction=8):
         super(SELayer, self).__init__()
@@ -52,7 +55,7 @@ class SEBasicBlock(nn.Module):
         return out
 
 
-class ResNetSpeakerEncoder(object):
+class ResNetSpeakerEncoder(BaseEncoder):
     """Implementation of the model H/ASP without batch normalization in speaker embedding. This model was proposed in: https://arxiv.org/abs/2009.14153
     Adapted from: https://github.com/clovaai/voxceleb_trainer
     """
