@@ -24,9 +24,7 @@ from layers.generator import HifiganGenerator
 from layers.losses import VitsDiscriminatorLoss, VitsGeneratorLoss
 from layers.encoder import TextEncoder, AudioEncoder
 from monotonic_align.maximum_path import maximum_path
-from speaker.speakers import SpeakerManager
 from text import text_to_tokens
-from util.audio_processor import AudioProcessor
 from util.helper import sequence_mask, segment, rand_segments
 from util.mel_processing import wav_to_spec, spec_to_mel, wav_to_mel
 
@@ -41,15 +39,16 @@ class VitsModel(nn.Module):
 
         # init multi-speaker, speaker_embedding is used when the speaker_embed is not provided
         self.num_speakers = self.model_config.num_speakers
+        self.spec_segment_size = self.model_config.spec_segment_size
         self.audio_transform = None
-        self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
+        if self.model_config.use_speaker_embedding:
+            self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
+        else:
+            self.embedded_speaker_dim = 0
         if self.num_speakers > 0:
             self.speaker_embedding = nn.Embedding(self.num_speakers, self.embedded_speaker_dim)
 
         self.init_multilingual(config)
-        self.init_upsampling()
-
-        self.spec_segment_size = self.model_config.spec_segment_size
 
         self.text_encoder = TextEncoder(
             n_vocab=self.model_config.text_encoder.num_chars,
@@ -62,7 +61,6 @@ class VitsModel(nn.Module):
             dropout_p=self.model_config.text_encoder.dropout_p_text_encoder,
             language_emb_dim=self.embedded_language_dim,
         )
-
         self.audio_encoder = AudioEncoder(
             in_channels=self.model_config.out_channels,
             out_channels=self.model_config.hidden_channels,
@@ -72,7 +70,6 @@ class VitsModel(nn.Module):
             num_layers=self.model_config.audio_encoder.num_layers_audio_encoder,
             cond_channels=self.embedded_speaker_dim,
         )
-
         self.flow = ResidualCouplingBlocks(
             channels=self.model_config.hidden_channels,
             hidden_channels=self.model_config.hidden_channels,
@@ -81,7 +78,6 @@ class VitsModel(nn.Module):
             num_layers=self.model_config.flow.num_layers_flow,
             cond_channels=self.embedded_speaker_dim,
         )
-
         if self.model_config.duration_predictor.use_stochastic_dp:
             self.duration_predictor = StochasticDurationPredictor(
                 in_channels=self.model_config.hidden_channels,
@@ -100,7 +96,6 @@ class VitsModel(nn.Module):
                 cond_channels=self.embedded_speaker_dim,
                 language_emb_dim=self.embedded_language_dim,
             )
-
         self.waveform_decoder = HifiganGenerator(
             in_channels=self.model_config.hidden_channels,
             out_channels=1,
@@ -134,15 +129,6 @@ class VitsModel(nn.Module):
         else:
             self.embedded_language_dim = 0
 
-    def init_upsampling(self):
-        """ Initialize upsampling modules of a model. """
-        # if self.model_config.encoder_sample_rate:
-        #     self.interpolate_factor = self.config.audio["sample_rate"] / self.model_config.encoder_sample_rate
-        #     self.audio_resampler = torchaudio.transforms.Resample(
-        #         orig_freq=self.config.audio["sample_rate"], new_freq=self.model_config.encoder_sample_rate
-        #     )
-        pass
-
     def forward(
         self,
         x: torch.tensor,
@@ -150,7 +136,7 @@ class VitsModel(nn.Module):
         y: torch.tensor,
         y_lengths: torch.tensor,
         waveform: torch.tensor,
-        d_vectors = None,
+        speaker_embeds = None,
         speaker_ids = None,
         language_ids = None
     ) -> Dict:
@@ -161,24 +147,12 @@ class VitsModel(nn.Module):
             y (torch.tensor): Batch of input spectrograms. [B, C, T_spec]`
             y_lengths (torch.tensor): Batch of input spectrogram lengths. [B]`
             waveform (torch.tensor): Batch of ground truth waveforms per sample. [B, 1, T_wav]`
-            aux_input (dict, optional): Auxiliary inputs for multi-speaker and multi-lingual training.
-                Defaults to {"d_vectors": None, "speaker_ids": None, "language_ids": None}.
-                d_vectors:[B, C, 1]` speaker_ids:`[B]`  language_ids:`[B]`
-        Return Shapes:
-            - model_outputs: :math:`[B, 1, T_wav]`
-            - alignments: :math:`[B, T_seq, T_dec]`
-            - z: :math:`[B, C, T_dec]`
-            - z_p: :math:`[B, C, T_dec]`
-            - m_p: :math:`[B, C, T_dec]`
-            - logs_p: :math:`[B, C, T_dec]`
-            - m_q: :math:`[B, C, T_dec]`
-            - logs_q: :math:`[B, C, T_dec]`
-            - waveform_seg: :math:`[B, 1, spec_seg_size * hop_length]`
-            - gt_spk_emb: :math:`[B, 1, speaker_encoder.proj_dim]`
-            - syn_spk_emb: :math:`[B, 1, speaker_encoder.proj_dim]`
+            speaker_embeds:[B, C, 1]: Batch of speaker embedding
+            speaker_ids:`[B]: Batch of speaker ids. use_speaker_embedding should be true
+            language_ids:`[B]: Batch of language ids.
         """
         outputs = {}
-        sid, g, lid = self._set_cond_input(d_vectors, speaker_ids, language_ids)
+        sid, g, lid = self._set_cond_input(speaker_embeds, speaker_ids, language_ids)
         # speaker embedding
         if self.model_config.use_speaker_embedding and sid is not None:
             g = self.speaker_embedding(sid).unsqueeze(-1)  # [b, h, 1]
@@ -221,17 +195,17 @@ class VitsModel(nn.Module):
         gt_spk_emb, syn_spk_emb = None, None
 
         outputs.update({
-            "model_outputs": o,
-            "alignments": attn.squeeze(1),
-            "m_p": m_p,
-            "logs_p": logs_p,
-            "z": z,
-            "z_p": z_p,
-            "m_q": m_q,
-            "logs_q": logs_q,
-            "waveform_seg": wav_seg,
-            "gt_spk_emb": gt_spk_emb,
-            "syn_spk_emb": syn_spk_emb,
+            "model_outputs": o,  # [B, 1, T_wav]
+            "alignments": attn.squeeze(1),  # [B, T_seq, T_dec]
+            "m_p": m_p, # [B, C, T_dec]
+            "logs_p": logs_p, # [B, C, T_dec]
+            "z": z,  # [B, C, T_dec]
+            "z_p": z_p,  # [B, C, T_dec]
+            "m_q": m_q, # [B, C, T_dec]
+            "logs_q": logs_q, # [B, C, T_dec]
+            "waveform_seg": wav_seg, # [B, 1, spec_seg_size * hop_length]
+            "gt_spk_emb": gt_spk_emb, # [B, 1, speaker_encoder.proj_dim]
+            "syn_spk_emb": syn_spk_emb, # [B, 1, speaker_encoder.proj_dim]
             "slice_ids": slice_ids,
         })
         return outputs
@@ -272,33 +246,16 @@ class VitsModel(nn.Module):
         outputs["loss_duration"] = loss_duration
         return outputs, attn
 
-    def upsampling_z(self, z, slice_ids=None, y_lengths=None, y_mask=None):
-        spec_segment_size = self.spec_segment_size
-        # if self.model_config.encoder_sample_rate:
-        #     # recompute the slices and spec_segment_size if needed
-        #     slice_ids = slice_ids * int(self.interpolate_factor) if slice_ids is not None else slice_ids
-        #     spec_segment_size = spec_segment_size * int(self.interpolate_factor)
-        #     # interpolate z if needed
-        #     if self.model_config.interpolate_z:
-        #         z = torch.nn.functional.interpolate(z, scale_factor=[self.interpolate_factor], mode="linear").squeeze(0)
-        #         # recompute the mask if needed
-        #         if y_lengths is not None and y_mask is not None:
-        #             y_mask = (
-        #                 sequence_mask(y_lengths * self.interpolate_factor, None).to(y_mask.dtype).unsqueeze(1)
-        #             )  # [B, 1, T_dec_resampled]
-
-        return z, spec_segment_size, slice_ids, y_mask
-
     @staticmethod
-    def _set_cond_input(d_vectors, speaker_ids, language_ids):
+    def _set_cond_input(speaker_embeds, speaker_ids, language_ids):
         """Set the speaker conditioning input based on the multi-speaker mode."""
         sid, g, lid, durations = None, None, None, None
         if speaker_ids is not None:
             sid = speaker_ids
             if sid.ndim == 0:
                 sid = sid.unsqueeze_(0)
-        if d_vectors is not None:
-            g = F.normalize(d_vectors).unsqueeze(-1)
+        if speaker_embeds is not None:
+            g = F.normalize(speaker_embeds).unsqueeze(-1)
             if g.ndim == 2:
                 g = g.unsqueeze_(0)
 
@@ -362,15 +319,15 @@ class VitsModel(nn.Module):
         z_p = m_p + torch.randn_like(m_p) * torch.exp(logs_p) * self.model_config.inference_noise_scale
         z = self.flow(z_p, y_mask, g=g, reverse=True)
 
-        # upsampling if needed
-        z, _, _, y_mask = self.upsampling_z(z, y_lengths=y_lengths, y_mask=y_mask)
-
         z = (z * y_mask)[:, :, : self.model_config.max_inference_len]
         wav = self.waveform_decoder(z, g=g)
         return wav
 
 
 class VitsTrain(TrainerModel):
+    """
+    VITS and YourTTS model training model.
+    """
     def __init__(self, config:VitsConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None, ):
         super().__init__()
         self.config = config
@@ -381,7 +338,6 @@ class VitsTrain(TrainerModel):
             speaker_embed=speaker_embed,
             language_manager=language_manager
         )
-
         self.discriminator = VitsDiscriminator(
             periods=self.model_config.discriminator.periods_multi_period_discriminator,
             use_spectral_norm=self.model_config.discriminator.use_spectral_norm_disriminator,
@@ -465,7 +421,7 @@ class VitsTrain(TrainerModel):
             tokens = batch["tokens"]
             token_lens = batch["token_lens"]
             spec = batch["spec"]
-            d_vectors = None
+            speaker_embeds = batch["speaker_embed"]
             speaker_ids = None
             language_ids = None
             waveform = batch["waveform"]
@@ -477,8 +433,8 @@ class VitsTrain(TrainerModel):
                 y=spec,
                 y_lengths=spec_lens,
                 waveform=waveform,
-                d_vectors=None,
-                speaker_ids=None,
+                speaker_embeds=speaker_embeds,
+                speaker_ids=speaker_ids,
                 language_ids=None
             )
 
@@ -603,6 +559,3 @@ class VitsTrain(TrainerModel):
         wav = self.generator.infer(tokens)
         return wav
 
-    # def save_wav(wav, path, rate):
-    #     wav *= 32767 / max(0.01, np.max(np.abs(wav))) * 0.6
-    #     wavfile.write(path, rate, wav.astype(np.int16))

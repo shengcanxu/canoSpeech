@@ -5,10 +5,9 @@ import fsspec
 import numpy as np
 import torch
 from coqpit import Coqpit
-from speaker.embedding_manager import BaseIDManager
 
-
-class LanguageManager(BaseIDManager):
+# class LanguageManager(BaseIDManager):
+class LanguageManager(object):
     """Manage the languages for multi-lingual 🐸TTS models. Load a datafile and parse the information
     in a way that can be queried by language.
     Args:

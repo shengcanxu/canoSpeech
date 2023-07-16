@@ -78,7 +78,7 @@ class TextAudioDataset(Dataset):
         self.samples = samples
         self.use_cache = getattr(config.dataset_config, "use_cache", False)
         self.melspec_use_GPU = getattr(config.dataset_config, "melspec_use_GPU", False)
-        self.add_pitch = getattr(config.dataset_config, "add_pitch", False)
+        self.add_preprocess_data = getattr(config.dataset_config, "add_preprocess_data", True)
 
         self.hop_length = config.audio.hop_length
         self.win_length = config.audio.win_length
@@ -159,24 +159,31 @@ class TextAudioDataset(Dataset):
             spec = torch.FloatTensor(spec)
             mel = torch.FloatTensor(mel)
 
-        pitch = None
-        if self.add_pitch:
-            start_time = time.time()
-            pitch = self.processor.compute_f0(wav)  # very slow
-            pitch = torch.FloatTensor(pitch)
-            print("compute f0 time: ", time.time() - start_time)
+        pitch, duration, speaker = None, None, None
+        if self.add_preprocess_data:
+            path = sample["audio"] + ".pkl"
+            if os.path.exists(path):
+                fp = open(path, "rb")
+                pickleObj = pickle.load(fp)
+                pitch = torch.FloatTensor(pickleObj["pitch"])
+                duration = torch.IntTensor(pickleObj["duration"])
+                speaker = torch.FloatTensor(pickleObj["speaker"])
+            else:
+                raise Exception("path doesn't exists! should run preprocess")
 
         return {
-            "raw_text": sample["text"],
-            "phoneme": phoneme,
+            "raw_text": sample["text"], # str
+            "phoneme": phoneme, # str
             "tokens": tokens,
             "token_len": len(tokens),
             "wav": wav_t,
             "spec": spec,
             "mel": mel,
             "audio_file": sample["audio"],
-            "speaker": sample["speaker"],
-            "pitch": pitch
+            "speaker_name": sample["speaker"],
+            "speaker_embed": speaker,
+            "pitch": pitch,
+            "duration": duration
         }
 
     # def _get_audio(self, filename):
@@ -216,29 +223,46 @@ class TextAudioDataset(Dataset):
 
         max_text_len = max([x["tokens"].size(0) for x in batch])
         token_lens = torch.LongTensor([x["token_len"] for x in batch])
+        token_padded = torch.LongTensor(B, max_text_len)
+        token_padded = token_padded.zero_()
+
         wav_lens = torch.LongTensor([x["wav"].size(1) for x in batch])
         wav_lens_max = torch.max(wav_lens)
         wav_rel_lens = wav_lens / wav_lens_max
+        wav_padded = torch.FloatTensor(B, 1, wav_lens_max)
+        wav_padded = wav_padded.zero_()
 
-        spec_lens, mel_lens = torch.LongTensor([10 for x in batch]), torch.LongTensor([10 for x in batch])
-        spec_feat_len, mel_feat_len = 10, 10
+        spec_lens, mel_lens = [], []
+        spec_padded, mel_padded = None, None
         if not self.melspec_use_GPU:  # if mel spec generated using GPU, it will be generate in format_batch_on_device callback
             spec_feat_len = batch[0]["spec"].size(0)
             spec_lens = torch.LongTensor([x["spec"].size(1) for x in batch])
+            spec_lens_max = torch.max(spec_lens)
+            spec_padded = torch.FloatTensor(B, spec_feat_len, spec_lens_max)
+            spec_padded = spec_padded.zero_()
+
             mel_feat_len = batch[0]["mel"].size(0)
             mel_lens = torch.LongTensor([x["mel"].size(1) for x in batch])
-        spec_lens_max = torch.max(spec_lens)
-        mel_lens_max = torch.max(mel_lens)
+            mel_lens_max = torch.max(mel_lens)
+            mel_padded = torch.FloatTensor(B, mel_feat_len, mel_lens_max)
+            mel_padded = mel_padded.zero_()
 
-        token_padded = torch.LongTensor(B, max_text_len)
-        wav_padded = torch.FloatTensor(B, 1, wav_lens_max)
-        spec_padded = torch.FloatTensor(B, spec_feat_len, spec_lens_max)
-        mel_padded = torch.FloatTensor(B, mel_feat_len, mel_lens_max)
+        pitch_padded, duration_padded, speaker_embed_padded = None, None, None
+        if self.add_preprocess_data:
+            pitch_lens = torch.LongTensor([x["pitch"].size(0) for x in batch])
+            pitch_lens_max = torch.max(pitch_lens)
+            pitch_padded = torch.FloatTensor(B, pitch_lens_max)
+            pitch_padded = pitch_padded.zero_()
 
-        token_padded = token_padded.zero_()
-        wav_padded = wav_padded.zero_()
-        spec_padded = spec_padded.zero_()
-        mel_padded = mel_padded.zero_()
+            duration_lens = torch.LongTensor([x["duration"].size(0) for x in batch])
+            duration_lens_max = torch.max(duration_lens)
+            duration_padded = torch.IntTensor(B, duration_lens_max)
+            duration_padded = duration_padded.zero_()
+
+            speaker_embed_lens = torch.LongTensor([x["speaker_embed"].size(0) for x in batch])
+            speaker_embed_lens_max = torch.max(speaker_embed_lens)
+            speaker_embed_padded = torch.FloatTensor(B, speaker_embed_lens_max)
+            speaker_embed_padded = speaker_embed_padded.zero_()
 
         for i in range(len(ids_sorted_decreasing)):
             item = batch[ids_sorted_decreasing[i]]
@@ -253,6 +277,14 @@ class TextAudioDataset(Dataset):
                 mel = item["mel"]
                 mel_padded[i, :, :mel.size(1)] = torch.FloatTensor(mel)
 
+            if self.add_preprocess_data:
+                pitch = item["pitch"]
+                pitch_padded[i, :pitch.size(0)] = torch.FloatTensor(pitch)
+                duration = item["duration"]
+                duration_padded[i, :duration.size(0)] = torch.IntTensor(duration)
+                speaker_embed = item["speaker_embed"]
+                speaker_embed_padded[i, :speaker_embed.size(0)] = torch.FloatTensor(speaker_embed)
+
         return {
             "tokens": token_padded, # [B, T]
             "token_lens": token_lens, # [B]
@@ -263,7 +295,9 @@ class TextAudioDataset(Dataset):
             "spec_lens": spec_lens, # [B]
             "mel": mel_padded, # [B, C, T_mel]
             "mel_lens": mel_lens, # [B]
-            "speakers": [x["speaker"] for x in batch],# [B]
+            "speaker_embed": speaker_embed_padded,# [B, T_speaker]
+            "pitch": pitch_padded, # [B, T_pitch]
+            "duration": duration_padded, #[B, T_duration]
             "audio_files": [x["audio_file"] for x in batch],# [B]
             "raw_texts": [x["raw_text"] for x in batch] # [B]
         }

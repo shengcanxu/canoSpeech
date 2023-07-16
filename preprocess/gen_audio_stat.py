@@ -110,7 +110,7 @@ def main(args):
     for sample in tqdm(samples):
         path = sample["audio"]
         text = sample["text"]
-        print("working on {}".format(path))
+        # print("working on {}".format(path))
         wav = processor.load_wav(path)
 
         # f0 = processor.compute_f0(wav) # too slow

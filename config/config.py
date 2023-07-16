@@ -40,7 +40,7 @@ class TTSDatasetConfig(Coqpit):
     num_loader_workers:int = 8
     num_eval_loader_workers:int = 8
     melspec_use_GPU:bool = False
-    add_pitch:bool = False
+    add_preprocess_data:bool = True
 
 @dataclass
 class TextConfig(Coqpit):
@@ -118,7 +118,7 @@ class VitsModelConfig(Coqpit):
     use_language_embedding:bool = False
     language_ids_file:str = None
     num_speakers:int = 0
-    speaker_embedding_channels:int = 256
+    speaker_embedding_channels:int = 512
     use_speaker_embedding:bool = False
     use_speaker_encoder_as_loss:bool = False
     inference_noise_scale_dp: float = 1.0
