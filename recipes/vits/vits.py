@@ -270,12 +270,13 @@ class VitsModel(nn.Module):
         self,
         x,  # [B, T_seq]
         x_lengths = None,  # [B]
-        speaker_ids = None,  # [B]
-        language_ids = None  # [B]
+        speaker_embeds=None, # [B]
+        speaker_ids=None, # [B]
+        language_ids=None # [B]
     ):
         if x_lengths is None:
             x_lengths = torch.LongTensor([len(a) for a in x])
-        sid, g, lid = speaker_ids, None, language_ids
+        sid, g, lid = self._set_cond_input(speaker_embeds, speaker_ids, language_ids)
 
         # speaker embedding
         if self.model_config.use_speaker_embedding and sid is not None:
