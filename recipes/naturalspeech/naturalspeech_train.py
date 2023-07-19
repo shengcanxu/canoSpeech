@@ -1,7 +1,9 @@
 import os
 from trainer import Trainer, TrainerArgs
-from config.config import VitsConfig
+
+from config.config import NaturalSpeechConfig
 from dataset.dataset import get_metas_from_filelist
+from recipes.naturalspeech.naturalspeech import NaturalSpeechTrain
 from recipes.vits.vits import VitsTrain
 
 # Path where you want to save the models outputs (configs, checkpoints and tensorboard logs)
@@ -15,11 +17,11 @@ SKIP_TRAIN_EPOCH = False
 BATCH_SIZE = 8
 
 def main():
-    config = VitsConfig(
+    config = NaturalSpeechConfig(
         batch_size=BATCH_SIZE,
         eval_batch_size=BATCH_SIZE,
     )
-    config.load_json("./config/vits.json")
+    config.load_json("./config/naturalspeech.json")
     data_config = config.dataset_config
     # print(config)
 
@@ -27,7 +29,7 @@ def main():
     test_samples = get_metas_from_filelist(data_config.meta_file_val)
 
     # init the model
-    train_model = VitsTrain(config=config)
+    train_model = NaturalSpeechTrain(config=config)
 
     # init the trainer and train
     trainer = Trainer(

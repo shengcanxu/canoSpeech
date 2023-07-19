@@ -109,12 +109,10 @@ def main(args):
 
     for sample in tqdm(samples):
         path = sample["audio"]
+        pklpath = path + ".pkl"
         text = sample["text"]
-        # print("working on {}".format(path))
-        wav = processor.load_wav(path)
-
-        # f0 = processor.compute_f0(wav) # too slow
-        # f0 = pysptk.rapt(wav.astype(np.float32), 16000, 256, otype="f0") # error
+        if not args.refresh and os.path.exists(pklpath):
+            continue
 
         # Load audio at the correct sample rate
         audio = penn.load.audio(path)
@@ -133,10 +131,10 @@ def main(args):
             gpu=0)
         pitch = pitch.cpu().squeeze().numpy()
 
-        audio, duration = gen_duration_using_vits(vits, vits_config, text, sid=77)
+        _, duration = gen_duration_using_vits(vits, vits_config, text, sid=77)
         # processor.save_wav(audio, path="../output/test2.wav", sr=22050)
 
-        speaker_embedd = speaker_encoder.compute_embedding_from_waveform(wav)
+        speaker_embedd = speaker_encoder.compute_embedding_from_waveform(audio)
         speaker_embedd = speaker_embedd.squeeze(0)
         speaker_embedd = speaker_embedd.cpu().float().numpy()
 
@@ -146,7 +144,7 @@ def main(args):
             "duration": duration,
             "speaker": speaker_embedd
         }
-        with open(path + ".pkl", "wb") as fp:
+        with open(pklpath, "wb") as fp:
             pickle.dump(obj=obj, file=fp )
 
 if __name__ == "__main__":
@@ -154,6 +152,7 @@ if __name__ == "__main__":
     parser.add_argument("--config", type=str, default="../config/vits.json")
     parser.add_argument("--speaker_model", type=str, default="D:/dataset/VCTK/model_se.pth.tar")
     parser.add_argument("--speaker_config", type=str, default="D:/dataset/VCTK/config_se.json")
+    parser.add_argument("--refresh", type=bool, default=False)
     args = parser.parse_args()
 
     main(args)

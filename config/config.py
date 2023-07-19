@@ -87,6 +87,8 @@ class FlowConfig(Coqpit):
 
 @dataclass
 class DurationPredictorConfig(Coqpit):
+    kernel_size_dp:int = 3
+    filter_channels:int = 256
     use_stochastic_dp:bool = True
     dropout_p_duration_predictor:float = 0.5
 
@@ -109,7 +111,7 @@ class DiscriminatorConfig(Coqpit):
     use_spectral_norm_disriminator:bool = False
 
 @dataclass
-class VitsModelConfig(Coqpit):
+class BaseModelConfig(Coqpit):
     hidden_channels: int = 192
     out_channels:int = 513
     spec_segment_size:int = 32
@@ -126,6 +128,8 @@ class VitsModelConfig(Coqpit):
     length_scale:float = 1.0
     max_inference_len:int = None
 
+@dataclass
+class VitsModelConfig(BaseModelConfig):
     text_encoder: TextEncoderConfig = field(default_factory=lambda: TextEncoderConfig())
     audio_encoder: AudioEncoderConfig = field(default_factory=lambda: AudioEncoderConfig())
     flow:FlowConfig = field(default_factory=lambda:FlowConfig())
@@ -135,13 +139,22 @@ class VitsModelConfig(Coqpit):
 
 @dataclass
 class VitsLossConfig(Coqpit):
-    kl_loss_alpha:int = 1.0
-    disc_loss_alpha = 1.0
-    gen_loss_alpha = 1.0
-    feat_loss_alpha = 1.0
-    mel_loss_alpha = 45.0
-    dur_loss_alpha = 1.0
-    speaker_encoder_loss_alpha = 9.0
+    #  "c_mel": 45,
+    # "c_kl": 1.0,
+    # "c_kl_fwd": 0.001,
+    # "c_e2e": 0.1,   disc_loss_alpha
+    # "c_dur": 5.0,
+    kl_loss_alpha:float = 1.0
+    kl_loss_forward_alpha:float = 1.0
+    disc_loss_alpha:float = 1.0
+    gen_loss_alpha:float = 1.0
+    gen_loss_e2e_alpha:float = 1.0
+    feat_loss_alpha:float = 1.0
+    mel_loss_alpha:float = 45.0
+    dur_loss_alpha:float = 1.0
+    speaker_encoder_loss_alpha:float = 9.0
+
+    use_soft_dynamic_time_warping:bool = False
 
 @dataclass
 class VitsConfig(TrainerConfig):
@@ -162,3 +175,56 @@ class VitsConfig(TrainerConfig):
 
     # model config
     model: VitsModelConfig = field(default_factory=lambda: VitsModelConfig())
+
+
+################################ Natural Speech ##########################################
+
+@dataclass
+class LearnableUpsampling(Coqpit):
+    d_predictor:int = 192,
+    kernel_size_lu:int = 3
+    dropout_lu:float = 0.0
+    conv_output_size:int = 8
+    dim_w:int = 4
+    dim_c:int = 2
+    max_seq_len:int = 1000  # max sequence length
+
+@dataclass
+class MemroyBank(Coqpit):
+    bank_size:int = 1000,
+    n_hidden_dims:int = 192,
+    n_attn_heads:int = 2
+
+@dataclass
+class NaturalSpeechModelConfig(BaseModelConfig):
+    use_memory_bank:bool = True
+    use_gt_duration:bool = False  # use ground-true duration to generate the training data
+
+    text_encoder: TextEncoderConfig = field(default_factory=lambda: TextEncoderConfig())
+    audio_encoder: AudioEncoderConfig = field(default_factory=lambda: AudioEncoderConfig())
+    flow:FlowConfig = field(default_factory=lambda:FlowConfig())
+    duration_predictor:DurationPredictorConfig = field(default_factory=lambda: DurationPredictorConfig())
+    learnable_upsampling:LearnableUpsampling = field(default_factory=lambda: LearnableUpsampling())
+    waveform_decoder:WaveformDecoderConfig = field(default_factory=lambda: WaveformDecoderConfig())
+    memory_bank:MemroyBank = field(default_factory=lambda: MemroyBank())
+    discriminator: DiscriminatorConfig = field(default_factory=lambda: DiscriminatorConfig())
+
+@dataclass
+class NaturalSpeechConfig(TrainerConfig):
+    """
+    General training config, here you can change the batch size and others useful parameters
+    """
+    dataset_config: TTSDatasetConfig = field(default_factory=lambda: TTSDatasetConfig())
+    audio:AudioConfig = field(default_factory=lambda: AudioConfig())
+    text:TextConfig = field(default_factory=lambda: TextConfig())
+
+    # the max size of eval dataset
+    eval_split_max_size: int = 256
+    # the percentage of dataset to be eval dataset
+    eval_split_size: float = 0.01
+
+    #loss
+    loss:VitsLossConfig = field(default_factory=lambda: VitsLossConfig())
+
+    # model config
+    model: NaturalSpeechModelConfig = field(default_factory=lambda: NaturalSpeechModelConfig())

@@ -35,4 +35,14 @@ speaker enbedding encoder configs:
 2. https://github.com/CODEJIN/NaturalSpeech2 
 3. https://github.com/heatz123/naturalspeech 
 4. https://github.com/coqui-ai/TTS  
-5. 
+
+# resources
+1. some usefull course about audio AI: https://www.youtube.com/watch?v=iCwMQJnKk2c&list=PL-wATfeyAMNqIee7cH3q1bh4QJFAaeNv0 
+2. how to augement audio for AI research: https://www.youtube.com/watch?v=bm1cQfb_pLA&list=PL-wATfeyAMNoR4aqS-Fv0GRmS6bx5RtTW&index=2 
+3. audio augementation tools:
+   1. librosa
+   2. audiomentations
+   3. torch-audiomentations
+   4. torchaudio.transforms
+   
+

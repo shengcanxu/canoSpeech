@@ -99,14 +99,14 @@ class WaveNet(torch.nn.Module):
             x_in = self.dropout(x_in)
             if g is not None:
                 cond_offset = i * 2 * self.hidden_channels
-                g_l = g[:, cond_offset : cond_offset + 2 * self.hidden_channels, :]
+                g_l = g[:, cond_offset: cond_offset + 2 * self.hidden_channels, :]
             else:
                 g_l = torch.zeros_like(x_in)
             acts = fused_add_tanh_sigmoid_multiply(x_in, g_l, n_channels_tensor)
             res_skip_acts = self.res_skip_layers[i](acts)
             if i < self.num_layers - 1:
                 x = (x + res_skip_acts[:, : self.hidden_channels, :]) * x_mask
-                output = output + res_skip_acts[:, self.hidden_channels :, :]
+                output = output + res_skip_acts[:, self.hidden_channels:, :]
             else:
                 output = output + res_skip_acts
         return output * x_mask

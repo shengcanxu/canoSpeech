@@ -1,28 +1,29 @@
-import math
-from typing import Dict, List, Union, Tuple
-from torch.cuda.amp.autocast_mode import autocast
 import torch
-from torch.nn import functional as F
 from coqpit import Coqpit
+from typing import Dict, List, Union, Tuple
+
 from torch import nn
-from trainer.trainer_utils import get_optimizer, get_scheduler
-from config.config import VitsConfig
+from torch.cuda.amp import autocast
+from trainer import get_optimizer, get_scheduler
+from torch.nn import functional as F
+from config.config import NaturalSpeechConfig
 from language.languages import LanguageManager
 from layers.discriminator import VitsDiscriminator
-from layers.duration_predictor import DurationPredictor, generate_path, StochasticDurationPredictor
+from layers.duration_predictor import DurationPredictor
+from layers.encoder import TextEncoder, AudioEncoder
 from layers.flow import ResidualCouplingBlocks
 from layers.generator import HifiganGenerator
-from layers.losses import VitsDiscriminatorLoss, VitsGeneratorLoss
-from layers.encoder import TextEncoder, AudioEncoder
-from monotonic_align.maximum_path import maximum_path
+from layers.learnable_upsampling import LearnableUpsampling
+from layers.losses import NaturalSpeechDiscriminatorLoss, NaturalSpeechGeneratorLoss
+from layers.memory_bank import VAEMemoryBank
 from recipes.trainer_model import TrainerModelWithDataset
 from text import text_to_tokens
-from util.helper import sequence_mask, segment, rand_segments
-from util.mel_processing import wav_to_spec, spec_to_mel, wav_to_mel
+from util.helper import segment, rand_segments
+from util.mel_processing import wav_to_mel
 
 
-class VitsModel(nn.Module):
-    def __init__(self, config:VitsConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None ):
+class NaturalSpeechModel(nn.Module):
+    def __init__(self, config:NaturalSpeechConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None ):
         super().__init__()
         self.config = config
         self.model_config = config.model
@@ -66,24 +67,23 @@ class VitsModel(nn.Module):
             num_layers=self.model_config.flow.num_layers_flow,
             cond_channels=self.embedded_speaker_dim,
         )
-        if self.model_config.duration_predictor.use_stochastic_dp:
-            self.duration_predictor = StochasticDurationPredictor(
-                in_channels=self.model_config.hidden_channels,
-                hidden_channels=192,
-                kernel_size=self.model_config.duration_predictor.kernel_size_dp,
-                dropout_p=self.model_config.duration_predictor.dropout_p_duration_predictor,
-                cond_channels=self.embedded_speaker_dim,
-                language_emb_dim=self.embedded_language_dim,
-            )
-        else:
-            self.duration_predictor = DurationPredictor(
-                in_channels=self.model_config.hidden_channels,
-                hidden_channels=256,
-                kernel_size=self.model_config.duration_predictor.kernel_size_dp,
-                dropout_p=self.model_config.duration_predictor.dropout_p_duration_predictor,
-                cond_channels=self.embedded_speaker_dim,
-                language_emb_dim=self.embedded_language_dim,
-            )
+        self.duration_predictor = DurationPredictor(
+            in_channels=self.model_config.hidden_channels,
+            hidden_channels=self.model_config.duration_predictor.filter_channels,
+            kernel_size=self.model_config.duration_predictor.kernel_size_dp,
+            dropout_p=self.model_config.duration_predictor.dropout_p_duration_predictor,
+            cond_channels=self.embedded_speaker_dim,
+            language_emb_dim=self.embedded_language_dim,
+        )
+        self.learnable_upsampling = LearnableUpsampling(
+            d_predictor=self.model_config.learnable_upsampling.d_predictor,
+            kernel_size=self.model_config.learnable_upsampling.kernel_size_lu,
+            dropout=self.model_config.learnable_upsampling.dropout_lu,
+            conv_output_size=self.model_config.learnable_upsampling.conv_output_size,
+            dim_w=self.model_config.learnable_upsampling.dim_w,
+            dim_c=self.model_config.learnable_upsampling.dim_c,
+            max_seq_len=self.model_config.learnable_upsampling.max_seq_len
+        )
         self.waveform_decoder = HifiganGenerator(
             in_channels=self.model_config.hidden_channels,
             out_channels=1,
@@ -97,7 +97,12 @@ class VitsModel(nn.Module):
             cond_channels=self.embedded_speaker_dim,
             conv_pre_weight_norm=False,
             conv_post_weight_norm=False,
-            conv_post_bias=False,
+            conv_post_bias=False
+        )
+        self.memory_bank = VAEMemoryBank(
+            bank_size=self.model_config.memory_bank.bank_size,
+            n_hidden_dims=self.model_config.memory_bank.n_hidden_dims,
+            n_attn_heads=self.model_config.memory_bank.n_attn_heads
         )
 
     def init_multilingual(self, config: Coqpit):
@@ -116,119 +121,6 @@ class VitsModel(nn.Module):
             torch.nn.init.xavier_uniform_(self.language_embedding.weight)
         else:
             self.embedded_language_dim = 0
-
-    def forward(
-        self,
-        x: torch.tensor,
-        x_lengths: torch.tensor,
-        y: torch.tensor,
-        y_lengths: torch.tensor,
-        waveform: torch.tensor,
-        speaker_embeds = None,
-        speaker_ids = None,
-        language_ids = None
-    ) -> Dict:
-        """Forward pass of the model.
-        Args:
-            x (torch.tensor): Batch of input character sequence IDs. [B, T_seq]`
-            x_lengths (torch.tensor): Batch of input character sequence lengths. [B]`
-            y (torch.tensor): Batch of input spectrograms. [B, C, T_spec]`
-            y_lengths (torch.tensor): Batch of input spectrogram lengths. [B]`
-            waveform (torch.tensor): Batch of ground truth waveforms per sample. [B, 1, T_wav]`
-            speaker_embeds:[B, C, 1]: Batch of speaker embedding
-            speaker_ids:`[B]: Batch of speaker ids. use_speaker_embedding should be true
-            language_ids:`[B]: Batch of language ids.
-        """
-        outputs = {}
-        sid, g, lid = self._set_cond_input(speaker_embeds, speaker_ids, language_ids)
-        # speaker embedding
-        if self.model_config.use_speaker_embedding and sid is not None:
-            g = self.speaker_embedding(sid).unsqueeze(-1)  # [b, h, 1]
-
-        # language embedding
-        lang_emb = None
-        if self.model_config.use_language_embedding and lid is not None:
-            lang_emb = self.language_embedding(lid).unsqueeze(-1)
-
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
-
-        # audio encoder, encode audio to embedding layer z's dimension
-        z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=g)
-        # flow layers
-        z_p = self.flow(z, y_mask, g=g)
-
-        # duration predictor
-        outputs, attn = self.forward_mas(outputs, z_p, m_p, logs_p, x, x_mask, y_mask, g=g, lang_emb=lang_emb)
-
-        # expand text token_size to audio token_size
-        m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
-        logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])
-
-        # select a random feature segment for the waveform decoder
-        z_slice, slice_ids = rand_segments(z, y_lengths, self.spec_segment_size, let_short_samples=True, pad_short=True)
-
-        o = self.waveform_decoder(z_slice, g=g)
-
-        wav_seg = segment(
-            waveform,
-            slice_ids * self.config.audio.hop_length,
-            self.spec_segment_size * self.config.audio.hop_length,
-            pad_short=True,
-        )
-
-        gt_spk_emb, syn_spk_emb = None, None
-
-        outputs.update({
-            "model_outputs": o,  # [B, 1, T_wav]
-            "alignments": attn.squeeze(1),  # [B, T_seq, T_dec]
-            "m_p": m_p,  # [B, C, T_dec]
-            "logs_p": logs_p,  # [B, C, T_dec]
-            "z": z,  # [B, C, T_dec]
-            "z_p": z_p,  # [B, C, T_dec]
-            "m_q": m_q,  # [B, C, T_dec]
-            "logs_q": logs_q,  # [B, C, T_dec]
-            "waveform_seg": wav_seg,  # [B, 1, spec_seg_size * hop_length]
-            "gt_spk_emb": gt_spk_emb,  # [B, 1, speaker_encoder.proj_dim]
-            "syn_spk_emb": syn_spk_emb,  # [B, 1, speaker_encoder.proj_dim]
-            "slice_ids": slice_ids,
-        })
-        return outputs
-
-    def forward_mas(self, outputs, z_p, m_p, logs_p, x, x_mask, y_mask, g, lang_emb):
-        # find the alignment path
-        attn_mask = torch.unsqueeze(x_mask, -1) * torch.unsqueeze(y_mask, 2)
-        with torch.no_grad():
-            o_scale = torch.exp(-2 * logs_p)
-            logp1 = torch.sum(-0.5 * math.log(2 * math.pi) - logs_p, [1]).unsqueeze(-1)  # [b, t, 1]
-            logp2 = torch.einsum("klm, kln -> kmn", [o_scale, -0.5 * (z_p**2)])
-            logp3 = torch.einsum("klm, kln -> kmn", [m_p * o_scale, z_p])
-            logp4 = torch.sum(-0.5 * (m_p**2) * o_scale, [1]).unsqueeze(-1)  # [b, t, 1]
-            logp = logp2 + logp3 + logp1 + logp4
-            attn = maximum_path(logp, attn_mask.squeeze(1)).unsqueeze(1).detach()  # [b, 1, t, t']
-
-        # duration predictor
-        attn_durations = attn.sum(3)
-        if self.model_config.duration_predictor.use_stochastic_dp:
-            loss_duration = self.duration_predictor(
-                x.detach(),
-                x_mask,
-                attn_durations,
-                g=g.detach() if g is not None else g,
-                lang_emb=lang_emb.detach() if lang_emb is not None else lang_emb,
-            )
-            loss_duration = loss_duration / torch.sum(x_mask)
-        else:
-            attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
-            log_durations = self.duration_predictor(
-                x.detach(),
-                x_mask,
-                g=g.detach() if g is not None else g,
-                lang_emb=lang_emb.detach() if lang_emb is not None else lang_emb,
-            )
-            loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
-
-        outputs["loss_duration"] = loss_duration
-        return outputs, attn
 
     @staticmethod
     def _set_cond_input(speaker_embeds, speaker_ids, language_ids):
@@ -249,76 +141,165 @@ class VitsModel(nn.Module):
                 lid = lid.unsqueeze_(0)
         return sid, g, lid
 
+    def forward(
+        self,
+        x,  # [B,C]
+        x_lengths,  # [B]
+        y,  # [B,specT,specC]
+        y_lengths,  # [B]
+        duration=None,
+        use_gt_duration=True,
+        speaker_embeds=None,
+        language_ids=None
+    ):
+        # _, g, lid = self._set_cond_input(speaker_embeds, None, language_ids)
+        if speaker_embeds is not None:
+            g = F.normalize(speaker_embeds).unsqueeze(-1)
+        else:
+            g = torch.zeros(x.size(0), self.embedded_speaker_dim, 1)
+        if g.ndim == 2:
+            g = g.unsqueeze_(0)
+        lid = None
+
+        # language embedding
+        lang_embedding = None
+        if self.model_config.use_language_embedding and lid is not None:
+            lang_embedding = self.language_embedding(lid).unsqueeze(-1)
+
+        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embedding)
+
+        # audio encoder, encode audio to embedding layer z's dimension,
+        # z:[B,C,spectrogramToken] m_q:[B,C,specT] logs_q:[B,C,specT] y_mask:[B,1,specT]
+        z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=g)
+        # z_p:[B,C,specT]
+        z_p = self.flow(z, y_mask, g=g)
+
+        # differentiable durator (duration predictor & loss)
+        logw = self.duration_predictor(x, x_mask, g=g)  # logw:[B,1,T]
+        w = torch.exp(logw) * x_mask  # w:[B,1,T]
+
+        w_ = duration.unsqueeze(1)
+        logw_ = torch.log(w_ + 1e-6) * x_mask
+        # for averaging
+        l_length = torch.sum((logw - logw_) ** 2, [1, 2]) / torch.sum(x_mask)
+        # use predicted duration
+        if not use_gt_duration:
+            duration = w.squeeze(1)
+
+        # differentiable durator (learnable upsampling)
+        upsampled_rep, p_mask, _, W = self.learnable_upsampling(
+            duration=duration,
+            V=x.transpose(1, 2),
+            src_len=x_lengths,
+            src_mask=~(x_mask.squeeze(1).bool()),
+            tgt_len=y_lengths,
+            max_src_len=x_lengths.max(),
+        )
+        p_mask = ~p_mask
+
+        m_p, logs_p = torch.split(upsampled_rep.transpose(1, 2), 192, dim=1)
+        z_slice, ids_slice = rand_segments(
+            z, y_lengths, self.spec_segment_size, let_short_samples=True, pad_short=True
+        )
+
+        if self.model_config.use_memory_bank:
+            z_slice = self.memory_bank(z_slice)
+
+        y_hat = self.waveform_decoder(z_slice, g=g)
+
+        z_q = self.flow(
+            x=m_p + torch.randn_like(m_p) * torch.exp(logs_p),
+            x_mask=p_mask.unsqueeze(1),
+            g=g,
+            reverse=True,
+        )
+        z_q_lengths = p_mask.flatten(1, -1).sum(dim=-1).long()
+        z_slice_q, ids_slice_q = rand_segments(
+            z_q, torch.minimum(z_q_lengths, y_lengths), self.spec_segment_size, let_short_samples=True, pad_short=True
+        )
+
+        if self.model_config.use_memory_bank:
+            z_slice_q = self.memory_bank(z_slice_q)
+
+        y_hat_e2e = self.waveform_decoder((z_slice_q), g=g)
+
+        return {
+            "y_hat": y_hat,  # the generated waveform
+            "l_length": l_length,
+            "ids_slice": ids_slice,
+            "x_mask": x_mask,
+            "y_mask": y_mask,
+            "z": z,
+            "z_p": z_p,
+            "m_p": m_p,
+            "logs_p": logs_p,
+            "m_q": m_q,
+            "logs_q": logs_q,
+            "p_mask": p_mask,
+            "W": W,
+            "y_hat_e2e": y_hat_e2e,
+            "z_q": z_q,
+            "duration": duration,
+            "ids_slice_q": ids_slice_q
+        }
+
     @torch.no_grad()
     def infer(
         self,
         x,  # [B, T_seq]
-        x_lengths = None,  # [B]
+        x_lengths=None,  # [B]
+        duration=None,
         speaker_embeds=None,  # [B]
-        speaker_ids=None,  # [B]
         language_ids=None  # [B]
     ):
         if x_lengths is None:
             x_lengths = torch.LongTensor([len(a) for a in x])
-        sid, g, lid = self._set_cond_input(speaker_embeds, speaker_ids, language_ids)
-
-        # speaker embedding
-        if self.model_config.use_speaker_embedding and sid is not None:
-            g = self.emb_g(sid).unsqueeze(-1)
+        _, g, lid = self._set_cond_input(speaker_embeds, None, language_ids)
 
         # language embedding
         lang_emb = None
         if self.model_config.use_language_embedding and lid is not None:
             lang_emb = self.language_embedding(lid).unsqueeze(-1)
 
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
+        # infer with only one example
+        x, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
 
-        if self.model_config.duration_predictor.use_stochastic_dp:
-            logw = self.duration_predictor(
-                x=x,
-                x_mask=x_mask,
-                g=g if g is not None else g,
-                reverse=True,
-                noise_scale=self.model_config.inference_noise_scale_dp,
-                lang_emb=lang_emb,
-            )
-        else:
-            logw = self.duration_predictor(
-                x=x,
-                x_mask=x_mask,
-                g=g if g is not None else g,
-                lang_emb=lang_emb
-            )
+        logw = self.duration_predictor(x, x_mask, g=g)
         w = torch.exp(logw) * x_mask * self.model_config.length_scale
+        if duration is not None:
+            w = duration.unsqueeze(1) * x_mask * self.model_config.length_scale
 
-        w_ceil = torch.ceil(w)
-        y_lengths = torch.clamp_min(torch.sum(w_ceil, [1, 2]), 1).long()
-        y_mask = sequence_mask(y_lengths, None).to(x_mask.dtype).unsqueeze(1)  # [B, 1, T_dec]
+        upsampled_rep, p_mask, _, W = self.learnable_upsampling(
+            duration=w.squeeze(1),
+            V=x.transpose(1, 2),
+            src_len=x_lengths,
+            src_mask=~(x_mask.squeeze(1).bool()),
+            max_src_len=x_mask.shape[-1]
+        )
+        p_mask = ~p_mask
+        m_p, logs_p = torch.split(upsampled_rep.transpose(1, 2), 192, dim=1)
 
-        attn_mask = x_mask * y_mask.transpose(1, 2)  # [B, 1, T_enc] * [B, T_dec, 1]
-        attn = generate_path(w_ceil.squeeze(1), attn_mask.squeeze(1).transpose(1, 2))
-
-        m_p = torch.matmul(attn.transpose(1, 2), m_p.transpose(1, 2)).transpose(1, 2)
-        logs_p = torch.matmul(attn.transpose(1, 2), logs_p.transpose(1, 2)).transpose(1, 2)
-
+        y_mask = p_mask.unsqueeze(1)
         z_p = m_p + torch.randn_like(m_p) * torch.exp(logs_p) * self.model_config.inference_noise_scale
         z = self.flow(z_p, y_mask, g=g, reverse=True)
 
-        z = (z * y_mask)[:, :, : self.model_config.max_inference_len]
-        wav = self.waveform_decoder(z, g=g)
-        return wav
+        if self.model_config.use_memory_bank:
+            z = self.memory_bank(z)
+
+        y_hat = self.dec((z * y_mask)[:, :, :self.model_config.max_inference_len], g=None)
+        return y_hat, y_mask, (z, z_p, m_p, logs_p)
 
 
-class VitsTrain(TrainerModelWithDataset):
+class NaturalSpeechTrain(TrainerModelWithDataset):
     """
-    VITS and YourTTS model training model.
+    Natural Speech model training model.
     """
-    def __init__(self, config:VitsConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None, ):
+    def __init__(self, config:NaturalSpeechConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None, ):
         super().__init__()
         self.config = config
         self.model_config = config.model
 
-        self.generator = VitsModel(
+        self.generator = NaturalSpeechModel(
             config=config,
             speaker_embed=speaker_embed,
             language_manager=language_manager
@@ -335,9 +316,8 @@ class VitsTrain(TrainerModelWithDataset):
             token_lens = batch["token_lens"]
             spec = batch["spec"]
             speaker_embeds = batch["speaker_embed"]
-            speaker_ids = None
-            language_ids = None
-            waveform = batch["waveform"]
+            wav = batch["waveform"]
+            duration = batch["duration"]
 
             # generator pass
             outputs = self.generator(
@@ -345,19 +325,39 @@ class VitsTrain(TrainerModelWithDataset):
                 x_lengths=token_lens,
                 y=spec,
                 y_lengths=spec_lens,
-                waveform=waveform,
+                duration=duration,
+                use_gt_duration=self.model_config.use_gt_duration,
                 speaker_embeds=speaker_embeds,
-                speaker_ids=speaker_ids,
-                language_ids=None
+                language_ids=None,
+
+            )
+
+            wav_slice1 = segment(
+                x=wav,
+                segment_indices=outputs["ids_slice"] * self.config.audio.hop_length,
+                segment_size=self.model_config.spec_segment_size * self.config.audio.hop_length,
+                pad_short=True
+            )
+            wav_slice2 = segment(
+                x=wav,
+                segment_indices=outputs["ids_slice_q"] * self.config.audio.hop_length,
+                segment_size=self.model_config.spec_segment_size * self.config.audio.hop_length,
+                pad_short=True
             )
 
             # cache tensors for the generator pass
             self.model_outputs_cache = outputs
+            self.wav_slice1 = wav_slice1
+            self.wav_slice2 = wav_slice2
 
             # compute scores and features
             scores_disc_real, _, scores_disc_fake, _ = self.discriminator(
-                x=outputs["waveform_seg"],
-                x_hat=outputs["model_outputs"].detach(),
+                x=wav_slice1,
+                x_hat=outputs["y_hat"].detach()
+            )
+            scores_disc_real_e2e, _, scores_disc_fake_e2e, _ = self.discriminator(
+                x=wav_slice2,
+                x_hat=outputs["y_hat_e2e"].detach()
             )
 
             # compute loss
@@ -366,7 +366,13 @@ class VitsTrain(TrainerModelWithDataset):
                     scores_disc_real=scores_disc_real,
                     scores_disc_fake=scores_disc_fake,
                 )
-            return outputs, loss_dict
+                loss_dict_e2e = criterion[0](
+                    scores_disc_real=scores_disc_real_e2e,
+                    scores_disc_fake=scores_disc_fake_e2e,
+                )
+                loss_disc_all = loss_dict["loss"] + loss_dict_e2e["loss"]
+                loss_dict_e2e["loss"] = loss_disc_all
+            return outputs, loss_dict_e2e
 
         if optimizer_idx == 1:
             mel = batch["mel"]
@@ -375,12 +381,12 @@ class VitsTrain(TrainerModelWithDataset):
             with autocast(enabled=False):
                 mel_slice = segment(
                     x=mel.float(),
-                    segment_indices=self.model_outputs_cache["slice_ids"],
+                    segment_indices=self.model_outputs_cache["ids_slice"],
                     segment_size=self.model_config.spec_segment_size,
                     pad_short=True
                 )
                 mel_slice_hat = wav_to_mel(
-                    y=self.model_outputs_cache["model_outputs"].float(),
+                    y=self.model_outputs_cache["y_hat"].float(),
                     n_fft=self.config.audio.fft_size,
                     sample_rate=self.config.audio.sample_rate,
                     num_mels=self.config.audio.num_mels,
@@ -392,28 +398,33 @@ class VitsTrain(TrainerModelWithDataset):
                 )
 
             # compute discriminator scores and features
-            _, feats_disc_real, scores_disc_fake, feats_disc_fake = self.discriminator(
-                x=self.model_outputs_cache["waveform_seg"],
-                x_hat=self.model_outputs_cache["model_outputs"]
+            scores_disc_real, feats_disc_real, scores_disc_fake, feats_disc_fake = self.discriminator(
+                x=self.wav_slice1,
+                x_hat=self.model_outputs_cache["y_hat"]
+            )
+            scores_disc_real_e2e, _, scores_disc_fake_e2e, _ = self.discriminator(
+                x=self.wav_slice2,
+                x_hat=self.model_outputs_cache["y_hat_e2e"]
             )
 
             # compute losses
             with autocast(enabled=False):  # use float32 for the criterion
                 loss_dict = criterion[1](
-                    mel_slice=mel_slice_hat.float(),
-                    mel_slice_hat=mel_slice.float(),
-                    z_p=self.model_outputs_cache["z_p"].float(),
-                    logs_q=self.model_outputs_cache["logs_q"].float(),
-                    m_p=self.model_outputs_cache["m_p"].float(),
-                    logs_p=self.model_outputs_cache["logs_p"].float(),
-                    z_len=spec_lens,
+                    mel_slice=mel_slice,
+                    mel_slice_hat=mel_slice_hat,
                     scores_disc_fake=scores_disc_fake,
-                    feats_disc_fake=feats_disc_fake,
+                    scores_disc_fake_e2e=scores_disc_fake_e2e,
                     feats_disc_real=feats_disc_real,
-                    loss_duration=self.model_outputs_cache["loss_duration"],
-                    use_speaker_encoder_as_loss=self.model_config.use_speaker_encoder_as_loss,
-                    gt_spk_emb=self.model_outputs_cache["gt_spk_emb"],
-                    syn_spk_emb=self.model_outputs_cache["syn_spk_emb"],
+                    feats_disc_fake=feats_disc_fake,
+                    loss_duration_length=self.model_outputs_cache["l_length"],
+                    z_p=self.model_outputs_cache["z_p"],
+                    m_p=self.model_outputs_cache["m_p"],
+                    logs_p=self.model_outputs_cache["logs_p"],
+                    z_q=self.model_outputs_cache["z_q"],
+                    m_q=self.model_outputs_cache["m_q"],
+                    logs_q=self.model_outputs_cache["logs_q"],
+                    p_mask=self.model_outputs_cache["p_mask"],
+                    z_mask=self.model_outputs_cache["y_mask"],
                 )
 
             return self.model_outputs_cache, loss_dict
@@ -426,7 +437,7 @@ class VitsTrain(TrainerModelWithDataset):
 
     def get_criterion(self):
         """Get criterions for each optimizer. The index in the output list matches the optimizer idx used in train_step()`"""
-        return [VitsDiscriminatorLoss(self.config), VitsGeneratorLoss(self.config)]
+        return [NaturalSpeechDiscriminatorLoss(self.config), NaturalSpeechGeneratorLoss(self.config)]
 
     def get_optimizer(self) -> List:
         """Initiate and return the GAN optimizers based on the config parameters."""
@@ -471,4 +482,3 @@ class VitsTrain(TrainerModelWithDataset):
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0)
         wav = self.generator.infer(tokens)
         return wav
-
