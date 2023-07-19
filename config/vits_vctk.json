@@ -31,7 +31,8 @@
         "fft_size": 1024,
         "num_mels": 80,
         "pitch_fmax": 640.0,
-        "pitch_fmin": 1.0
+        "pitch_fmin": 1.0,
+        "max_audio_length": 10.0
     },
 
     "eval_split_max_size": 256,

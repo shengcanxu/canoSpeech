@@ -171,6 +171,7 @@ class NaturalSpeechModel(nn.Module):
         # audio encoder, encode audio to embedding layer z's dimension,
         # z:[B,C,spectrogramToken] m_q:[B,C,specT] logs_q:[B,C,specT] y_mask:[B,1,specT]
         z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=g)
+
         # z_p:[B,C,specT]
         z_p = self.flow(z, y_mask, g=g)
 
@@ -254,15 +255,22 @@ class NaturalSpeechModel(nn.Module):
     ):
         if x_lengths is None:
             x_lengths = torch.LongTensor([len(a) for a in x])
-        _, g, lid = self._set_cond_input(speaker_embeds, None, language_ids)
+
+        if speaker_embeds is not None:
+            g = F.normalize(speaker_embeds).unsqueeze(-1)
+        else:
+            g = torch.zeros(x.size(0), self.embedded_speaker_dim, 1).to(x.device)
+        if g.ndim == 2:
+            g = g.unsqueeze_(0)
+        lid = None
 
         # language embedding
-        lang_emb = None
+        lang_embedding = None
         if self.model_config.use_language_embedding and lid is not None:
-            lang_emb = self.language_embedding(lid).unsqueeze(-1)
+            lang_embedding = self.language_embedding(lid).unsqueeze(-1)
 
         # infer with only one example
-        x, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
+        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embedding)
 
         logw = self.duration_predictor(x, x_mask, g=g)
         w = torch.exp(logw) * x_mask * self.model_config.length_scale
@@ -274,6 +282,7 @@ class NaturalSpeechModel(nn.Module):
             V=x.transpose(1, 2),
             src_len=x_lengths,
             src_mask=~(x_mask.squeeze(1).bool()),
+            tgt_len=None,
             max_src_len=x_mask.shape[-1]
         )
         p_mask = ~p_mask
@@ -286,8 +295,9 @@ class NaturalSpeechModel(nn.Module):
         if self.model_config.use_memory_bank:
             z = self.memory_bank(z)
 
-        y_hat = self.dec((z * y_mask)[:, :, :self.model_config.max_inference_len], g=None)
-        return y_hat, y_mask, (z, z_p, m_p, logs_p)
+        z = (z * y_mask)[:, :, :self.model_config.max_inference_len]
+        y_hat = self.waveform_decoder(z, g=g)
+        return y_hat
 
 
 class NaturalSpeechTrain(TrainerModelWithDataset):
