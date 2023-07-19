@@ -67,48 +67,48 @@ class AudioConfig(Coqpit):
 @dataclass
 class TextEncoderConfig(Coqpit):
     num_chars:int = 165
-    hidden_channels_ffn_text_encoder:int = 768
-    num_heads_text_encoder:int = 2
-    num_layers_text_encoder:int = 10
-    kernel_size_text_encoder:int = 3
-    dropout_p_text_encoder:float = 0.1
+    hidden_channels_ffn:int = 768
+    num_heads:int = 2
+    num_layers:int = 10
+    kernel_size:int = 3
+    dropout_p:float = 0.1
 
 @dataclass
 class AudioEncoderConfig(Coqpit):
-    kernel_size_audio_encoder:int = 5
-    dilation_rate_audio_encoder:int = 1
-    num_layers_audio_encoder:int = 16
+    kernel_size:int = 5
+    dilation_rate:int = 1
+    num_layers:int = 16
 
 @dataclass
 class FlowConfig(Coqpit):
-    kernel_size_flow:int = 5
-    dilation_rate_flow:int = 1
-    num_layers_flow:int = 4
+    kernel_size:int = 5
+    dilation_rate:int = 1
+    num_layers:int = 4
 
 @dataclass
 class DurationPredictorConfig(Coqpit):
     kernel_size_dp:int = 3
     filter_channels:int = 256
     use_stochastic_dp:bool = True
-    dropout_p_duration_predictor:float = 0.5
+    dropout_p:float = 0.5
 
 @dataclass
 class WaveformDecoderConfig(Coqpit):
-    resblock_type_decoder:str = "2"
-    resblock_dilation_sizes_decoder:List[List[int]] = field(default_factory=lambda: [
+    resblock_type:str = "2"
+    resblock_dilation_sizes:List[List[int]] = field(default_factory=lambda: [
                 [ 1, 3, 5 ],
                 [ 1, 3, 5 ],
                 [ 1, 3, 5 ]
             ])
-    resblock_kernel_sizes_decoder:List[int] = field(default_factory=lambda: [ 3, 7, 11 ])
-    upsample_kernel_sizes_decoder:List[int] = field(default_factory=lambda: [ 16, 16, 4, 4 ])
-    upsample_initial_channel_decoder:int = 512
-    upsample_rates_decoder:List[int] = field(default_factory=lambda: [ 8, 8, 2, 2 ])
+    resblock_kernel_sizes:List[int] = field(default_factory=lambda: [ 3, 7, 11])
+    upsample_kernel_sizes:List[int] = field(default_factory=lambda: [ 16, 16, 4, 4])
+    upsample_initial_channel:int = 512
+    upsample_rates:List[int] = field(default_factory=lambda: [ 8, 8, 2, 2])
 
 @dataclass
 class DiscriminatorConfig(Coqpit):
-    periods_multi_period_discriminator:List[int] = field(default_factory=lambda: [2, 3, 5, 7, 11])
-    use_spectral_norm_disriminator:bool = False
+    periods_multi_period:List[int] = field(default_factory=lambda: [2, 3, 5, 7, 11])
+    use_spectral_norm:bool = False
 
 @dataclass
 class BaseModelConfig(Coqpit):

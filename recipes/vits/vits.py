@@ -42,28 +42,28 @@ class VitsModel(nn.Module):
             n_vocab=self.model_config.text_encoder.num_chars,
             out_channels=self.model_config.hidden_channels,
             hidden_channels=self.model_config.hidden_channels,
-            hidden_channels_ffn=self.model_config.text_encoder.hidden_channels_ffn_text_encoder,
-            num_heads=self.model_config.text_encoder.num_heads_text_encoder,
-            num_layers=self.model_config.text_encoder.num_layers_text_encoder,
-            kernel_size=self.model_config.text_encoder.kernel_size_text_encoder,
-            dropout_p=self.model_config.text_encoder.dropout_p_text_encoder,
+            hidden_channels_ffn=self.model_config.text_encoder.hidden_channels_ffn,
+            num_heads=self.model_config.text_encoder.num_heads,
+            num_layers=self.model_config.text_encoder.num_layers,
+            kernel_size=self.model_config.text_encoder.kernel_size,
+            dropout_p=self.model_config.text_encoder.dropout_p,
             language_emb_dim=self.embedded_language_dim,
         )
         self.audio_encoder = AudioEncoder(
             in_channels=self.model_config.out_channels,
             out_channels=self.model_config.hidden_channels,
             hidden_channels=self.model_config.hidden_channels,
-            kernel_size=self.model_config.audio_encoder.kernel_size_audio_encoder,
-            dilation_rate=self.model_config.audio_encoder.dilation_rate_audio_encoder,
-            num_layers=self.model_config.audio_encoder.num_layers_audio_encoder,
+            kernel_size=self.model_config.audio_encoder.kernel_size,
+            dilation_rate=self.model_config.audio_encoder.dilation_rate,
+            num_layers=self.model_config.audio_encoder.num_layers,
             cond_channels=self.embedded_speaker_dim,
         )
         self.flow = ResidualCouplingBlocks(
             channels=self.model_config.hidden_channels,
             hidden_channels=self.model_config.hidden_channels,
-            kernel_size=self.model_config.flow.kernel_size_flow,
-            dilation_rate=self.model_config.flow.dilation_rate_flow,
-            num_layers=self.model_config.flow.num_layers_flow,
+            kernel_size=self.model_config.flow.kernel_size,
+            dilation_rate=self.model_config.flow.dilation_rate,
+            num_layers=self.model_config.flow.num_layers,
             cond_channels=self.embedded_speaker_dim,
         )
         if self.model_config.duration_predictor.use_stochastic_dp:
@@ -71,7 +71,7 @@ class VitsModel(nn.Module):
                 in_channels=self.model_config.hidden_channels,
                 hidden_channels=192,
                 kernel_size=self.model_config.duration_predictor.kernel_size_dp,
-                dropout_p=self.model_config.duration_predictor.dropout_p_duration_predictor,
+                dropout_p=self.model_config.duration_predictor.dropout_p,
                 cond_channels=self.embedded_speaker_dim,
                 language_emb_dim=self.embedded_language_dim,
             )
@@ -80,19 +80,19 @@ class VitsModel(nn.Module):
                 in_channels=self.model_config.hidden_channels,
                 hidden_channels=256,
                 kernel_size=self.model_config.duration_predictor.kernel_size_dp,
-                dropout_p=self.model_config.duration_predictor.dropout_p_duration_predictor,
+                dropout_p=self.model_config.duration_predictor.dropout_p,
                 cond_channels=self.embedded_speaker_dim,
                 language_emb_dim=self.embedded_language_dim,
             )
         self.waveform_decoder = HifiganGenerator(
             in_channels=self.model_config.hidden_channels,
             out_channels=1,
-            resblock_type=self.model_config.waveform_decoder.resblock_type_decoder,
-            resblock_dilation_sizes=self.model_config.waveform_decoder.resblock_dilation_sizes_decoder,
-            resblock_kernel_sizes=self.model_config.waveform_decoder.resblock_kernel_sizes_decoder,
-            upsample_kernel_sizes=self.model_config.waveform_decoder.upsample_kernel_sizes_decoder,
-            upsample_initial_channel=self.model_config.waveform_decoder.upsample_initial_channel_decoder,
-            upsample_factors=self.model_config.waveform_decoder.upsample_rates_decoder,
+            resblock_type=self.model_config.waveform_decoder.resblock_type,
+            resblock_dilation_sizes=self.model_config.waveform_decoder.resblock_dilation_sizes,
+            resblock_kernel_sizes=self.model_config.waveform_decoder.resblock_kernel_sizes,
+            upsample_kernel_sizes=self.model_config.waveform_decoder.upsample_kernel_sizes,
+            upsample_initial_channel=self.model_config.waveform_decoder.upsample_initial_channel,
+            upsample_factors=self.model_config.waveform_decoder.upsample_rates,
             inference_padding=0,
             cond_channels=self.embedded_speaker_dim,
             conv_pre_weight_norm=False,
@@ -324,8 +324,8 @@ class VitsTrain(TrainerModelWithDataset):
             language_manager=language_manager
         )
         self.discriminator = VitsDiscriminator(
-            periods=self.model_config.discriminator.periods_multi_period_discriminator,
-            use_spectral_norm=self.model_config.discriminator.use_spectral_norm_disriminator,
+            periods=self.model_config.discriminator.periods_multi_period,
+            use_spectral_norm=self.model_config.discriminator.use_spectral_norm,
         )
 
     def train_step(self, batch: Dict, criterion: nn.Module, optimizer_idx: int) -> Tuple[Dict, Dict]:
