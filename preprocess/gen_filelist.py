@@ -1,8 +1,9 @@
 import argparse
 import text
 from config.config import VitsConfig
-from dataset.VCTK import load_file_metas as load_vctk_metas
+from dataset.VCTK import load_vctk_metas as load_vctk_metas
 from dataset.dataset import split_dataset_metas
+from dataset.ljspeech import load_ljspeech_metas
 
 """
 generate train and test filelist. 
@@ -13,15 +14,17 @@ def load_file_metas(config):
     items = []
     if dataset_name.lower() == "vctk":
         items = load_vctk_metas(root_path=config.path, ignored_speakers=config.ignored_speakers)
+    if dataset_name.lower() == "ljspeech":
+        items = load_ljspeech_metas(root_path=config.path)
     return items
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="./config/vits.json")
+    parser.add_argument("--config", type=str, default="../config/base.json")
     args = parser.parse_args()
 
     train_config = VitsConfig()
-    train_config.load_json("./config/vits.json")
+    train_config.load_json("../config/base.json")
     config = train_config.dataset_config
     text_config = train_config.text
 
@@ -36,8 +39,8 @@ if __name__ == "__main__":
 
     # save test and validate filelist
     filelists = [
-        "filelists/%s_train_filelist.txt" % config.dataset_name,
-        "filelists/%s_test_filelist.txt" % config.dataset_name
+        "../filelists/%s_train_filelist.txt" % config.dataset_name,
+        "../filelists/%s_test_filelist.txt" % config.dataset_name
     ]
     with open(filelists[0], "w", encoding="utf-8") as f:
         f.writelines([x["audio"] + "|" + x["speaker"] + "|en|" + x["text"].strip() + "\n" for x in train_datas])

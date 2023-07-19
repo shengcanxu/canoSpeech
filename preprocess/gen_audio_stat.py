@@ -149,7 +149,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="../config/vits.json")
+    parser.add_argument("--config", type=str, default="../config/vits_vctk.json")
     parser.add_argument("--speaker_model", type=str, default="D:/dataset/VCTK/model_se.pth.tar")
     parser.add_argument("--speaker_config", type=str, default="D:/dataset/VCTK/config_se.json")
     parser.add_argument("--refresh", type=bool, default=False)

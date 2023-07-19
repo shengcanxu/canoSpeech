@@ -119,27 +119,25 @@ VCTK_gender_dict = {
         'S5': 'Female',
 }
 
-def download_vctk(path: str, use_kaggle: Optional[bool] = False):
+def download_vctk(save_path: str, use_kaggle: Optional[bool] = False):
     """Download and extract VCTK dataset.
-
     Args:
-        path (str): path to the directory where the dataset will be stored.
-
+        save_path (str): path to the directory where the dataset will be stored.
         use_kaggle (bool, optional): Downloads vctk dataset from kaggle. Is generally faster. Defaults to False.
     """
     if use_kaggle:
-        download_kaggle_dataset("mfekadu/english-multispeaker-corpus-for-voice-cloning", "VCTK", path)
+        download_kaggle_dataset("mfekadu/english-multispeaker-corpus-for-voice-cloning", "VCTK", save_path)
     else:
-        os.makedirs(path, exist_ok=True)
+        os.makedirs(save_path, exist_ok=True)
         url = "https://datashare.ed.ac.uk/bitstream/handle/10283/3443/VCTK-Corpus-0.92.zip"
-        download_url(url, path)
+        download_url(url, save_path)
         basename = os.path.basename(url)
-        archive = os.path.join(path, basename)
+        archive = os.path.join(save_path, basename)
         print(" > Extracting archive file...")
         extract_archive(archive)
 
 
-def load_file_metas(root_path:str, wavs_path="wav48_silence_trimmed", mic="mic1", ignored_speakers=None):
+def load_vctk_metas(root_path:str, wavs_path="wav48_silence_trimmed", mic="mic1", ignored_speakers=None):
     """
     load VCTK dataset file meta
     """
@@ -179,5 +177,5 @@ if __name__ == "__main__":
     print(">>> Downloading VCTK dataset:")
     download_vctk(VCTK_DOWNLOAD_PATH)
     print(">>> resampling VCTK dataset:")
-    resample_files(VCTK_DOWNLOAD_PATH, args.sample_rate, file_ext="flac", n_jobs=args.resample_threads)
+    # resample_files(VCTK_DOWNLOAD_PATH, args.sample_rate, file_ext="flac", n_jobs=args.resample_threads)
 

@@ -1,0 +1,154 @@
+{
+    "run_name": "CanoNaturalSpeech",
+    "run_description": "Cano Speech running on VCTK dataset",
+
+    "dataset_config": {
+        "dataset_name":"vctk",
+        "meta_file_train":"D:/project/canoSpeech/filelists/vctk_train_filelist.txt",
+        "meta_file_val":"D:/project/canoSpeech/filelists/vctk_test_filelist.txt",
+        "path":"D:\\dataset\\VCTK",
+        "language":"en",
+        "ignored_speakers":[ "p261", "p225", "p294", "p347", "p238", "p234", "p248", "p335", "p245", "p326", "p302"],
+        "num_loader_workers": 8,
+        "num_eval_loader_workers": 4,
+        "use_cache": false,
+        "melspec_use_GPU": true,
+        "add_preprocess_data": true
+    },
+    "text": {
+        "min_text_len": 1,
+        "max_text_len": 190,
+        "add_blank": true,
+        "cleaned_text": false,
+        "text_cleaners":["english_cleaners2"]
+    },
+    "audio": {
+        "mel_fmin": 0,
+        "mel_fmax": null,
+        "hop_length": 256,
+        "win_length": 1024,
+        "sample_rate": 22050,
+        "fft_size": 1024,
+        "num_mels": 80,
+        "pitch_fmax": 640.0,
+        "pitch_fmin": 1.0
+    },
+
+    "eval_split_max_size": 256,
+    "eval_split_size": 0.1,
+    "distributed_backend": "nccl",
+    "distributed_url": "tcp://localhost:54321",
+    "mixed_precision": false,
+    "grad_clip": [ 1000, 1000 ],
+
+    "scheduler_after_epoch": true,
+    "lr": 0.001,
+    "optimizer": "AdamW",
+    "optimizer_params": {
+        "betas": [0.8, 0.99 ],
+        "eps": 1e-09,
+        "weight_decay": 0.01
+    },
+    "lr_scheduler": null,
+    "lr_scheduler_params": {},
+
+    "epochs": 1000,
+    "batch_size": 4,
+    "eval_batch_size": 4,
+    "restore_path": "D:\\project\\canoSpeech\\output\\CanoSpeech-July-14-2023_10+41AM-b8d34d4",
+
+    "print_step": 5,
+    "plot_step": 100,
+    "log_model_step": 1000,
+    "save_step": 5000,
+    "save_n_checkpoints": 2,
+    "save_checkpoints": true,
+
+    "loss": {
+        "kl_loss_alpha": 1.0,
+        "kl_loss_forward_alpha": 1.0,
+        "disc_loss_alpha": 1.0,
+        "gen_loss_alpha": 1.0,
+        "gen_loss_e2e_alpha": 1.0,
+        "feat_loss_alpha": 1.0,
+        "mel_loss_alpha": 45.0,
+        "dur_loss_alpha": 1.0,
+        "speaker_encoder_loss_alpha": 9.0,
+        "use_soft_dynamic_time_warping": false
+    },
+
+    "model": {
+        "hidden_channels": 192,
+        "out_channels":513,
+        "spec_segment_size": 32,
+
+        "language_embedding_channels": 4,
+        "use_language_embedding": false,
+        "language_ids_file": null,
+        "speaker_embedding_channels": 512,
+        "num_speakers": 0,
+        "use_speaker_embedding": false,
+        "use_speaker_encoder_as_loss": false,
+        "inference_noise_scale_dp": 1.0,
+        "inference_noise_scale":0.667,
+        "length_scale": 1.0,
+        "max_inference_len": null,
+        "use_memory_bank": true,
+        "use_gt_duration": false,
+
+        "text_encoder": {
+            "num_chars": 178,
+            "hidden_channels_ffn_text_encoder": 768,
+            "num_heads_text_encoder": 2,
+            "num_layers_text_encoder": 10,
+            "kernel_size_text_encoder": 3,
+            "dropout_p_text_encoder": 0.1
+        },
+        "audio_encoder": {
+            "kernel_size_audio_encoder": 5,
+            "dilation_rate_audio_encoder": 1,
+            "num_layers_audio_encoder": 16
+        },
+        "flow": {
+            "kernel_size_flow": 5,
+            "dilation_rate_flow": 1,
+            "num_layers_flow": 4
+        },
+        "duration_predictor": {
+            "kernel_size_dp": 3,
+            "filter_channels": 256,
+            "use_stochastic_dp": true,
+            "dropout_p_duration_predictor": 0.5
+        },
+        "learnable_upsampling": {
+            "d_predictor": 192,
+            "kernel_size_lu": 3,
+            "dropout_lu": 0.0,
+            "conv_output_size": 8,
+            "dim_w": 4,
+            "dim_c": 2,
+            "max_seq_len": 1000
+        },
+        "waveform_decoder": {
+            "resblock_type_decoder": "2",
+            "resblock_dilation_sizes_decoder": [
+                [ 1, 3, 5 ],
+                [ 1, 3, 5 ],
+                [ 1, 3, 5 ]
+            ],
+            "resblock_kernel_sizes_decoder": [ 3, 7, 11 ],
+            "upsample_kernel_sizes_decoder": [ 16, 16, 4, 4 ],
+            "upsample_initial_channel_decoder": 512,
+            "upsample_rates_decoder": [ 8, 8, 2, 2 ]
+        },
+        "memory_bank": {
+            "bank_size": 1000,
+            "n_hidden_dims": 192,
+            "n_attn_heads": 2
+        },
+        "discriminator": {
+            "periods_multi_period_discriminator": [2, 3, 5, 7, 11],
+            "use_spectral_norm_disriminator": false
+        }
+    }
+}

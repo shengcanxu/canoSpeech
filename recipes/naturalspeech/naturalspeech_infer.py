@@ -31,7 +31,7 @@ def main(args:dict):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="./config/naturalspeech.json")
+    parser.add_argument("--config", type=str, default="./config/naturalspeech_ljs.json")
     parser.add_argument("--path", type=str, default="D:/project/canoSpeech/output/CanoSpeech-July-14-2023_10+41AM-b8d34d4/best_model_40.pth")
     args = parser.parse_args()
 

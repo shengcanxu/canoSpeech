@@ -156,7 +156,7 @@ class NaturalSpeechModel(nn.Module):
         if speaker_embeds is not None:
             g = F.normalize(speaker_embeds).unsqueeze(-1)
         else:
-            g = torch.zeros(x.size(0), self.embedded_speaker_dim, 1)
+            g = torch.zeros(x.size(0), self.embedded_speaker_dim, 1).to(x.device)
         if g.ndim == 2:
             g = g.unsqueeze_(0)
         lid = None

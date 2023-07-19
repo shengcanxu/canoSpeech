@@ -21,7 +21,8 @@ def main():
         batch_size=BATCH_SIZE,
         eval_batch_size=BATCH_SIZE,
     )
-    config.load_json("./config/naturalspeech.json")
+    config.load_json("./config/naturalspeech_vctk.json")
+    # config.load_json("./config/naturalspeech_ljs.json")
     data_config = config.dataset_config
     # print(config)
 
