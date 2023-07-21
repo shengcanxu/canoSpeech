@@ -1,6 +1,8 @@
 import torch
 from torch import nn
 
+from layers.transformer import RelativePositionMultiHeadAttention
+
 
 @torch.jit.script
 def fused_add_tanh_sigmoid_multiply(input_a, input_b, n_channels):
@@ -40,7 +42,6 @@ class WaveNet(torch.nn.Module):
         num_layers,
         c_in_channels=0,
         dropout_p=0,
-        weight_norm=True,
     ):
         super().__init__()
         assert kernel_size % 2 == 1
@@ -84,9 +85,6 @@ class WaveNet(torch.nn.Module):
             res_skip_layer = torch.nn.Conv1d(hidden_channels, res_skip_channels, 1)
             res_skip_layer = torch.nn.utils.weight_norm(res_skip_layer, name="weight")
             self.res_skip_layers.append(res_skip_layer)
-        # setup weight norm
-        if not weight_norm:
-            self.remove_weight_norm()
 
     def forward(self, x, x_mask=None, g=None, **kwargs):  # pylint: disable=unused-argument
         output = torch.zeros_like(x)
@@ -111,14 +109,6 @@ class WaveNet(torch.nn.Module):
                 output = output + res_skip_acts
         return output * x_mask
 
-    def remove_weight_norm(self):
-        if self.c_in_channels != 0:
-            torch.nn.utils.remove_weight_norm(self.cond_layer)
-        for l in self.in_layers:
-            torch.nn.utils.remove_weight_norm(l)
-        for l in self.res_skip_layers:
-            torch.nn.utils.remove_weight_norm(l)
-
 
 class WaveNetBlocks(nn.Module):
     """Wavenet blocks.
@@ -134,7 +124,6 @@ class WaveNetBlocks(nn.Module):
         num_layers (int): number of wavenet layers.
         c_in_channels (int): number of channels of conditioning input.
         dropout_p (float): dropout rate.
-        weight_norm (bool): enable/disable weight norm for convolution layers.
     """
     def __init__(
         self,
@@ -146,7 +135,6 @@ class WaveNetBlocks(nn.Module):
         num_layers,
         c_in_channels=0,
         dropout_p=0,
-        weight_norm=True,
     ):
         super().__init__()
         self.wn_blocks = nn.ModuleList()
@@ -159,7 +147,6 @@ class WaveNetBlocks(nn.Module):
                 num_layers=num_layers,
                 c_in_channels=c_in_channels,
                 dropout_p=dropout_p,
-                weight_norm=weight_norm,
             )
             self.wn_blocks.append(layer)
 

@@ -71,3 +71,16 @@ class DurationPredictor(VariancePredictor):
 class PitchPredictor(VariancePredictor):
     def __init__(self, channels:int, condition_channels:int, kernel_size:int, n_stack:int, n_stack_in_stack:int, attention_num_head:int, dropout_p:float):
         super().__init__(channels, condition_channels, kernel_size, n_stack, n_stack_in_stack, attention_num_head, dropout_p)
+
+        self.pitch_embedding = nn.Conv1d(in_channels=1, out_channels=channels, kernel_size=1)
+        self.norm = LayerNorm(channels)
+
+    def forward(self, x:torch.Tensor, masks:torch.Tensor, speech_prompts:torch.Tensor) -> torch.Tensor:
+        '''
+        encodings: [Batch, Enc_d, Enc_t or Feature_t]
+        speech_prompts: [Batch, Enc_d, Prompt_t]
+        '''
+        pitches = super().forward(x=x, masks=masks, speech_prompts=speech_prompts)
+        pitch_embed = self.pitch_embedding(pitches.unsqueeze(1))
+        pitch_embed = self.norm(pitch_embed) * masks
+        return pitches, pitch_embed

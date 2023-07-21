@@ -3,6 +3,11 @@ text to speech, a repro for producing human natural speech
 
 NaturalTTS is revised from NaturalSpeech2 and change the Diffusion to Flow
 
+use wavenet and attention. As descripted in Figure 4 in NaturalSpeech2 paper, but change a little bit. 
+    the changes is: 
+        1. keep the flow architecture from VITS
+        2. wrape the wavenet, add attention and FiLM to it, as description in Figure 4
+
 # get dataset and process
 1. VCTK: run download/VCTK.py
 

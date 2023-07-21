@@ -66,7 +66,8 @@ class NaturalSpeechModel(nn.Module):
             hidden_channels=self.model_config.hidden_channels,
             kernel_size=self.model_config.flow.kernel_size,
             dilation_rate=self.model_config.flow.dilation_rate,
-            num_layers=self.model_config.flow.num_layers,
+            num_flows=self.model_config.flow.num_flows,
+            num_layers=self.model_config.flow.num_layers_in_flow,
             cond_channels=self.embedded_speaker_dim,
         )
         self.duration_predictor = VitsDurationPredictor(

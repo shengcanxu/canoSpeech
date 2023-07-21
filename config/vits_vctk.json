@@ -108,7 +108,8 @@
         "flow": {
             "kernel_size": 5,
             "dilation_rate": 1,
-            "num_layers": 4
+            "num_flows": 4,
+            "num_layers_in_flow": 4
         },
         "duration_predictor": {
             "kernel_size": 3,

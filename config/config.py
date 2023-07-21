@@ -84,7 +84,9 @@ class AudioEncoderConfig(Coqpit):
 class FlowConfig(Coqpit):
     kernel_size:int = 5
     dilation_rate:int = 1
-    num_layers:int = 4
+    num_flows:int = 4
+    num_layers_in_flow:int = 4
+    attention_heads:int = 2
 
 @dataclass
 class VitsDurationPredictorConfig(Coqpit):

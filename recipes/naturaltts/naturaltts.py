@@ -11,12 +11,12 @@ from language.languages import LanguageManager
 from layers.discriminator import VitsDiscriminator
 from layers.duration_predictor import VitsDurationPredictor
 from layers.encoder import TextEncoder, AudioEncoder
-from layers.flow import ResidualCouplingBlocks
+from layers.flow import ResidualCouplingBlocks, AttentionFlow
 from layers.generator import HifiganGenerator
 from layers.learnable_upsampling import LearnableUpsampling
 from layers.losses import NaturalSpeechDiscriminatorLoss, NaturalSpeechGeneratorLoss
 from layers.quantizer import RVQQuantizer
-from layers.variancepredictor import DurationPredictor, PitchPredictor
+from layers.variance_predictor import DurationPredictor, PitchPredictor
 from recipes.trainer_model import TrainerModelWithDataset
 from text import text_to_tokens
 from util.helper import segment, rand_segments
@@ -60,13 +60,15 @@ class NaturalTTSModel(nn.Module):
             num_layers=self.model_config.audio_encoder.num_layers,
             cond_channels=self.embedded_speaker_dim,
         )
-        self.flow = ResidualCouplingBlocks(
+        self.flow = AttentionFlow(
             channels=self.model_config.hidden_channels,
             hidden_channels=self.model_config.hidden_channels,
             kernel_size=self.model_config.flow.kernel_size,
             dilation_rate=self.model_config.flow.dilation_rate,
-            num_layers=self.model_config.flow.num_layers,
+            num_layers=self.model_config.flow.num_layers_in_flow,
+            num_flows=self.model_config.flow.num_flows,
             cond_channels=self.embedded_speaker_dim,
+            attention_heads=self.model_config.flow.attention_heads
         )
         self.duration_predictor = DurationPredictor(
             channels=self.model_config.hidden_channels,
@@ -168,13 +170,13 @@ class NaturalTTSModel(nn.Module):
         duration_loss = torch.sum((duration_logw - duration_logw_gt) ** 2, [1, 2]) / torch.sum(x_mask)
 
         # predict pitch
-        pitch_logw = self.duration_predictor(x, x_mask, speech_prompts=prompt)  # pitch_logw:[B,1,T]
+        pitch_logw, pitch_embed = self.pitch_predictor(x, x_mask, speech_prompts=prompt)  # pitch_logw:[B,1,T]
         pitch_p = torch.exp(pitch_logw) * x_mask  # w:[B,1,T]
         # pitch_logw_gt = torch.log(pitch.unsqueeze(1) + 1e-6) * x_mask
         # pitch_loss = torch.sum((pitch_logw - pitch_logw_gt) ** 2, [1, 2]) / torch.sum(x_mask)
 
         # pitch add to tokens(x) for future upsampling using duration
-        x = x + pitch_logw.unsqueeze(1)
+        x = x + pitch_embed
 
         # differentiable durator (learnable upsampling)
         upsampled_rep, p_mask, _, W = self.learnable_upsampling(
