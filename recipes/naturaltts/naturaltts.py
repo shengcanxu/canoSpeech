@@ -1,5 +1,3 @@
-import time
-
 import torch
 from coqpit import Coqpit
 from typing import Dict, List, Union, Tuple
@@ -8,7 +6,7 @@ from torch import nn
 from torch.cuda.amp import autocast
 from trainer import get_optimizer, get_scheduler
 from torch.nn import functional as F
-from config.config import NaturalSpeechConfig
+from config.config import NaturalTTSConfig
 from language.languages import LanguageManager
 from layers.discriminator import VitsDiscriminator
 from layers.duration_predictor import VitsDurationPredictor
@@ -17,15 +15,16 @@ from layers.flow import ResidualCouplingBlocks
 from layers.generator import HifiganGenerator
 from layers.learnable_upsampling import LearnableUpsampling
 from layers.losses import NaturalSpeechDiscriminatorLoss, NaturalSpeechGeneratorLoss
-from layers.quantizer import VAEMemoryBank
+from layers.quantizer import RVQQuantizer
+from layers.variancepredictor import DurationPredictor, PitchPredictor
 from recipes.trainer_model import TrainerModelWithDataset
 from text import text_to_tokens
 from util.helper import segment, rand_segments
 from util.mel_processing import wav_to_mel
 
 
-class NaturalSpeechModel(nn.Module):
-    def __init__(self, config:NaturalSpeechConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None ):
+class NaturalTTSModel(nn.Module):
+    def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None ):
         super().__init__()
         self.config = config
         self.model_config = config.model
@@ -69,13 +68,23 @@ class NaturalSpeechModel(nn.Module):
             num_layers=self.model_config.flow.num_layers,
             cond_channels=self.embedded_speaker_dim,
         )
-        self.duration_predictor = VitsDurationPredictor(
-            in_channels=self.model_config.hidden_channels,
-            hidden_channels=self.model_config.duration_predictor.filter_channels,
+        self.duration_predictor = DurationPredictor(
+            channels=self.model_config.hidden_channels,
+            condition_channels=self.model_config.hidden_channels,
             kernel_size=self.model_config.duration_predictor.kernel_size,
-            dropout_p=self.model_config.duration_predictor.dropout_p,
-            cond_channels=self.embedded_speaker_dim,
-            language_emb_dim=self.embedded_language_dim,
+            n_stack=self.model_config.duration_predictor.n_stack,
+            n_stack_in_stack=self.model_config.duration_predictor.n_stack_in_stack,
+            attention_num_head=self.model_config.duration_predictor.attention_num_head,
+            dropout_p=self.model_config.duration_predictor.dropout_p
+        )
+        self.pitch_predictor = PitchPredictor(
+            channels=self.model_config.hidden_channels,
+            condition_channels=self.model_config.hidden_channels,
+            kernel_size=self.model_config.pitch_predictor.kernel_size,
+            n_stack=self.model_config.pitch_predictor.n_stack,
+            n_stack_in_stack=self.model_config.pitch_predictor.n_stack_in_stack,
+            attention_num_head=self.model_config.pitch_predictor.attention_num_head,
+            dropout_p=self.model_config.pitch_predictor.dropout_p
         )
         self.learnable_upsampling = LearnableUpsampling(
             d_predictor=self.model_config.learnable_upsampling.d_predictor,
@@ -96,15 +105,16 @@ class NaturalSpeechModel(nn.Module):
             upsample_initial_channel=self.model_config.waveform_decoder.upsample_initial_channel,
             upsample_factors=self.model_config.waveform_decoder.upsample_rates,
             inference_padding=0,
-            cond_channels=self.embedded_speaker_dim,
+            cond_channels=0,
             conv_pre_weight_norm=False,
             conv_post_weight_norm=False,
             conv_post_bias=False
         )
-        self.memory_bank = VAEMemoryBank(
-            bank_size=self.model_config.memory_bank.bank_size,
-            n_hidden_dims=self.model_config.memory_bank.n_hidden_dims,
-            n_attn_heads=self.model_config.memory_bank.n_attn_heads
+        self.quantizer = RVQQuantizer(
+            n_code_groups=self.model_config.quantizer.n_code_groups,
+            n_codes=self.model_config.quantizer.n_codes,
+            codebook_loss_alpha=self.model_config.quantizer.codebook_loss_alpha,
+            commitment_loss_alpha=self.model_config.quantizer.commitment_loss_alpha
         )
 
     def init_multilingual(self, config: Coqpit):
@@ -124,70 +134,47 @@ class NaturalSpeechModel(nn.Module):
         else:
             self.embedded_language_dim = 0
 
-    @staticmethod
-    def _set_cond_input(speaker_embeds, speaker_ids, language_ids):
-        """Set the speaker conditioning input based on the multi-speaker mode."""
-        sid, g, lid, durations = None, None, None, None
-        if speaker_ids is not None:
-            sid = speaker_ids
-            if sid.ndim == 0:
-                sid = sid.unsqueeze_(0)
-        if speaker_embeds is not None:
-            g = F.normalize(speaker_embeds).unsqueeze(-1)
-            if g.ndim == 2:
-                g = g.unsqueeze_(0)
-
-        if language_ids is not None:
-            lid = language_ids
-            if lid.ndim == 0:
-                lid = lid.unsqueeze_(0)
-        return sid, g, lid
-
     def forward(
         self,
-        x,  # [B,C]
+        x,  # [B,C,T]
         x_lengths,  # [B]
-        y,  # [B,specT,specC]
+        y,  # [B,specC,specT]
         y_lengths,  # [B]
-        duration=None,
-        use_gt_duration=True,
-        speaker_embeds=None,
-        language_ids=None
+        duration=None, # [B, T]
+        pitch=None,
+        speaker_prompt=None,
     ):
-        # _, g, lid = self._set_cond_input(speaker_embeds, None, language_ids)
-        if speaker_embeds is not None:
-            g = F.normalize(speaker_embeds).unsqueeze(-1)
-        else:
-            g = torch.zeros(x.size(0), self.embedded_speaker_dim, 1).to(x.device)
-        if g.ndim == 2:
-            g = g.unsqueeze_(0)
-        lid = None
-
-        # language embedding
-        lang_embedding = None
-        if self.model_config.use_language_embedding and lid is not None:
-            lang_embedding = self.language_embedding(lid).unsqueeze(-1)
-
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embedding)
-
         # audio encoder, encode audio to embedding layer z's dimension,
         # z:[B,C,spectrogramToken] m_q:[B,C,specT] logs_q:[B,C,specT] y_mask:[B,1,specT]
-        z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=g)
+        z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=None)
 
         # z_p:[B,C,specT]
-        z_p = self.flow(z, y_mask, g=g)
+        z_p = self.flow(z, y_mask, g=None)
+        z_slice, ids_slice = rand_segments(z, y_lengths, self.spec_segment_size, let_short_samples=True, pad_short=True)
 
-        # differentiable durator (duration predictor & loss)
-        logw = self.duration_predictor(x, x_mask, g=g)  # logw:[B,1,T]
-        w = torch.exp(logw) * x_mask  # w:[B,1,T]
+        # quantize z using RVQ
+        z_slice, _, _ = self.quantizer(z_slice)
 
-        w_gt = duration.unsqueeze(1)
-        logw_gt = torch.log(w_gt + 1e-6) * x_mask
-        # for averaging
-        duration_loss = torch.sum((logw - logw_gt) ** 2, [1, 2]) / torch.sum(x_mask)
-        # use predicted duration
-        if not use_gt_duration:
-            duration = w.squeeze(1)
+        y_hat = self.waveform_decoder(z_slice, g=None)
+
+        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=None)
+        # generate prompt from x, use half x_length
+        prompt = x
+
+        # predict durator
+        duration_logw = self.duration_predictor(x, x_mask, speech_prompts=prompt)  # duration_logw:[B,1,T]
+        duration_p = torch.exp(duration_logw) * x_mask  # w:[B,1,T]
+        duration_logw_gt = torch.log(duration.unsqueeze(1) + 1e-6) * x_mask
+        duration_loss = torch.sum((duration_logw - duration_logw_gt) ** 2, [1, 2]) / torch.sum(x_mask)
+
+        # predict pitch
+        pitch_logw = self.duration_predictor(x, x_mask, speech_prompts=prompt)  # pitch_logw:[B,1,T]
+        pitch_p = torch.exp(pitch_logw) * x_mask  # w:[B,1,T]
+        # pitch_logw_gt = torch.log(pitch.unsqueeze(1) + 1e-6) * x_mask
+        # pitch_loss = torch.sum((pitch_logw - pitch_logw_gt) ** 2, [1, 2]) / torch.sum(x_mask)
+
+        # pitch add to tokens(x) for future upsampling using duration
+        x = x + pitch_logw.unsqueeze(1)
 
         # differentiable durator (learnable upsampling)
         upsampled_rep, p_mask, _, W = self.learnable_upsampling(
@@ -199,32 +186,16 @@ class NaturalSpeechModel(nn.Module):
             max_src_len=x_lengths.max(),
         )
         p_mask = ~p_mask
-
         m_p, logs_p = torch.split(upsampled_rep.transpose(1, 2), 192, dim=1)
-        z_slice, ids_slice = rand_segments(
-            z, y_lengths, self.spec_segment_size, let_short_samples=True, pad_short=True
-        )
 
-        if self.model_config.use_memory_bank:
-            z_slice = self.memory_bank(z_slice)
-
-        y_hat = self.waveform_decoder(z_slice, g=g)
-
-        z_q = self.flow(
-            x=m_p + torch.randn_like(m_p) * torch.exp(logs_p),
-            x_mask=p_mask.unsqueeze(1),
-            g=g,
-            reverse=True,
-        )
+        z_q = self.flow(x=m_p + torch.randn_like(m_p) * torch.exp(logs_p), x_mask=p_mask.unsqueeze(1), g=None, reverse=True, )
         z_q_lengths = p_mask.flatten(1, -1).sum(dim=-1).long()
-        z_slice_q, ids_slice_q = rand_segments(
-            z_q, torch.minimum(z_q_lengths, y_lengths), self.spec_segment_size, let_short_samples=True, pad_short=True
-        )
+        z_slice_q, ids_slice_q = rand_segments(z_q, torch.minimum(z_q_lengths, y_lengths), self.spec_segment_size, let_short_samples=True, pad_short=True)
 
-        if self.model_config.use_memory_bank:
-            z_slice_q = self.memory_bank(z_slice_q)
+        # quantize z using RVQ
+        z_slice_q, _, _ = self.quantizer(z_slice_q)
 
-        y_hat_e2e = self.waveform_decoder((z_slice_q), g=g)
+        y_hat_e2e = self.waveform_decoder((z_slice_q), g=None)
 
         return {
             "y_hat": y_hat,  # the generated waveform
@@ -274,8 +245,8 @@ class NaturalSpeechModel(nn.Module):
         # infer with only one example
         x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embedding)
 
-        logw = self.duration_predictor(x, x_mask, g=g)
-        w = torch.exp(logw) * x_mask * self.model_config.length_scale
+        logw_p = self.duration_predictor(x, x_mask, g=g)
+        w = torch.exp(logw_p) * x_mask * self.model_config.length_scale
         if duration is not None:
             w = duration.unsqueeze(1) * x_mask * self.model_config.length_scale
 
@@ -294,24 +265,24 @@ class NaturalSpeechModel(nn.Module):
         z_p = m_p + torch.randn_like(m_p) * torch.exp(logs_p) * self.model_config.inference_noise_scale
         z = self.flow(z_p, y_mask, g=g, reverse=True)
 
-        if self.model_config.use_memory_bank:
-            z = self.memory_bank(z)
+        # quantize with RVQ
+        z = self.quantizer.embed(z)
 
         z = (z * y_mask)[:, :, :self.model_config.max_inference_len]
         y_hat = self.waveform_decoder(z, g=g)
         return y_hat
 
 
-class NaturalSpeechTrain(TrainerModelWithDataset):
+class NaturalTTSTrain(TrainerModelWithDataset):
     """
     Natural Speech model training model.
     """
-    def __init__(self, config:NaturalSpeechConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None, ):
+    def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None, ):
         super().__init__()
         self.config = config
         self.model_config = config.model
 
-        self.generator = NaturalSpeechModel(
+        self.generator = NaturalTTSModel(
             config=config,
             speaker_embed=speaker_embed,
             language_manager=language_manager
@@ -330,6 +301,7 @@ class NaturalSpeechTrain(TrainerModelWithDataset):
             speaker_embeds = batch["speaker_embed"]
             wav = batch["waveform"]
             duration = batch["duration"]
+            pitch = batch["pitch"]
 
             # generator pass
             outputs = self.generator(
@@ -338,10 +310,7 @@ class NaturalSpeechTrain(TrainerModelWithDataset):
                 y=spec,
                 y_lengths=spec_lens,
                 duration=duration,
-                use_gt_duration=self.model_config.use_gt_duration,
-                speaker_embeds=speaker_embeds,
-                language_ids=None,
-
+                pitch=pitch
             )
 
             wav_slice1 = segment(

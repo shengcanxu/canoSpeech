@@ -12,8 +12,9 @@
         "num_loader_workers": 8,
         "num_eval_loader_workers": 4,
         "use_cache": false,
-        "melspec_use_GPU": true,
-        "add_preprocess_data": true
+        "melspec_use_GPU": false,
+        "add_preprocess_data": true,
+        "use_speech_prompt": true
     },
     "text": {
         "min_text_len": 1,
@@ -94,7 +95,6 @@
         "inference_noise_scale":0.667,
         "length_scale": 1.0,
         "max_inference_len": null,
-        "use_memory_bank": true,
         "use_gt_duration": false,
 
         "text_encoder": {
@@ -117,8 +117,16 @@
         },
         "duration_predictor": {
             "kernel_size": 3,
-            "filter_channels": 256,
-            "use_stochastic_dp": true,
+            "n_stack": 10,
+            "n_stack_in_stack": 3,
+            "attention_num_head": 2,
+            "dropout_p": 0.5
+        },
+        "pitch_predictor": {
+            "kernel_size": 3,
+            "n_stack": 10,
+            "n_stack_in_stack": 3,
+            "attention_num_head": 2,
             "dropout_p": 0.5
         },
         "learnable_upsampling": {
@@ -142,10 +150,11 @@
             "upsample_initial_channel": 512,
             "upsample_rates": [ 8, 8, 2, 2 ]
         },
-        "memory_bank": {
-            "bank_size": 1000,
-            "n_hidden_dims": 192,
-            "n_attn_heads": 2
+        "quantizer": {
+            "n_code_groups": 2,
+            "n_codes": 1024,
+            "codebook_loss_alpha": 1.0,
+            "commitment_loss_alpha":  0.25
         },
         "discriminator": {
             "periods_multi_period": [2, 3, 5, 7, 11],

@@ -30,7 +30,7 @@ def generate_path(duration, mask):
     path = path * mask
     return path
 
-class DurationPredictor(nn.Module):
+class VitsDurationPredictor(nn.Module):
     """Glow-TTS duration prediction model.
     ::
         [2 x (conv1d_kxk -> relu -> layer_norm -> dropout)] -> conv1d_1x1 -> durs

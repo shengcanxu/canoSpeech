@@ -79,6 +79,7 @@ class TextAudioDataset(Dataset):
         self.use_cache = getattr(config.dataset_config, "use_cache", False)
         self.melspec_use_GPU = getattr(config.dataset_config, "melspec_use_GPU", False)
         self.add_preprocess_data = getattr(config.dataset_config, "add_preprocess_data", True)
+        self.use_speech_prompt = getattr(config.dataset_config, "use_speech_prompt", False)
 
         self.hop_length = config.audio.hop_length
         self.win_length = config.audio.win_length
@@ -265,6 +266,10 @@ class TextAudioDataset(Dataset):
             speaker_embed_lens_max = torch.max(speaker_embed_lens)
             speaker_embed_padded = torch.FloatTensor(B, speaker_embed_lens_max)
             speaker_embed_padded = speaker_embed_padded.zero_()
+
+        prompt_padded, prompt_starts = None, None
+        if self.use_speech_prompt:
+            pass
 
         for i in range(len(ids_sorted_decreasing)):
             item = batch[ids_sorted_decreasing[i]]

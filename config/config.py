@@ -41,6 +41,7 @@ class TTSDatasetConfig(Coqpit):
     num_eval_loader_workers:int = 8
     melspec_use_GPU:bool = False
     add_preprocess_data:bool = True
+    use_speech_prompt:bool = False
 
 @dataclass
 class TextConfig(Coqpit):
@@ -56,7 +57,7 @@ class AudioConfig(Coqpit):
     mel_fmax = None
     hop_length:int = 256
     win_length:int = 1024
-    sample_rate:int = 16000
+    sample_rate:int = 16000  # sample_rate affect the training time a lot
     fft_size:int = 1024
     num_mels:int = 80
     pitch_fmax:float = 640.0
@@ -86,8 +87,8 @@ class FlowConfig(Coqpit):
     num_layers:int = 4
 
 @dataclass
-class DurationPredictorConfig(Coqpit):
-    kernel_size_dp:int = 3
+class VitsDurationPredictorConfig(Coqpit):
+    kernel_size:int = 3
     filter_channels:int = 256
     use_stochastic_dp:bool = True
     dropout_p:float = 0.5
@@ -133,17 +134,12 @@ class VitsModelConfig(BaseModelConfig):
     text_encoder: TextEncoderConfig = field(default_factory=lambda: TextEncoderConfig())
     audio_encoder: AudioEncoderConfig = field(default_factory=lambda: AudioEncoderConfig())
     flow:FlowConfig = field(default_factory=lambda:FlowConfig())
-    duration_predictor:DurationPredictorConfig = field(default_factory=lambda: DurationPredictorConfig())
+    duration_predictor:VitsDurationPredictorConfig = field(default_factory=lambda: VitsDurationPredictorConfig())
     waveform_decoder:WaveformDecoderConfig = field(default_factory=lambda: WaveformDecoderConfig())
     discriminator: DiscriminatorConfig = field(default_factory=lambda: DiscriminatorConfig())
 
 @dataclass
 class VitsLossConfig(Coqpit):
-    #  "c_mel": 45,
-    # "c_kl": 1.0,
-    # "c_kl_fwd": 0.001,
-    # "c_e2e": 0.1,   disc_loss_alpha
-    # "c_dur": 5.0,
     kl_loss_alpha:float = 1.0
     kl_loss_forward_alpha:float = 1.0
     disc_loss_alpha:float = 1.0
@@ -203,7 +199,7 @@ class NaturalSpeechModelConfig(BaseModelConfig):
     text_encoder: TextEncoderConfig = field(default_factory=lambda: TextEncoderConfig())
     audio_encoder: AudioEncoderConfig = field(default_factory=lambda: AudioEncoderConfig())
     flow:FlowConfig = field(default_factory=lambda:FlowConfig())
-    duration_predictor:DurationPredictorConfig = field(default_factory=lambda: DurationPredictorConfig())
+    duration_predictor:VitsDurationPredictorConfig = field(default_factory=lambda: VitsDurationPredictorConfig())
     learnable_upsampling:LearnableUpsampling = field(default_factory=lambda: LearnableUpsampling())
     waveform_decoder:WaveformDecoderConfig = field(default_factory=lambda: WaveformDecoderConfig())
     memory_bank:MemroyBank = field(default_factory=lambda: MemroyBank())
@@ -228,3 +224,63 @@ class NaturalSpeechConfig(TrainerConfig):
 
     # model config
     model: NaturalSpeechModelConfig = field(default_factory=lambda: NaturalSpeechModelConfig())
+
+################################ Natural TTS ##########################################
+
+@dataclass
+class QuantizerConfig(Coqpit):
+    n_code_groups:int = 2
+    n_codes:int = 1024
+    codebook_loss_alpha:float = 1.0
+    commitment_loss_alpha:float = 0.25
+
+@dataclass
+class PitchPredictorConfig(Coqpit):
+    kernel_size:int = 3
+    n_stack:int = 10
+    n_stack_in_stack:int = 3
+    attention_num_head:int = 2
+    dropout_p:float = 0.5
+
+@dataclass
+class DurationPredictorConfig(Coqpit):
+    kernel_size:int = 3
+    n_stack:int = 10
+    n_stack_in_stack:int = 3
+    attention_num_head:int = 2
+    dropout_p:float = 0.5
+
+@dataclass
+class NaturalTTSModelConfig(BaseModelConfig):
+    use_gt_duration:bool = False  # use ground-true duration to generate the training data
+
+    text_encoder: TextEncoderConfig = field(default_factory=lambda: TextEncoderConfig())
+    audio_encoder: AudioEncoderConfig = field(default_factory=lambda: AudioEncoderConfig())
+    flow:FlowConfig = field(default_factory=lambda:FlowConfig())
+    duration_predictor:DurationPredictorConfig = field(default_factory=lambda: DurationPredictorConfig())
+    pitch_predictor:PitchPredictorConfig = field(default_factory=lambda: PitchPredictorConfig())
+    learnable_upsampling:LearnableUpsampling = field(default_factory=lambda: LearnableUpsampling())
+    waveform_decoder:WaveformDecoderConfig = field(default_factory=lambda: WaveformDecoderConfig())
+    quantizer:QuantizerConfig = field(default_factory=lambda: QuantizerConfig())
+    discriminator: DiscriminatorConfig = field(default_factory=lambda: DiscriminatorConfig())
+
+
+@dataclass
+class NaturalTTSConfig(TrainerConfig):
+    """
+    General training config, here you can change the batch size and others useful parameters
+    """
+    dataset_config: TTSDatasetConfig = field(default_factory=lambda: TTSDatasetConfig())
+    audio: AudioConfig = field(default_factory=lambda: AudioConfig())
+    text: TextConfig = field(default_factory=lambda: TextConfig())
+
+    # the max size of eval dataset
+    eval_split_max_size: int = 256
+    # the percentage of dataset to be eval dataset
+    eval_split_size: float = 0.01
+
+    # loss
+    loss: VitsLossConfig = field(default_factory=lambda: VitsLossConfig())
+
+    # model config
+    model: NaturalTTSModelConfig = field(default_factory=lambda: NaturalTTSModelConfig())

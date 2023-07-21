@@ -9,7 +9,7 @@ from trainer.trainer_utils import get_optimizer, get_scheduler
 from config.config import VitsConfig
 from language.languages import LanguageManager
 from layers.discriminator import VitsDiscriminator
-from layers.duration_predictor import DurationPredictor, generate_path, StochasticDurationPredictor
+from layers.duration_predictor import VitsDurationPredictor, generate_path, StochasticDurationPredictor
 from layers.flow import ResidualCouplingBlocks
 from layers.generator import HifiganGenerator
 from layers.losses import VitsDiscriminatorLoss, VitsGeneratorLoss
@@ -70,16 +70,16 @@ class VitsModel(nn.Module):
             self.duration_predictor = StochasticDurationPredictor(
                 in_channels=self.model_config.hidden_channels,
                 hidden_channels=192,
-                kernel_size=self.model_config.duration_predictor.kernel_size_dp,
+                kernel_size=self.model_config.duration_predictor.kernel_size,
                 dropout_p=self.model_config.duration_predictor.dropout_p,
                 cond_channels=self.embedded_speaker_dim,
                 language_emb_dim=self.embedded_language_dim,
             )
         else:
-            self.duration_predictor = DurationPredictor(
+            self.duration_predictor = VitsDurationPredictor(
                 in_channels=self.model_config.hidden_channels,
                 hidden_channels=256,
-                kernel_size=self.model_config.duration_predictor.kernel_size_dp,
+                kernel_size=self.model_config.duration_predictor.kernel_size,
                 dropout_p=self.model_config.duration_predictor.dropout_p,
                 cond_channels=self.embedded_speaker_dim,
                 language_emb_dim=self.embedded_language_dim,

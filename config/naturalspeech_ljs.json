@@ -27,7 +27,7 @@
         "mel_fmax": null,
         "hop_length": 256,
         "win_length": 1024,
-        "sample_rate": 22050,
+        "sample_rate": 16000,
         "fft_size": 1024,
         "num_mels": 80,
         "pitch_fmax": 640.0,
@@ -116,7 +116,7 @@
             "num_layers": 4
         },
         "duration_predictor": {
-            "kernel_size_dp": 3,
+            "kernel_size": 3,
             "filter_channels": 256,
             "use_stochastic_dp": true,
             "dropout_p": 0.5

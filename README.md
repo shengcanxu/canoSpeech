@@ -1,6 +1,8 @@
 # canoSpeech
 text to speech, a repro for producing human natural speech
 
+NaturalTTS is revised from NaturalSpeech2 and change the Diffusion to Flow
+
 # get dataset and process
 1. VCTK: run download/VCTK.py
 
@@ -44,5 +46,9 @@ speaker enbedding encoder configs:
    2. audiomentations
    3. torch-audiomentations
    4. torchaudio.transforms
+4. useful checkpoints
+   1. H/ASP speaker embedding model checkpoint: https://github.com/coqui-ai/TTS/releases/download/speaker_encoder_model/model_se.pth.tar
+   2. RQV quantizer checkpoint: https://huggingface.co/Dongchao/AcademiCodec/tree/main
+   
    
 
