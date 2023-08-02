@@ -1,3 +1,5 @@
+import math
+
 import torch
 from coqpit import Coqpit
 from typing import Dict, List, Union, Tuple
@@ -17,6 +19,7 @@ from layers.learnable_upsampling import LearnableUpsampling
 from layers.losses import NaturalSpeechDiscriminatorLoss, NaturalSpeechGeneratorLoss
 from layers.quantizer import RVQQuantizer
 from layers.variance_predictor import DurationPredictor, PitchPredictor
+from monotonic_align.maximum_path import maximum_path
 from recipes.trainer_model import TrainerModelWithDataset
 from text import text_to_tokens
 from util.helper import segment, rand_segments
@@ -37,6 +40,7 @@ class NaturalTTSModel(nn.Module):
         self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
         if self.num_speakers > 0:
             self.speaker_embedding = nn.Embedding(self.num_speakers, self.embedded_speaker_dim)
+        self.use_gt_duration = self.model_config.use_gt_duration
 
         self.init_multilingual(config)
 
@@ -136,75 +140,136 @@ class NaturalTTSModel(nn.Module):
         else:
             self.embedded_language_dim = 0
 
+    def match_mel_token(self, z_p, m_p, logs_p, x_mask, y_mask):
+        # find the alignment path
+        attn_mask = torch.unsqueeze(x_mask, -1) * torch.unsqueeze(y_mask, 2)
+        with torch.no_grad():
+            # code here does: using "Probability density function", by applying z_p to Probability density function
+            # to get the probability
+            o_scale = torch.exp(-2 * logs_p)  # 1/p**2, p is the Variance
+            logp1 = torch.sum(-0.5 * math.log(2 * math.pi) - logs_p, [1]).unsqueeze(-1)  # [b, t, 1] log( 1/sqrt(2*pi*p**2) )
+            logp2 = torch.einsum("klm, kln -> kmn", [o_scale, -0.5 * (z_p ** 2)])  # log( -x**2/(2*p**2) ), x will be z_p here
+            logp3 = torch.einsum("klm, kln -> kmn", [m_p * o_scale, z_p])  # log( 2xu/2p**2 ), u is the mean here
+            logp4 = torch.sum(-0.5 * (m_p ** 2) * o_scale, [1]).unsqueeze(-1)  # [b, t, 1]  log( u**2/(2*p**2) )
+            logp = logp2 + logp3 + logp1 + logp4  # log("Probability density")
+            attn = maximum_path(logp, attn_mask.squeeze(1)).unsqueeze(1).detach()  # [b, 1, t, t']
+
+        # duration predictor
+        attn_durations = attn.sum(3)
+        return attn_durations
+
     def forward(
         self,
         x,  # [B,C,T]
         x_lengths,  # [B]
         y,  # [B,specC,specT]
         y_lengths,  # [B]
-        duration=None, # [B, T]
         pitch=None,
         speaker_prompt=None,
     ):
         # audio encoder, encode audio to embedding layer z's dimension,
-        # z:[B,C,spectrogramToken] m_q:[B,C,specT] logs_q:[B,C,specT] y_mask:[B,1,specT]
-        z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=None)
+        # z:[B,C,spectrogramToken] m_q:[B,C,specT] logs_q:[B,C,specT] z_mask:[B,1,specT]
+        z, m_q, logs_q, z_mask = self.audio_encoder(
+            x=y,
+            x_lengths=y_lengths,
+            g=None
+        )
+
+        # generate prompt from x, use half x_length
+        prompt_length = y_lengths.min() // 2
+        prompts, ids_prompts = rand_segments(
+            x=z,
+            x_lengths=y_lengths,
+            segment_size=prompt_length,
+            let_short_samples=True,
+            pad_short=True
+        )
 
         # z_p:[B,C,specT]
-        z_p = self.flow(z, y_mask, g=None)
-        z_slice, ids_slice = rand_segments(z, y_lengths, self.spec_segment_size, let_short_samples=True, pad_short=True)
+        z_p = self.flow(z, z_mask, g=None)
+        z_slice, ids_slice = rand_segments(
+            x=z,
+            x_lengths=y_lengths,
+            segment_size=self.spec_segment_size,
+            let_short_samples=True,
+            pad_short=True
+        )
 
         # quantize z using RVQ
         z_slice, _, _ = self.quantizer(z_slice)
-
         y_hat = self.waveform_decoder(z_slice, g=None)
 
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=None)
-        # generate prompt from x, use half x_length
-        prompt = x
+        x, m_p, logs_p, x_mask = self.text_encoder(
+            x=x,
+            x_lengths=x_lengths,
+            lang_emb=None
+        )
 
         # predict durator
-        duration_logw = self.duration_predictor(x, x_mask, speech_prompts=prompt)  # duration_logw:[B,1,T]
-        duration_p = torch.exp(duration_logw) * x_mask  # w:[B,1,T]
-        duration_logw_gt = torch.log(duration.unsqueeze(1) + 1e-6) * x_mask
+        duration_logw = self.duration_predictor(
+            x=x,
+            masks=x_mask,
+            speech_prompts=prompts
+        )  # duration_logw:[B,1,T]
+        duration_p = torch.exp(duration_logw.unsqueeze(1)) * x_mask  # w:[B,1,T]
+        duration_gt = self.match_mel_token(z_p, m_p, logs_p, x_mask, z_mask)
+        duration_logw_gt = torch.log(duration_gt.unsqueeze(1) + 1e-6) * x_mask
         duration_loss = torch.sum((duration_logw - duration_logw_gt) ** 2, [1, 2]) / torch.sum(x_mask)
 
-        # predict pitch
-        pitch_logw, pitch_embed = self.pitch_predictor(x, x_mask, speech_prompts=prompt)  # pitch_logw:[B,1,T]
-        pitch_p = torch.exp(pitch_logw) * x_mask  # w:[B,1,T]
-        # pitch_logw_gt = torch.log(pitch.unsqueeze(1) + 1e-6) * x_mask
-        # pitch_loss = torch.sum((pitch_logw - pitch_logw_gt) ** 2, [1, 2]) / torch.sum(x_mask)
-
-        # pitch add to tokens(x) for future upsampling using duration
-        x = x + pitch_embed
-
         # differentiable durator (learnable upsampling)
-        upsampled_rep, p_mask, _, W = self.learnable_upsampling(
-            duration=duration,
-            V=x.transpose(1, 2),
+        upsampled_rep, p_mask, _, W, C = self.learnable_upsampling(
+            duration=duration_gt.squeeze() if self.use_gt_duration else duration_p.squeeze(),
+            tokens=x.transpose(1, 2),
             src_len=x_lengths,
             src_mask=~(x_mask.squeeze(1).bool()),
             tgt_len=y_lengths,
             max_src_len=x_lengths.max(),
         )
-        p_mask = ~p_mask
+        p_mask = p_mask.unsqueeze(1)
         m_p, logs_p = torch.split(upsampled_rep.transpose(1, 2), 192, dim=1)
 
-        z_q = self.flow(x=m_p + torch.randn_like(m_p) * torch.exp(logs_p), x_mask=p_mask.unsqueeze(1), g=None, reverse=True, )
+        # predict pitch
+        x_p = m_p + torch.randn_like(m_p) * torch.exp(logs_p)
+        pitch_logw, pitch_embed = self.pitch_predictor(
+            x=x_p,
+            masks=p_mask,
+            speech_prompts=prompts
+        )  # pitch_logw:[B,1,T]
+        # pitch_p = torch.exp(pitch_logw.unsqueeze(1)) * z_mask  # w:[B,1,T]
+        pitch_logw_gt = torch.log(pitch.unsqueeze(1) + 1e-6) * p_mask
+        pitch_loss = torch.sum((pitch_logw - pitch_logw_gt) ** 2, [1, 2]) / torch.sum(p_mask)
+
+        # pitch add to tokens(x) for future upsampling using duration
+        x_p = x_p + pitch_embed
+
+        z_q = self.flow(
+            x=x_p,
+            x_mask=p_mask,
+            g=None,
+            reverse=True
+        )
         z_q_lengths = p_mask.flatten(1, -1).sum(dim=-1).long()
-        z_slice_q, ids_slice_q = rand_segments(z_q, torch.minimum(z_q_lengths, y_lengths), self.spec_segment_size, let_short_samples=True, pad_short=True)
+        z_slice_q, ids_slice_q = rand_segments(
+            x=z_q,
+            x_lengths=torch.minimum(z_q_lengths, y_lengths),
+            segment_size=self.spec_segment_size,
+            let_short_samples=True,
+            pad_short=True
+        )
 
         # quantize z using RVQ
         z_slice_q, _, _ = self.quantizer(z_slice_q)
-
-        y_hat_e2e = self.waveform_decoder((z_slice_q), g=None)
+        y_hat_e2e = self.waveform_decoder(z_slice_q, g=None)
 
         return {
             "y_hat": y_hat,  # the generated waveform
+            "duration": duration_gt,
             "duration_loss": duration_loss,
+            "pitch": pitch,
+            "pitch_loss": pitch_loss,
             "ids_slice": ids_slice,
             "x_mask": x_mask,
-            "y_mask": y_mask,
+            "z_mask": z_mask,
             "z": z,
             "z_p": z_p,
             "m_p": m_p,
@@ -215,7 +280,6 @@ class NaturalTTSModel(nn.Module):
             "W": W,
             "y_hat_e2e": y_hat_e2e,
             "z_q": z_q,
-            "duration": duration,
             "ids_slice_q": ids_slice_q
         }
 
@@ -252,7 +316,7 @@ class NaturalTTSModel(nn.Module):
         if duration is not None:
             w = duration.unsqueeze(1) * x_mask * self.model_config.length_scale
 
-        upsampled_rep, p_mask, _, W = self.learnable_upsampling(
+        upsampled_rep, p_mask, _, W, C = self.learnable_upsampling(
             duration=w.squeeze(1),
             V=x.transpose(1, 2),
             src_len=x_lengths,
@@ -260,7 +324,6 @@ class NaturalTTSModel(nn.Module):
             tgt_len=None,
             max_src_len=x_mask.shape[-1]
         )
-        p_mask = ~p_mask
         m_p, logs_p = torch.split(upsampled_rep.transpose(1, 2), 192, dim=1)
 
         y_mask = p_mask.unsqueeze(1)
@@ -302,7 +365,6 @@ class NaturalTTSTrain(TrainerModelWithDataset):
             spec = batch["spec"]
             speaker_embeds = batch["speaker_embed"]
             wav = batch["waveform"]
-            duration = batch["duration"]
             pitch = batch["pitch"]
 
             # generator pass
@@ -311,17 +373,16 @@ class NaturalTTSTrain(TrainerModelWithDataset):
                 x_lengths=token_lens,
                 y=spec,
                 y_lengths=spec_lens,
-                duration=duration,
                 pitch=pitch
             )
 
-            wav_slice1 = segment(
+            wav_slice = segment(
                 x=wav,
                 segment_indices=outputs["ids_slice"] * self.config.audio.hop_length,
                 segment_size=self.model_config.spec_segment_size * self.config.audio.hop_length,
                 pad_short=True
             )
-            wav_slice2 = segment(
+            wav_slice_q = segment(
                 x=wav,
                 segment_indices=outputs["ids_slice_q"] * self.config.audio.hop_length,
                 segment_size=self.model_config.spec_segment_size * self.config.audio.hop_length,
@@ -330,16 +391,16 @@ class NaturalTTSTrain(TrainerModelWithDataset):
 
             # cache tensors for the generator pass
             self.model_outputs_cache = outputs
-            self.wav_slice1 = wav_slice1
-            self.wav_slice2 = wav_slice2
+            self.wav_slice = wav_slice
+            self.wav_slice_q = wav_slice_q
 
             # compute scores and features
             scores_disc_real, _, scores_disc_fake, _ = self.discriminator(
-                x=wav_slice1,
+                x=wav_slice,
                 x_hat=outputs["y_hat"].detach()
             )
             scores_disc_real_e2e, _, scores_disc_fake_e2e, _ = self.discriminator(
-                x=wav_slice2,
+                x=wav_slice_q,
                 x_hat=outputs["y_hat_e2e"].detach()
             )
 
@@ -382,11 +443,11 @@ class NaturalTTSTrain(TrainerModelWithDataset):
 
             # compute discriminator scores and features
             scores_disc_real, feats_disc_real, scores_disc_fake, feats_disc_fake = self.discriminator(
-                x=self.wav_slice1,
+                x=self.wav_slice,
                 x_hat=self.model_outputs_cache["y_hat"]
             )
             scores_disc_real_e2e, _, scores_disc_fake_e2e, _ = self.discriminator(
-                x=self.wav_slice2,
+                x=self.wav_slice_q,
                 x_hat=self.model_outputs_cache["y_hat_e2e"]
             )
 
@@ -399,7 +460,8 @@ class NaturalTTSTrain(TrainerModelWithDataset):
                     scores_disc_fake_e2e=scores_disc_fake_e2e,
                     feats_disc_real=feats_disc_real,
                     feats_disc_fake=feats_disc_fake,
-                    loss_duration_length=self.model_outputs_cache["duration_loss"],
+                    duration_loss=self.model_outputs_cache["duration_loss"],
+                    pitch_loss = self.model_outputs_cache["pitch_loss"],
                     z_p=self.model_outputs_cache["z_p"],
                     m_p=self.model_outputs_cache["m_p"],
                     logs_p=self.model_outputs_cache["logs_p"],
@@ -407,7 +469,7 @@ class NaturalTTSTrain(TrainerModelWithDataset):
                     m_q=self.model_outputs_cache["m_q"],
                     logs_q=self.model_outputs_cache["logs_q"],
                     p_mask=self.model_outputs_cache["p_mask"],
-                    z_mask=self.model_outputs_cache["y_mask"],
+                    z_mask=self.model_outputs_cache["z_mask"],
                 )
 
             return self.model_outputs_cache, loss_dict

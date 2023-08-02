@@ -49,18 +49,18 @@ def gen_vits_model():
     os.chdir(current_path)  # change the path back
     return net_g, hps
 
-def gen_duration_using_vits(net_g:torch.nn.Module, hps, text:str, sid=4):
+def gen_duration_using_vits(vits_model:torch.nn.Module, hps, text:str, sid=4):
     current_path = os.path.dirname(os.path.abspath(__file__))
     os.chdir(os.path.join(current_path, "reference/vits"))  # change the path to vits path
 
-    stn_tst = get_text(text, hps)
+    x_text = get_text(text, hps)
     with torch.no_grad():
-        x_tst = stn_tst.cuda().unsqueeze(0)
-        x_tst_lengths = torch.LongTensor([stn_tst.size(0)]).cuda()
+        x_text = x_text.cuda().unsqueeze(0)
+        x_text_lengths = torch.LongTensor([x_text.size(1)]).cuda()
         sid = torch.LongTensor([sid]).cuda()
-        audio, attn, _, _ = net_g.infer(
-            x_tst,
-            x_tst_lengths,
+        audio, attn, _, _ = vits_model.infer(
+            x=x_text,
+            x_lengths=x_text_lengths,
             sid=sid,
             noise_scale=.667,
             noise_scale_w=0.8,
@@ -115,24 +115,38 @@ def main(args):
             continue
 
         # Load audio at the correct sample rate
-        audio = penn.load.audio(path)
-        hopsize = config.audio.hop_length / config.audio.sample_rate
+        wav = processor.load_wav(path, sr=config.audio.sample_rate)
+        audio = torch.from_numpy(wav)
+        audio = audio.unsqueeze(0)
+
+        _, duration = gen_duration_using_vits(vits, vits_config, text, sid=77)
+
         # Infer pitch and periodicity
         pitch, periodicity = penn.from_audio(
             audio=audio,
             sample_rate=config.audio.sample_rate,
-            hopsize=hopsize,
+            hopsize=config.audio.hop_length / config.audio.sample_rate,
             fmin=config.audio.pitch_fmin,
             fmax=config.audio.pitch_fmax,
             checkpoint="D:\\dataset\\VCTK\\fcnf0++.pt",
-            batch_size=128,
+            batch_size=256,
             pad=True,
             interp_unvoiced_at=0.065,
-            gpu=0)
+            gpu=0
+        )
         pitch = pitch.cpu().squeeze().numpy()
+        periodicity = periodicity.cpu().squeeze().numpy()
 
-        _, duration = gen_duration_using_vits(vits, vits_config, text, sid=77)
-        # processor.save_wav(audio, path="../output/test2.wav", sr=22050)
+        # align pitch and spectrogram length
+        spec = processor.spectrogram(wav)
+        if spec.shape[1] > pitch.shape[0] + 1:
+            print("Error! pitch is shorter than spectrogram")
+        elif spec.shape[1] < pitch.shape[0]:
+            print("Error! pitch is longer than spectrogram")
+        elif spec.shape[1] == pitch.shape[0] + 1:
+            # add the last data to the end to extend the length
+            pitch = np.append(pitch, pitch[-1])
+            periodicity = np.append(periodicity, periodicity[-1])
 
         speaker_embedd = speaker_encoder.compute_embedding_from_waveform(audio)
         speaker_embedd = speaker_embedd.squeeze(0)
@@ -141,6 +155,7 @@ def main(args):
         obj = {
             "text": text,
             "pitch": pitch,
+            "periodicity": periodicity,
             "duration": duration,
             "speaker": speaker_embedd
         }
@@ -156,3 +171,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args)
+
+    # pklpath = 'D:\\dataset\\VCTK\\wav48_silence_trimmed\\p226\\p226_089_mic1.flac.pkl'
+    # with open(pklpath, "rb") as fp:
+    #     obj = pickle.load(fp)
+    #     print(obj)
+    #     print(len(obj["pitch"]))

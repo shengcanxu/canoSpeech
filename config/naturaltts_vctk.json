@@ -13,8 +13,7 @@
         "num_eval_loader_workers": 4,
         "use_cache": false,
         "melspec_use_GPU": false,
-        "add_preprocess_data": true,
-        "use_speech_prompt": true
+        "add_preprocess_data": true
     },
     "text": {
         "min_text_len": 1,
@@ -33,7 +32,8 @@
         "num_mels": 80,
         "pitch_fmax": 640.0,
         "pitch_fmin": 1.0,
-        "max_audio_length": 10.0
+        "max_audio_length": 10.0,
+        "min_audio_length": 1.0
     },
 
     "eval_split_max_size": 256,
@@ -95,7 +95,7 @@
         "inference_noise_scale":0.667,
         "length_scale": 1.0,
         "max_inference_len": null,
-        "use_gt_duration": false,
+        "use_gt_duration": true,
 
         "text_encoder": {
             "num_chars": 178,
@@ -113,7 +113,7 @@
         "flow": {
             "kernel_size": 5,
             "dilation_rate": 1,
-            "num_flows": 6,
+            "num_flows": 4,
             "num_layers_in_flow": 4,
             "attention_heads": 2
         },

@@ -429,7 +429,7 @@ class NaturalSpeechTrain(TrainerModelWithDataset):
                     scores_disc_fake_e2e=scores_disc_fake_e2e,
                     feats_disc_real=feats_disc_real,
                     feats_disc_fake=feats_disc_fake,
-                    loss_duration_length=self.model_outputs_cache["duration_loss"],
+                    duration_loss=self.model_outputs_cache["duration_loss"],
                     z_p=self.model_outputs_cache["z_p"],
                     m_p=self.model_outputs_cache["m_p"],
                     logs_p=self.model_outputs_cache["logs_p"],

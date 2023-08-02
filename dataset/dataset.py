@@ -79,12 +79,12 @@ class TextAudioDataset(Dataset):
         self.use_cache = getattr(config.dataset_config, "use_cache", False)
         self.melspec_use_GPU = getattr(config.dataset_config, "melspec_use_GPU", False)
         self.add_preprocess_data = getattr(config.dataset_config, "add_preprocess_data", True)
-        self.use_speech_prompt = getattr(config.dataset_config, "use_speech_prompt", False)
 
         self.hop_length = config.audio.hop_length
         self.win_length = config.audio.win_length
         self.sample_rate = config.audio.sample_rate
         self.max_audio_length = getattr(config.audio, "max_audio_length", 10.0)
+        self.min_audio_length = getattr(config.audio, "min_audio_length", 1.0)
 
         self.processor = AudioProcessor(
             hop_length=config.audio.hop_length,
@@ -122,7 +122,7 @@ class TextAudioDataset(Dataset):
             # audio_len should less than config.audio.max_audio_length. it controls the max dimention of mel
             # max_mel_len = max_audio_length * sample_rate / hop_length
             if self.min_text_len <= len(sample["text"]) <= self.max_text_len\
-                    and audio_len <= self.max_audio_length:
+                    and self.min_audio_length <= audio_len <= self.max_audio_length:
                 samples_new.append(sample)
         self.samples = samples_new
 
@@ -188,13 +188,6 @@ class TextAudioDataset(Dataset):
             "pitch": pitch,
             "duration": duration
         }
-
-    # def _get_audio(self, filename):
-    #     wav, sample_rate = torchaudio.load(filename)
-    #
-    #     if sample_rate != self.sample_rate:
-    #         raise ValueError( "{} SR doesn't match target {} SR".format( sample_rate, self.sample_rate) )
-    #     return wav
 
     def _get_text(self, text):
         """format text and add blank"""
@@ -267,12 +260,11 @@ class TextAudioDataset(Dataset):
             speaker_embed_padded = torch.FloatTensor(B, speaker_embed_lens_max)
             speaker_embed_padded = speaker_embed_padded.zero_()
 
-        prompt_padded, prompt_starts = None, None
-        if self.use_speech_prompt:
-            pass
-
+        audio_files, raw_texts = [], []
         for i in range(len(ids_sorted_decreasing)):
             item = batch[ids_sorted_decreasing[i]]
+            audio_files.append(item["audio_file"])
+            raw_texts.append(item["raw_text"])
 
             tokens = item["tokens"]
             token_padded[i, : tokens.size(0)] = torch.LongTensor(tokens)

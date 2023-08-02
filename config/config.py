@@ -41,7 +41,6 @@ class TTSDatasetConfig(Coqpit):
     num_eval_loader_workers:int = 8
     melspec_use_GPU:bool = False
     add_preprocess_data:bool = True
-    use_speech_prompt:bool = False
 
 @dataclass
 class TextConfig(Coqpit):
@@ -63,6 +62,7 @@ class AudioConfig(Coqpit):
     pitch_fmax:float = 640.0
     pitch_fmin:float = 1.0
     max_audio_length:float = 10.0
+    min_audio_length:float = 1.0
     preemphasis: float = 0.0
 
 @dataclass
@@ -141,7 +141,7 @@ class VitsModelConfig(BaseModelConfig):
     discriminator: DiscriminatorConfig = field(default_factory=lambda: DiscriminatorConfig())
 
 @dataclass
-class VitsLossConfig(Coqpit):
+class LossConfig(Coqpit):
     kl_loss_alpha:float = 1.0
     kl_loss_forward_alpha:float = 1.0
     disc_loss_alpha:float = 1.0
@@ -150,6 +150,7 @@ class VitsLossConfig(Coqpit):
     feat_loss_alpha:float = 1.0
     mel_loss_alpha:float = 45.0
     dur_loss_alpha:float = 1.0
+    pitch_loss_alpha:float = 1.0
     speaker_encoder_loss_alpha:float = 9.0
 
     use_soft_dynamic_time_warping:bool = False
@@ -169,7 +170,7 @@ class VitsConfig(TrainerConfig):
     eval_split_size: float = 0.01
 
     #loss
-    loss:VitsLossConfig = field(default_factory=lambda: VitsLossConfig())
+    loss:LossConfig = field(default_factory=lambda: LossConfig())
 
     # model config
     model: VitsModelConfig = field(default_factory=lambda: VitsModelConfig())
@@ -222,7 +223,7 @@ class NaturalSpeechConfig(TrainerConfig):
     eval_split_size: float = 0.01
 
     #loss
-    loss:VitsLossConfig = field(default_factory=lambda: VitsLossConfig())
+    loss:LossConfig = field(default_factory=lambda: LossConfig())
 
     # model config
     model: NaturalSpeechModelConfig = field(default_factory=lambda: NaturalSpeechModelConfig())
@@ -266,7 +267,6 @@ class NaturalTTSModelConfig(BaseModelConfig):
     quantizer:QuantizerConfig = field(default_factory=lambda: QuantizerConfig())
     discriminator: DiscriminatorConfig = field(default_factory=lambda: DiscriminatorConfig())
 
-
 @dataclass
 class NaturalTTSConfig(TrainerConfig):
     """
@@ -282,7 +282,7 @@ class NaturalTTSConfig(TrainerConfig):
     eval_split_size: float = 0.01
 
     # loss
-    loss: VitsLossConfig = field(default_factory=lambda: VitsLossConfig())
+    loss: LossConfig = field(default_factory=lambda: LossConfig())
 
     # model config
     model: NaturalTTSModelConfig = field(default_factory=lambda: NaturalTTSModelConfig())

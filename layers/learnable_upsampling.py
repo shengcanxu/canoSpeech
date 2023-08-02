@@ -45,16 +45,19 @@ class LearnableUpsampling(nn.Module):
 
         self.proj_o = LinearNorm(192, 192 * 2)
 
-    def forward(self, duration, V, src_len, src_mask, tgt_len, max_src_len):
+    def forward(self, duration, tokens, src_len, src_mask, tgt_len, max_src_len):
 
         batch_size = duration.shape[0]
 
         # Duration Interpretation
-        if tgt_len is None:
-            mel_len = torch.round(duration.sum(-1)).type(torch.LongTensor).to(V.device)
-        else:
-            # fix: mel_len should be the target_lens(y_lengths)
-            mel_len = torch.round(tgt_len.type(torch.LongTensor).to(V.device))
+        # if tgt_len is None:
+        #     mel_len = torch.round(duration.sum(-1)).type(torch.LongTensor).to(tokens.device)
+        # else:
+        #     # fix: mel_len should be the target_lens(y_lengths)
+        #     mel_len = torch.round(tgt_len.type(torch.LongTensor).to(tokens.device))
+
+        mel_len = torch.round(duration.sum(-1)).type(torch.LongTensor).to(tokens.device)
+
         mel_len = torch.clamp(mel_len, max=self.max_seq_len)
         max_mel_len = mel_len.max().item()
         mel_mask = self.get_mask_from_lengths(mel_len, max_mel_len)
@@ -68,7 +71,7 @@ class LearnableUpsampling(nn.Module):
         )  # mel_mask_:[B,specT,T]
         attn_mask = torch.zeros(
             (src_mask.shape[0], mel_mask.shape[1], src_mask.shape[1])
-        ).to(V.device)  # attn_mask:[B,specT,T]
+        ).to(tokens.device)  # attn_mask:[B,specT,T]
         attn_mask = attn_mask.masked_fill(src_mask_, 1.0)
         attn_mask = attn_mask.masked_fill(mel_mask_, 1.0)
         attn_mask = attn_mask.bool()
@@ -79,7 +82,7 @@ class LearnableUpsampling(nn.Module):
         e_k = e_k.unsqueeze(1).expand(batch_size, max_mel_len, -1)
         s_k = s_k.unsqueeze(1).expand(batch_size, max_mel_len, -1)  # e_k:[B,specT,T] s_k:[B,specT,T]
         t_arange = (
-            torch.arange(1, max_mel_len + 1, device=V.device)
+            torch.arange(1, max_mel_len + 1, device=tokens.device)
             .unsqueeze(0)
             .unsqueeze(-1)
             .expand(batch_size, -1, max_src_len)
@@ -91,18 +94,18 @@ class LearnableUpsampling(nn.Module):
         )  # S:[B,specT,T] E:[B,specT,T]
 
         # Attention (W), formulate (7)
-        W = self.swish_w(S, E, self.conv_w(V))  # W:[B,specT,T,dim_w]
+        W = self.swish_w(S, E, self.conv_w(tokens))  # W:[B,specT,T,dim_w]
         W = W.masked_fill(src_mask_.unsqueeze(-1), -np.inf)
         W = self.softmax_w(W)
         W = W.masked_fill(mel_mask_.unsqueeze(-1), 0.0)
         W = W.permute(0, 3, 1, 2)
 
         # Auxiliary Attention Context (C),  formulate (8)
-        C = self.swish_c(S, E, self.conv_c(V))  # C:[B,specT,T,dim_c]
+        C = self.swish_c(S, E, self.conv_c(tokens))  # C:[B,specT,T,dim_c]
 
         # Upsampled Representation (O),  formulate (9)
         upsampled_rep = self.linear_w(
-            torch.einsum("bqtk,bkh->bqth", W, V).permute(0, 2, 1, 3).flatten(2)
+            torch.einsum("bqtk,bkh->bqth", W, tokens).permute(0, 2, 1, 3).flatten(2)
         ) + self.linear_einsum(
             torch.einsum("bqtk,btkp->bqtp", W, C).permute(0, 2, 1, 3).flatten(2)
         )  # [B,specT,C]
@@ -110,7 +113,8 @@ class LearnableUpsampling(nn.Module):
         upsampled_rep = upsampled_rep.masked_fill(mel_mask.unsqueeze(-1), 0)
         upsampled_rep = self.proj_o(upsampled_rep)  # upsampled_rep:[B,specT,C*2]
 
-        return upsampled_rep, mel_mask, mel_len, W
+        p_mask = ~mel_mask
+        return upsampled_rep, p_mask, mel_len, W, C
 
     def get_mask_from_lengths(self, lengths, max_len=None):
         batch_size = lengths.shape[0]

@@ -199,12 +199,14 @@ class VitsModel(nn.Module):
         # find the alignment path
         attn_mask = torch.unsqueeze(x_mask, -1) * torch.unsqueeze(y_mask, 2)
         with torch.no_grad():
-            o_scale = torch.exp(-2 * logs_p)
-            logp1 = torch.sum(-0.5 * math.log(2 * math.pi) - logs_p, [1]).unsqueeze(-1)  # [b, t, 1]
-            logp2 = torch.einsum("klm, kln -> kmn", [o_scale, -0.5 * (z_p**2)])
-            logp3 = torch.einsum("klm, kln -> kmn", [m_p * o_scale, z_p])
-            logp4 = torch.sum(-0.5 * (m_p**2) * o_scale, [1]).unsqueeze(-1)  # [b, t, 1]
-            logp = logp2 + logp3 + logp1 + logp4
+            # code here does: using "Probability density function", by applying z_p to Probability density function
+            # to get the probability
+            o_scale = torch.exp(-2 * logs_p)  # 1/p**2, p is the Variance
+            logp1 = torch.sum(-0.5 * math.log(2 * math.pi) - logs_p, [1]).unsqueeze(-1)  # [b, t, 1] log( 1/sqrt(2*pi*p**2) )
+            logp2 = torch.einsum("klm, kln -> kmn", [o_scale, -0.5 * (z_p**2)])  # log( -x**2/(2*p**2) ), x will be z_p here
+            logp3 = torch.einsum("klm, kln -> kmn", [m_p * o_scale, z_p])  # log( 2xu/2p**2 ), u is the mean here
+            logp4 = torch.sum(-0.5 * (m_p**2) * o_scale, [1]).unsqueeze(-1)  # [b, t, 1]  log( u**2/(2*p**2) )
+            logp = logp2 + logp3 + logp1 + logp4  # log("Probability density")
             attn = maximum_path(logp, attn_mask.squeeze(1)).unsqueeze(1).detach()  # [b, 1, t, t']
 
         # duration predictor

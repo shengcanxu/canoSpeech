@@ -158,6 +158,7 @@ class NaturalSpeechGeneratorLoss(nn.Module):
         self.gen_loss_e2e_alpha = config.loss.gen_loss_e2e_alpha
         self.feat_loss_alpha = config.loss.feat_loss_alpha
         self.dur_loss_alpha = config.loss.dur_loss_alpha
+        self.pitch_loss_alpha = config.loss.pitch_loss_alpha
         self.mel_loss_alpha = config.loss.mel_loss_alpha
         self.spk_encoder_loss_alpha = config.loss.speaker_encoder_loss_alpha
 
@@ -165,6 +166,7 @@ class NaturalSpeechGeneratorLoss(nn.Module):
 
     @staticmethod
     def feature_loss(feats_real, feats_generated):
+        """loss range [0, infinit], always [0, 12]"""
         loss = 0
         for dr, dg in zip(feats_real, feats_generated):
             for rl, gl in zip(dr, dg):
@@ -175,6 +177,7 @@ class NaturalSpeechGeneratorLoss(nn.Module):
 
     @staticmethod
     def generator_loss(scores_fake):
+        """loss range [0 - 6]"""
         loss = 0
         gen_losses = []
         for dg in scores_fake:
@@ -196,6 +199,21 @@ class NaturalSpeechGeneratorLoss(nn.Module):
         m_p = m_p.float()
         logs_p = logs_p.float()
         z_mask = z_mask.float()
+
+        # pad if size is not equal.
+        # distribution of logs_p and logs_q may different, make them the same size
+        if logs_p.size(2) != logs_q.size(2):
+            length = max(logs_p.size(2), logs_q.size(2))
+            if z_p.size(2) != length:
+                z_p = F.pad(z_p, (0, length - z_p.size(2)), "constant", 0)
+            if logs_p.size(2) != length:
+                logs_p = F.pad(logs_p, (0, length - logs_p.size(2)), "constant", 0)
+            if m_p.size(2) != length:
+                m_p = F.pad(m_p, (0, length - m_p.size(2)), "constant", 0)
+            if logs_q.size(2) != length:
+                logs_q = F.pad(logs_q, (0, length - logs_q.size(2)), "constant", 0)
+            if z_mask.size(2) != length:
+                z_mask = F.pad(z_mask, (0, length - z_mask.size(2)), "constant", 0)
 
         # kl_loss 的介绍在视频 https://www.bilibili.com/video/BV1VG411h75N/?spm_id_from=333.788&vd_source=d38c9d5cf896f215d746bb79474d6606
         # 的 1:38:43 开始处
@@ -263,7 +281,8 @@ class NaturalSpeechGeneratorLoss(nn.Module):
         scores_disc_fake_e2e,
         feats_disc_real,
         feats_disc_fake,
-        loss_duration_length,
+        duration_loss,
+        pitch_loss,
         z_p,
         m_p,
         logs_p,
@@ -277,10 +296,17 @@ class NaturalSpeechGeneratorLoss(nn.Module):
         loss_gen = loss_gen * self.gen_loss_alpha
         loss_gen_e2e, losses_gen_e2e = self.generator_loss(scores_disc_fake_e2e)
         loss_gen_e2e = loss_gen_e2e * self.gen_loss_e2e_alpha
-        loss_fm = self.feature_loss(feats_disc_real, feats_disc_fake) * self.feat_loss_alpha
-        loss_mel = F.l1_loss(mel_slice, mel_slice_hat) * self.mel_loss_alpha
-        loss_dur = torch.sum(loss_duration_length.float()) * self.dur_loss_alpha
 
+        # feature loss of discriminator with z generated from audio
+        loss_fm = self.feature_loss(feats_disc_real, feats_disc_fake) * self.feat_loss_alpha
+        # mel loss of discrimator with z generated from audio
+        loss_mel = F.l1_loss(mel_slice, mel_slice_hat) * self.mel_loss_alpha
+
+        # duration and pitch loss generated from text
+        loss_dur = torch.sum(duration_loss.float()) * self.dur_loss_alpha
+        loss_pitch = torch.sum(pitch_loss.float()) * self.pitch_loss_alpha
+
+        # kl loss makes z generated from audio and z_q generated from text are in the same distribution
         if self.use_soft_dynamic_time_warping:
             loss_kl = self.kl_loss_sdtw(z_p, logs_q, m_p, logs_p, p_mask, z_mask.squeeze(1)) * self.kl_loss_alpha
             loss_kl_fwd = self.kl_loss_sdtw(z_q, logs_p, m_q, logs_q, z_mask.unsqueeze(1), p_mask) * self.kl_loss_forward_alpha
@@ -289,7 +315,7 @@ class NaturalSpeechGeneratorLoss(nn.Module):
             loss_kl_fwd = self.kl_loss(z_q, logs_p, m_q, logs_q, p_mask.unsqueeze(1)) * self.kl_loss_forward_alpha
 
         # total loss = sum all losses
-        loss = loss_gen + loss_gen_e2e + loss_fm + loss_mel + loss_dur + loss_kl + loss_kl_fwd
+        loss = loss_gen + loss_gen_e2e + loss_fm + loss_mel + loss_dur + loss_pitch + loss_kl + loss_kl_fwd
 
         return_dict = {}
         # pass losses to the dict
@@ -298,6 +324,7 @@ class NaturalSpeechGeneratorLoss(nn.Module):
         return_dict["loss_feature"] = loss_fm
         return_dict["loss_mel"] = loss_mel
         return_dict["loss_duration"] = loss_dur
+        return_dict["loss_pitch"] = loss_pitch
         return_dict["loss_kl"] = loss_kl
         return_dict["loss_kl_forward"] = loss_kl_fwd
         return_dict["loss"] = loss
