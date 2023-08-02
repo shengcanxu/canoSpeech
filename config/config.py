@@ -232,10 +232,10 @@ class NaturalSpeechConfig(TrainerConfig):
 
 @dataclass
 class QuantizerConfig(Coqpit):
-    n_code_groups:int = 2
-    n_codes:int = 1024
+    num_quantizers:int = 8
+    codebook_size:int = 1024
+    codebook_dimension:int = 192
     codebook_loss_alpha:float = 1.0
-    commitment_loss_alpha:float = 0.25
 
 @dataclass
 class PitchPredictorConfig(Coqpit):

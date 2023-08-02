@@ -17,7 +17,7 @@ from layers.flow import ResidualCouplingBlocks, AttentionFlow
 from layers.generator import HifiganGenerator
 from layers.learnable_upsampling import LearnableUpsampling
 from layers.losses import NaturalSpeechDiscriminatorLoss, NaturalSpeechGeneratorLoss
-from layers.quantizer import RVQQuantizer
+from layers.quantizer import ResidualVectorQuantization
 from layers.variance_predictor import DurationPredictor, PitchPredictor
 from monotonic_align.maximum_path import maximum_path
 from recipes.trainer_model import TrainerModelWithDataset
@@ -116,11 +116,10 @@ class NaturalTTSModel(nn.Module):
             conv_post_weight_norm=False,
             conv_post_bias=False
         )
-        self.quantizer = RVQQuantizer(
-            n_code_groups=self.model_config.quantizer.n_code_groups,
-            n_codes=self.model_config.quantizer.n_codes,
-            codebook_loss_alpha=self.model_config.quantizer.codebook_loss_alpha,
-            commitment_loss_alpha=self.model_config.quantizer.commitment_loss_alpha
+        self.quantizer = ResidualVectorQuantization(
+            num_quantizers=self.model_config.quantizer.num_quantizers,
+            codebook_size=self.model_config.quantizer.codebook_size,
+            codebook_dim=self.model_config.quantizer.codebook_dimension
         )
 
     def init_multilingual(self, config: Coqpit):
@@ -187,6 +186,10 @@ class NaturalTTSModel(nn.Module):
 
         # z_p:[B,C,specT]
         z_p = self.flow(z, z_mask, g=None)
+
+        # quantize z using RVQ
+        z, _, _ = self.quantizer(z)
+
         z_slice, ids_slice = rand_segments(
             x=z,
             x_lengths=y_lengths,
@@ -194,9 +197,6 @@ class NaturalTTSModel(nn.Module):
             let_short_samples=True,
             pad_short=True
         )
-
-        # quantize z using RVQ
-        z_slice, _, _ = self.quantizer(z_slice)
         y_hat = self.waveform_decoder(z_slice, g=None)
 
         x, m_p, logs_p, x_mask = self.text_encoder(
@@ -248,6 +248,10 @@ class NaturalTTSModel(nn.Module):
             g=None,
             reverse=True
         )
+
+        # quantize z using RVQ
+        z_q, _, _ = self.quantizer(z_q)
+
         z_q_lengths = p_mask.flatten(1, -1).sum(dim=-1).long()
         z_slice_q, ids_slice_q = rand_segments(
             x=z_q,
@@ -257,8 +261,6 @@ class NaturalTTSModel(nn.Module):
             pad_short=True
         )
 
-        # quantize z using RVQ
-        z_slice_q, _, _ = self.quantizer(z_slice_q)
         y_hat_e2e = self.waveform_decoder(z_slice_q, g=None)
 
         return {

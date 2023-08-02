@@ -153,10 +153,10 @@
             "upsample_rates": [ 8, 8, 2, 2 ]
         },
         "quantizer": {
-            "n_code_groups": 2,
-            "n_codes": 1024,
-            "codebook_loss_alpha": 1.0,
-            "commitment_loss_alpha":  0.25
+            "num_quantizers": 8,
+            "codebook_size": 1024,
+            "codebook_dimension": 192,
+            "codebook_loss_alpha": 1.0
         },
         "discriminator": {
             "periods_multi_period": [2, 3, 5, 7, 11],
