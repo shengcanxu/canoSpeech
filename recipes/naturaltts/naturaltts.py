@@ -359,6 +359,9 @@ class NaturalTTSTrain(TrainerModelWithDataset):
             use_spectral_norm=self.model_config.discriminator.use_spectral_norm,
         )
 
+    def optimize(self, batch, trainer):
+        pass
+
     def train_step(self, batch: Dict, criterion: nn.Module, optimizer_idx: int) -> Tuple[Dict, Dict]:
         spec_lens = batch["spec_lens"]
         if optimizer_idx == 0:
