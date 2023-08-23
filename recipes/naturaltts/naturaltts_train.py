@@ -4,8 +4,6 @@ from config.config import NaturalTTSConfig
 from dataset.dataset import get_metas_from_filelist
 from recipes.naturaltts.naturaltts import NaturalTTSTrain
 
-# Path where you want to save the models outputs (configs, checkpoints and tensorboard logs)
-OUT_PATH = os.path.dirname(os.path.abspath(__file__))
 # If you want to do transfer learning and speedup your training you can set here the path to the original YourTTS model
 RESTORE_PATH = None
 # This paramter is useful to debug, it skips the training epochs and just do the evaluation  and produce the test sentences
@@ -34,7 +32,7 @@ def main():
     trainer = Trainer(
         TrainerArgs(restore_path=RESTORE_PATH, skip_train_epoch=SKIP_TRAIN_EPOCH),
         config,
-        output_path=OUT_PATH,
+        output_path=config.output_path,
         model=train_model,
         train_samples=train_samples,
         eval_samples=test_samples,

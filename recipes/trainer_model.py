@@ -36,7 +36,8 @@ class TrainerModelWithDataset(TrainerModel):
 
         sampler = DistributedSampler(dataset) if num_gpus > 1 else RandomSampler(dataset)
 
-        # set num_workers>0 the DataLoader will be very slow in windows, because it re-start
+        # #TODO: fix this:
+        #  set num_workers>0 the DataLoader will be very slow in windows, because it re-start
         # all processes every epoch. https://github.com/JaidedAI/EasyOCR/issues/274
         num_workers = config.dataset_config.num_eval_loader_workers if is_eval else config.dataset_config.num_loader_workers
         if platform.system() == "Windows":
