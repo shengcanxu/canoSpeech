@@ -42,8 +42,8 @@ class VariancePredictor(nn.Module):
         if self.use_pre_attention:
             speech_prompts = self.pre_attention(speech_prompts)
 
-        for conv_blocks in self.conv_blocks:
-            for conv in conv_blocks:
+        for conv_block in self.conv_blocks:
+            for conv in conv_block:
                 x = conv(x * masks) + x
 
             # Attention + Dropout + Residual + Norm
@@ -52,8 +52,8 @@ class VariancePredictor(nn.Module):
             x = self.norm(x + residual)
 
         x = self.project(x * masks) * masks
-        return x.squeeze(1)
-
+        x = x.squeeze(1)
+        return x
 
 class DurationPredictor(VariancePredictor):
     def __init__(self, channels:int, condition_channels:int, kernel_size:int, n_stack:int, n_stack_in_stack:int, attention_num_head:int, dropout_p:float):

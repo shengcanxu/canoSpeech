@@ -1,5 +1,4 @@
 import math
-
 import torch
 from coqpit import Coqpit
 from typing import Dict, List, Union, Tuple
@@ -360,9 +359,10 @@ class NaturalTTSTrain(TrainerModelWithDataset):
         )
 
     def train_step(self, batch: Dict, criterion: nn.Module, optimizer_idx: int) -> Tuple[Dict, Dict]:
-        print(batch["raw_texts"])
         spec_lens = batch["spec_lens"]
         if optimizer_idx == 0:
+            # print(batch["raw_texts"])
+
             tokens = batch["tokens"]
             token_lens = batch["token_lens"]
             spec = batch["spec"]

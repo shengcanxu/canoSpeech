@@ -40,7 +40,9 @@
     "distributed_backend": "nccl",
     "distributed_url": "tcp://localhost:54321",
     "mixed_precision": false,
-    "grad_clip": [ 1000, 1000 ],
+    "precision": "fp32",
+    "grad_clip": [0.0, 0.0],
+    "use_grad_scaler": false,
 
     "scheduler_after_epoch": true,
     "lr": 0.001,

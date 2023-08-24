@@ -12,7 +12,8 @@ except ModuleNotFoundError:
 def maximum_path(value, mask):
     if CYTHON:
         return maximum_path_cython(value, mask)
-    return maximum_path_numpy(value, mask)
+    raise RuntimeError("Cython for maximum path is not activated!")
+    # return maximum_path_numpy(value, mask)
 
 # "monotonic alignment search" algorithm introduced in paper:
 # Glow-TTS: A Generative Flow for Text-to-Speech via Monotonic Alignment Search
