@@ -1,4 +1,6 @@
 import os
+
+from torch.cuda import memory_allocated
 from trainer import Trainer, TrainerArgs
 from config.config import NaturalTTSConfig
 from dataset.dataset import get_metas_from_filelist

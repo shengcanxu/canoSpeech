@@ -2,7 +2,7 @@ import math
 import torch
 from coqpit import Coqpit
 from typing import Dict, List, Union, Tuple
-
+from util.gpu_mem_track import MemTracker, modelsize
 from torch import nn
 from torch.cuda.amp import autocast
 from trainer import get_optimizer, get_scheduler
@@ -353,6 +353,7 @@ class NaturalTTSTrain(TrainerModelWithDataset):
             speaker_embed=speaker_embed,
             language_manager=language_manager
         )
+
         self.discriminator = VitsDiscriminator(
             periods=self.model_config.discriminator.periods_multi_period,
             use_spectral_norm=self.model_config.discriminator.use_spectral_norm,
@@ -360,6 +361,9 @@ class NaturalTTSTrain(TrainerModelWithDataset):
 
     def train_step(self, batch: Dict, criterion: nn.Module, optimizer_idx: int) -> Tuple[Dict, Dict]:
         spec_lens = batch["spec_lens"]
+
+        print(torch.cuda.memory_allocated())
+
         if optimizer_idx == 0:
             # print(batch["raw_texts"])
 
@@ -370,6 +374,8 @@ class NaturalTTSTrain(TrainerModelWithDataset):
             wav = batch["waveform"]
             pitch = batch["pitch"]
 
+            print(torch.cuda.memory_allocated())
+
             # generator pass
             outputs = self.generator(
                 x=tokens,
@@ -378,6 +384,7 @@ class NaturalTTSTrain(TrainerModelWithDataset):
                 y_lengths=spec_lens,
                 pitch=pitch
             )
+            print(torch.cuda.memory_allocated())
 
             wav_slice = segment(
                 x=wav,
