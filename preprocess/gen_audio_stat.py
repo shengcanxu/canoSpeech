@@ -162,6 +162,7 @@ def main(args):
         with open(pklpath, "wb") as fp:
             pickle.dump(obj=obj, file=fp )
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=str, default="../config/vits_vctk.json")

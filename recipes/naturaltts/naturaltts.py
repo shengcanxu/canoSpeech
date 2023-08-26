@@ -139,6 +139,9 @@ class NaturalTTSModel(nn.Module):
             self.embedded_language_dim = 0
 
     def match_mel_token(self, z_p, m_p, logs_p, x_mask, y_mask):
+        """
+        match the mel and token to get the duration. duration in the source dataset is not used because it may be wrong.
+        """
         # find the alignment path
         attn_mask = torch.unsqueeze(x_mask, -1) * torch.unsqueeze(y_mask, 2)
         with torch.no_grad():
@@ -187,10 +190,10 @@ class NaturalTTSModel(nn.Module):
         z_p = self.flow(z, z_mask, g=None)
 
         # quantize z using RVQ
-        z, _, _ = self.quantizer(z)
+        z_quant, _, _ = self.quantizer(z)
 
         z_slice, ids_slice = rand_segments(
-            x=z,
+            x=z_quant,
             x_lengths=y_lengths,
             segment_size=self.spec_segment_size,
             let_short_samples=True,
@@ -221,7 +224,6 @@ class NaturalTTSModel(nn.Module):
             tokens=x.transpose(1, 2),
             src_len=x_lengths,
             src_mask=~(x_mask.squeeze(1).bool()),
-            tgt_len=y_lengths,
             max_src_len=x_lengths.max(),
         )
         p_mask = p_mask.unsqueeze(1)
@@ -247,13 +249,15 @@ class NaturalTTSModel(nn.Module):
             g=None,
             reverse=True
         )
+        # z_p should minus pitch_embed before compute KL loss with (m_p, logs_p)
+        z_p = z_p - pitch_embed
 
         # quantize z using RVQ
-        z_q, _, _ = self.quantizer(z_q)
+        z_q_quant, _, _ = self.quantizer(z_q)
 
         z_q_lengths = p_mask.flatten(1, -1).sum(dim=-1).long()
         z_slice_q, ids_slice_q = rand_segments(
-            x=z_q,
+            x=z_q_quant,
             x_lengths=torch.minimum(z_q_lengths, y_lengths),
             segment_size=self.spec_segment_size,
             let_short_samples=True,
@@ -361,9 +365,6 @@ class NaturalTTSTrain(TrainerModelWithDataset):
 
     def train_step(self, batch: Dict, criterion: nn.Module, optimizer_idx: int) -> Tuple[Dict, Dict]:
         spec_lens = batch["spec_lens"]
-
-        print(torch.cuda.memory_allocated())
-
         if optimizer_idx == 0:
             # print(batch["raw_texts"])
 
@@ -374,8 +375,6 @@ class NaturalTTSTrain(TrainerModelWithDataset):
             wav = batch["waveform"]
             pitch = batch["pitch"]
 
-            print(torch.cuda.memory_allocated())
-
             # generator pass
             outputs = self.generator(
                 x=tokens,
@@ -384,7 +383,6 @@ class NaturalTTSTrain(TrainerModelWithDataset):
                 y_lengths=spec_lens,
                 pitch=pitch
             )
-            print(torch.cuda.memory_allocated())
 
             wav_slice = segment(
                 x=wav,

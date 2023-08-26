@@ -200,20 +200,20 @@ class NaturalSpeechGeneratorLoss(nn.Module):
         logs_p = logs_p.float()
         z_mask = z_mask.float()
 
-        # pad if size is not equal.
-        # distribution of logs_p and logs_q may different, make them the same size
-        if logs_p.size(2) != logs_q.size(2):
-            length = max(logs_p.size(2), logs_q.size(2))
-            if z_p.size(2) != length:
-                z_p = F.pad(z_p, (0, length - z_p.size(2)), "constant", 0)
-            if logs_p.size(2) != length:
-                logs_p = F.pad(logs_p, (0, length - logs_p.size(2)), "constant", 0)
-            if m_p.size(2) != length:
-                m_p = F.pad(m_p, (0, length - m_p.size(2)), "constant", 0)
-            if logs_q.size(2) != length:
-                logs_q = F.pad(logs_q, (0, length - logs_q.size(2)), "constant", 0)
-            if z_mask.size(2) != length:
-                z_mask = F.pad(z_mask, (0, length - z_mask.size(2)), "constant", 0)
+        # # pad if size is not equal.
+        # # distribution of logs_p and logs_q may different, make them the same size
+        # if logs_p.size(2) != logs_q.size(2):
+        #     length = max(logs_p.size(2), logs_q.size(2))
+        #     if z_p.size(2) != length:
+        #         z_p = F.pad(z_p, (0, length - z_p.size(2)), "constant", 0)
+        #     if logs_p.size(2) != length:
+        #         logs_p = F.pad(logs_p, (0, length - logs_p.size(2)), "constant", 0)
+        #     if m_p.size(2) != length:
+        #         m_p = F.pad(m_p, (0, length - m_p.size(2)), "constant", 0)
+        #     if logs_q.size(2) != length:
+        #         logs_q = F.pad(logs_q, (0, length - logs_q.size(2)), "constant", 0)
+        #     if z_mask.size(2) != length:
+        #         z_mask = F.pad(z_mask, (0, length - z_mask.size(2)), "constant", 0)
 
         # kl_loss 的介绍在视频 https://www.bilibili.com/video/BV1VG411h75N/?spm_id_from=333.788&vd_source=d38c9d5cf896f215d746bb79474d6606
         # 的 1:38:43 开始处

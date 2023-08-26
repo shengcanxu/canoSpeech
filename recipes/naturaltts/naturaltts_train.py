@@ -6,19 +6,12 @@ from config.config import NaturalTTSConfig
 from dataset.dataset import get_metas_from_filelist
 from recipes.naturaltts.naturaltts import NaturalTTSTrain
 
-# If you want to do transfer learning and speedup your training you can set here the path to the original YourTTS model
-RESTORE_PATH = None
+
 # This paramter is useful to debug, it skips the training epochs and just do the evaluation  and produce the test sentences
 SKIP_TRAIN_EPOCH = False
 
-# Set here the batch size to be used in training and evaluation
-BATCH_SIZE = 8
-
 def main():
-    config = NaturalTTSConfig(
-        batch_size=BATCH_SIZE,
-        eval_batch_size=BATCH_SIZE,
-    )
+    config = NaturalTTSConfig()
     config.load_json("./config/naturaltts_vctk.json")
     # config.load_json("./config/naturaltts_ljs.json")
     data_config = config.dataset_config
@@ -32,7 +25,7 @@ def main():
 
     # init the trainer and train
     trainer = Trainer(
-        TrainerArgs(restore_path=RESTORE_PATH, skip_train_epoch=SKIP_TRAIN_EPOCH),
+        TrainerArgs(continue_path=config.continue_path, skip_train_epoch=SKIP_TRAIN_EPOCH),
         config,
         output_path=config.output_path,
         model=train_model,

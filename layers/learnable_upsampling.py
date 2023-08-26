@@ -45,17 +45,9 @@ class LearnableUpsampling(nn.Module):
 
         self.proj_o = LinearNorm(192, 192 * 2)
 
-    def forward(self, duration, tokens, src_len, src_mask, tgt_len, max_src_len):
+    def forward(self, duration, tokens, src_len, src_mask, max_src_len):
 
         batch_size = duration.shape[0]
-
-        # Duration Interpretation
-        # if tgt_len is None:
-        #     mel_len = torch.round(duration.sum(-1)).type(torch.LongTensor).to(tokens.device)
-        # else:
-        #     # fix: mel_len should be the target_lens(y_lengths)
-        #     mel_len = torch.round(tgt_len.type(torch.LongTensor).to(tokens.device))
-
         mel_len = torch.round(duration.sum(-1)).type(torch.LongTensor).to(tokens.device)
 
         mel_len = torch.clamp(mel_len, max=self.max_seq_len)
