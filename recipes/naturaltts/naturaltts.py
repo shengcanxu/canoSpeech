@@ -218,6 +218,13 @@ class NaturalTTSModel(nn.Module):
         duration_logw_gt = torch.log(duration_gt.unsqueeze(1) + 1e-6) * x_mask
         duration_loss = torch.sum((duration_logw - duration_logw_gt) ** 2, [1, 2]) / torch.sum(x_mask)
 
+        pitch_logw, pitch_embed = self.pitch_predictor(
+            x=x,
+            masks=x_mask,
+            speech_prompts=prompts
+        )  # pitch_logw:[B,1,T]
+        # x = x + pitch_embed
+
         # differentiable durator (learnable upsampling)
         upsampled_rep, p_mask, _, W, C = self.learnable_upsampling(
             duration=duration_gt.squeeze() if self.use_gt_duration else duration_p.squeeze(),
@@ -228,29 +235,31 @@ class NaturalTTSModel(nn.Module):
         )
         p_mask = p_mask.unsqueeze(1)
         m_p, logs_p = torch.split(upsampled_rep.transpose(1, 2), 192, dim=1)
+        # x_p = torch.randn_like(m_p) * torch.exp(logs_p)
 
         # predict pitch
-        x_p = m_p + torch.randn_like(m_p) * torch.exp(logs_p)
-        pitch_logw, pitch_embed = self.pitch_predictor(
-            x=x_p,
-            masks=p_mask,
-            speech_prompts=prompts
-        )  # pitch_logw:[B,1,T]
+        # pitch_logw, pitch_embed = self.pitch_predictor(
+        #     x=x_p,
+        #     masks=p_mask,
+        #     speech_prompts=prompts
+        # )  # pitch_logw:[B,1,T]
+
         # pitch_p = torch.exp(pitch_logw.unsqueeze(1)) * z_mask  # w:[B,1,T]
-        pitch_logw_gt = torch.log(pitch.unsqueeze(1) + 1e-6) * p_mask
-        pitch_loss = torch.sum((pitch_logw - pitch_logw_gt) ** 2, [1, 2]) / torch.sum(p_mask)
+        # pitch_logw_gt = torch.log(pitch.unsqueeze(1) + 1e-6) * p_mask
+        # pitch_loss = torch.sum((pitch_logw - pitch_logw_gt) ** 2, [1, 2]) / torch.sum(p_mask)
+        pitch_loss = torch.sum(p_mask)
 
         # pitch add to tokens(x) for future upsampling using duration
-        x_p = x_p + pitch_embed
+        # x_p = x_p + pitch_embed
 
         z_q = self.flow(
-            x=x_p,
+            x=torch.randn_like(m_p) * torch.exp(logs_p),
             x_mask=p_mask,
             g=None,
             reverse=True
         )
         # z_p should minus pitch_embed before compute KL loss with (m_p, logs_p)
-        z_p = z_p - pitch_embed
+        # z_p = z_p - pitch_embed
 
         # quantize z using RVQ
         z_q_quant, _, _ = self.quantizer(z_q)
