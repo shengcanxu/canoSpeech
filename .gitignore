@@ -8,3 +8,6 @@ output
 monotonic_align.build
 *.pth
 *.zip
+/monotonic_align/monotonic_align/*
+/monotonic_align/build/*
+/preprocess/reference/vits/*

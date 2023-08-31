@@ -235,7 +235,6 @@ class NaturalTTSModel(nn.Module):
         )
         p_mask = p_mask.unsqueeze(1)
         m_p, logs_p = torch.split(upsampled_rep.transpose(1, 2), 192, dim=1)
-        # x_p = torch.randn_like(m_p) * torch.exp(logs_p)
 
         # predict pitch
         # pitch_logw, pitch_embed = self.pitch_predictor(
@@ -252,8 +251,9 @@ class NaturalTTSModel(nn.Module):
         # pitch add to tokens(x) for future upsampling using duration
         # x_p = x_p + pitch_embed
 
+        x_p = (m_p + torch.randn_like(m_p) * torch.exp(logs_p)) * p_mask
         z_q = self.flow(
-            x=torch.randn_like(m_p) * torch.exp(logs_p),
+            x=x_p,
             x_mask=p_mask,
             g=None,
             reverse=True

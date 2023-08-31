@@ -200,21 +200,6 @@ class NaturalSpeechGeneratorLoss(nn.Module):
         logs_p = logs_p.float()
         z_mask = z_mask.float()
 
-        # # pad if size is not equal.
-        # # distribution of logs_p and logs_q may different, make them the same size
-        # if logs_p.size(2) != logs_q.size(2):
-        #     length = max(logs_p.size(2), logs_q.size(2))
-        #     if z_p.size(2) != length:
-        #         z_p = F.pad(z_p, (0, length - z_p.size(2)), "constant", 0)
-        #     if logs_p.size(2) != length:
-        #         logs_p = F.pad(logs_p, (0, length - logs_p.size(2)), "constant", 0)
-        #     if m_p.size(2) != length:
-        #         m_p = F.pad(m_p, (0, length - m_p.size(2)), "constant", 0)
-        #     if logs_q.size(2) != length:
-        #         logs_q = F.pad(logs_q, (0, length - logs_q.size(2)), "constant", 0)
-        #     if z_mask.size(2) != length:
-        #         z_mask = F.pad(z_mask, (0, length - z_mask.size(2)), "constant", 0)
-
         # kl_loss 的介绍在视频 https://www.bilibili.com/video/BV1VG411h75N/?spm_id_from=333.788&vd_source=d38c9d5cf896f215d746bb79474d6606
         # 的 1:38:43 开始处
         # 对于kl_loss 通过mean 和standard deviation计算的方法来计算两个高斯分布的KL散度， 详细解释看：
@@ -308,11 +293,11 @@ class NaturalSpeechGeneratorLoss(nn.Module):
 
         # kl loss makes z generated from audio and z_q generated from text are in the same distribution
         if self.use_soft_dynamic_time_warping:
-            loss_kl = self.kl_loss_sdtw(z_p, logs_q, m_p, logs_p, p_mask, z_mask.squeeze(1)) * self.kl_loss_alpha
-            loss_kl_fwd = self.kl_loss_sdtw(z_q, logs_p, m_q, logs_q, z_mask.unsqueeze(1), p_mask) * self.kl_loss_forward_alpha
+            loss_kl = self.kl_loss_sdtw(z_p, logs_q, m_p, logs_p, p_mask, z_mask) * self.kl_loss_alpha
+            loss_kl_fwd = self.kl_loss_sdtw(z_q, logs_p, m_q, logs_q, z_mask, p_mask) * self.kl_loss_forward_alpha
         else:
             loss_kl = self.kl_loss(z_p, logs_q, m_p, logs_p, z_mask) * self.kl_loss_alpha
-            loss_kl_fwd = self.kl_loss(z_q, logs_p, m_q, logs_q, p_mask.unsqueeze(1)) * self.kl_loss_forward_alpha
+            loss_kl_fwd = self.kl_loss(z_q, logs_p, m_q, logs_q, p_mask) * self.kl_loss_forward_alpha
 
         # total loss = sum all losses
         loss = loss_gen + loss_gen_e2e + loss_fm + loss_mel + loss_dur + loss_pitch + loss_kl + loss_kl_fwd
