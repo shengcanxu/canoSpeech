@@ -69,7 +69,7 @@
     "plot_step": 100,
     "log_model_step": 1000,
     "save_step": 5000,
-    "save_n_checkpoints": 2,
+    "save_n_checkpoints": 5,
     "save_checkpoints": true,
 
     "loss": {

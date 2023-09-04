@@ -156,8 +156,8 @@ class NaturalTTSModel(nn.Module):
             attn = maximum_path(logp, attn_mask.squeeze(1)).unsqueeze(1).detach()  # [b, 1, t, t']
 
         # duration predictor
-        attn_durations = attn.sum(3)
-        return attn_durations
+        durations = attn.sum(3)
+        return durations, attn
 
     def forward(
         self,
@@ -219,9 +219,24 @@ class NaturalTTSModel(nn.Module):
             speech_prompts=prompts
         )  # duration_logw:[B,1,T]
         duration_p = torch.exp(duration_logw.unsqueeze(1)) * x_mask
-        duration_gt = self.match_mel_token(z_p, m_p, logs_p, x_mask, z_mask)
+        duration_gt, attn = self.match_mel_token(z_p, m_p, logs_p, x_mask, z_mask)
         duration_logw_gt = torch.log(duration_gt.unsqueeze(1) + 1e-6) * x_mask
         duration_loss = torch.sum((duration_logw - duration_logw_gt) ** 2, [1, 2]) / torch.sum(x_mask)
+
+        pitch_logw, pitch_embed = self.pitch_predictor(
+            x=x,
+            masks=x_mask,
+            speech_prompts=prompts
+        )  # pitch_logw:[B,1,T]
+        x = x + pitch_embed
+
+        pitch_p = torch.exp(pitch_logw.unsqueeze(1)) * x_mask
+        # map ground true pitch to the same dimention of x
+        pitch = torch.einsum("bcxy,bcy->bcx", attn, pitch.unsqueeze(1))
+        pitch = (pitch / (attn.sum(3) + 1e-6) * x_mask).round(decimals=3)
+        # compute pitch loss
+        pitch_logw_gt = torch.log(pitch.unsqueeze(1) + 1e-6) * x_mask
+        pitch_loss = torch.sum((pitch_logw - pitch_logw_gt) ** 2, [1, 2]) / torch.sum(x_mask)
 
         # differentiable durator (learnable upsampling)
         upsampled_rep, p_mask, _, W, C = self.learnable_upsampling(
@@ -234,22 +249,6 @@ class NaturalTTSModel(nn.Module):
         p_mask = p_mask.unsqueeze(1)
         m_p, logs_p = torch.split(upsampled_rep.transpose(1, 2), 192, dim=1)
         x_p = (m_p + torch.randn_like(m_p) * torch.exp(logs_p)) * p_mask
-
-        pitch_logw, pitch_embed = self.pitch_predictor(
-            x=x_p,
-            masks=p_mask,
-            speech_prompts=prompts
-        )  # pitch_logw:[B,1,T]
-
-        # compute pitch loss
-        pitch_p = torch.exp(pitch_logw.unsqueeze(1)) * z_mask
-        pitch_logw_gt = torch.log(pitch.unsqueeze(1) + 1e-6) * p_mask
-        pitch_loss = torch.sum((pitch_logw - pitch_logw_gt) ** 2, [1, 2]) / torch.sum(p_mask)
-
-        # add pitch_embed to embed pitch info into x_p, and z_p should minus pitch_embed.
-        # flow + pitch is the actual f(x), not the flow. so z_p should minus pitch_embed.
-        x_p = x_p + pitch_embed
-        z_p = z_p - pitch_embed
 
         z_q = self.flow(
             x=x_p,
