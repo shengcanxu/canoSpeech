@@ -51,7 +51,7 @@
     "cudnn_benchmark": true,
 
     "scheduler_after_epoch": true,
-    "lr": 0.001,
+    "lr": 0.01,
     "optimizer": "AdamW",
     "optimizer_params": {
         "betas": [0.8, 0.99 ],
@@ -78,9 +78,10 @@
         "disc_loss_alpha": 100.0,
         "gen_loss_alpha": 100.0,
         "gen_loss_e2e_alpha": 100.0,
-        "feat_loss_alpha": 1.0,
+        "feat_loss_alpha": 10.0,
         "mel_loss_alpha": 50.0,
-        "dur_loss_alpha": 1.0,
+        "dur_loss_alpha": 0.1,
+        "pitch_loss_alpha": 0.1,
         "speaker_encoder_loss_alpha": 9.0,
         "use_soft_dynamic_time_warping": false
     },

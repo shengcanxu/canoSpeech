@@ -60,6 +60,9 @@ class VitsGeneratorLoss(nn.Module):
         kl += 0.5 * ((z_p - m_p) ** 2) * torch.exp(-2.0 * logs_p)
         kl = torch.sum(kl * z_mask)
         l = kl / torch.sum(z_mask)
+
+        # don't know why kl_loss will be negative, maybe it's because the batch size is not big enough that makes the sample numbers not big enough to make it ocationaly be negative.
+        l = torch.abs(l)
         return l
 
     @staticmethod
