@@ -282,6 +282,7 @@ class NaturalTTSConfig(TrainerConfig):
     eval_split_size: float = 0.01
     # path for continue training
     continue_path: str = None
+    restore_path: str = None
 
     # loss
     loss: LossConfig = field(default_factory=lambda: LossConfig())

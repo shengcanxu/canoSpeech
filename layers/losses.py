@@ -285,39 +285,47 @@ class NaturalSpeechGeneratorLoss(nn.Module):
     ):
         loss_gen, losses_gen = self.generator_loss(scores_disc_fake)
         loss_gen = loss_gen * self.gen_loss_alpha
-        loss_gen_e2e, losses_gen_e2e = self.generator_loss(scores_disc_fake_e2e)
-        loss_gen_e2e = loss_gen_e2e * self.gen_loss_e2e_alpha
+        # loss_gen_e2e, losses_gen_e2e = self.generator_loss(scores_disc_fake_e2e)
+        # loss_gen_e2e = loss_gen_e2e * self.gen_loss_e2e_alpha
 
         # feature loss of discriminator with z generated from audio
         loss_fm = self.feature_loss(feats_disc_real, feats_disc_fake) * self.feat_loss_alpha
         # mel loss of discrimator with z generated from audio
         loss_mel = F.l1_loss(mel_slice, mel_slice_hat) * self.mel_loss_alpha
 
-        # duration and pitch loss generated from text
-        loss_dur = torch.sum(duration_loss.float()) * self.dur_loss_alpha
-        loss_pitch = torch.sum(pitch_loss.float()) * self.pitch_loss_alpha
+        # # duration and pitch loss generated from text
+        # loss_dur = torch.sum(duration_loss.float()) * self.dur_loss_alpha
+        # loss_pitch = torch.sum(pitch_loss.float()) * self.pitch_loss_alpha
 
-        # kl loss makes z generated from audio and z_q generated from text are in the same distribution
-        if self.use_soft_dynamic_time_warping:
-            loss_kl = self.kl_loss_sdtw(z_p, logs_q, m_p, logs_p, p_mask, z_mask) * self.kl_loss_alpha
-            loss_kl_fwd = self.kl_loss_sdtw(z_q, logs_p, m_q, logs_q, z_mask, p_mask) * self.kl_loss_forward_alpha
-        else:
-            loss_kl = self.kl_loss(z_p, logs_q, m_p, logs_p, z_mask) * self.kl_loss_alpha
-            loss_kl_fwd = self.kl_loss(z_q, logs_p, m_q, logs_q, p_mask) * self.kl_loss_forward_alpha
+        # # kl loss makes z generated from audio and z_q generated from text are in the same distribution
+        # if self.use_soft_dynamic_time_warping:
+        #     loss_kl = self.kl_loss_sdtw(z_p, logs_q, m_p, logs_p, p_mask, z_mask) * self.kl_loss_alpha
+        #     loss_kl_fwd = self.kl_loss_sdtw(z_q, logs_p, m_q, logs_q, z_mask, p_mask) * self.kl_loss_forward_alpha
+        # else:
+        #     loss_kl = self.kl_loss(z_p, logs_q, m_p, logs_p, z_mask) * self.kl_loss_alpha
+        #     loss_kl_fwd = self.kl_loss(z_q, logs_p, m_q, logs_q, p_mask) * self.kl_loss_forward_alpha
 
-        # total loss = sum all losses
-        loss = loss_gen + loss_gen_e2e + loss_fm + loss_mel + loss_dur + loss_pitch + loss_kl + loss_kl_fwd
+        # # total loss = sum all losses
+        # loss = loss_gen + loss_gen_e2e + loss_fm + loss_mel + loss_dur + loss_pitch + loss_kl + loss_kl_fwd
+        loss = loss_gen + loss_fm + loss_mel
+
+        # return_dict = {}
+        # # pass losses to the dict
+        # return_dict["loss_gen"] = loss_gen
+        # return_dict["loss_gen_e2e"] = loss_gen_e2e
+        # return_dict["loss_feature"] = loss_fm
+        # return_dict["loss_mel"] = loss_mel
+        # return_dict["loss_duration"] = loss_dur
+        # return_dict["loss_pitch"] = loss_pitch
+        # return_dict["loss_kl"] = loss_kl
+        # return_dict["loss_kl_forward"] = loss_kl_fwd
+        # return_dict["loss"] = loss
 
         return_dict = {}
         # pass losses to the dict
         return_dict["loss_gen"] = loss_gen
-        return_dict["loss_gen_e2e"] = loss_gen_e2e
         return_dict["loss_feature"] = loss_fm
         return_dict["loss_mel"] = loss_mel
-        return_dict["loss_duration"] = loss_dur
-        return_dict["loss_pitch"] = loss_pitch
-        return_dict["loss_kl"] = loss_kl
-        return_dict["loss_kl_forward"] = loss_kl_fwd
         return_dict["loss"] = loss
         return return_dict
 

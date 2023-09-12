@@ -25,7 +25,7 @@ def main():
 
     # init the trainer and train
     trainer = Trainer(
-        TrainerArgs(continue_path=config.continue_path, skip_train_epoch=SKIP_TRAIN_EPOCH),
+        TrainerArgs(continue_path=config.continue_path, restore_path=config.restore_path, skip_train_epoch=SKIP_TRAIN_EPOCH),
         config,
         output_path=config.output_path,
         model=train_model,
