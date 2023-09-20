@@ -1,7 +1,7 @@
-
 import torch
 import torch.utils.data
 from librosa.filters import mel as librosa_mel_fn
+import soundfile as sf
 
 """
 do the similar audio process with util.audio_processor.py, but do it in GPU. all the functions here should be call in GPU
@@ -128,3 +128,17 @@ def wav_to_mel(y, n_fft, num_mels, sample_rate, hop_length, win_length, fmin, fm
     spec = torch.matmul(mel_basis[fmax_dtype_device], spec)
     spec = amp_to_db(spec)
     return spec
+
+
+def load_audio(file_path):
+    """Load the audio file normalized in [-1, 1]
+    Return Shapes:
+        - x: :math:`[1, T]`
+    """
+    # x, sr = torchaudio.load(file_path)
+    # assert (x > 1).sum() + (x < -1).sum() == 0
+    # return x, sr
+    x, sr = sf.read(file_path)
+    x = torch.FloatTensor(x)
+    x = x.unsqueeze(0)
+    return x, sr

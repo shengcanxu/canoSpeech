@@ -18,6 +18,7 @@ from reference.vits.models import SynthesizerTrn
 from reference.vits.text import text_to_sequence
 from reference.vits.text.symbols import symbols
 from util.audio_processor import AudioProcessor
+from util.mel_processing import load_audio, wav_to_mel, wav_to_spec, spec_to_mel
 
 ###
 # generate audio pitch, duration and save to file
@@ -81,19 +82,6 @@ def main(args):
     config.load_json(args.config)
     dataset_config = config.dataset_config
 
-    processor = AudioProcessor(
-        hop_length=config.audio.hop_length,
-        win_length=config.audio.win_length,
-        sample_rate=config.audio.sample_rate,
-        mel_fmin=config.audio.mel_fmin,
-        mel_fmax=config.audio.mel_fmax,
-        fft_size=config.audio.fft_size,
-        num_mels=config.audio.num_mels,
-        pitch_fmax=config.audio.pitch_fmax,
-        pitch_fmin=config.audio.pitch_fmin,
-        verbose=True
-    )
-
     vits, vits_config = gen_vits_model()
 
     use_cuda = torch.cuda.is_available()
@@ -112,21 +100,19 @@ def main(args):
         path = sample["audio"]
         pklpath = path + ".pkl"
         text = sample["text"]
-        # if not args.refresh and os.path.exists(pklpath):
-        #     continue
+        if not args.refresh and os.path.exists(pklpath):
+            continue
 
         # Load audio at the correct sample rate
-        wav = processor.load_wav(path, sr=config.audio.sample_rate)
-        audio = torch.from_numpy(wav)
-        audio = audio.unsqueeze(0)
-        spec = processor.spectrogram(wav)
-        spec = torch.FloatTensor(spec)
+        wav, sr = load_audio(path)
 
-        _, duration = gen_duration_using_vits(vits, vits_config, text, spec, sid=77)
+        spec = wav_to_spec(wav.unsqueeze(0), config.audio.fft_size, config.audio.hop_length, config.audio.win_length)
+
+        # _, duration = gen_duration_using_vits(vits, vits_config, text, spec, sid=77)
 
         # Infer pitch and periodicity
         pitch, periodicity = penn.from_audio(
-            audio=audio,
+            audio=wav,
             sample_rate=config.audio.sample_rate,
             hopsize=config.audio.hop_length / config.audio.sample_rate,
             fmin=config.audio.pitch_fmin,
@@ -138,28 +124,34 @@ def main(args):
             gpu=0
         )
         pitch = pitch.cpu().squeeze().numpy()
-        periodicity = periodicity.cpu().squeeze().numpy()
+        # periodicity = periodicity.cpu().squeeze().numpy()
 
         # align pitch and spectrogram length
-        spec = processor.spectrogram(wav)
-        if spec.shape[1] > pitch.shape[0] + 1:
-            print("Error! pitch is shorter than spectrogram")
-        elif spec.shape[1] < pitch.shape[0]:
-            print("Error! pitch is longer than spectrogram")
-        elif spec.shape[1] == pitch.shape[0] + 1:
-            # add the last data to the end to extend the length
-            pitch = np.append(pitch, pitch[-1])
-            periodicity = np.append(periodicity, periodicity[-1])
+        refined_pitch = torch.ones([spec.shape[2]]) * pitch[0]
+        if spec.shape[2] > pitch.shape[0]:
+            print(f"pitch is {spec.shape[2]-pitch.shape[0]} shorter than spectrogram")
+            left = int((spec.shape[2] - pitch.shape[0]) / 2)
+            right = pitch.shape[0] + left
+            refined_pitch[left:right] = torch.FloatTensor(pitch)
 
-        speaker_embedd = speaker_encoder.compute_embedding_from_waveform(audio)
+        elif spec.shape[2] < pitch.shape[0]:
+            print(f"pitch is {pitch.shape[0]-spec.shape[2]} longer than spectrogram")
+            left = int((pitch.shape[0] - spec.shape[2]) / 2)
+            right = spec.shape[2] + left
+            refined_pitch = torch.FloatTensor(pitch[left:right])
+
+        else:
+            refined_pitch = pitch
+
+        # speaker embedding
+        speaker_embedd = speaker_encoder.compute_embedding_from_waveform(wav)
         speaker_embedd = speaker_embedd.squeeze(0)
         speaker_embedd = speaker_embedd.cpu().float().numpy()
 
         obj = {
             "text": text,
-            "pitch": pitch,
-            "periodicity": periodicity,
-            "duration": duration,
+            "pitch": refined_pitch,
+            # "duration": duration,
             "speaker": speaker_embedd
         }
         with open(pklpath, "wb") as fp:
@@ -195,6 +187,7 @@ if __name__ == "__main__":
     parser.add_argument("--refresh", type=bool, default=False)
     args = parser.parse_args()
 
+    args.refresh = True
     main(args)
     # gen_text_pitch(args)
 

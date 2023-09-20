@@ -6,8 +6,9 @@ import pickle
 from text import cleaned_text_to_tokens, _clean_text
 import torch
 from torch.utils.data import Dataset
-
+import librosa
 from util.audio_processor import AudioProcessor
+from util.mel_processing import wav_to_mel, wav_to_spec, spec_to_mel, load_audio
 
 
 def split_dataset_metas(items, eval_split_max_size=None, eval_split_size=0.01):
@@ -80,21 +81,12 @@ class TextAudioDataset(Dataset):
         self.hop_length = config.audio.hop_length
         self.win_length = config.audio.win_length
         self.sample_rate = config.audio.sample_rate
+        self.fft_size = config.audio.fft_size
+        self.num_mels = config.audio.num_mels
+        self.mel_fmin = config.audio.mel_fmin
+        self.mel_fmax = config.audio.mel_fmax
         self.max_audio_length = getattr(config.audio, "max_audio_length", 10.0)
         self.min_audio_length = getattr(config.audio, "min_audio_length", 1.0)
-
-        self.processor = AudioProcessor(
-            hop_length=config.audio.hop_length,
-            win_length=config.audio.win_length,
-            sample_rate=config.audio.sample_rate,
-            mel_fmin=config.audio.mel_fmin,
-            mel_fmax=config.audio.mel_fmax,
-            fft_size=config.audio.fft_size,
-            num_mels=config.audio.num_mels,
-            pitch_fmax=config.audio.pitch_fmax,
-            pitch_fmin=config.audio.pitch_fmin,
-            verbose=False
-        )
 
         self.cleaned_text = getattr(config.text, "cleaned_text", False)
         self.text_cleaners = config.text.text_cleaners
@@ -115,7 +107,7 @@ class TextAudioDataset(Dataset):
         # spec_length = wav_length // hop_length
         samples_new = []
         for sample in self.samples:
-            audio_len = self.processor.get_duration(sample["audio"])
+            audio_len = librosa.get_duration(path=sample["audio"])
             # audio_len should less than config.audio.max_audio_length. it controls the max dimention of mel
             # max_mel_len = max_audio_length * sample_rate / hop_length
             if self.min_text_len <= len(sample["text"]) <= self.max_text_len\
@@ -148,14 +140,14 @@ class TextAudioDataset(Dataset):
 
     def get_audio_text_duration_f0(self, sample):
         tokens, phoneme = self._get_text(sample["text"])
-        wav = self.processor.load_wav(sample["audio"], sr=self.sample_rate)
-        wav_t = torch.FloatTensor(wav)
-        wav_t = wav_t.unsqueeze(0)
+        wav, sr = load_audio(sample["audio"])
+        # wav_t = torch.FloatTensor(wav)
+        # wav_t = wav_t.unsqueeze(0)
 
         spec, mel = None, None
         if not self.melspec_use_GPU:
-            spec = self.processor.spectrogram(wav)
-            mel = self.processor.out_linear_to_mel(spec)
+            spec = wav_to_spec(wav, self.fft_size, self.hop_length, self.win_length)
+            mel = spec_to_mel(spec, self.fft_size, self.num_mels, self.sample_rate, self.mel_fmin, self.mel_fmax)
             spec = torch.FloatTensor(spec)
             mel = torch.FloatTensor(mel)
 
@@ -166,7 +158,7 @@ class TextAudioDataset(Dataset):
                 fp = open(path, "rb")
                 pickleObj = pickle.load(fp)
                 pitch = torch.FloatTensor(pickleObj["pitch"])
-                duration = torch.IntTensor(pickleObj["duration"])
+                # duration = torch.IntTensor(pickleObj["duration"])
                 speaker = torch.FloatTensor(pickleObj["speaker"])
             else:
                 raise Exception("path doesn't exists! should run preprocess")
@@ -176,9 +168,9 @@ class TextAudioDataset(Dataset):
             "phoneme": phoneme, # str
             "tokens": tokens,
             "token_len": len(tokens),
-            "wav": wav_t,
-            "spec": spec,
-            "mel": mel,
+            "wav": wav,
+            "spec": spec.squeeze(),
+            "mel": mel.squeeze(),
             "audio_file": sample["audio"],
             "speaker_name": sample["speaker"],
             "speaker_embed": speaker,
@@ -247,10 +239,10 @@ class TextAudioDataset(Dataset):
             pitch_padded = torch.FloatTensor(B, pitch_lens_max)
             pitch_padded = pitch_padded.zero_()
 
-            duration_lens = torch.LongTensor([x["duration"].size(0) for x in batch])
-            duration_lens_max = torch.max(duration_lens)
-            duration_padded = torch.IntTensor(B, duration_lens_max)
-            duration_padded = duration_padded.zero_()
+            # duration_lens = torch.LongTensor([x["duration"].size(0) for x in batch])
+            # duration_lens_max = torch.max(duration_lens)
+            # duration_padded = torch.IntTensor(B, duration_lens_max)
+            # duration_padded = duration_padded.zero_()
 
             speaker_embed_lens = torch.LongTensor([x["speaker_embed"].size(0) for x in batch])
             speaker_embed_lens_max = torch.max(speaker_embed_lens)
@@ -276,8 +268,8 @@ class TextAudioDataset(Dataset):
             if self.add_preprocess_data:
                 pitch = item["pitch"]
                 pitch_padded[i, :pitch.size(0)] = torch.FloatTensor(pitch)
-                duration = item["duration"]
-                duration_padded[i, :duration.size(0)] = torch.IntTensor(duration)
+                # duration = item["duration"]
+                # duration_padded[i, :duration.size(0)] = torch.IntTensor(duration)
                 speaker_embed = item["speaker_embed"]
                 speaker_embed_padded[i, :speaker_embed.size(0)] = torch.FloatTensor(speaker_embed)
 

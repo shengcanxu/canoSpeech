@@ -44,10 +44,10 @@ if __name__ == "__main__":
         "../filelists/%s_train_filelist.txt" % config.dataset_name,
         "../filelists/%s_test_filelist.txt" % config.dataset_name
     ]
-    # with open(filelists[0], "w", encoding="utf-8") as f:
-    #     f.writelines([x["audio"] + "|" + x["speaker"] + "|en|" + x["text"].strip() + "\n" for x in train_datas])
-    # with open(filelists[1], "w", encoding="utf-8") as f:
-    #     f.writelines([x["audio"] + "|" + x["speaker"] + "|en|" + x["text"].strip() + "\n" for x in test_datas])
+    with open(filelists[0], "w", encoding="utf-8") as f:
+        f.writelines([x["audio"] + "|" + x["speaker"] + "|en|" + x["text"].strip() + "\n" for x in train_datas])
+    with open(filelists[1], "w", encoding="utf-8") as f:
+        f.writelines([x["audio"] + "|" + x["speaker"] + "|en|" + x["text"].strip() + "\n" for x in test_datas])
 
     # clean text and save to filelist file
     for filelist in filelists:
