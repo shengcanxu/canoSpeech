@@ -20,11 +20,11 @@ def load_file_metas(config):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="../config/naturaltts_vctk.json")
+    parser.add_argument("--config", type=str, default="../config/naturaltts_vctk_linux.json")
     args = parser.parse_args()
 
     train_config = VitsConfig()
-    train_config.load_json("../config/naturaltts_vctk.json")
+    train_config.load_json("../config/naturaltts_vctk_linux.json")
     config = train_config.dataset_config
     text_config = train_config.text
 

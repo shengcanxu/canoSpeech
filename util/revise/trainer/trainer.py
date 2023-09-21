@@ -72,7 +72,7 @@ class TrainerConfig(Coqpit):
 
         Run the training code by overriding the ```lr``` and ```plot_step``` fields.
 
-        >>> python train.py --coqpit.plot_step=22 --coqpit.lr=0.001
+        # >>> python train.py --coqpit.plot_step=22 --coqpit.lr=0.001
 
         Defining a model using ```TrainerConfig```.
 
@@ -566,7 +566,7 @@ class Trainer:
         self.callbacks.on_init_end(self)
         self.dashboard_logger.add_config(config)
         self.save_training_script()
-        ping_training_run()
+        # ping_training_run()
 
     @property
     def use_apex(self):
@@ -735,7 +735,7 @@ class Trainer:
         if args.rank == 0:
             if args.restore_path:
                 new_fields["restore_path"] = args.restore_path
-            new_fields["github_branch"] = get_git_branch()
+            # new_fields["github_branch"] = get_git_branch()
         return config, new_fields
 
     @staticmethod

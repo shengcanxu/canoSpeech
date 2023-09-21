@@ -1,14 +1,14 @@
 {
     "run_name": "CanoNaturalSpeech",
     "run_description": "Cano Speech running on VCTK dataset",
-    "output_path": "D:\\project\\canoSpeech\\output",
-    "restore_path": "D:\\project\\canoSpeech\\output\\CanoNaturalSpeech-August-24-2023_11+02PM-0000000\\checkpoint_128000.pth",
+    "output_path": "/home/output",
+    "continue_path": "/home/output/CanoNaturalSpeech-August-24-2023_11+02PM-0000000",
 
     "dataset_config": {
         "dataset_name":"vctk",
-        "meta_file_train":"D:/project/canoSpeech/filelists/vctk_train_filelist.txt.cleaned",
-        "meta_file_val":"D:/project/canoSpeech/filelists/vctk_test_filelist.txt.cleaned",
-        "path":"D:\\dataset\\VCTK",
+        "meta_file_train":"/home/canoSpeech/filelists/vctk_train_filelist.txt.cleaned",
+        "meta_file_val":"/home/canoSpeech/filelists/vctk_test_filelist.txt.cleaned",
+        "path":"/home/dataset/VCTK",
         "language":"en",
         "ignored_speakers":[],
         "num_loader_workers": 8,
