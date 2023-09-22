@@ -482,7 +482,11 @@ class NaturalTTSTrain(TrainerModelWithDataset):
                 # # add loss and e2e_loss, but the dicrimator loss use the value in lost_dict
                 # loss_dict["loss"] = loss_dict["loss"] + loss_dict_e2e["loss"]
 
-            return outputs, loss_dict
+            if self.config.stop_discriminator:
+                return outputs, None
+            else:
+                return outputs, loss_dict
+
 
         if optimizer_idx == 1:
             mel = batch["mel"]

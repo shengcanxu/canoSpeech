@@ -283,6 +283,8 @@ class NaturalTTSConfig(TrainerConfig):
     # path for continue training
     continue_path: str = None
     restore_path: str = None
+    # stop running discriminator
+    stop_discriminator: bool = False
 
     # loss
     loss: LossConfig = field(default_factory=lambda: LossConfig())
