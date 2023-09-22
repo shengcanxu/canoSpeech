@@ -199,7 +199,8 @@ class HifiganDiscriminator(nn.Module):
 
 class VitsDiscriminator(nn.Module):
     """VITS discriminator wrapping one Scale Discriminator and a stack of Period Discriminator.
-    ::
+    size: (6, ), output 5 periods loss and a scale loss, each size is (B, C, Scale)
+    each loss number in range [0, 1]
         waveform -> ScaleDiscriminator() -> scores_sd, feats_sd --> append() -> scores, feats
                |--> MultiPeriodDiscriminator() -> scores_mpd, feats_mpd ^
     Args:

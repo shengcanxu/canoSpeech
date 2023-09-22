@@ -169,18 +169,18 @@ class NaturalSpeechGeneratorLoss(nn.Module):
 
     @staticmethod
     def feature_loss(feats_real, feats_generated):
-        """loss range [0, infinit], always [0, 12]"""
+        """total loss range: [0, (8+6*5)*2=76]"""
         loss = 0
-        for dr, dg in zip(feats_real, feats_generated):
-            for rl, gl in zip(dr, dg):
+        for dr, dg in zip(feats_real, feats_generated):  # list of 6 items
+            for rl, gl in zip(dr, dg): # 8 items for scale disc, 6 items for those 5 period disc
                 rl = rl.float().detach()
                 gl = gl.float()
-                loss += torch.mean(torch.abs(rl - gl))
+                loss += torch.mean(torch.abs(rl - gl))  # range [0, 1]
         return loss * 2
 
     @staticmethod
     def generator_loss(scores_fake):
-        """loss range [0 - 6]"""
+        """loss range [0, 6], because each loss range [0, 1]"""
         loss = 0
         gen_losses = []
         for dg in scores_fake:
@@ -283,14 +283,14 @@ class NaturalSpeechGeneratorLoss(nn.Module):
         p_mask,
         z_mask
     ):
-        loss_gen, losses_gen = self.generator_loss(scores_disc_fake)
+        loss_gen, losses_gen = self.generator_loss(scores_disc_fake)  # range [0, 6]
         loss_gen = loss_gen * self.gen_loss_alpha
-        loss_gen_e2e, losses_gen_e2e = self.generator_loss(scores_disc_fake_e2e)
+        loss_gen_e2e, losses_gen_e2e = self.generator_loss(scores_disc_fake_e2e)  # range [0, 6]
         loss_gen_e2e = loss_gen_e2e * self.gen_loss_e2e_alpha
 
-        # feature loss of discriminator with z generated from audio
+        # feature loss of discriminator, range: [0, (8+6*5)*2=76]
         loss_fm = self.feature_loss(feats_disc_real, feats_disc_fake) * self.feat_loss_alpha
-        # mel loss of discrimator with z generated from audio
+        # mel loss, range: [0, inf], normally in [0, 20]
         loss_mel = F.l1_loss(mel_slice, mel_slice_hat) * self.mel_loss_alpha
 
         # duration and pitch loss generated from text
@@ -330,6 +330,8 @@ class NaturalSpeechDiscriminatorLoss(nn.Module):
 
     @staticmethod
     def discriminator_loss(scores_real, scores_fake):
+        """the input data size doesnot affect the loss range. each real_loss/fake_loss range: [0,1],
+            so loss range [0, 2*6], *6 because there are 5 period disc and 1 scale disc """
         loss = 0
         real_losses = []
         fake_losses = []
@@ -346,7 +348,7 @@ class NaturalSpeechDiscriminatorLoss(nn.Module):
     def forward(self, scores_disc_real, scores_disc_fake):
         loss = 0.0
         return_dict = {}
-        loss_disc, loss_disc_real, _ = self.discriminator_loss(
+        loss_disc, loss_disc_real, loss_disc_fake = self.discriminator_loss(  # range [0, 2*6]
             scores_real=scores_disc_real,
             scores_fake=scores_disc_fake
         )
@@ -354,7 +356,7 @@ class NaturalSpeechDiscriminatorLoss(nn.Module):
         loss = loss + return_dict["loss_disc"]
         return_dict["loss"] = loss
 
-        for i, ldr in enumerate(loss_disc_real):
-            return_dict[f"loss_disc_real_{i}"] = ldr
+        return_dict["loss_disc_real_all"] = sum(loss_disc_real) / len(loss_disc_real) * self.disc_loss_alpha
+        return_dict["loss_disc_fake_all"] = sum(loss_disc_fake) / len(loss_disc_fake) * self.disc_loss_alpha
         return return_dict
 

@@ -8,7 +8,7 @@ import numpy as np
 import pysptk
 from tqdm import tqdm
 from speaker.speaker_encoder import SpeakerEncoder
-
+import soundfile as sf
 sys.path.append("D:\\project\\canoSpeech\\preprocess\\reference\\vits")
 import torch
 from config.config import VitsConfig
@@ -43,7 +43,8 @@ def gen_vits_model():
         n_speakers=config.data.n_speakers,
         **config.model
     ).cuda()
-    _ = vits_model.train()
+    # _ = vits_model.train()
+    _ = vits_model.eval()
 
     print("loading pretrained checkpoint")
     _ = utils.load_checkpoint("../vits_pretrained_vctk.pth", vits_model, None)
@@ -60,21 +61,27 @@ def gen_duration_using_vits(vits_model:torch.nn.Module, config, text:str, spec:t
     with torch.no_grad():
         x_text = x_text.cuda().unsqueeze(0)
         x_text_lengths = torch.LongTensor([x_text.size(1)]).cuda()
-        y_spec = spec.cuda().unsqueeze(0)
+        y_spec = spec.cuda()
         y_spec_lengths = torch.LongTensor([y_spec.size(2)]).cuda()
         sid = torch.LongTensor([sid]).cuda()
 
-        audio, _, attn, _, _, _, _ = vits_model.forward(
+        audio1, _, attn1, _, _, _, _ = vits_model.forward(
             x=x_text,
             x_lengths=x_text_lengths,
             y=y_spec,
             y_lengths=y_spec_lengths,
             sid=sid
         )
+        audio1 = audio1[0, 0].data.cpu().float().numpy()
+        sf.write("D:/project/canoSpeech/output/test1.wav", audio1, 22050)
 
-    duration = attn.sum(2)
+        audio2, attn2, y_mask, _ = vits_model.infer(x_text, x_text_lengths, sid=sid, noise_scale=1, noise_scale_w=1, length_scale=1)
+        audio2 = audio2[0,0].data.cpu().float().numpy()
+        sf.write("D:/project/canoSpeech/output/test2.wav", audio2, 22050)
+
+    duration = attn1.sum(2)
     os.chdir(current_path)  #change the path back
-    return audio, duration
+    return audio2, duration
 
 
 def main(args):
@@ -108,54 +115,54 @@ def main(args):
 
         spec = wav_to_spec(wav.unsqueeze(0), config.audio.fft_size, config.audio.hop_length, config.audio.win_length)
 
-        # _, duration = gen_duration_using_vits(vits, vits_config, text, spec, sid=77)
+        _, duration = gen_duration_using_vits(vits, vits_config, text, spec)
 
-        # Infer pitch and periodicity
-        pitch, periodicity = penn.from_audio(
-            audio=wav,
-            sample_rate=config.audio.sample_rate,
-            hopsize=config.audio.hop_length / config.audio.sample_rate,
-            fmin=config.audio.pitch_fmin,
-            fmax=config.audio.pitch_fmax,
-            checkpoint="D:\\dataset\\VCTK\\fcnf0++.pt",
-            batch_size=256,
-            pad=True,
-            interp_unvoiced_at=0.065,
-            gpu=0
-        )
-        pitch = pitch.cpu().squeeze().numpy()
-        # periodicity = periodicity.cpu().squeeze().numpy()
-
-        # align pitch and spectrogram length
-        refined_pitch = torch.ones([spec.shape[2]]) * pitch[0]
-        if spec.shape[2] > pitch.shape[0]:
-            print(f"pitch is {spec.shape[2]-pitch.shape[0]} shorter than spectrogram")
-            left = int((spec.shape[2] - pitch.shape[0]) / 2)
-            right = pitch.shape[0] + left
-            refined_pitch[left:right] = torch.FloatTensor(pitch)
-
-        elif spec.shape[2] < pitch.shape[0]:
-            print(f"pitch is {pitch.shape[0]-spec.shape[2]} longer than spectrogram")
-            left = int((pitch.shape[0] - spec.shape[2]) / 2)
-            right = spec.shape[2] + left
-            refined_pitch = torch.FloatTensor(pitch[left:right])
-
-        else:
-            refined_pitch = pitch
-
-        # speaker embedding
-        speaker_embedd = speaker_encoder.compute_embedding_from_waveform(wav)
-        speaker_embedd = speaker_embedd.squeeze(0)
-        speaker_embedd = speaker_embedd.cpu().float().numpy()
+        # # Infer pitch and periodicity
+        # pitch, periodicity = penn.from_audio(
+        #     audio=wav,
+        #     sample_rate=config.audio.sample_rate,
+        #     hopsize=config.audio.hop_length / config.audio.sample_rate,
+        #     fmin=config.audio.pitch_fmin,
+        #     fmax=config.audio.pitch_fmax,
+        #     checkpoint="D:\\dataset\\VCTK\\fcnf0++.pt",
+        #     batch_size=256,
+        #     pad=True,
+        #     interp_unvoiced_at=0.065,
+        #     gpu=0
+        # )
+        # pitch = pitch.cpu().squeeze().numpy()
+        # # periodicity = periodicity.cpu().squeeze().numpy()
+        #
+        # # align pitch and spectrogram length
+        # refined_pitch = torch.ones([spec.shape[2]]) * pitch[0]
+        # if spec.shape[2] > pitch.shape[0]:
+        #     print(f"pitch is {spec.shape[2]-pitch.shape[0]} shorter than spectrogram")
+        #     left = int((spec.shape[2] - pitch.shape[0]) / 2)
+        #     right = pitch.shape[0] + left
+        #     refined_pitch[left:right] = torch.FloatTensor(pitch)
+        #
+        # elif spec.shape[2] < pitch.shape[0]:
+        #     print(f"pitch is {pitch.shape[0]-spec.shape[2]} longer than spectrogram")
+        #     left = int((pitch.shape[0] - spec.shape[2]) / 2)
+        #     right = spec.shape[2] + left
+        #     refined_pitch = torch.FloatTensor(pitch[left:right])
+        #
+        # else:
+        #     refined_pitch = pitch
+        #
+        # # speaker embedding
+        # speaker_embedd = speaker_encoder.compute_embedding_from_waveform(wav)
+        # speaker_embedd = speaker_embedd.squeeze(0)
+        # speaker_embedd = speaker_embedd.cpu().float().numpy()
 
         obj = {
             "text": text,
-            "pitch": refined_pitch,
-            # "duration": duration,
-            "speaker": speaker_embedd
+            # "pitch": refined_pitch,
+            "duration": duration,
+            # "speaker": speaker_embedd
         }
-        with open(pklpath, "wb") as fp:
-            pickle.dump(obj=obj, file=fp )
+        # with open(pklpath, "wb") as fp:
+        #     pickle.dump(obj=obj, file=fp )
 
 def gen_text_pitch(args):
     config = VitsConfig()

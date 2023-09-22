@@ -1,4 +1,6 @@
 import math
+import time
+import soundfile as sf
 import torch
 from coqpit import Coqpit
 from typing import Dict, List, Union, Tuple
@@ -431,12 +433,9 @@ class NaturalTTSTrain(TrainerModelWithDataset):
                     scores_disc_real=scores_disc_real_e2e,
                     scores_disc_fake=scores_disc_fake_e2e,
                 )
-                loss_disc_all = loss_dict["loss"] + loss_dict_e2e["loss"]
-                loss_dict_e2e["loss"] = loss_disc_all
+                # add loss and e2e_loss, but the dicrimator loss use the value in lost_dict
+                loss_dict["loss"] = loss_dict["loss"] + loss_dict_e2e["loss"]
 
-            return outputs, loss_dict_e2e
-
-            loss_dict["loss"] = loss_dict["loss"]
             return outputs, loss_dict
 
         if optimizer_idx == 1:
@@ -499,7 +498,13 @@ class NaturalTTSTrain(TrainerModelWithDataset):
 
     @torch.no_grad()
     def eval_step(self, batch: dict, criterion: nn.Module, optimizer_idx: int):
-        return self.train_step(batch, criterion, optimizer_idx)
+        output, lass_dict = self.train_step(batch, criterion, optimizer_idx)
+        if optimizer_idx == 1:
+            wav = output["y_hat"][0, 0]
+            wav = wav.cpu().float().numpy()
+            sf.write(f"{self.config.output_path}/test_{int(time.time()*1000)}.wav", wav, 22050)
+
+        return output, lass_dict
 
     def get_criterion(self):
         """Get criterions for each optimizer. The index in the output list matches the optimizer idx used in train_step()`"""
@@ -548,3 +553,10 @@ class NaturalTTSTrain(TrainerModelWithDataset):
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0)
         wav = self.generator.infer(tokens)
         return wav
+
+    def test_run(self, assets: Dict):
+        print("run test run ..... ")
+        print("run test run ..... ")
+        print("run test run ..... ")
+        print("run test run ..... ")
+        print("run test run ..... ")

@@ -73,11 +73,11 @@
     "save_checkpoints": true,
 
     "loss": {
-        "kl_loss_alpha": 1.0,
-        "kl_loss_forward_alpha": 1.0,
-        "disc_loss_alpha": 100.0,
-        "gen_loss_alpha": 100.0,
-        "gen_loss_e2e_alpha": 100.0,
+        "kl_loss_alpha": 10.0,
+        "kl_loss_forward_alpha": 10.0,
+        "disc_loss_alpha": 10.0,
+        "gen_loss_alpha": 10.0,
+        "gen_loss_e2e_alpha": 10.0,
         "feat_loss_alpha": 10.0,
         "mel_loss_alpha": 50.0,
         "dur_loss_alpha": 0.1,
