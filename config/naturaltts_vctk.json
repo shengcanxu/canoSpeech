@@ -2,7 +2,7 @@
     "run_name": "CanoNaturalSpeech",
     "run_description": "Cano Speech running on VCTK dataset",
     "output_path": "D:\\project\\canoSpeech\\output",
-    "restore_path": "D:\\project\\canoSpeech\\output\\CanoNaturalSpeech-August-24-2023_11+02PM-0000000\\checkpoint_128000.pth",
+    "restore_path": "D:\\project\\canoSpeech\\output\\CanoNaturalSpeech-August-24-2023_11+02PM-0000000\\checkpoint_142000.pth",
 
     "dataset_config": {
         "dataset_name":"vctk",
@@ -80,8 +80,8 @@
         "gen_loss_e2e_alpha": 10.0,
         "feat_loss_alpha": 10.0,
         "mel_loss_alpha": 50.0,
-        "dur_loss_alpha": 0.1,
-        "pitch_loss_alpha": 0.1,
+        "dur_loss_alpha": 10.0,
+        "pitch_loss_alpha": 10.0,
         "speaker_encoder_loss_alpha": 9.0,
         "use_soft_dynamic_time_warping": false
     },

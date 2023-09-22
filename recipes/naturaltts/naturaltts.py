@@ -29,10 +29,11 @@ from util.mel_processing import wav_to_mel
 
 
 class NaturalTTSModel(nn.Module):
-    def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None ):
+    def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None, share_durations = None ):
         super().__init__()
         self.config = config
         self.model_config = config.model
+        self.share_durations = share_durations
         self.speaker_embed = speaker_embed
         self.language_manager = language_manager
 
@@ -169,6 +170,8 @@ class NaturalTTSModel(nn.Module):
         y,  # [B,specC,specT]
         y_lengths,  # [B]
         pitch=None,
+        duration=None,
+        filenames=None,
         speaker_prompt=None,
     ):
         # audio encoder, encode audio to embedding layer z's dimension,
@@ -396,15 +399,16 @@ class NaturalTTSTrain(TrainerModelWithDataset):
     """
     Natural Speech model training model.
     """
-    def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None, ):
-        super().__init__()
+    def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None, share_vars = None):
+        super().__init__(share_vars)
         self.config = config
         self.model_config = config.model
 
         self.generator = NaturalTTSModel(
             config=config,
             speaker_embed=speaker_embed,
-            language_manager=language_manager
+            language_manager=language_manager,
+            share_durations = self.share_vars
         )
 
         self.discriminator = VitsDiscriminator(
@@ -423,6 +427,8 @@ class NaturalTTSTrain(TrainerModelWithDataset):
             speaker_embeds = batch["speaker_embed"]
             wav = batch["waveform"]
             pitch = batch["pitch"]
+            duration = batch["duration"]
+            filenames = batch["filenames"]
 
             # generator pass
             outputs = self.generator(
@@ -430,7 +436,9 @@ class NaturalTTSTrain(TrainerModelWithDataset):
                 x_lengths=token_lens,
                 y=spec,
                 y_lengths=spec_lens,
-                pitch=pitch
+                pitch=pitch,
+                duration=duration,
+                filenames=filenames
             )
 
             wav_slice = segment(

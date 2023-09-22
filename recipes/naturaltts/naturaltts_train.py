@@ -1,5 +1,5 @@
 import os
-
+from dataset.share_duration import ShareDuration
 from torch.cuda import memory_allocated
 from trainer import Trainer, TrainerArgs
 from config.config import NaturalTTSConfig
@@ -21,7 +21,8 @@ def main():
     test_samples = get_metas_from_filelist(data_config.meta_file_val)
 
     # init the model
-    train_model = NaturalTTSTrain(config=config)
+    durations = ShareDuration()
+    train_model = NaturalTTSTrain(config=config, share_vars=durations)
 
     # init the trainer and train
     trainer = Trainer(

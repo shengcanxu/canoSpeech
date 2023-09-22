@@ -11,8 +11,9 @@ from typing import Dict, List, Union, Tuple
 from coqpit import Coqpit
 
 class TrainerModelWithDataset(TrainerModel):
-    def __init__(self):
+    def __init__(self, share_vars=None):
         super().__init__()
+        self.share_vars = share_vars
 
     def get_data_loader(
         self,
@@ -28,7 +29,7 @@ class TrainerModelWithDataset(TrainerModel):
             loader = None
             return loader
 
-        dataset = TextAudioDataset(samples, config)
+        dataset = TextAudioDataset(samples, config, self.share_vars)
 
         # wait all the DDP process to be ready
         if num_gpus > 1:

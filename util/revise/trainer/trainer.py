@@ -1727,6 +1727,8 @@ class Trainer:
             ch = load_fsspec(self.args.restore_path, map_location="cpu")
             if "model_loss" in ch:
                 self.best_loss = ch["model_loss"]
+                if isinstance(self.best_loss, dict):
+                    self.best_loss = self.best_loss["train_loss"] if self.best_loss["eval_loss"] is None else self.best_loss["eval_loss"]
             logger.info(" > Starting with loaded last best loss %f", self.best_loss)
 
     def test(self, model=None, test_samples=None) -> None:
