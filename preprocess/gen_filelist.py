@@ -18,36 +18,35 @@ def load_file_metas(config):
         items = load_ljspeech_metas(root_path=config.path)
     return items
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="../config/naturaltts_vctk_linux.json")
-    args = parser.parse_args()
-
+def gen_filelist(config_path):
     train_config = VitsConfig()
-    train_config.load_json("../config/naturaltts_vctk_linux.json")
+    train_config.load_json(config_path)
     config = train_config.dataset_config
     text_config = train_config.text
 
-    # # load dataset metas
-    # print("load and split metas....")
-    # data_items = load_file_metas(config)
-    # # split train and eval dataset
-    # test_datas, train_datas = split_dataset_metas(
-    #     items=data_items,
-    #     eval_split_max_size=train_config.eval_split_max_size,
-    #     eval_split_size=train_config.eval_split_size
-    # )
-    #
-    # # save test and validate filelist
-    # print("generate filelist....")
+    # save test and validate filelist
+    print("generate filelist....")
     filelists = [
         "../filelists/%s_train_filelist.txt" % config.dataset_name,
         "../filelists/%s_test_filelist.txt" % config.dataset_name
     ]
-    with open(filelists[0], "w", encoding="utf-8") as f:
-        f.writelines([x["audio"] + "|" + x["speaker"] + "|en|" + x["text"].strip() + "\n" for x in train_datas])
-    with open(filelists[1], "w", encoding="utf-8") as f:
-        f.writelines([x["audio"] + "|" + x["speaker"] + "|en|" + x["text"].strip() + "\n" for x in test_datas])
+
+    # load dataset metas
+    print("load and split metas....")
+    data_items = load_file_metas(config)
+    # split train and eval dataset
+    test_datas, train_datas = split_dataset_metas(
+        items=data_items,
+        eval_split_max_size=train_config.eval_split_max_size,
+        eval_split_size=train_config.eval_split_size
+    )
+
+    if not os.path.exists(filelists[0]):
+        with open(filelists[0], "w", encoding="utf-8") as f:
+            f.writelines([x["audio"] + "|" + x["speaker"] + "|en|" + x["text"].strip() + "\n" for x in train_datas])
+    if not os.path.exists(filelists[1]):
+        with open(filelists[1], "w", encoding="utf-8") as f:
+            f.writelines([x["audio"] + "|" + x["speaker"] + "|en|" + x["text"].strip() + "\n" for x in test_datas])
 
     # clean text and save to filelist file
     for filelist in filelists:
@@ -59,6 +58,7 @@ if __name__ == "__main__":
             fw = open(new_filelist, "a", encoding="utf-8")
             with open(new_filelist, encoding="utf-8") as fr:
                 parsed_lines = len([line for line in fr])
+                print(f"already parsed {parsed_lines} lines")
 
             for i in range(len(ptexts)):
                 if i < parsed_lines: continue
@@ -68,3 +68,10 @@ if __name__ == "__main__":
                 fw.writelines(ptexts[i][0] + "|" + ptexts[i][1] + "|" + ptexts[i][2] + "|" + cleaned_text + "\n")
                 if i % 100 == 0:
                     print(i)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=str, default="../config/naturaltts_ljspeech.json")
+    args = parser.parse_args()
+
+    gen_filelist(args.config)

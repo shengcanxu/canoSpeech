@@ -2,8 +2,8 @@ import argparse
 import os
 from glob import glob
 
-from resample import resample_files
-from download_util import download_kaggle_dataset, download_url, extract_archive
+from dataset.resample import resample_files
+from dataset.download_util import download_kaggle_dataset, download_url, extract_archive
 from typing import Optional
 
 

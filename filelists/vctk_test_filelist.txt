@@ -8,28 +8,3 @@ D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_119_mic1.flac|VCTK_p226|en|Among
 D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_063_mic1.flac|VCTK_p226|en|It's a real challenge.
 D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_040_mic1.flac|VCTK_p226|en|It was clear.
 D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_311_mic1.flac|VCTK_p226|en|I was concerned with the way they tried to justify his actions.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_027_mic1.flac|VCTK_p226|en|They should have a major rethink about the event for next year.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_301_mic1.flac|VCTK_p226|en|However, the snow was welcomed by some.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_245_mic1.flac|VCTK_p226|en|I was at the British Olympic Medical Centre, on Friday.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_302_mic1.flac|VCTK_p226|en|Within months, he was a part-time tribunal chairman.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_142_mic1.flac|VCTK_p226|en|Government will intervene.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_224_mic1.flac|VCTK_p226|en|It was a miserable afternoon in Fife.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_141_mic1.flac|VCTK_p226|en|Our intentions are real.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_297_mic1.flac|VCTK_p226|en|There's a pause.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_068_mic1.flac|VCTK_p226|en|Scotland had great assets.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_175_mic1.flac|VCTK_p226|en|It is not either national standards or local control.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_209_mic1.flac|VCTK_p226|en|Now, it's all right.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_319_mic1.flac|VCTK_p226|en|Craig is a major concern for us.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_048_mic1.flac|VCTK_p226|en|It's a blessing.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_246_mic1.flac|VCTK_p226|en|His body was never found.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_244_mic1.flac|VCTK_p226|en|It is linked to the row over proposed changes at Scottish Ballet.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_185_mic1.flac|VCTK_p226|en|It is not fair.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_079_mic1.flac|VCTK_p226|en|Neither it is.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_082_mic1.flac|VCTK_p226|en|It is a terrible place.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_016_mic1.flac|VCTK_p226|en|The Norsemen considered the rainbow as a bridge over which the gods passed from earth to their home in the sky.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_105_mic1.flac|VCTK_p226|en|May not have been at fault?
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_365_mic1.flac|VCTK_p226|en|I have got a wife to feed.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_132_mic1.flac|VCTK_p226|en|Child abuse is a dreadful thing.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_055_mic1.flac|VCTK_p226|en|However, he will now have to wait for his chance to impress.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_058_mic1.flac|VCTK_p226|en|Next league matches Celtic.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_057_mic1.flac|VCTK_p226|en|It's the big omission.

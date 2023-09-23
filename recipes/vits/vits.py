@@ -9,7 +9,7 @@ from trainer.trainer_utils import get_optimizer, get_scheduler
 from config.config import VitsConfig
 from language.languages import LanguageManager
 from layers.discriminator import VitsDiscriminator
-from layers.duration_predictor import VitsDurationPredictor, generate_path, StochasticDurationPredictor
+from layers.duration_predictor import VitsDurationPredictor, generate_path
 from layers.flow import ResidualCouplingBlocks
 from layers.generator import HifiganGenerator
 from layers.losses import VitsDiscriminatorLoss, VitsGeneratorLoss
@@ -67,24 +67,14 @@ class VitsModel(nn.Module):
             num_layers=self.model_config.flow.num_layers_in_flow,
             cond_channels=self.embedded_speaker_dim,
         )
-        if self.model_config.duration_predictor.use_stochastic_dp:
-            self.duration_predictor = StochasticDurationPredictor(
-                in_channels=self.model_config.hidden_channels,
-                hidden_channels=192,
-                kernel_size=self.model_config.duration_predictor.kernel_size,
-                dropout_p=self.model_config.duration_predictor.dropout_p,
-                cond_channels=self.embedded_speaker_dim,
-                language_emb_dim=self.embedded_language_dim,
-            )
-        else:
-            self.duration_predictor = VitsDurationPredictor(
-                in_channels=self.model_config.hidden_channels,
-                hidden_channels=256,
-                kernel_size=self.model_config.duration_predictor.kernel_size,
-                dropout_p=self.model_config.duration_predictor.dropout_p,
-                cond_channels=self.embedded_speaker_dim,
-                language_emb_dim=self.embedded_language_dim,
-            )
+        self.duration_predictor = VitsDurationPredictor(
+            in_channels=self.model_config.hidden_channels,
+            hidden_channels=256,
+            kernel_size=self.model_config.duration_predictor.kernel_size,
+            dropout_p=self.model_config.duration_predictor.dropout_p,
+            cond_channels=self.embedded_speaker_dim,
+            language_emb_dim=self.embedded_language_dim,
+        )
         self.waveform_decoder = HifiganGenerator(
             in_channels=self.model_config.hidden_channels,
             out_channels=1,
@@ -117,6 +107,43 @@ class VitsModel(nn.Module):
             torch.nn.init.xavier_uniform_(self.language_embedding.weight)
         else:
             self.embedded_language_dim = 0
+
+    @staticmethod
+    def _set_cond_input(speaker_embeds, speaker_ids, language_ids):
+        """Set the speaker conditioning input based on the multi-speaker mode."""
+        sid, g, lid, durations = None, None, None, None
+        if speaker_ids is not None:
+            sid = speaker_ids
+            if sid.ndim == 0:
+                sid = sid.unsqueeze_(0)
+        if speaker_embeds is not None:
+            g = F.normalize(speaker_embeds).unsqueeze(-1)
+            if g.ndim == 2:
+                g = g.unsqueeze_(0)
+
+        if language_ids is not None:
+            lid = language_ids
+            if lid.ndim == 0:
+                lid = lid.unsqueeze_(0)
+        return sid, g, lid
+
+    def monotonic_align(self, z_p, m_p, logs_p, x, x_mask, y_mask):
+        # find the alignment path
+        attn_mask = torch.unsqueeze(x_mask, -1) * torch.unsqueeze(y_mask, 2)
+        with torch.no_grad():
+            # code here does: using "Probability density function", by applying z_p to Probability density function
+            # to get the probability
+            o_scale = torch.exp(-2 * logs_p)  # 1/p**2, p is the Variance
+            logp1 = torch.sum(-0.5 * math.log(2 * math.pi) - logs_p, [1]).unsqueeze(-1)  # [b, t, 1] log( 1/sqrt(2*pi*p**2) )
+            logp2 = torch.einsum("klm, kln -> kmn", [o_scale, -0.5 * (z_p**2)])  # log( -x**2/(2*p**2) ), x will be z_p here
+            logp3 = torch.einsum("klm, kln -> kmn", [m_p * o_scale, z_p])  # log( 2xu/2p**2 ), u is the mean here
+            logp4 = torch.sum(-0.5 * (m_p**2) * o_scale, [1]).unsqueeze(-1)  # [b, t, 1]  log( u**2/(2*p**2) )
+            logp = logp2 + logp3 + logp1 + logp4  # log("Probability density")
+            attn = maximum_path(logp, attn_mask.squeeze(1)).unsqueeze(1).detach()  # [b, 1, t, t']
+
+        # duration predictor
+        attn_durations = attn.sum(3)
+        return attn_durations, attn
 
     def forward(
         self,
@@ -151,24 +178,33 @@ class VitsModel(nn.Module):
         if self.model_config.use_language_embedding and lid is not None:
             lang_emb = self.language_embedding(lid).unsqueeze(-1)
 
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
-
         # audio encoder, encode audio to embedding layer z's dimension
         z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=g)
         # flow layers
         z_p = self.flow(z, y_mask, g=g)
 
-        # duration predictor
-        outputs, attn = self.forward_mas(outputs, z_p, m_p, logs_p, x, x_mask, y_mask, g=g, lang_emb=lang_emb)
+        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
 
+        # duration predictor
+        attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask, g=g, lang_emb=lang_emb)
         # expand text token_size to audio token_size
         m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
         logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])
 
+        attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
+        log_durations = self.duration_predictor(
+            x.detach(),
+            x_mask,
+            g=g.detach() if g is not None else g,
+            lang_emb=lang_emb.detach() if lang_emb is not None else lang_emb,
+        )
+        loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
+        outputs["loss_duration"] = loss_duration
+
         # select a random feature segment for the waveform decoder
         z_slice, slice_ids = rand_segments(z, y_lengths, self.spec_segment_size, let_short_samples=True, pad_short=True)
 
-        o = self.waveform_decoder(z_slice, g=g)
+        y_hat = self.waveform_decoder(z_slice, g=g)
 
         wav_seg = segment(
             waveform,
@@ -180,7 +216,7 @@ class VitsModel(nn.Module):
         gt_spk_emb, syn_spk_emb = None, None
 
         outputs.update({
-            "model_outputs": o,  # [B, 1, T_wav]
+            "model_outputs": y_hat,  # [B, 1, T_wav]
             "alignments": attn.squeeze(1),  # [B, T_seq, T_dec]
             "m_p": m_p,  # [B, C, T_dec]
             "logs_p": logs_p,  # [B, C, T_dec]
@@ -194,63 +230,6 @@ class VitsModel(nn.Module):
             "slice_ids": slice_ids,
         })
         return outputs
-
-    def forward_mas(self, outputs, z_p, m_p, logs_p, x, x_mask, y_mask, g, lang_emb):
-        # find the alignment path
-        attn_mask = torch.unsqueeze(x_mask, -1) * torch.unsqueeze(y_mask, 2)
-        with torch.no_grad():
-            # code here does: using "Probability density function", by applying z_p to Probability density function
-            # to get the probability
-            o_scale = torch.exp(-2 * logs_p)  # 1/p**2, p is the Variance
-            logp1 = torch.sum(-0.5 * math.log(2 * math.pi) - logs_p, [1]).unsqueeze(-1)  # [b, t, 1] log( 1/sqrt(2*pi*p**2) )
-            logp2 = torch.einsum("klm, kln -> kmn", [o_scale, -0.5 * (z_p**2)])  # log( -x**2/(2*p**2) ), x will be z_p here
-            logp3 = torch.einsum("klm, kln -> kmn", [m_p * o_scale, z_p])  # log( 2xu/2p**2 ), u is the mean here
-            logp4 = torch.sum(-0.5 * (m_p**2) * o_scale, [1]).unsqueeze(-1)  # [b, t, 1]  log( u**2/(2*p**2) )
-            logp = logp2 + logp3 + logp1 + logp4  # log("Probability density")
-            attn = maximum_path(logp, attn_mask.squeeze(1)).unsqueeze(1).detach()  # [b, 1, t, t']
-
-        # duration predictor
-        attn_durations = attn.sum(3)
-        if self.model_config.duration_predictor.use_stochastic_dp:
-            loss_duration = self.duration_predictor(
-                x.detach(),
-                x_mask,
-                attn_durations,
-                g=g.detach() if g is not None else g,
-                lang_emb=lang_emb.detach() if lang_emb is not None else lang_emb,
-            )
-            loss_duration = loss_duration / torch.sum(x_mask)
-        else:
-            attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
-            log_durations = self.duration_predictor(
-                x.detach(),
-                x_mask,
-                g=g.detach() if g is not None else g,
-                lang_emb=lang_emb.detach() if lang_emb is not None else lang_emb,
-            )
-            loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
-
-        outputs["loss_duration"] = loss_duration
-        return outputs, attn
-
-    @staticmethod
-    def _set_cond_input(speaker_embeds, speaker_ids, language_ids):
-        """Set the speaker conditioning input based on the multi-speaker mode."""
-        sid, g, lid, durations = None, None, None, None
-        if speaker_ids is not None:
-            sid = speaker_ids
-            if sid.ndim == 0:
-                sid = sid.unsqueeze_(0)
-        if speaker_embeds is not None:
-            g = F.normalize(speaker_embeds).unsqueeze(-1)
-            if g.ndim == 2:
-                g = g.unsqueeze_(0)
-
-        if language_ids is not None:
-            lid = language_ids
-            if lid.ndim == 0:
-                lid = lid.unsqueeze_(0)
-        return sid, g, lid
 
     @torch.no_grad()
     def infer(
@@ -276,22 +255,12 @@ class VitsModel(nn.Module):
 
         x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
 
-        if self.model_config.duration_predictor.use_stochastic_dp:
-            logw = self.duration_predictor(
-                x=x,
-                x_mask=x_mask,
-                g=g if g is not None else g,
-                reverse=True,
-                noise_scale=self.model_config.inference_noise_scale_dp,
-                lang_emb=lang_emb,
-            )
-        else:
-            logw = self.duration_predictor(
-                x=x,
-                x_mask=x_mask,
-                g=g if g is not None else g,
-                lang_emb=lang_emb
-            )
+        logw = self.duration_predictor(
+            x=x,
+            x_mask=x_mask,
+            g=g if g is not None else g,
+            lang_emb=lang_emb
+        )
         w = torch.exp(logw) * x_mask * self.model_config.length_scale
 
         w_ceil = torch.ceil(w)
