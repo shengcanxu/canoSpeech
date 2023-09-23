@@ -403,6 +403,8 @@ class NaturalTTSTrain(TrainerModelWithDataset):
         super().__init__(share_vars)
         self.config = config
         self.model_config = config.model
+        self.balance_disc_generator = config.balance_disc_generator
+        self.skip_discriminator = False
 
         self.generator = NaturalTTSModel(
             config=config,
@@ -482,7 +484,8 @@ class NaturalTTSTrain(TrainerModelWithDataset):
                 # # add loss and e2e_loss, but the dicrimator loss use the value in lost_dict
                 # loss_dict["loss"] = loss_dict["loss"] + loss_dict_e2e["loss"]
 
-            if self.config.stop_discriminator:
+            self.disc_loss_dict = loss_dict
+            if self.skip_discriminator:
                 return outputs, None
             else:
                 return outputs, loss_dict
@@ -561,20 +564,26 @@ class NaturalTTSTrain(TrainerModelWithDataset):
                     z_mask=self.model_outputs_cache["z_mask"],
                 )
 
+                loss_dict["loss_disc"] = self.disc_loss_dict["loss_disc"]
+                loss_dict["loss_disc_real_all"] = self.disc_loss_dict["loss_disc_real_all"]
+                loss_dict["loss_disc_fake_all"] = self.disc_loss_dict["loss_disc_fake_all"]
+                # auto balance discriminator and generator, make sure loss of disciminator will be roughly 1.5x - 2.0x of generator
+                self.skip_discriminator =  loss_dict["loss_disc"] <= loss_dict["loss_gen"] * 1.5
+
             return self.model_outputs_cache, loss_dict
 
         raise ValueError(" [!] Unexpected `optimizer_idx`.")
 
     @torch.no_grad()
     def eval_step(self, batch: dict, criterion: nn.Module, optimizer_idx: int):
-        output, lass_dict = self.train_step(batch, criterion, optimizer_idx)
+        output, loss_dict = self.train_step(batch, criterion, optimizer_idx)
         if optimizer_idx == 1:
             wav = self.generator.generate_wav(output["z"])
             wav = wav[0, 0].cpu().float().numpy()
             filename = os.path.basename(batch["filenames"][0])
             sf.write(f"{self.config.output_path}/{filename}_{int(time.time())}.wav", wav, 22050)
 
-        return output, lass_dict
+        return output, loss_dict
 
     def get_criterion(self):
         """Get criterions for each optimizer. The index in the output list matches the optimizer idx used in train_step()`"""

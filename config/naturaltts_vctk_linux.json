@@ -3,6 +3,7 @@
     "run_description": "Cano Speech running on VCTK dataset",
     "output_path": "/home/output",
     "continue_path": "/home/output/CanoNaturalSpeech-August-24-2023_11+02PM-0000000",
+    "balance_disc_generator": true,
 
     "dataset_config": {
         "dataset_name":"vctk",
