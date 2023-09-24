@@ -186,7 +186,7 @@ class VitsModel(nn.Module):
         x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
 
         # duration predictor
-        attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask, g=g, lang_emb=lang_emb)
+        attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
         # expand text token_size to audio token_size
         m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
         logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])

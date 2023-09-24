@@ -11,7 +11,7 @@ from typing import Dict, List, Union, Tuple
 from coqpit import Coqpit
 
 class TrainerModelWithDataset(TrainerModel):
-    def __init__(self, share_vars=None):
+    def __init__(self, share_vars={}):
         super().__init__()
         self.share_vars = share_vars
 

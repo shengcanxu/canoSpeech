@@ -168,6 +168,11 @@ class VitsConfig(TrainerConfig):
     eval_split_max_size: int = 256
     # the percentage of dataset to be eval dataset
     eval_split_size: float = 0.01
+    # path for continue training
+    continue_path: str = None
+    restore_path: str = None
+    # stop running discriminator
+    balance_disc_generator: bool = False
 
     #loss
     loss:LossConfig = field(default_factory=lambda: LossConfig())

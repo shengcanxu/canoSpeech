@@ -12,7 +12,6 @@ def main():
     config = VitsConfig()
     config.load_json("./config/naturaltts_ljspeech.json")
     data_config = config.dataset_config
-    print(config)
 
     train_samples = get_metas_from_filelist(data_config.meta_file_train)
     test_samples = get_metas_from_filelist(data_config.meta_file_val)
