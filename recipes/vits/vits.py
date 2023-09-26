@@ -2,6 +2,8 @@ import math
 from typing import Dict, List, Union, Tuple
 from torch.cuda.amp.autocast_mode import autocast
 import torch
+import os
+import time
 from torch.nn import functional as F
 from coqpit import Coqpit
 from torch import nn
@@ -19,6 +21,7 @@ from recipes.trainer_model import TrainerModelWithDataset
 from text import text_to_tokens
 from util.helper import sequence_mask, segment, rand_segments
 from util.mel_processing import wav_to_spec, spec_to_mel, wav_to_mel
+import soundfile as sf
 
 
 class VitsModel(nn.Module):
@@ -183,23 +186,23 @@ class VitsModel(nn.Module):
         # flow layers
         z_p = self.flow(z, y_mask, g=g)
 
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
+        # x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
 
-        # duration predictor
-        attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
-        # expand text token_size to audio token_size
-        m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
-        logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])
-
-        attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
-        log_durations = self.duration_predictor(
-            x.detach(),
-            x_mask,
-            g=g.detach() if g is not None else g,
-            lang_emb=lang_emb.detach() if lang_emb is not None else lang_emb,
-        )
-        loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
-        outputs["loss_duration"] = loss_duration
+        # # duration predictor
+        # attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
+        # # expand text token_size to audio token_size
+        # m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
+        # logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])
+        #
+        # attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
+        # log_durations = self.duration_predictor(
+        #     x.detach(),
+        #     x_mask,
+        #     g=g.detach() if g is not None else g,
+        #     lang_emb=lang_emb.detach() if lang_emb is not None else lang_emb,
+        # )
+        # loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
+        # outputs["loss_duration"] = loss_duration
 
         # select a random feature segment for the waveform decoder
         z_slice, slice_ids = rand_segments(z, y_lengths, self.spec_segment_size, let_short_samples=True, pad_short=True)
@@ -215,11 +218,26 @@ class VitsModel(nn.Module):
 
         gt_spk_emb, syn_spk_emb = None, None
 
-        outputs.update({
-            "model_outputs": y_hat,  # [B, 1, T_wav]
-            "alignments": attn.squeeze(1),  # [B, T_seq, T_dec]
-            "m_p": m_p,  # [B, C, T_dec]
-            "logs_p": logs_p,  # [B, C, T_dec]
+        # return {
+        #     "y_hat": y_hat,  # [B, 1, T_wav]
+        #     "alignments": attn.squeeze(1),  # [B, T_seq, T_dec]
+        #     "m_p": m_p,  # [B, C, T_dec]
+        #     "logs_p": logs_p,  # [B, C, T_dec]
+        #     "z": z,  # [B, C, T_dec]
+        #     "z_p": z_p,  # [B, C, T_dec]
+        #     "m_q": m_q,  # [B, C, T_dec]
+        #     "logs_q": logs_q,  # [B, C, T_dec]
+        #     "waveform_seg": wav_seg,  # [B, 1, spec_seg_size * hop_length]
+        #     "gt_spk_emb": gt_spk_emb,  # [B, 1, speaker_encoder.proj_dim]
+        #     "syn_spk_emb": syn_spk_emb,  # [B, 1, speaker_encoder.proj_dim]
+        #     "slice_ids": slice_ids,
+        #     "loss_duration": loss_duration,
+        # }
+        return {
+            "y_hat": y_hat,  # [B, 1, T_wav]
+            "alignments": torch.FloatTensor([0]),
+            "m_p": torch.FloatTensor([0]),  # [B, C, T_dec]
+            "logs_p": torch.FloatTensor([0]),  # [B, C, T_dec]
             "z": z,  # [B, C, T_dec]
             "z_p": z_p,  # [B, C, T_dec]
             "m_q": m_q,  # [B, C, T_dec]
@@ -228,8 +246,8 @@ class VitsModel(nn.Module):
             "gt_spk_emb": gt_spk_emb,  # [B, 1, speaker_encoder.proj_dim]
             "syn_spk_emb": syn_spk_emb,  # [B, 1, speaker_encoder.proj_dim]
             "slice_ids": slice_ids,
-        })
-        return outputs
+            "loss_duration": torch.FloatTensor([0])
+        }
 
     @torch.no_grad()
     def infer(
@@ -280,6 +298,12 @@ class VitsModel(nn.Module):
         wav = self.waveform_decoder(z, g=g)
         return wav
 
+    @torch.no_grad()
+    def generate_wav(self, z, speaker_embeds):
+        z = z[0].unsqueeze(0)
+        sid, g, lid = self._set_cond_input(speaker_embeds, None, None)
+        wav = self.waveform_decoder(z, g=g)
+        return wav
 
 class VitsTrain(TrainerModelWithDataset):
     """
@@ -289,6 +313,8 @@ class VitsTrain(TrainerModelWithDataset):
         super().__init__()
         self.config = config
         self.model_config = config.model
+        self.balance_disc_generator = config.balance_disc_generator
+        self.skip_discriminator = False
 
         self.generator = VitsModel(
             config=config,
@@ -329,7 +355,7 @@ class VitsTrain(TrainerModelWithDataset):
             # compute scores and features
             scores_disc_real, _, scores_disc_fake, _ = self.discriminator(
                 x=outputs["waveform_seg"],
-                x_hat=outputs["model_outputs"].detach(),
+                x_hat=outputs["y_hat"].detach(),
             )
 
             # compute loss
@@ -338,7 +364,12 @@ class VitsTrain(TrainerModelWithDataset):
                     scores_disc_real=scores_disc_real,
                     scores_disc_fake=scores_disc_fake,
                 )
-            return outputs, loss_dict
+
+            self.disc_loss_dict = loss_dict
+            if self.skip_discriminator:
+                return outputs, None
+            else:
+                return outputs, loss_dict
 
         if optimizer_idx == 1:
             mel = batch["mel"]
@@ -352,7 +383,7 @@ class VitsTrain(TrainerModelWithDataset):
                     pad_short=True
                 )
                 mel_slice_hat = wav_to_mel(
-                    y=self.model_outputs_cache["model_outputs"].float(),
+                    y=self.model_outputs_cache["y_hat"].float(),
                     n_fft=self.config.audio.fft_size,
                     sample_rate=self.config.audio.sample_rate,
                     num_mels=self.config.audio.num_mels,
@@ -366,7 +397,7 @@ class VitsTrain(TrainerModelWithDataset):
             # compute discriminator scores and features
             _, feats_disc_real, scores_disc_fake, feats_disc_fake = self.discriminator(
                 x=self.model_outputs_cache["waveform_seg"],
-                x_hat=self.model_outputs_cache["model_outputs"]
+                x_hat=self.model_outputs_cache["y_hat"]
             )
 
             # compute losses
@@ -394,7 +425,15 @@ class VitsTrain(TrainerModelWithDataset):
 
     @torch.no_grad()
     def eval_step(self, batch: dict, criterion: nn.Module, optimizer_idx: int):
-        return self.train_step(batch, criterion, optimizer_idx)
+        output, loss_dict = self.train_step(batch, criterion, optimizer_idx)
+        if optimizer_idx == 1:
+            speaker_embeds = batch["speaker_embed"]
+            wav = self.generator.generate_wav(output["z"], speaker_embeds)
+            wav = wav[0, 0].cpu().float().numpy()
+            filename = os.path.basename(batch["filenames"][0])
+            sf.write(f"{self.config.output_path}/{filename}_{int(time.time())}.wav", wav, 22050)
+
+        return output, loss_dict
 
     def get_criterion(self):
         """Get criterions for each optimizer. The index in the output list matches the optimizer idx used in train_step()`"""
@@ -443,4 +482,3 @@ class VitsTrain(TrainerModelWithDataset):
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0)
         wav = self.generator.infer(tokens)
         return wav
-
