@@ -1,0 +1,10 @@
+/home/dataset/LJSpeech/wavs/LJ025-0134.wav|ljspeech|en|A molecular change takes place in the nerve of the tentacle,
+/home/dataset/LJSpeech/wavs/LJ010-0304.wav|ljspeech|en|through advances made to various builders, and that it could only maintain its credit by wholesale discounting.
+/home/dataset/LJSpeech/wavs/LJ013-0102.wav|ljspeech|en|and thence to Halifax, whither he followed them, accompanied by a confidential clerk from the bank.
+/home/dataset/LJSpeech/wavs/LJ007-0196.wav|ljspeech|en|the provision of dining-rooms and dining-tables.
+/home/dataset/LJSpeech/wavs/LJ046-0091.wav|ljspeech|en|Such risks can be lessened when the President recognizes the security problem,
+/home/dataset/LJSpeech/wavs/LJ029-0170.wav|ljspeech|en|Dallas Before the Visit
+/home/dataset/LJSpeech/wavs/LJ021-0108.wav|ljspeech|en|from the standpoint of the good of the industries themselves, as well as the general public interest,
+/home/dataset/LJSpeech/wavs/LJ037-0152.wav|ljspeech|en|Identification was effected through breech face marks and firing pin marks.
+/home/dataset/LJSpeech/wavs/LJ019-0039.wav|ljspeech|en|At Pentonville the rate was higher, but there the expense had been increased by the site,
+/home/dataset/LJSpeech/wavs/LJ001-0134.wav|ljspeech|en|In good printing the spaces between the words should be as near as possible equal

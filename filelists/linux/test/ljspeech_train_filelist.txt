@@ -1,0 +1,50 @@
+/home/dataset/LJSpeech/wavs/LJ029-0028.wav|ljspeech|en|Everyone agreed that, if there was sufficient time, a motorcade through downtown Dallas would be the best way for the people to see their President.
+/home/dataset/LJSpeech/wavs/LJ040-0165.wav|ljspeech|en|Lee's withdrawal was also noted by Mrs. Siegel, who described him as a, quote, seriously detached, withdrawn youngster, end quote.
+/home/dataset/LJSpeech/wavs/LJ018-0138.wav|ljspeech|en|Some time in 1862, a large deficiency in stock of bank paper unglazed was discovered at the mills.
+/home/dataset/LJSpeech/wavs/LJ038-0156.wav|ljspeech|en|He stated that at the time the President was shot he was having lunch with "Junior" but he did not give Junior's last name.
+/home/dataset/LJSpeech/wavs/LJ045-0065.wav|ljspeech|en|Marina Oswald's inability to speak English also made it more difficult for her to have an independent existence in this country.
+/home/dataset/LJSpeech/wavs/LJ002-0124.wav|ljspeech|en|Quite half of the foregoing writs and arrests applied to sums under £30.
+/home/dataset/LJSpeech/wavs/LJ031-0115.wav|ljspeech|en|From approximately 4 p.m. to 4:50 p.m. on November 22,
+/home/dataset/LJSpeech/wavs/LJ012-0085.wav|ljspeech|en|The chest was opened to give change, and a heavy tray lifted out which plainly held some £4000 in cash.
+/home/dataset/LJSpeech/wavs/LJ028-0163.wav|ljspeech|en|which are, like the great gates in the outer wall, of brass, and open on the water.
+/home/dataset/LJSpeech/wavs/LJ002-0305.wav|ljspeech|en|and thus when the debtor's debt had been actually paid, or when he had abandoned his property to the creditors, and, almost destitute,
+/home/dataset/LJSpeech/wavs/LJ010-0119.wav|ljspeech|en|It was asserted, not without foundation, at these trials, that Edwards repeatedly incited the associates he was betraying
+/home/dataset/LJSpeech/wavs/LJ048-0182.wav|ljspeech|en|President Kennedy himself had mentioned it that morning, as had Agent Sorrels when he and Agent Lawson were fixing the motorcade route.
+/home/dataset/LJSpeech/wavs/LJ045-0093.wav|ljspeech|en|She said that she, quote, always tried to point out to him that he was a man like any others who were around us. But he simply could not understand that? End quote.
+/home/dataset/LJSpeech/wavs/LJ013-0162.wav|ljspeech|en|a bundle lying on the floor, as though thieves had been interrupted in the act.
+/home/dataset/LJSpeech/wavs/LJ028-0088.wav|ljspeech|en|Religion and cruelty frequently go hand in hand, and Nebuchadnezzar was exceedingly religious.
+/home/dataset/LJSpeech/wavs/LJ023-0048.wav|ljspeech|en|Two of the horses are pulling in unison today; the third is not.
+/home/dataset/LJSpeech/wavs/LJ030-0150.wav|ljspeech|en|The Dallas police radio log reflects that Chief of Police Curry reported the shooting of the President
+/home/dataset/LJSpeech/wavs/LJ008-0133.wav|ljspeech|en|He was dressed in a mixed-colored loose coat with a black collar, swandown waistcoat, blue pantaloons, and white silk stockings.
+/home/dataset/LJSpeech/wavs/LJ016-0295.wav|ljspeech|en|curse, or shout, as in this heaving and struggling forward they gained or lost in their strong efforts to get nearer where Müller was to die.
+/home/dataset/LJSpeech/wavs/LJ039-0177.wav|ljspeech|en|was greater than from the second to the third shot and required a movement in the basic firing position of the marksmen.
+/home/dataset/LJSpeech/wavs/LJ035-0164.wav|ljspeech|en|3 minutes after the shooting.
+/home/dataset/LJSpeech/wavs/LJ038-0226.wav|ljspeech|en|Oswald had apparently mistaken the county jail for the city jail.
+/home/dataset/LJSpeech/wavs/LJ005-0194.wav|ljspeech|en|The keeper and his officers resided at a distance from the jail, and left its inmates to their own devices.
+/home/dataset/LJSpeech/wavs/LJ009-0238.wav|ljspeech|en|After this the sheriffs sent for another rope, but the spectators interfered, and the man was carried back to jail.
+/home/dataset/LJSpeech/wavs/LJ008-0239.wav|ljspeech|en|The loud shout of the multitude once more subsided, or only fell upon the abstracted ear like the dreamy murmur of an ocean shell.
+/home/dataset/LJSpeech/wavs/LJ003-0118.wav|ljspeech|en|Various punishments were inflicted, the heaviest of which was standing in the pillory.
+/home/dataset/LJSpeech/wavs/LJ028-0302.wav|ljspeech|en|I will desert to the enemy as I am, and when I get into their city I will tell them that it is by thee that I have been thus treated.
+/home/dataset/LJSpeech/wavs/LJ028-0230.wav|ljspeech|en|A battle was fought at a short distance from the city, in which the Babylonians were defeated by the Persian King,
+/home/dataset/LJSpeech/wavs/LJ038-0144.wav|ljspeech|en|that must have been some other time he picked me up, end quote,
+/home/dataset/LJSpeech/wavs/LJ044-0057.wav|ljspeech|en|extensive investigation was not able to connect Oswald with that address, although it did develop the fact
+/home/dataset/LJSpeech/wavs/LJ037-0075.wav|ljspeech|en|However, even in the absence of Mrs. Markham's testimony, there is ample evidence to identify Oswald as the killer of Tippit.
+/home/dataset/LJSpeech/wavs/LJ028-0415.wav|ljspeech|en|but only part, and that a small part, of the great tower, which God hath suffered to stand
+/home/dataset/LJSpeech/wavs/LJ036-0169.wav|ljspeech|en|he would have reached his destination at approximately 12:54 p.m.
+/home/dataset/LJSpeech/wavs/LJ019-0079.wav|ljspeech|en|The cells inhabited by prisoners were of very varying dimensions;
+/home/dataset/LJSpeech/wavs/LJ014-0227.wav|ljspeech|en|One of these was Mobbs, who lived in the Minories,
+/home/dataset/LJSpeech/wavs/LJ016-0078.wav|ljspeech|en|but had to come down again covered with soot and filth just as the officers entered the ward.
+/home/dataset/LJSpeech/wavs/LJ027-0054.wav|ljspeech|en|Since backboned animals are best known to most readers, they may be taken as an illustration.
+/home/dataset/LJSpeech/wavs/LJ006-0152.wav|ljspeech|en|One turnkey had been so employed several hours daily for nearly eleven years.
+/home/dataset/LJSpeech/wavs/LJ043-0072.wav|ljspeech|en|Even though he told his wife that he had been fired, he voluntarily left on October 8, 1962, and moved to Dallas.
+/home/dataset/LJSpeech/wavs/LJ010-0037.wav|ljspeech|en|Now and again there seemed to be a recurrence of a murder epidemic,
+/home/dataset/LJSpeech/wavs/LJ012-0079.wav|ljspeech|en|A large amount of specie was nearly always retained here in the department of the Receiver of Fines.
+/home/dataset/LJSpeech/wavs/LJ031-0147.wav|ljspeech|en|Secret Service Emergency Security Arrangements
+/home/dataset/LJSpeech/wavs/LJ046-0112.wav|ljspeech|en|and requests to other agencies, Federal and local, for useful information.
+/home/dataset/LJSpeech/wavs/LJ019-0383.wav|ljspeech|en|The whole question assumed sufficient importance to become a part of the Government program when Lord Beaconsfield took office in 1874.
+/home/dataset/LJSpeech/wavs/LJ024-0003.wav|ljspeech|en|What is my proposal?
+/home/dataset/LJSpeech/wavs/LJ037-0004.wav|ljspeech|en|At least 12 persons saw the man with the revolver in the vicinity of the Tippit crime scene at or immediately after the shooting.
+/home/dataset/LJSpeech/wavs/LJ036-0065.wav|ljspeech|en|Oswald lived at 1026 North Beckley.
+/home/dataset/LJSpeech/wavs/LJ016-0019.wav|ljspeech|en|and climbed up the pipe of a cistern in the corner of the press yard; some thought with the idea of drowning himself.
+/home/dataset/LJSpeech/wavs/LJ002-0213.wav|ljspeech|en|The Fleet, which stood in Farringdon Street,
+/home/dataset/LJSpeech/wavs/LJ034-0082.wav|ljspeech|en|None of the Depository employees is known to have seen Oswald again until after the shooting.

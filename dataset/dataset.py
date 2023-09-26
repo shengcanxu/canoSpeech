@@ -161,7 +161,7 @@ class TextAudioDataset(Dataset):
             else:
                 raise Exception("path doesn't exists! should run preprocess")
 
-            duration = self.share_vars.get(sample["audio"], None)
+            duration = self.share_vars.get(sample["audio"])
 
         return {
             "raw_text": sample["text"], # str
