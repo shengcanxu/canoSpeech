@@ -9686,7 +9686,6 @@
 /home/dataset/LJSpeech/wavs/LJ031-0080.wav|ljspeech|en|The time was fixed at 1 p.m., as an approximation, since it was impossible to determine the precise moment when life left the President.
 /home/dataset/LJSpeech/wavs/LJ007-0045.wav|ljspeech|en|They amused themselves after their own fashion; played all day long at blind-man's-buff and leap-frog, or beat each other with a knotted handkerchief,
 /home/dataset/LJSpeech/wavs/LJ037-0074.wav|ljspeech|en|and her positive identification of Oswald at a police lineup, the Commission considers her testimony reliable.
-/home/dataset/LJSpeech/wavs/LJ014-0216.wav|ljspeech|en|and by getting his hand inside Dwyer's stock, with the idea of strangling him.
 /home/dataset/LJSpeech/wavs/LJ037-0247.wav|ljspeech|en|Marina Oswald also identified Commission Exhibit No. 162, the jacket found by Captain Westbrook, as her husband's second jacket.
 /home/dataset/LJSpeech/wavs/LJ002-0114.wav|ljspeech|en|and imprisonment for debt has almost entirely disappeared.
 /home/dataset/LJSpeech/wavs/LJ029-0155.wav|ljspeech|en|As the date for the President's visit approached,

@@ -568,7 +568,7 @@ class NaturalTTSTrain(TrainerModelWithDataset):
                 loss_dict["loss_disc_real_all"] = self.disc_loss_dict["loss_disc_real_all"]
                 loss_dict["loss_disc_fake_all"] = self.disc_loss_dict["loss_disc_fake_all"]
                 # auto balance discriminator and generator, make sure loss of disciminator will be roughly 1.5x - 2.0x of generator
-                self.skip_discriminator =  loss_dict["loss_disc"] <= loss_dict["loss_gen"] * 1.5
+                self.skip_discriminator = loss_dict["loss_disc"] <= loss_dict["loss_gen"] * 1.5
 
             return self.model_outputs_cache, loss_dict
 
