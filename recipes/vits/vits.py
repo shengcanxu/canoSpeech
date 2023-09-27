@@ -450,21 +450,20 @@ class VitsTrain(TrainerModelWithDataset):
     def get_optimizer(self) -> List:
         """Initiate and return the GAN optimizers based on the config parameters."""
         # select generator parameters
-        disOptimizer = get_optimizer(
+        discOptimizer = get_optimizer(
             optimizer_name=self.config.optimizer,
             optimizer_params=self.config.optimizer_params,
-            lr=self.config.lr,
+            lr=self.config.lr[0],
             model=self.discriminator
         )
 
-        # gen_parameters = chain(params for k, params in self.named_parameters() if not k.startswith("discriminator."))
         genOptimizer = get_optimizer(
             optimizer_name=self.config.optimizer,
             optimizer_params=self.config.optimizer_params,
-            lr=self.config.lr,
+            lr=self.config.lr[1],
             model=self.generator
         )
-        return [disOptimizer, genOptimizer]
+        return [discOptimizer, genOptimizer]
 
     def get_scheduler(self, optimizer) -> List:
         """Set the schedulers for each optimizer.

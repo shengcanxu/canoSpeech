@@ -235,11 +235,11 @@ def _deserialize_union(x: Any, field_type: Type) -> Any:
     for arg in field_type.__args__:
         # stop after first matching type in Union
         try:
-            x = _deserialize(x, arg)
-            break
+            v = _deserialize(x, arg)
+            if v is not None: break
         except ValueError:
             pass
-    return x
+    return v
 
 
 def _deserialize_primitive_types(x: Union[int, float, str, bool], field_type: Type) -> Union[int, float, str, bool]:

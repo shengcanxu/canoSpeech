@@ -51,7 +51,7 @@
     "cudnn_benchmark": true,
 
     "scheduler_after_epoch": true,
-    "lr": 2e-4,
+    "lr": [2e-4, 2e-4],
     "optimizer": "AdamW",
     "optimizer_params": {
         "betas": [0.8, 0.99 ],

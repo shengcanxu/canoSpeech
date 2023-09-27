@@ -45,7 +45,7 @@
     "use_grad_scaler": false,
 
     "scheduler_after_epoch": true,
-    "lr": 0.001,
+    "lr": [2e-4, 2e-4],
     "optimizer": "AdamW",
     "optimizer_params": {
         "betas": [0.8, 0.99 ],

@@ -72,20 +72,20 @@ class TrainerConfig(Coqpit):
 
         Run the training code by overriding the ```lr``` and ```plot_step``` fields.
 
-        >>> python train.py --coqpit.plot_step=22 --coqpit.lr=0.001
-
-        Defining a model using ```TrainerConfig```.
-
-        >>> from trainer import TrainerConfig
-        >>> class MyModelConfig(TrainerConfig):
-        ...     optimizer: str = "Adam"
-        ...     lr: float = 0.001
-        ...     epochs: int = 1
-        ...     ...
-        >>> class MyModel(nn.module):
-        ...    def __init__(self, config):
-        ...        ...
-        >>> model = MyModel(MyModelConfig())
+        # >>> python train.py --coqpit.plot_step=22 --coqpit.lr=0.001
+        #
+        # Defining a model using ```TrainerConfig```.
+        #
+        # >>> from trainer import TrainerConfig
+        # >>> class MyModelConfig(TrainerConfig):
+        # ...     optimizer: str = "Adam"
+        # ...     lr: float = 0.001
+        # ...     epochs: int = 1
+        # ...     ...
+        # >>> class MyModel(nn.module):
+        # ...    def __init__(self, config):
+        # ...        ...
+        # >>> model = MyModel(MyModelConfig())
 
     """
 
@@ -865,20 +865,6 @@ class Trainer:
             else:
                 for group in optimizer.param_groups:
                     group["lr"] = self.get_lr(model, config)
-
-        # change to rewrite lr from config
-        else:
-            if isinstance(optimizer, list):
-                for idx, optim in enumerate(optimizer):
-                    for group in optim.param_groups:
-                        group["lr"] = config.lr
-            elif isinstance(optimizer, dict):
-                for optim_name, optim in optimizer.items():
-                    for group in optim.param_groups:
-                        group["lr"] = config.lr
-            else:
-                for group in optimizer.param_groups:
-                    group["lr"] = config.lr
 
         return optimizer
 
