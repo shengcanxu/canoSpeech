@@ -10,7 +10,7 @@ SKIP_TRAIN_EPOCH = False
 
 def main():
     config = VitsConfig()
-    config.load_json("./config/naturaltts_ljspeech.json")
+    config.load_json("./config/vits_ljspeech.json")
     data_config = config.dataset_config
 
     train_samples = get_metas_from_filelist(data_config.meta_file_train)
