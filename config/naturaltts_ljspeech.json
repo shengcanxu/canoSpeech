@@ -2,12 +2,12 @@
     "run_name": "NaturalTTSLJSpeech",
     "run_description": "Cano Speech running on LJSpeech dataset",
     "output_path": "D:\\project\\canoSpeech\\output",
-    "balance_disc_generator": false,
+    "balance_disc_generator": true,
 
     "dataset_config": {
         "dataset_name":"ljspeech",
-        "meta_file_train":"D:/project/canoSpeech/filelists/ljspeech_train_filelist.txt",
-        "meta_file_val":"D:/project/canoSpeech/filelists/ljspeech_test_filelist.txt",
+        "meta_file_train":"D:/project/canoSpeech/filelists/ljspeech_train_filelist.txt.cleaned",
+        "meta_file_val":"D:/project/canoSpeech/filelists/ljspeech_test_filelist.txt.cleaned",
         "path":"D:\\dataset\\LJSpeech",
         "language":"en",
         "ignored_speakers":[],
@@ -21,7 +21,7 @@
         "min_text_len": 1,
         "max_text_len": 190,
         "add_blank": true,
-        "cleaned_text": false,
+        "cleaned_text": true,
         "text_cleaners":["english_cleaners2"]
     },
     "audio": {
@@ -51,24 +51,27 @@
     "cudnn_benchmark": true,
 
     "scheduler_after_epoch": true,
-    "lr": 0.005,
+    "lr": 2e-4,
     "optimizer": "AdamW",
     "optimizer_params": {
         "betas": [0.8, 0.99 ],
         "eps": 1e-09,
         "weight_decay": 0.01
     },
-    "lr_scheduler": null,
-    "lr_scheduler_params": {},
+    "lr_scheduler": "ExponentialLR",
+    "lr_scheduler_params": {
+        "gamma": 0.999875,
+        "last_epoch": -1
+    },
 
     "epochs": 1000,
     "batch_size": 4,
     "eval_batch_size": 4,
 
-    "print_step": 5,
+    "print_step": 30,
     "plot_step": 100,
     "log_model_step": 1000,
-    "save_step": 5000,
+    "save_step": 2000,
     "save_n_checkpoints": 5,
     "save_checkpoints": true,
 

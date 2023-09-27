@@ -568,7 +568,7 @@ class NaturalTTSTrain(TrainerModelWithDataset):
                 loss_dict["loss_disc_real_all"] = self.disc_loss_dict["loss_disc_real_all"]
                 loss_dict["loss_disc_fake_all"] = self.disc_loss_dict["loss_disc_fake_all"]
                 # auto balance discriminator and generator, make sure loss of disciminator will be roughly 1.5x - 2.0x of generator
-                self.skip_discriminator = loss_dict["loss_disc"] <= loss_dict["loss_gen"] * 1.5
+                self.skip_discriminator = loss_dict["loss_disc"] < 0.4 * self.config.loss.disc_loss_alpha
 
             return self.model_outputs_cache, loss_dict
 
@@ -615,12 +615,8 @@ class NaturalTTSTrain(TrainerModelWithDataset):
         Returns:
             List: Schedulers, one for each optimizer.
         """
-        lr_scheduler_params = {
-            "gamma": 0.999875,
-            "last_epoch": -1
-        }
-        scheduler_D = get_scheduler("ExponentialLR", lr_scheduler_params, optimizer[0])
-        scheduler_G = get_scheduler("ExponentialLR", lr_scheduler_params, optimizer[1])
+        scheduler_D = get_scheduler(self.config.lr_scheduler, self.config.lr_scheduler_params, optimizer[0])
+        scheduler_G = get_scheduler(self.config.lr_scheduler, self.config.lr_scheduler_params, optimizer[1])
         return [scheduler_D, scheduler_G]
 
     def forward(self, input: torch.Tensor) -> Dict:

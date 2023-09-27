@@ -478,12 +478,8 @@ class NaturalSpeechTrain(TrainerModelWithDataset):
         Returns:
             List: Schedulers, one for each optimizer.
         """
-        lr_scheduler_params = {
-            "gamma": 0.999875,
-            "last_epoch": -1
-        }
-        scheduler_D = get_scheduler("ExponentialLR", lr_scheduler_params, optimizer[0])
-        scheduler_G = get_scheduler("ExponentialLR", lr_scheduler_params, optimizer[1])
+        scheduler_D = get_scheduler(self.config.lr_scheduler, self.config.lr_scheduler_params, optimizer[0])
+        scheduler_G = get_scheduler(self.config.lr_scheduler, self.config.lr_scheduler_params, optimizer[1])
         return [scheduler_D, scheduler_G]
 
     def forward(self, input: torch.Tensor) -> Dict:

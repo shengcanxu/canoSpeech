@@ -52,8 +52,11 @@
         "eps": 1e-09,
         "weight_decay": 0.01
     },
-    "lr_scheduler": null,
-    "lr_scheduler_params": {},
+    "lr_scheduler": "ExponentialLR",
+    "lr_scheduler_params": {
+        "gamma": 0.99875,
+        "last_epoch": -1
+    },
 
     "epochs": 1000,
     "batch_size": 8,
