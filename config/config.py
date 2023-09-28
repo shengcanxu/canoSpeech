@@ -97,7 +97,7 @@ class VitsDurationPredictorConfig(Coqpit):
 
 @dataclass
 class WaveformDecoderConfig(Coqpit):
-    resblock_type:str = "2"
+    resblock_type:str = "1"
     resblock_dilation_sizes:List[List[int]] = field(default_factory=lambda: [
                 [ 1, 3, 5 ],
                 [ 1, 3, 5 ],
