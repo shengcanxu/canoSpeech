@@ -87,42 +87,33 @@ class VitsGeneratorLoss(nn.Module):
         syn_spk_emb=None,
     ):
         loss = 0.0
-        return_dict = {}
         z_mask = sequence_mask(z_len).float()
         # compute losses
-        # loss_kl = (
-        #     self.kl_loss(z_p=z_p, logs_q=logs_q, m_p=m_p, logs_p=logs_p, z_mask=z_mask.unsqueeze(1))
-        #     * self.kl_loss_alpha
-        # )
-        loss_fm = (
+        loss_kl = (
+            self.kl_loss(z_p=z_p, logs_q=logs_q, m_p=m_p, logs_p=logs_p, z_mask=z_mask.unsqueeze(1))
+            * self.kl_loss_alpha
+        )
+        loss_feat = (
             self.feature_loss(feats_real=feats_disc_real, feats_generated=feats_disc_fake) * self.feat_loss_alpha
         )
         loss_gen = self.generator_loss(scores_fake=scores_disc_fake)[0] * self.gen_loss_alpha
         loss_mel = torch.nn.functional.l1_loss(mel_slice, mel_slice_hat) * self.mel_loss_alpha
-        # loss_duration = torch.sum(loss_duration.float()) * self.dur_loss_alpha
-        # loss = loss_kl + loss_feat + loss_mel + loss_gen + loss_duration
-
-        # if use_speaker_encoder_as_loss:
-        #     loss_se = self.cosine_similarity_loss(gt_spk_emb, syn_spk_emb) * self.spk_encoder_loss_alpha
-        #     loss = loss + loss_se
-        #     return_dict["loss_spk_encoder"] = loss_se
-        # # pass losses to the dict
-        # return_dict["loss_gen"] = loss_gen
-        # return_dict["loss_kl"] = loss_kl
-        # return_dict["loss_feat"] = loss_feat
-        # return_dict["loss_mel"] = loss_mel
-        # return_dict["loss_duration"] = loss_duration
-        # return_dict["loss"] = loss
-        # return return_dict
+        loss_duration = torch.sum(loss_duration.float()) * self.dur_loss_alpha
+        loss = loss_kl + loss_feat + loss_mel + loss_gen + loss_duration
 
         return_dict = {}
+        if use_speaker_encoder_as_loss:
+            loss_se = self.cosine_similarity_loss(gt_spk_emb, syn_spk_emb) * self.spk_encoder_loss_alpha
+            loss = loss + loss_se
+            return_dict["loss_spk_encoder"] = loss_se
         # pass losses to the dict
         return_dict["loss_gen"] = loss_gen
-        return_dict["loss_feature"] = loss_fm
+        return_dict["loss_kl"] = loss_kl
+        return_dict["loss_feat"] = loss_feat
         return_dict["loss_mel"] = loss_mel
-        return_dict["loss"] = loss_gen + loss_fm + loss_mel
+        return_dict["loss_duration"] = loss_duration
+        return_dict["loss"] = loss
         return return_dict
-
 
 class VitsDiscriminatorLoss(nn.Module):
     def __init__(self, config: Coqpit):

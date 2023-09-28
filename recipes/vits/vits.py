@@ -170,7 +170,6 @@ class VitsModel(nn.Module):
             speaker_ids:`[B]: Batch of speaker ids. use_speaker_embedding should be true
             language_ids:`[B]: Batch of language ids.
         """
-        outputs = {}
         sid, g, lid = self._set_cond_input(speaker_embeds, speaker_ids, language_ids)
         # speaker embedding
         if self.model_config.use_speaker_embedding and sid is not None:
@@ -186,23 +185,22 @@ class VitsModel(nn.Module):
         # flow layers
         z_p = self.flow(z, y_mask, g=g)
 
-        # x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
+        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
 
-        # # duration predictor
-        # attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
-        # # expand text token_size to audio token_size
-        # m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
-        # logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])
-        #
-        # attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
-        # log_durations = self.duration_predictor(
-        #     x.detach(),
-        #     x_mask,
-        #     g=g.detach() if g is not None else g,
-        #     lang_emb=lang_emb.detach() if lang_emb is not None else lang_emb,
-        # )
-        # loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
-        # outputs["loss_duration"] = loss_duration
+        # duration predictor
+        attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
+        # expand text token_size to audio token_size
+        m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
+        logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])
+
+        attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
+        log_durations = self.duration_predictor(
+            x.detach(),
+            x_mask,
+            g=g.detach() if g is not None else g,
+            lang_emb=lang_emb.detach() if lang_emb is not None else lang_emb,
+        )
+        loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
 
         # select a random feature segment for the waveform decoder
         z_slice, slice_ids = rand_segments(z, y_lengths, self.spec_segment_size, let_short_samples=True, pad_short=True)
@@ -218,26 +216,11 @@ class VitsModel(nn.Module):
 
         gt_spk_emb, syn_spk_emb = None, None
 
-        # return {
-        #     "y_hat": y_hat,  # [B, 1, T_wav]
-        #     "alignments": attn.squeeze(1),  # [B, T_seq, T_dec]
-        #     "m_p": m_p,  # [B, C, T_dec]
-        #     "logs_p": logs_p,  # [B, C, T_dec]
-        #     "z": z,  # [B, C, T_dec]
-        #     "z_p": z_p,  # [B, C, T_dec]
-        #     "m_q": m_q,  # [B, C, T_dec]
-        #     "logs_q": logs_q,  # [B, C, T_dec]
-        #     "waveform_seg": wav_seg,  # [B, 1, spec_seg_size * hop_length]
-        #     "gt_spk_emb": gt_spk_emb,  # [B, 1, speaker_encoder.proj_dim]
-        #     "syn_spk_emb": syn_spk_emb,  # [B, 1, speaker_encoder.proj_dim]
-        #     "slice_ids": slice_ids,
-        #     "loss_duration": loss_duration,
-        # }
         return {
             "y_hat": y_hat,  # [B, 1, T_wav]
-            "alignments": torch.FloatTensor([0]),
-            "m_p": torch.FloatTensor([0]),  # [B, C, T_dec]
-            "logs_p": torch.FloatTensor([0]),  # [B, C, T_dec]
+            "alignments": attn.squeeze(1),  # [B, T_seq, T_dec]
+            "m_p": m_p,  # [B, C, T_dec]
+            "logs_p": logs_p,  # [B, C, T_dec]
             "z": z,  # [B, C, T_dec]
             "z_p": z_p,  # [B, C, T_dec]
             "m_q": m_q,  # [B, C, T_dec]
@@ -246,7 +229,7 @@ class VitsModel(nn.Module):
             "gt_spk_emb": gt_spk_emb,  # [B, 1, speaker_encoder.proj_dim]
             "syn_spk_emb": syn_spk_emb,  # [B, 1, speaker_encoder.proj_dim]
             "slice_ids": slice_ids,
-            "loss_duration": torch.FloatTensor([0])
+            "loss_duration": loss_duration,
         }
 
     @torch.no_grad()
