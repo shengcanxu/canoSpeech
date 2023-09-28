@@ -3,7 +3,7 @@ import random
 import numpy as np
 from collections import Counter
 import pickle
-from text import cleaned_text_to_tokens, _clean_text
+from text import cleaned_text_to_tokens, _clean_text, _intersperse
 import torch
 from torch.utils.data import Dataset
 import librosa
@@ -187,15 +187,9 @@ class TextAudioDataset(Dataset):
             cleaned_text = _clean_text(text, self.text_cleaners)
             tokens = cleaned_text_to_tokens(cleaned_text)
         if self.add_blank:
-            tokens = self._intersperse(tokens, 0)
+            tokens = _intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens)
         return tokens, cleaned_text
-
-    @staticmethod
-    def _intersperse(lst, item):
-        result = [item] * (len(lst) * 2 + 1)
-        result[1::2] = lst
-        return result
 
     def collate_fn(self, batch):
         """Zero-pads model inputs, audios and targets and pad a batch and sort by wav decreasing

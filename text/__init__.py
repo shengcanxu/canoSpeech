@@ -7,6 +7,12 @@ from text.symbols import symbols
 _symbol_to_id = {s: i for i, s in enumerate(symbols)}
 _id_to_symbol = {i: s for i, s in enumerate(symbols)}
 
+# use to add_blank
+def _intersperse(lst, item):
+    result = [item] * (len(lst) * 2 + 1)
+    result[1::2] = lst
+    return result
+
 
 def text_to_tokens(text, cleaner_names=["english_cleaners2"]):
     """Converts a string of text to a tokens of IDs corresponding to the symbols in the text.

@@ -18,7 +18,7 @@ from layers.losses import VitsDiscriminatorLoss, VitsGeneratorLoss
 from layers.encoder import TextEncoder, AudioEncoder
 from monotonic_align.maximum_path import maximum_path
 from recipes.trainer_model import TrainerModelWithDataset
-from text import text_to_tokens
+from text import text_to_tokens, _intersperse
 from util.helper import sequence_mask, segment, rand_segments
 from util.mel_processing import wav_to_spec, spec_to_mel, wav_to_mel
 import soundfile as sf
@@ -422,10 +422,14 @@ class VitsTrain(TrainerModelWithDataset):
         print("nothing to do! doing the real train code in train_step. ")
         return input
 
+
+
     def inference(self, text:str):
         tokens = text_to_tokens(text)
+        if self.config.text.add_blank:
+            tokens = _intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0).cuda()
-        x_lengths = torch.LongTensor([tokens.size(0)]).cuda()
+        x_lengths = torch.LongTensor([tokens.size(1)]).cuda()
         wav, _, _, _ = self.generator.infer(
             tokens,
             x_lengths,
