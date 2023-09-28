@@ -102,10 +102,6 @@
         "num_speakers": 0,
         "use_speaker_embedding": false,
         "use_speaker_encoder_as_loss": false,
-        "inference_noise_scale_dp": 1.0,
-        "inference_noise_scale":0.667,
-        "length_scale": 1.0,
-        "max_inference_len": null,
         "use_gt_duration": true,
 
         "text_encoder": {

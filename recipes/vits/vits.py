@@ -111,25 +111,6 @@ class VitsModel(nn.Module):
         else:
             self.embedded_language_dim = 0
 
-    @staticmethod
-    def _set_cond_input(speaker_embeds, speaker_ids, language_ids):
-        """Set the speaker conditioning input based on the multi-speaker mode."""
-        sid, g, lid, durations = None, None, None, None
-        if speaker_ids is not None:
-            sid = speaker_ids
-            if sid.ndim == 0:
-                sid = sid.unsqueeze_(0)
-        if speaker_embeds is not None:
-            g = F.normalize(speaker_embeds).unsqueeze(-1)
-            if g.ndim == 2:
-                g = g.unsqueeze_(0)
-
-        if language_ids is not None:
-            lid = language_ids
-            if lid.ndim == 0:
-                lid = lid.unsqueeze_(0)
-        return sid, g, lid
-
     def monotonic_align(self, z_p, m_p, logs_p, x, x_mask, y_mask):
         # find the alignment path
         attn_mask = torch.unsqueeze(x_mask, -1) * torch.unsqueeze(y_mask, 2)
@@ -170,22 +151,21 @@ class VitsModel(nn.Module):
             speaker_ids:`[B]: Batch of speaker ids. use_speaker_embedding should be true
             language_ids:`[B]: Batch of language ids.
         """
-        sid, g, lid = self._set_cond_input(speaker_embeds, speaker_ids, language_ids)
-        # speaker embedding
-        if self.model_config.use_speaker_embedding and sid is not None:
-            g = self.speaker_embedding(sid).unsqueeze(-1)  # [b, h, 1]
+        if speaker_embeds is not None:
+            g = F.normalize(speaker_embeds).unsqueeze(-1)
+            if g.ndim == 2:
+                g = g.unsqueeze_(0)
 
-        # language embedding
-        lang_emb = None
-        if self.model_config.use_language_embedding and lid is not None:
-            lang_emb = self.language_embedding(lid).unsqueeze(-1)
+        # speaker embedding
+        if self.model_config.use_speaker_embedding and speaker_ids is not None:
+            g = self.speaker_embedding(speaker_ids).unsqueeze(-1)  # [b, h, 1]
 
         # audio encoder, encode audio to embedding layer z's dimension
         z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=g)
         # flow layers
         z_p = self.flow(z, y_mask, g=g)
 
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
+        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=None)
 
         # duration predictor
         attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
@@ -198,7 +178,7 @@ class VitsModel(nn.Module):
             x.detach(),
             x_mask,
             g=g.detach() if g is not None else g,
-            lang_emb=lang_emb.detach() if lang_emb is not None else lang_emb,
+            lang_emb=None,
         )
         loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
 
@@ -236,33 +216,27 @@ class VitsModel(nn.Module):
     def infer(
         self,
         x,  # [B, T_seq]
-        x_lengths = None,  # [B]
-        speaker_embeds=None,  # [B]
+        x_lengths,  # [B]
         speaker_ids=None,  # [B]
-        language_ids=None  # [B]
+        noise_scale=1.0,
+        length_scale=1.0,
+        max_len=None
     ):
-        if x_lengths is None:
-            x_lengths = torch.LongTensor([len(a) for a in x])
-        sid, g, lid = self._set_cond_input(speaker_embeds, speaker_ids, language_ids)
-
         # speaker embedding
-        if self.model_config.use_speaker_embedding and sid is not None:
-            g = self.emb_g(sid).unsqueeze(-1)
+        if self.num_speakers > 1 and speaker_ids is not None:
+            g = self.speaker_embedding(speaker_ids).unsqueeze(-1)  # [b, h, 1]
+        else:
+            g = None
 
-        # language embedding
-        lang_emb = None
-        if self.model_config.use_language_embedding and lid is not None:
-            lang_emb = self.language_embedding(lid).unsqueeze(-1)
-
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_emb)
+        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=None)
 
         logw = self.duration_predictor(
             x=x,
             x_mask=x_mask,
             g=g if g is not None else g,
-            lang_emb=lang_emb
+            lang_emb=None
         )
-        w = torch.exp(logw) * x_mask * self.model_config.length_scale
+        w = torch.exp(logw) * x_mask * length_scale
 
         w_ceil = torch.ceil(w)
         y_lengths = torch.clamp_min(torch.sum(w_ceil, [1, 2]), 1).long()
@@ -274,12 +248,12 @@ class VitsModel(nn.Module):
         m_p = torch.matmul(attn.transpose(1, 2), m_p.transpose(1, 2)).transpose(1, 2)
         logs_p = torch.matmul(attn.transpose(1, 2), logs_p.transpose(1, 2)).transpose(1, 2)
 
-        z_p = m_p + torch.randn_like(m_p) * torch.exp(logs_p) * self.model_config.inference_noise_scale
+        z_p = m_p + torch.randn_like(m_p) * torch.exp(logs_p) * noise_scale
         z = self.flow(z_p, y_mask, g=g, reverse=True)
 
-        z = (z * y_mask)[:, :, : self.model_config.max_inference_len]
+        z = (z * y_mask)[:, :, : max_len]
         wav = self.waveform_decoder(z, g=g)
-        return wav
+        return wav, attn, y_mask, (z, z_p, m_p, logs_p)
 
     @torch.no_grad()
     def generate_wav(self, z, speaker_embeds):
@@ -315,9 +289,6 @@ class VitsTrain(TrainerModelWithDataset):
             tokens = batch["tokens"]
             token_lens = batch["token_lens"]
             spec = batch["spec"]
-            speaker_embeds = batch["speaker_embed"]
-            speaker_ids = None
-            language_ids = None
             waveform = batch["waveform"]
 
             # generator pass
@@ -327,8 +298,8 @@ class VitsTrain(TrainerModelWithDataset):
                 y=spec,
                 y_lengths=spec_lens,
                 waveform=waveform,
-                speaker_embeds=speaker_embeds,
-                speaker_ids=speaker_ids,
+                speaker_embeds=None,
+                speaker_ids=None,
                 language_ids=None
             )
 
@@ -409,22 +380,9 @@ class VitsTrain(TrainerModelWithDataset):
                     # auto balance discriminator and generator, make sure loss of disciminator will be roughly 1.5x - 2.0x of generator
                     self.skip_discriminator = loss_dict["loss_disc"] < 0.4 * self.config.loss.disc_loss_alpha
 
-
             return self.model_outputs_cache, loss_dict
 
         raise ValueError(" [!] Unexpected `optimizer_idx`.")
-
-    @torch.no_grad()
-    def eval_step(self, batch: dict, criterion: nn.Module, optimizer_idx: int):
-        output, loss_dict = self.train_step(batch, criterion, optimizer_idx)
-        if optimizer_idx == 1:
-            speaker_embeds = batch["speaker_embed"]
-            wav = self.generator.generate_wav(output["z"], speaker_embeds)
-            wav = wav[0, 0].cpu().float().numpy()
-            filename = os.path.basename(batch["filenames"][0])
-            sf.write(f"{self.config.output_path}/{filename}_{int(time.time())}.wav", wav, 22050)
-
-        return output, loss_dict
 
     def get_criterion(self):
         """Get criterions for each optimizer. The index in the output list matches the optimizer idx used in train_step()`"""
@@ -463,8 +421,34 @@ class VitsTrain(TrainerModelWithDataset):
         print("nothing to do! doing the real train code in train_step. ")
         return input
 
-    def infer(self, text:str):
+    def inference(self, text:str):
         tokens = text_to_tokens(text)
-        tokens = torch.LongTensor(tokens).unsqueeze(dim=0)
-        wav = self.generator.infer(tokens)
+        tokens = torch.LongTensor(tokens).unsqueeze(dim=0).cuda()
+        x_lengths = torch.LongTensor([tokens.size(0)]).cuda()
+        wav, _, _, _ = self.generator.infer(
+            tokens,
+            x_lengths,
+            noise_scale=0.667,
+            length_scale=1,
+        )
         return wav
+
+    @torch.no_grad()
+    def eval_step(self, batch: dict, criterion: nn.Module, optimizer_idx: int):
+        output, loss_dict = self.train_step(batch, criterion, optimizer_idx)
+        # if optimizer_idx == 1:
+        #     speaker_embeds = batch["speaker_embed"]
+        #     wav = self.generator.generate_wav(output["z"], speaker_embeds)
+        #     wav = wav[0, 0].cpu().float().numpy()
+        #     filename = os.path.basename(batch["filenames"][0])
+        #     sf.write(f"{self.config.output_path}/{filename}_{int(time.time())}.wav", wav, 22050)
+
+        return output, loss_dict
+
+    @torch.no_grad()
+    def test_run(self, assets) -> Tuple[Dict, Dict]:
+        print("doing test run...")
+        text = "Who else do you want to talk to? You can go with me today to the meeting."
+        wav = self.inference(text)
+        wav = wav[0, 0].cpu().float().numpy()
+        sf.write(f"{self.config.output_path}/test_{int(time.time())}.wav", wav, 22050)

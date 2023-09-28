@@ -126,10 +126,6 @@ class BaseModelConfig(Coqpit):
     speaker_embedding_channels:int = 512
     use_speaker_embedding:bool = False
     use_speaker_encoder_as_loss:bool = False
-    inference_noise_scale_dp: float = 1.0
-    inference_noise_scale:float = 0.667
-    length_scale:float = 1.0
-    max_inference_len:int = None
 
 @dataclass
 class VitsModelConfig(BaseModelConfig):

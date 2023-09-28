@@ -28,8 +28,8 @@ def main():
         train_samples=train_samples,
         eval_samples=test_samples,
     )
-    trainer.fit()
-
+    # trainer.fit()
+    trainer.test_run()
 
 if __name__ == "__main__":
     main()
