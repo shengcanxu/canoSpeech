@@ -8,6 +8,10 @@ from recipes.vits.vits import VitsTrain
 from trainer import Trainer, TrainerArgs
 
 if __name__ == "__main__":
+    pre_path = "D:\\project\\canoSpeech\\output\\online\\NaturalTTSLJSpeech-September-27-2023_VAE_train\\best_model.pth"
+    with fsspec.open(pre_path, "rb") as f:
+        pre_checkpoint = torch.load(f, map_location="cpu")
+        pre_model = pre_checkpoint["model"]
     path = "D:\\dataset\\LJSpeech\\vits_pretrained_ljs.pth"
     with fsspec.open(path, "rb") as f:
         checkpoint = torch.load(f, map_location="cpu")
@@ -19,7 +23,7 @@ if __name__ == "__main__":
         jsonstr = f.read()
         jsonobj = json.loads(jsonstr)
 
-    new_model = OrderedDict()
+    new_model = pre_model
     for key in jsonobj:
         value = jsonobj[key]
         new_model[key] = model[value]

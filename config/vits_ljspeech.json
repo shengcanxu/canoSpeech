@@ -2,7 +2,7 @@
     "run_name": "NaturalTTSLJSpeech",
     "run_description": "Cano Speech running on LJSpeech dataset",
     "output_path": "D:\\project\\canoSpeech\\output",
-    "continue_path": "D:\\project\\canoSpeech\\output\\NaturalTTSLJSpeech-September-28-2023_03+30PM-4a1f545",
+    "restore_path": "D:\\project\\canoSpeech\\output\\NaturalTTSLJSpeech-September-28-2023_04+50PM-8c96973\\best_model.pth",
     "balance_disc_generator": true,
 
     "dataset_config": {
@@ -43,7 +43,7 @@
     "eval_split_size": 0.05,
     "distributed_backend": "nccl",
     "distributed_url": "tcp://localhost:54321",
-    "mixed_precision": false,
+    "mixed_precision": true,
     "precision": "fp16",
     "grad_clip": [0.0, 0.0],
     "use_grad_scaler": false,
