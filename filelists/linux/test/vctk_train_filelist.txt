@@ -1,321 +1,321 @@
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_367_mic1.flac|VCTK_p226|en|Equity declined to comment.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_262_mic1.flac|VCTK_p226|en|Today we can say that a new era has begun.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_097_mic1.flac|VCTK_p226|en|We could not get any possession.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_214_mic1.flac|VCTK_p226|en|I'm pleased about one thing.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_118_mic1.flac|VCTK_p226|en|We have to look at everything before we make any final decision.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_021_mic1.flac|VCTK_p226|en|The difference in the rainbow depends considerably upon the size of the drops, and the width of the colored band increases as the size of the drops increases.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_230_mic1.flac|VCTK_p226|en|The charity also has a project in Moscow in Russia.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_280_mic1.flac|VCTK_p226|en|He has a wealth of experience.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_216_mic1.flac|VCTK_p226|en|His third goal was superb.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_241_mic1.flac|VCTK_p226|en|They are all bright and different.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_313_mic1.flac|VCTK_p226|en|The minister is the engineer.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_111_mic1.flac|VCTK_p226|en|It was an adventure.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_071_mic1.flac|VCTK_p226|en|I am pleased with the result, as it was a possible upset.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_077_mic1.flac|VCTK_p226|en|Tommy is not a problem.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_165_mic1.flac|VCTK_p226|en|We have to move forward.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_285_mic1.flac|VCTK_p226|en|It was a virus.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_215_mic1.flac|VCTK_p226|en|I am delighted for Simon.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_188_mic1.flac|VCTK_p226|en|Any change would be subject to the Scottish Parliament's approval.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_223_mic1.flac|VCTK_p226|en|But we have not heard a thing from Diego.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_008_mic1.flac|VCTK_p226|en|These take the shape of a long round arch, with its path high above, and its two ends apparently beyond the horizon.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_067_mic1.flac|VCTK_p226|en|It's a matter of balance.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_225_mic1.flac|VCTK_p226|en|A career as a doctor is on hold.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_166_mic1.flac|VCTK_p226|en|However, the French government has a major dilemma on its hands.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_276_mic1.flac|VCTK_p226|en|It's a way of life.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_237_mic1.flac|VCTK_p226|en|It is not an option, but a policy requirement.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_062_mic1.flac|VCTK_p226|en|This is a scheme that has a lot of potential.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_106_mic1.flac|VCTK_p226|en|It was some time before she found out he was safe.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_140_mic1.flac|VCTK_p226|en|They made such decisions in London.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_059_mic1.flac|VCTK_p226|en|She's a spy!
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_121_mic1.flac|VCTK_p226|en|Maybe this battle has been.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_258_mic1.flac|VCTK_p226|en|That's what made the difference and set the pattern of the match.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_195_mic1.flac|VCTK_p226|en|It's a commission, and it's for work, a year's work.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_172_mic1.flac|VCTK_p226|en|It became a book by itself.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_163_mic1.flac|VCTK_p226|en|I've learned from my mistakes.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_206_mic1.flac|VCTK_p226|en|Some realism was needed about time, resources and management.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_066_mic1.flac|VCTK_p226|en|Art is extra.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_314_mic1.flac|VCTK_p226|en|I did not name it.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_259_mic1.flac|VCTK_p226|en|Scotland will have strong defences as part of the United Kingdom.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_325_mic1.flac|VCTK_p226|en|I am very happy to be here.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_352_mic1.flac|VCTK_p226|en|His contract was then not renewed.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_149_mic1.flac|VCTK_p226|en|In this case, the farmer had actually given permission.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_022_mic1.flac|VCTK_p226|en|The actual primary rainbow observed is said to be the effect of super-imposition of a number of bows.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_330_mic1.flac|VCTK_p226|en|The weekly average was three hours.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_148_mic1.flac|VCTK_p226|en|Three penalties were given.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_052_mic1.flac|VCTK_p226|en|It is the whole package.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_326_mic1.flac|VCTK_p226|en|The airport was even different.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_359_mic1.flac|VCTK_p226|en|He's very explosive.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_284_mic1.flac|VCTK_p226|en|Russian officials have not determined the cause of the accident.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_190_mic1.flac|VCTK_p226|en|Suddenly, the rugby world had changed.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_272_mic1.flac|VCTK_p226|en|Frankly, we should all have such problems.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_107_mic1.flac|VCTK_p226|en|It was a good performance.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_023_mic1.flac|VCTK_p226|en|If the red of the second bow falls upon the green of the first, the result is to give a bow with an abnormally wide yellow band, since red and green light when mixed form yellow.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_128_mic1.flac|VCTK_p226|en|I felt very strongly that England should have it.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_094_mic1.flac|VCTK_p226|en|Every time I play I do not understand their reaction.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_151_mic1.flac|VCTK_p226|en|We have seen a copy of the report.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_138_mic1.flac|VCTK_p226|en|The whole thing of doing the movie was a risk.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_069_mic1.flac|VCTK_p226|en|I've spent a lot of time on buses.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_273_mic1.flac|VCTK_p226|en|It's great, because it takes a lot of pressure off the players.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_013_mic1.flac|VCTK_p226|en|Some have accepted it as a miracle without physical explanation.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_126_mic1.flac|VCTK_p226|en|It is a delight on every level.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_160_mic1.flac|VCTK_p226|en|They should stop the bombing.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_304_mic1.flac|VCTK_p226|en|Our task is to complete the picture.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_290_mic1.flac|VCTK_p226|en|Scotland were beaten again.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_018_mic1.flac|VCTK_p226|en|Aristotle thought that the rainbow was caused by reflection of the sun's rays by the rain.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_242_mic1.flac|VCTK_p226|en|It's only fair.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_339_mic1.flac|VCTK_p226|en|My view has now completely changed.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_337_mic1.flac|VCTK_p226|en|I'd like to take the plunge.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_236_mic1.flac|VCTK_p226|en|It is set in Paris.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_362_mic1.flac|VCTK_p226|en|Six of the asylum seekers left the offices, it was reported.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_108_mic1.flac|VCTK_p226|en|That time is not now, however.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_153_mic1.flac|VCTK_p226|en|That group reported just before Christmas.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_201_mic1.flac|VCTK_p226|en|The service from the other players was super.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_361_mic1.flac|VCTK_p226|en|Our numbers are small.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_130_mic1.flac|VCTK_p226|en|I thought it was a fantastic game.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_181_mic1.flac|VCTK_p226|en|I've been there.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_308_mic1.flac|VCTK_p226|en|This is a war over our home.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_152_mic1.flac|VCTK_p226|en|That could mean the difference between life and death in action.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_228_mic1.flac|VCTK_p226|en|I am immensely sad.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_085_mic1.flac|VCTK_p226|en|It can be halted.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_002_mic1.flac|VCTK_p226|en|Ask her to bring these things with her from the store.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_139_mic1.flac|VCTK_p226|en|I am now unemployed.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_009_mic1.flac|VCTK_p226|en|There is , according to legend, a boiling pot of gold at one end.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_271_mic1.flac|VCTK_p226|en|He was popular.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_248_mic1.flac|VCTK_p226|en|I was shocked.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_157_mic1.flac|VCTK_p226|en|Alain Baxter did not have long to speak on Friday.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_291_mic1.flac|VCTK_p226|en|It depends on the internal discussions in the Ministry of Defence.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_176_mic1.flac|VCTK_p226|en|If that's the case, he will struggle.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_208_mic1.flac|VCTK_p226|en|I don't want to use it.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_335_mic1.flac|VCTK_p226|en|The boat was fantastic.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_257_mic1.flac|VCTK_p226|en|Certainly, in terms of league position, we must be favourites.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_220_mic1.flac|VCTK_p226|en|For the refugees, the return will not come a moment too soon.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_006_mic1.flac|VCTK_p226|en|When the sunlight strikes raindrops in the air, they act as a prism and form a rainbow.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_034_mic1.flac|VCTK_p226|en|Mr Ferguson became a minister after seven years as a journalist.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_350_mic1.flac|VCTK_p226|en|That is the very reason why it was so vital.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_036_mic1.flac|VCTK_p226|en|It can't just be a cynical marketing exercise.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_179_mic1.flac|VCTK_p226|en|No-one has appeared in court in relation to her death.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_102_mic1.flac|VCTK_p226|en|I am not willing to say anything about any couple.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_090_mic1.flac|VCTK_p226|en|New Zealand rugby is totally different.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_293_mic1.flac|VCTK_p226|en|He added that public transport improvements must also be maintained.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_341_mic1.flac|VCTK_p226|en|In addition, certain areas are closed at certain times.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_363_mic1.flac|VCTK_p226|en|Mr Anderson was not acting in the course of his employment.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_264_mic1.flac|VCTK_p226|en|This court has made an order which has not been observed.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_169_mic1.flac|VCTK_p226|en|Nobody did in those days.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_113_mic1.flac|VCTK_p226|en|The Prime Minister was very saddened to hear about this.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_049_mic1.flac|VCTK_p226|en|But it might have done.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_299_mic1.flac|VCTK_p226|en|There was no hint of scandal.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_184_mic1.flac|VCTK_p226|en|It's a portrait of Glasgow, not the portrait.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_076_mic1.flac|VCTK_p226|en|Help is needed.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_143_mic1.flac|VCTK_p226|en|Everyone is in favour of the need for welfare reform in general.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_353_mic1.flac|VCTK_p226|en|A report is the first step in a criminal case in India.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_334_mic1.flac|VCTK_p226|en|On Thursday, Mr Blair will address the Institute of Public Policy Research.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_289_mic1.flac|VCTK_p226|en|This is a national crisis.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_030_mic1.flac|VCTK_p226|en|Because we do not need it.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_265_mic1.flac|VCTK_p226|en|The work between the musicians and the fire is very important.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_249_mic1.flac|VCTK_p226|en|I should think so, too.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_312_mic1.flac|VCTK_p226|en|It wasn't just the character and energy of the playing.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_328_mic1.flac|VCTK_p226|en|That's the law of the land.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_028_mic1.flac|VCTK_p226|en|Suggestions of the action being a punishment were dismissed.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_270_mic1.flac|VCTK_p226|en|We showed a lot of skill in the final quarter.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_178_mic1.flac|VCTK_p226|en|Mr Docherty said the whole family was shocked.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_349_mic1.flac|VCTK_p226|en|He's been the key to everything.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_144_mic1.flac|VCTK_p226|en|Police could not say if the two incidents were connected.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_287_mic1.flac|VCTK_p226|en|Who will perform?
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_370_mic1.flac|VCTK_p226|en|Saddam is not the only example of evil in our world.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_247_mic1.flac|VCTK_p226|en|We did not compete with any other local farmer.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_360_mic1.flac|VCTK_p226|en|No other job in world football can compare to this one.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_037_mic1.flac|VCTK_p226|en|It is a matter of the utmost concern to the Allies.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_232_mic1.flac|VCTK_p226|en|My wife and family are the support system.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_218_mic1.flac|VCTK_p226|en|I was so nervous.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_235_mic1.flac|VCTK_p226|en|Police later said the scheme would end in November.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_234_mic1.flac|VCTK_p226|en|Stewart will travel with some confidence.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_047_mic1.flac|VCTK_p226|en|We need to chat.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_200_mic1.flac|VCTK_p226|en|Is that success?
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_135_mic1.flac|VCTK_p226|en|I do not think this family will ever get over this.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_098_mic1.flac|VCTK_p226|en|If you could find it.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_116_mic1.flac|VCTK_p226|en|It is normal.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_174_mic1.flac|VCTK_p226|en|It's quite a routine.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_252_mic1.flac|VCTK_p226|en|There will be widespread support on all sides.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_227_mic1.flac|VCTK_p226|en|Lottery cash is rightly dependent on grassroots approval.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_019_mic1.flac|VCTK_p226|en|Since then physicists have found that it is not reflection, but refraction by the raindrops which causes the rainbows.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_260_mic1.flac|VCTK_p226|en|It is a mark of respect from the inmates.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_083_mic1.flac|VCTK_p226|en|It works for us.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_336_mic1.flac|VCTK_p226|en|It is a time bomb.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_074_mic1.flac|VCTK_p226|en|You need a trademark.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_229_mic1.flac|VCTK_p226|en|I'd never seen a play about me.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_315_mic1.flac|VCTK_p226|en|It was a question of patience.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_357_mic1.flac|VCTK_p226|en|I kept going for her.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_199_mic1.flac|VCTK_p226|en|We live by the rule of law.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_167_mic1.flac|VCTK_p226|en|They will do their own thing.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_253_mic1.flac|VCTK_p226|en|I was never going to play against Scotland.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_168_mic1.flac|VCTK_p226|en|It is too much for me.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_088_mic1.flac|VCTK_p226|en|Detection is often difficult.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_368_mic1.flac|VCTK_p226|en|All the investment is possible through the public sector.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_124_mic1.flac|VCTK_p226|en|This is the first big idea of the Scottish Parliament election.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_210_mic1.flac|VCTK_p226|en|It's like a garage.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_266_mic1.flac|VCTK_p226|en|The warning is timely.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_348_mic1.flac|VCTK_p226|en|Look at the witnesses.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_115_mic1.flac|VCTK_p226|en|I did not think about the Ryder Cup.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_156_mic1.flac|VCTK_p226|en|The petition was formally presented at Downing Street yesterday.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_164_mic1.flac|VCTK_p226|en|They say that vital evidence was not heard in court.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_159_mic1.flac|VCTK_p226|en|The weather affected the other two games in Fife.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_017_mic1.flac|VCTK_p226|en|Others have tried to explain the phenomenon physically.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_239_mic1.flac|VCTK_p226|en|It would still have been a good film, but very different.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_078_mic1.flac|VCTK_p226|en|There could be a way back.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_114_mic1.flac|VCTK_p226|en|It was really enjoyable on Saturday.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_324_mic1.flac|VCTK_p226|en|We are in the end game.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_340_mic1.flac|VCTK_p226|en|You can see it on the training ground and around the hotel.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_145_mic1.flac|VCTK_p226|en|On Friday, the headteacher and deputy headteacher appeared at the door.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_364_mic1.flac|VCTK_p226|en|This is a club on the rise.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_005_mic1.flac|VCTK_p226|en|She can scoop these things into three red bags, and we will go meet her Wednesday at the train station.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_101_mic1.flac|VCTK_p226|en|It was mayhem.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_261_mic1.flac|VCTK_p226|en|He has already suffered a good deal of unwanted attention.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_064_mic1.flac|VCTK_p226|en|It is not great art.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_070_mic1.flac|VCTK_p226|en|There was a tremendous amount of anger and frustration in that music.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_298_mic1.flac|VCTK_p226|en|The move was welcomed by the Roman Catholic Church in Scotland.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_204_mic1.flac|VCTK_p226|en|The tickets will be on sale today at the ticket office.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_161_mic1.flac|VCTK_p226|en|These days are long gone.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_226_mic1.flac|VCTK_p226|en|At the top of the structure will remain the post of headteacher.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_318_mic1.flac|VCTK_p226|en|Kids are terrible.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_243_mic1.flac|VCTK_p226|en|We lost our composure towards the interval, he said.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_347_mic1.flac|VCTK_p226|en|It was his conclusion that they were generally in good condition.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_043_mic1.flac|VCTK_p226|en|Is there a new way forward?
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_117_mic1.flac|VCTK_p226|en|I don't have many friends.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_014_mic1.flac|VCTK_p226|en|To the Hebrews it was a token that there would be no more universal floods.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_112_mic1.flac|VCTK_p226|en|The eye was badly closed on Sunday.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_286_mic1.flac|VCTK_p226|en|Yet, it worked.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_004_mic1.flac|VCTK_p226|en|We also need a small plastic snake and a big toy frog for the kids.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_251_mic1.flac|VCTK_p226|en|There's the mix.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_131_mic1.flac|VCTK_p226|en|I was furious.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_025_mic1.flac|VCTK_p226|en|He has not been named.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_031_mic1.flac|VCTK_p226|en|This is the window.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_080_mic1.flac|VCTK_p226|en|The First Minister is scheduled to be elected by the Parliament tomorrow.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_198_mic1.flac|VCTK_p226|en|Is that it?
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_193_mic1.flac|VCTK_p226|en|The appeal tribunal will give its decision at a later date.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_345_mic1.flac|VCTK_p226|en|They made clear that they are not interested in Government assistance.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_310_mic1.flac|VCTK_p226|en|It is no country for a man or woman of letters.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_267_mic1.flac|VCTK_p226|en|George W Bush, the US president, condemned the attacks.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_020_mic1.flac|VCTK_p226|en|Many complicated ideas about the rainbow have been formed.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_320_mic1.flac|VCTK_p226|en|The home team had an amazing start.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_322_mic1.flac|VCTK_p226|en|Referees are easy targets.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_191_mic1.flac|VCTK_p226|en|Treasury spokesman Malcolm Bruce is also considered a potential contender.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_332_mic1.flac|VCTK_p226|en|I am so upset.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_084_mic1.flac|VCTK_p226|en|I would think about the end of January, the beginning of February.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_054_mic1.flac|VCTK_p226|en|I got a great response from the players, as I had expected.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_003_mic1.flac|VCTK_p226|en|Six spoons of fresh snow peas, five thick slabs of blue cheese, and maybe a snack for her brother Bob.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_012_mic1.flac|VCTK_p226|en|Throughout the centuries people have explained the rainbow in various ways.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_109_mic1.flac|VCTK_p226|en|Oil embargo endorsed.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_278_mic1.flac|VCTK_p226|en|I feel pretty good.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_091_mic1.flac|VCTK_p226|en|Someone who cares
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_011_mic1.flac|VCTK_p226|en|When a man looks for something beyond his reach, his friends say he is looking for the pot of gold at the end of the rainbow.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_039_mic1.flac|VCTK_p226|en|It has failed.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_354_mic1.flac|VCTK_p226|en|That is a break with tradition.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_061_mic1.flac|VCTK_p226|en|It is not a process which can be completed overnight.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_044_mic1.flac|VCTK_p226|en|Mexico City was a wonderful experience.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_015_mic1.flac|VCTK_p226|en|The Greeks used to imagine that it was a sign from the gods to foretell war or heavy rain.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_162_mic1.flac|VCTK_p226|en|It is an attitude of mind.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_053_mic1.flac|VCTK_p226|en|He had no enemies.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_219_mic1.flac|VCTK_p226|en|I might come back.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_296_mic1.flac|VCTK_p226|en|If you can run a computer, you can talk to the world.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_295_mic1.flac|VCTK_p226|en|He should have won.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_351_mic1.flac|VCTK_p226|en|This is a sector in overall deficit and urgent action is required.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_309_mic1.flac|VCTK_p226|en|In performance, that quality can prove to be a challenge.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_129_mic1.flac|VCTK_p226|en|She has been shot.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_233_mic1.flac|VCTK_p226|en|Her condition was yesterday described as critical, but stable.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_065_mic1.flac|VCTK_p226|en|You do not change overnight.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_283_mic1.flac|VCTK_p226|en|He looked very sharp.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_136_mic1.flac|VCTK_p226|en|Wish I could be there on Sunday in person but I can't.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_197_mic1.flac|VCTK_p226|en|There was no option.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_024_mic1.flac|VCTK_p226|en|This is a very common type of bow, one showing mainly red and yellow, with little or no green or blue.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_046_mic1.flac|VCTK_p226|en|Failure to comply with the order is likely to result in prison.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_001_mic1.flac|VCTK_p226|en|Please call Stella.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_211_mic1.flac|VCTK_p226|en|But I am a worried man.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_316_mic1.flac|VCTK_p226|en|The whole region is in shock.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_103_mic1.flac|VCTK_p226|en|They were outside the circle.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_187_mic1.flac|VCTK_p226|en|I had a train to catch.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_268_mic1.flac|VCTK_p226|en|That decision is for the British Parliament and people.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_099_mic1.flac|VCTK_p226|en|He is hungry for success and I am the same.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_343_mic1.flac|VCTK_p226|en|I'm so pleased the show has won a prize.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_100_mic1.flac|VCTK_p226|en|They were under a lot of pressure from the other clubs.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_327_mic1.flac|VCTK_p226|en|We do the same.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_177_mic1.flac|VCTK_p226|en|I took the gun.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_072_mic1.flac|VCTK_p226|en|Everything happened so quickly, that we were taken by surprise.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_051_mic1.flac|VCTK_p226|en|It has been a horrible, horrible time.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_217_mic1.flac|VCTK_p226|en|It's not ideal.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_294_mic1.flac|VCTK_p226|en|The results are sometimes contentious.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_238_mic1.flac|VCTK_p226|en|Hospitals are for the ill.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_155_mic1.flac|VCTK_p226|en|It's an issue that will have to be tackled.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_150_mic1.flac|VCTK_p226|en|We just had a go.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_189_mic1.flac|VCTK_p226|en|The whole process is a vicious circle at the moment.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_137_mic1.flac|VCTK_p226|en|It will be too hot.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_333_mic1.flac|VCTK_p226|en|It was no secret that I wanted to sign him.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_369_mic1.flac|VCTK_p226|en|He took over our lives.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_274_mic1.flac|VCTK_p226|en|She has every confidence in his performance of his duties.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_213_mic1.flac|VCTK_p226|en|Feel the heat?
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_089_mic1.flac|VCTK_p226|en|He seems to be pleased with the picture.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_127_mic1.flac|VCTK_p226|en|We recognise the important role of golf in attracting visitors.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_321_mic1.flac|VCTK_p226|en|My body is clearly capable.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_342_mic1.flac|VCTK_p226|en|Three years ago he would have been.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_096_mic1.flac|VCTK_p226|en|However, it did not end that way.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_086_mic1.flac|VCTK_p226|en|This is the way things should be handled.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_281_mic1.flac|VCTK_p226|en|It happens from time to time.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_125_mic1.flac|VCTK_p226|en|She's got to say something.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_306_mic1.flac|VCTK_p226|en|We believe the world has too many refugees already.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_060_mic1.flac|VCTK_p226|en|It is unique.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_269_mic1.flac|VCTK_p226|en|They are never here.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_331_mic1.flac|VCTK_p226|en|Donald was his friend.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_045_mic1.flac|VCTK_p226|en|This represents a tough game for us.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_110_mic1.flac|VCTK_p226|en|Before the game we went for a pint.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_288_mic1.flac|VCTK_p226|en|The condition of their adoption was that they should be kept together.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_355_mic1.flac|VCTK_p226|en|A spokeswoman for Edinburgh City Council confirmed its support for the company.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_041_mic1.flac|VCTK_p226|en|It is not for any other purpose.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_056_mic1.flac|VCTK_p226|en|For the meantime, though, the signs are good.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_323_mic1.flac|VCTK_p226|en|He said she was mad.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_134_mic1.flac|VCTK_p226|en|It's the traumatic event in the childhood of the nation.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_305_mic1.flac|VCTK_p226|en|A police inquiry began about two weeks before the General Election.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_029_mic1.flac|VCTK_p226|en|We want to ensure that the process is entirely transparent.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_192_mic1.flac|VCTK_p226|en|People will ask about us.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_171_mic1.flac|VCTK_p226|en|A helpline number is published at the end of this article.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_158_mic1.flac|VCTK_p226|en|We will turn the corner.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_256_mic1.flac|VCTK_p226|en|Blair is very positive at European Councils.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_212_mic1.flac|VCTK_p226|en|They like being on the front pages of the newspapers.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_032_mic1.flac|VCTK_p226|en|I was an athlete.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_033_mic1.flac|VCTK_p226|en|From that day on we started to look for another full back.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_133_mic1.flac|VCTK_p226|en|She really suffered for her art.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_194_mic1.flac|VCTK_p226|en|It is a case of taking a risk.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_346_mic1.flac|VCTK_p226|en|But the disease has not been confined to the Tory Party.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_303_mic1.flac|VCTK_p226|en|One was a lawyer.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_366_mic1.flac|VCTK_p226|en|It's not pretty, but it's effective.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_154_mic1.flac|VCTK_p226|en|Initial reports said the aircraft had experienced a loss of power.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_300_mic1.flac|VCTK_p226|en|I thought it was my only chance.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_344_mic1.flac|VCTK_p226|en|He also insisted that no concessions had been made to the French.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_186_mic1.flac|VCTK_p226|en|It just came into my head that day.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_104_mic1.flac|VCTK_p226|en|However, the intensive care unit at the Southern General Hospital was full.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_207_mic1.flac|VCTK_p226|en|It's a mixture of everything.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_255_mic1.flac|VCTK_p226|en|That was a bonus, but it was not the main objective.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_120_mic1.flac|VCTK_p226|en|It would not do any harm to reinforce the message.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_279_mic1.flac|VCTK_p226|en|In essence, the teaching profession has a choice.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_075_mic1.flac|VCTK_p226|en|Painful, but only because it's true.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_026_mic1.flac|VCTK_p226|en|That's no bad thing.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_173_mic1.flac|VCTK_p226|en|His team management was protective.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_356_mic1.flac|VCTK_p226|en|She is free.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_183_mic1.flac|VCTK_p226|en|I have no sympathy with her at all.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_358_mic1.flac|VCTK_p226|en|You must have a government and a good civil service.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_042_mic1.flac|VCTK_p226|en|Of course, on Tuesday, United were beaten despite this.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_203_mic1.flac|VCTK_p226|en|The guidelines are expected to be finalised before next spring.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_329_mic1.flac|VCTK_p226|en|But no such amendment has been brought before the Scottish Parliament.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_093_mic1.flac|VCTK_p226|en|It's never too late.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_073_mic1.flac|VCTK_p226|en|The script was funny.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_092_mic1.flac|VCTK_p226|en|It's just awful.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_307_mic1.flac|VCTK_p226|en|The whole matter is somewhat in the air.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_254_mic1.flac|VCTK_p226|en|At the end of the day, one has to be careful.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_292_mic1.flac|VCTK_p226|en|It goes back a long way.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_221_mic1.flac|VCTK_p226|en|Friends of the Earth Scotland last night welcomed the announcement.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_010_mic1.flac|VCTK_p226|en|People look, but no one ever finds it.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_205_mic1.flac|VCTK_p226|en|I, in the meantime, had been far from chilling.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_263_mic1.flac|VCTK_p226|en|I would have the hammer in the crowd.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_338_mic1.flac|VCTK_p226|en|Later in the day he was forced to explain his position.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_202_mic1.flac|VCTK_p226|en|They are in the euro.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_122_mic1.flac|VCTK_p226|en|Mr Chisholm said the move was made on the advice of consultants.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_050_mic1.flac|VCTK_p226|en|Yesterday, he had a chilling warning for the game in Scotland.
-/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_180_mic1.flac|VCTK_p226|en|I have the first six months of next season to prove myself.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_367_mic1.flac.wav|VCTK_p226|en|Equity declined to comment.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_262_mic1.flac.wav|VCTK_p226|en|Today we can say that a new era has begun.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_097_mic1.flac.wav|VCTK_p226|en|We could not get any possession.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_214_mic1.flac.wav|VCTK_p226|en|I'm pleased about one thing.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_118_mic1.flac.wav|VCTK_p226|en|We have to look at everything before we make any final decision.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_021_mic1.flac.wav|VCTK_p226|en|The difference in the rainbow depends considerably upon the size of the drops, and the width of the colored band increases as the size of the drops increases.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_230_mic1.flac.wav|VCTK_p226|en|The charity also has a project in Moscow in Russia.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_280_mic1.flac.wav|VCTK_p226|en|He has a wealth of experience.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_216_mic1.flac.wav|VCTK_p226|en|His third goal was superb.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_241_mic1.flac.wav|VCTK_p226|en|They are all bright and different.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_313_mic1.flac.wav|VCTK_p226|en|The minister is the engineer.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_111_mic1.flac.wav|VCTK_p226|en|It was an adventure.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_071_mic1.flac.wav|VCTK_p226|en|I am pleased with the result, as it was a possible upset.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_077_mic1.flac.wav|VCTK_p226|en|Tommy is not a problem.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_165_mic1.flac.wav|VCTK_p226|en|We have to move forward.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_285_mic1.flac.wav|VCTK_p226|en|It was a virus.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_215_mic1.flac.wav|VCTK_p226|en|I am delighted for Simon.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_188_mic1.flac.wav|VCTK_p226|en|Any change would be subject to the Scottish Parliament's approval.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_223_mic1.flac.wav|VCTK_p226|en|But we have not heard a thing from Diego.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_008_mic1.flac.wav|VCTK_p226|en|These take the shape of a long round arch, with its path high above, and its two ends apparently beyond the horizon.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_067_mic1.flac.wav|VCTK_p226|en|It's a matter of balance.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_225_mic1.flac.wav|VCTK_p226|en|A career as a doctor is on hold.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_166_mic1.flac.wav|VCTK_p226|en|However, the French government has a major dilemma on its hands.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_276_mic1.flac.wav|VCTK_p226|en|It's a way of life.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_237_mic1.flac.wav|VCTK_p226|en|It is not an option, but a policy requirement.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_062_mic1.flac.wav|VCTK_p226|en|This is a scheme that has a lot of potential.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_106_mic1.flac.wav|VCTK_p226|en|It was some time before she found out he was safe.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_140_mic1.flac.wav|VCTK_p226|en|They made such decisions in London.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_059_mic1.flac.wav|VCTK_p226|en|She's a spy!
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_121_mic1.flac.wav|VCTK_p226|en|Maybe this battle has been.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_258_mic1.flac.wav|VCTK_p226|en|That's what made the difference and set the pattern of the match.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_195_mic1.flac.wav|VCTK_p226|en|It's a commission, and it's for work, a year's work.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_172_mic1.flac.wav|VCTK_p226|en|It became a book by itself.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_163_mic1.flac.wav|VCTK_p226|en|I've learned from my mistakes.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_206_mic1.flac.wav|VCTK_p226|en|Some realism was needed about time, resources and management.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_066_mic1.flac.wav|VCTK_p226|en|Art is extra.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_314_mic1.flac.wav|VCTK_p226|en|I did not name it.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_259_mic1.flac.wav|VCTK_p226|en|Scotland will have strong defences as part of the United Kingdom.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_325_mic1.flac.wav|VCTK_p226|en|I am very happy to be here.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_352_mic1.flac.wav|VCTK_p226|en|His contract was then not renewed.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_149_mic1.flac.wav|VCTK_p226|en|In this case, the farmer had actually given permission.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_022_mic1.flac.wav|VCTK_p226|en|The actual primary rainbow observed is said to be the effect of super-imposition of a number of bows.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_330_mic1.flac.wav|VCTK_p226|en|The weekly average was three hours.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_148_mic1.flac.wav|VCTK_p226|en|Three penalties were given.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_052_mic1.flac.wav|VCTK_p226|en|It is the whole package.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_326_mic1.flac.wav|VCTK_p226|en|The airport was even different.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_359_mic1.flac.wav|VCTK_p226|en|He's very explosive.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_284_mic1.flac.wav|VCTK_p226|en|Russian officials have not determined the cause of the accident.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_190_mic1.flac.wav|VCTK_p226|en|Suddenly, the rugby world had changed.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_272_mic1.flac.wav|VCTK_p226|en|Frankly, we should all have such problems.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_107_mic1.flac.wav|VCTK_p226|en|It was a good performance.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_023_mic1.flac.wav|VCTK_p226|en|If the red of the second bow falls upon the green of the first, the result is to give a bow with an abnormally wide yellow band, since red and green light when mixed form yellow.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_128_mic1.flac.wav|VCTK_p226|en|I felt very strongly that England should have it.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_094_mic1.flac.wav|VCTK_p226|en|Every time I play I do not understand their reaction.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_151_mic1.flac.wav|VCTK_p226|en|We have seen a copy of the report.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_138_mic1.flac.wav|VCTK_p226|en|The whole thing of doing the movie was a risk.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_069_mic1.flac.wav|VCTK_p226|en|I've spent a lot of time on buses.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_273_mic1.flac.wav|VCTK_p226|en|It's great, because it takes a lot of pressure off the players.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_013_mic1.flac.wav|VCTK_p226|en|Some have accepted it as a miracle without physical explanation.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_126_mic1.flac.wav|VCTK_p226|en|It is a delight on every level.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_160_mic1.flac.wav|VCTK_p226|en|They should stop the bombing.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_304_mic1.flac.wav|VCTK_p226|en|Our task is to complete the picture.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_290_mic1.flac.wav|VCTK_p226|en|Scotland were beaten again.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_018_mic1.flac.wav|VCTK_p226|en|Aristotle thought that the rainbow was caused by reflection of the sun's rays by the rain.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_242_mic1.flac.wav|VCTK_p226|en|It's only fair.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_339_mic1.flac.wav|VCTK_p226|en|My view has now completely changed.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_337_mic1.flac.wav|VCTK_p226|en|I'd like to take the plunge.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_236_mic1.flac.wav|VCTK_p226|en|It is set in Paris.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_362_mic1.flac.wav|VCTK_p226|en|Six of the asylum seekers left the offices, it was reported.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_108_mic1.flac.wav|VCTK_p226|en|That time is not now, however.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_153_mic1.flac.wav|VCTK_p226|en|That group reported just before Christmas.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_201_mic1.flac.wav|VCTK_p226|en|The service from the other players was super.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_361_mic1.flac.wav|VCTK_p226|en|Our numbers are small.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_130_mic1.flac.wav|VCTK_p226|en|I thought it was a fantastic game.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_181_mic1.flac.wav|VCTK_p226|en|I've been there.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_308_mic1.flac.wav|VCTK_p226|en|This is a war over our home.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_152_mic1.flac.wav|VCTK_p226|en|That could mean the difference between life and death in action.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_228_mic1.flac.wav|VCTK_p226|en|I am immensely sad.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_085_mic1.flac.wav|VCTK_p226|en|It can be halted.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_002_mic1.flac.wav|VCTK_p226|en|Ask her to bring these things with her from the store.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_139_mic1.flac.wav|VCTK_p226|en|I am now unemployed.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_009_mic1.flac.wav|VCTK_p226|en|There is , according to legend, a boiling pot of gold at one end.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_271_mic1.flac.wav|VCTK_p226|en|He was popular.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_248_mic1.flac.wav|VCTK_p226|en|I was shocked.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_157_mic1.flac.wav|VCTK_p226|en|Alain Baxter did not have long to speak on Friday.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_291_mic1.flac.wav|VCTK_p226|en|It depends on the internal discussions in the Ministry of Defence.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_176_mic1.flac.wav|VCTK_p226|en|If that's the case, he will struggle.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_208_mic1.flac.wav|VCTK_p226|en|I don't want to use it.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_335_mic1.flac.wav|VCTK_p226|en|The boat was fantastic.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_257_mic1.flac.wav|VCTK_p226|en|Certainly, in terms of league position, we must be favourites.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_220_mic1.flac.wav|VCTK_p226|en|For the refugees, the return will not come a moment too soon.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_006_mic1.flac.wav|VCTK_p226|en|When the sunlight strikes raindrops in the air, they act as a prism and form a rainbow.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_034_mic1.flac.wav|VCTK_p226|en|Mr Ferguson became a minister after seven years as a journalist.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_350_mic1.flac.wav|VCTK_p226|en|That is the very reason why it was so vital.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_036_mic1.flac.wav|VCTK_p226|en|It can't just be a cynical marketing exercise.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_179_mic1.flac.wav|VCTK_p226|en|No-one has appeared in court in relation to her death.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_102_mic1.flac.wav|VCTK_p226|en|I am not willing to say anything about any couple.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_090_mic1.flac.wav|VCTK_p226|en|New Zealand rugby is totally different.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_293_mic1.flac.wav|VCTK_p226|en|He added that public transport improvements must also be maintained.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_341_mic1.flac.wav|VCTK_p226|en|In addition, certain areas are closed at certain times.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_363_mic1.flac.wav|VCTK_p226|en|Mr Anderson was not acting in the course of his employment.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_264_mic1.flac.wav|VCTK_p226|en|This court has made an order which has not been observed.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_169_mic1.flac.wav|VCTK_p226|en|Nobody did in those days.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_113_mic1.flac.wav|VCTK_p226|en|The Prime Minister was very saddened to hear about this.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_049_mic1.flac.wav|VCTK_p226|en|But it might have done.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_299_mic1.flac.wav|VCTK_p226|en|There was no hint of scandal.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_184_mic1.flac.wav|VCTK_p226|en|It's a portrait of Glasgow, not the portrait.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_076_mic1.flac.wav|VCTK_p226|en|Help is needed.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_143_mic1.flac.wav|VCTK_p226|en|Everyone is in favour of the need for welfare reform in general.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_353_mic1.flac.wav|VCTK_p226|en|A report is the first step in a criminal case in India.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_334_mic1.flac.wav|VCTK_p226|en|On Thursday, Mr Blair will address the Institute of Public Policy Research.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_289_mic1.flac.wav|VCTK_p226|en|This is a national crisis.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_030_mic1.flac.wav|VCTK_p226|en|Because we do not need it.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_265_mic1.flac.wav|VCTK_p226|en|The work between the musicians and the fire is very important.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_249_mic1.flac.wav|VCTK_p226|en|I should think so, too.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_312_mic1.flac.wav|VCTK_p226|en|It wasn't just the character and energy of the playing.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_328_mic1.flac.wav|VCTK_p226|en|That's the law of the land.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_028_mic1.flac.wav|VCTK_p226|en|Suggestions of the action being a punishment were dismissed.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_270_mic1.flac.wav|VCTK_p226|en|We showed a lot of skill in the final quarter.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_178_mic1.flac.wav|VCTK_p226|en|Mr Docherty said the whole family was shocked.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_349_mic1.flac.wav|VCTK_p226|en|He's been the key to everything.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_144_mic1.flac.wav|VCTK_p226|en|Police could not say if the two incidents were connected.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_287_mic1.flac.wav|VCTK_p226|en|Who will perform?
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_370_mic1.flac.wav|VCTK_p226|en|Saddam is not the only example of evil in our world.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_247_mic1.flac.wav|VCTK_p226|en|We did not compete with any other local farmer.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_360_mic1.flac.wav|VCTK_p226|en|No other job in world football can compare to this one.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_037_mic1.flac.wav|VCTK_p226|en|It is a matter of the utmost concern to the Allies.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_232_mic1.flac.wav|VCTK_p226|en|My wife and family are the support system.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_218_mic1.flac.wav|VCTK_p226|en|I was so nervous.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_235_mic1.flac.wav|VCTK_p226|en|Police later said the scheme would end in November.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_234_mic1.flac.wav|VCTK_p226|en|Stewart will travel with some confidence.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_047_mic1.flac.wav|VCTK_p226|en|We need to chat.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_200_mic1.flac.wav|VCTK_p226|en|Is that success?
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_135_mic1.flac.wav|VCTK_p226|en|I do not think this family will ever get over this.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_098_mic1.flac.wav|VCTK_p226|en|If you could find it.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_116_mic1.flac.wav|VCTK_p226|en|It is normal.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_174_mic1.flac.wav|VCTK_p226|en|It's quite a routine.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_252_mic1.flac.wav|VCTK_p226|en|There will be widespread support on all sides.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_227_mic1.flac.wav|VCTK_p226|en|Lottery cash is rightly dependent on grassroots approval.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_019_mic1.flac.wav|VCTK_p226|en|Since then physicists have found that it is not reflection, but refraction by the raindrops which causes the rainbows.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_260_mic1.flac.wav|VCTK_p226|en|It is a mark of respect from the inmates.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_083_mic1.flac.wav|VCTK_p226|en|It works for us.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_336_mic1.flac.wav|VCTK_p226|en|It is a time bomb.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_074_mic1.flac.wav|VCTK_p226|en|You need a trademark.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_229_mic1.flac.wav|VCTK_p226|en|I'd never seen a play about me.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_315_mic1.flac.wav|VCTK_p226|en|It was a question of patience.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_357_mic1.flac.wav|VCTK_p226|en|I kept going for her.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_199_mic1.flac.wav|VCTK_p226|en|We live by the rule of law.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_167_mic1.flac.wav|VCTK_p226|en|They will do their own thing.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_253_mic1.flac.wav|VCTK_p226|en|I was never going to play against Scotland.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_168_mic1.flac.wav|VCTK_p226|en|It is too much for me.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_088_mic1.flac.wav|VCTK_p226|en|Detection is often difficult.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_368_mic1.flac.wav|VCTK_p226|en|All the investment is possible through the public sector.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_124_mic1.flac.wav|VCTK_p226|en|This is the first big idea of the Scottish Parliament election.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_210_mic1.flac.wav|VCTK_p226|en|It's like a garage.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_266_mic1.flac.wav|VCTK_p226|en|The warning is timely.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_348_mic1.flac.wav|VCTK_p226|en|Look at the witnesses.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_115_mic1.flac.wav|VCTK_p226|en|I did not think about the Ryder Cup.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_156_mic1.flac.wav|VCTK_p226|en|The petition was formally presented at Downing Street yesterday.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_164_mic1.flac.wav|VCTK_p226|en|They say that vital evidence was not heard in court.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_159_mic1.flac.wav|VCTK_p226|en|The weather affected the other two games in Fife.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_017_mic1.flac.wav|VCTK_p226|en|Others have tried to explain the phenomenon physically.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_239_mic1.flac.wav|VCTK_p226|en|It would still have been a good film, but very different.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_078_mic1.flac.wav|VCTK_p226|en|There could be a way back.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_114_mic1.flac.wav|VCTK_p226|en|It was really enjoyable on Saturday.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_324_mic1.flac.wav|VCTK_p226|en|We are in the end game.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_340_mic1.flac.wav|VCTK_p226|en|You can see it on the training ground and around the hotel.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_145_mic1.flac.wav|VCTK_p226|en|On Friday, the headteacher and deputy headteacher appeared at the door.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_364_mic1.flac.wav|VCTK_p226|en|This is a club on the rise.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_005_mic1.flac.wav|VCTK_p226|en|She can scoop these things into three red bags, and we will go meet her Wednesday at the train station.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_101_mic1.flac.wav|VCTK_p226|en|It was mayhem.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_261_mic1.flac.wav|VCTK_p226|en|He has already suffered a good deal of unwanted attention.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_064_mic1.flac.wav|VCTK_p226|en|It is not great art.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_070_mic1.flac.wav|VCTK_p226|en|There was a tremendous amount of anger and frustration in that music.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_298_mic1.flac.wav|VCTK_p226|en|The move was welcomed by the Roman Catholic Church in Scotland.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_204_mic1.flac.wav|VCTK_p226|en|The tickets will be on sale today at the ticket office.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_161_mic1.flac.wav|VCTK_p226|en|These days are long gone.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_226_mic1.flac.wav|VCTK_p226|en|At the top of the structure will remain the post of headteacher.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_318_mic1.flac.wav|VCTK_p226|en|Kids are terrible.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_243_mic1.flac.wav|VCTK_p226|en|We lost our composure towards the interval, he said.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_347_mic1.flac.wav|VCTK_p226|en|It was his conclusion that they were generally in good condition.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_043_mic1.flac.wav|VCTK_p226|en|Is there a new way forward?
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_117_mic1.flac.wav|VCTK_p226|en|I don't have many friends.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_014_mic1.flac.wav|VCTK_p226|en|To the Hebrews it was a token that there would be no more universal floods.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_112_mic1.flac.wav|VCTK_p226|en|The eye was badly closed on Sunday.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_286_mic1.flac.wav|VCTK_p226|en|Yet, it worked.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_004_mic1.flac.wav|VCTK_p226|en|We also need a small plastic snake and a big toy frog for the kids.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_251_mic1.flac.wav|VCTK_p226|en|There's the mix.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_131_mic1.flac.wav|VCTK_p226|en|I was furious.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_025_mic1.flac.wav|VCTK_p226|en|He has not been named.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_031_mic1.flac.wav|VCTK_p226|en|This is the window.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_080_mic1.flac.wav|VCTK_p226|en|The First Minister is scheduled to be elected by the Parliament tomorrow.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_198_mic1.flac.wav|VCTK_p226|en|Is that it?
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_193_mic1.flac.wav|VCTK_p226|en|The appeal tribunal will give its decision at a later date.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_345_mic1.flac.wav|VCTK_p226|en|They made clear that they are not interested in Government assistance.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_310_mic1.flac.wav|VCTK_p226|en|It is no country for a man or woman of letters.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_267_mic1.flac.wav|VCTK_p226|en|George W Bush, the US president, condemned the attacks.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_020_mic1.flac.wav|VCTK_p226|en|Many complicated ideas about the rainbow have been formed.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_320_mic1.flac.wav|VCTK_p226|en|The home team had an amazing start.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_322_mic1.flac.wav|VCTK_p226|en|Referees are easy targets.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_191_mic1.flac.wav|VCTK_p226|en|Treasury spokesman Malcolm Bruce is also considered a potential contender.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_332_mic1.flac.wav|VCTK_p226|en|I am so upset.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_084_mic1.flac.wav|VCTK_p226|en|I would think about the end of January, the beginning of February.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_054_mic1.flac.wav|VCTK_p226|en|I got a great response from the players, as I had expected.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_003_mic1.flac.wav|VCTK_p226|en|Six spoons of fresh snow peas, five thick slabs of blue cheese, and maybe a snack for her brother Bob.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_012_mic1.flac.wav|VCTK_p226|en|Throughout the centuries people have explained the rainbow in various ways.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_109_mic1.flac.wav|VCTK_p226|en|Oil embargo endorsed.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_278_mic1.flac.wav|VCTK_p226|en|I feel pretty good.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_091_mic1.flac.wav|VCTK_p226|en|Someone who cares
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_011_mic1.flac.wav|VCTK_p226|en|When a man looks for something beyond his reach, his friends say he is looking for the pot of gold at the end of the rainbow.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_039_mic1.flac.wav|VCTK_p226|en|It has failed.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_354_mic1.flac.wav|VCTK_p226|en|That is a break with tradition.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_061_mic1.flac.wav|VCTK_p226|en|It is not a process which can be completed overnight.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_044_mic1.flac.wav|VCTK_p226|en|Mexico City was a wonderful experience.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_015_mic1.flac.wav|VCTK_p226|en|The Greeks used to imagine that it was a sign from the gods to foretell war or heavy rain.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_162_mic1.flac.wav|VCTK_p226|en|It is an attitude of mind.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_053_mic1.flac.wav|VCTK_p226|en|He had no enemies.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_219_mic1.flac.wav|VCTK_p226|en|I might come back.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_296_mic1.flac.wav|VCTK_p226|en|If you can run a computer, you can talk to the world.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_295_mic1.flac.wav|VCTK_p226|en|He should have won.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_351_mic1.flac.wav|VCTK_p226|en|This is a sector in overall deficit and urgent action is required.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_309_mic1.flac.wav|VCTK_p226|en|In performance, that quality can prove to be a challenge.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_129_mic1.flac.wav|VCTK_p226|en|She has been shot.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_233_mic1.flac.wav|VCTK_p226|en|Her condition was yesterday described as critical, but stable.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_065_mic1.flac.wav|VCTK_p226|en|You do not change overnight.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_283_mic1.flac.wav|VCTK_p226|en|He looked very sharp.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_136_mic1.flac.wav|VCTK_p226|en|Wish I could be there on Sunday in person but I can't.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_197_mic1.flac.wav|VCTK_p226|en|There was no option.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_024_mic1.flac.wav|VCTK_p226|en|This is a very common type of bow, one showing mainly red and yellow, with little or no green or blue.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_046_mic1.flac.wav|VCTK_p226|en|Failure to comply with the order is likely to result in prison.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_001_mic1.flac.wav|VCTK_p226|en|Please call Stella.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_211_mic1.flac.wav|VCTK_p226|en|But I am a worried man.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_316_mic1.flac.wav|VCTK_p226|en|The whole region is in shock.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_103_mic1.flac.wav|VCTK_p226|en|They were outside the circle.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_187_mic1.flac.wav|VCTK_p226|en|I had a train to catch.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_268_mic1.flac.wav|VCTK_p226|en|That decision is for the British Parliament and people.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_099_mic1.flac.wav|VCTK_p226|en|He is hungry for success and I am the same.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_343_mic1.flac.wav|VCTK_p226|en|I'm so pleased the show has won a prize.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_100_mic1.flac.wav|VCTK_p226|en|They were under a lot of pressure from the other clubs.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_327_mic1.flac.wav|VCTK_p226|en|We do the same.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_177_mic1.flac.wav|VCTK_p226|en|I took the gun.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_072_mic1.flac.wav|VCTK_p226|en|Everything happened so quickly, that we were taken by surprise.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_051_mic1.flac.wav|VCTK_p226|en|It has been a horrible, horrible time.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_217_mic1.flac.wav|VCTK_p226|en|It's not ideal.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_294_mic1.flac.wav|VCTK_p226|en|The results are sometimes contentious.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_238_mic1.flac.wav|VCTK_p226|en|Hospitals are for the ill.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_155_mic1.flac.wav|VCTK_p226|en|It's an issue that will have to be tackled.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_150_mic1.flac.wav|VCTK_p226|en|We just had a go.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_189_mic1.flac.wav|VCTK_p226|en|The whole process is a vicious circle at the moment.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_137_mic1.flac.wav|VCTK_p226|en|It will be too hot.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_333_mic1.flac.wav|VCTK_p226|en|It was no secret that I wanted to sign him.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_369_mic1.flac.wav|VCTK_p226|en|He took over our lives.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_274_mic1.flac.wav|VCTK_p226|en|She has every confidence in his performance of his duties.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_213_mic1.flac.wav|VCTK_p226|en|Feel the heat?
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_089_mic1.flac.wav|VCTK_p226|en|He seems to be pleased with the picture.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_127_mic1.flac.wav|VCTK_p226|en|We recognise the important role of golf in attracting visitors.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_321_mic1.flac.wav|VCTK_p226|en|My body is clearly capable.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_342_mic1.flac.wav|VCTK_p226|en|Three years ago he would have been.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_096_mic1.flac.wav|VCTK_p226|en|However, it did not end that way.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_086_mic1.flac.wav|VCTK_p226|en|This is the way things should be handled.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_281_mic1.flac.wav|VCTK_p226|en|It happens from time to time.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_125_mic1.flac.wav|VCTK_p226|en|She's got to say something.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_306_mic1.flac.wav|VCTK_p226|en|We believe the world has too many refugees already.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_060_mic1.flac.wav|VCTK_p226|en|It is unique.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_269_mic1.flac.wav|VCTK_p226|en|They are never here.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_331_mic1.flac.wav|VCTK_p226|en|Donald was his friend.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_045_mic1.flac.wav|VCTK_p226|en|This represents a tough game for us.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_110_mic1.flac.wav|VCTK_p226|en|Before the game we went for a pint.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_288_mic1.flac.wav|VCTK_p226|en|The condition of their adoption was that they should be kept together.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_355_mic1.flac.wav|VCTK_p226|en|A spokeswoman for Edinburgh City Council confirmed its support for the company.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_041_mic1.flac.wav|VCTK_p226|en|It is not for any other purpose.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_056_mic1.flac.wav|VCTK_p226|en|For the meantime, though, the signs are good.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_323_mic1.flac.wav|VCTK_p226|en|He said she was mad.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_134_mic1.flac.wav|VCTK_p226|en|It's the traumatic event in the childhood of the nation.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_305_mic1.flac.wav|VCTK_p226|en|A police inquiry began about two weeks before the General Election.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_029_mic1.flac.wav|VCTK_p226|en|We want to ensure that the process is entirely transparent.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_192_mic1.flac.wav|VCTK_p226|en|People will ask about us.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_171_mic1.flac.wav|VCTK_p226|en|A helpline number is published at the end of this article.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_158_mic1.flac.wav|VCTK_p226|en|We will turn the corner.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_256_mic1.flac.wav|VCTK_p226|en|Blair is very positive at European Councils.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_212_mic1.flac.wav|VCTK_p226|en|They like being on the front pages of the newspapers.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_032_mic1.flac.wav|VCTK_p226|en|I was an athlete.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_033_mic1.flac.wav|VCTK_p226|en|From that day on we started to look for another full back.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_133_mic1.flac.wav|VCTK_p226|en|She really suffered for her art.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_194_mic1.flac.wav|VCTK_p226|en|It is a case of taking a risk.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_346_mic1.flac.wav|VCTK_p226|en|But the disease has not been confined to the Tory Party.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_303_mic1.flac.wav|VCTK_p226|en|One was a lawyer.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_366_mic1.flac.wav|VCTK_p226|en|It's not pretty, but it's effective.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_154_mic1.flac.wav|VCTK_p226|en|Initial reports said the aircraft had experienced a loss of power.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_300_mic1.flac.wav|VCTK_p226|en|I thought it was my only chance.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_344_mic1.flac.wav|VCTK_p226|en|He also insisted that no concessions had been made to the French.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_186_mic1.flac.wav|VCTK_p226|en|It just came into my head that day.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_104_mic1.flac.wav|VCTK_p226|en|However, the intensive care unit at the Southern General Hospital was full.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_207_mic1.flac.wav|VCTK_p226|en|It's a mixture of everything.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_255_mic1.flac.wav|VCTK_p226|en|That was a bonus, but it was not the main objective.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_120_mic1.flac.wav|VCTK_p226|en|It would not do any harm to reinforce the message.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_279_mic1.flac.wav|VCTK_p226|en|In essence, the teaching profession has a choice.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_075_mic1.flac.wav|VCTK_p226|en|Painful, but only because it's true.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_026_mic1.flac.wav|VCTK_p226|en|That's no bad thing.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_173_mic1.flac.wav|VCTK_p226|en|His team management was protective.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_356_mic1.flac.wav|VCTK_p226|en|She is free.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_183_mic1.flac.wav|VCTK_p226|en|I have no sympathy with her at all.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_358_mic1.flac.wav|VCTK_p226|en|You must have a government and a good civil service.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_042_mic1.flac.wav|VCTK_p226|en|Of course, on Tuesday, United were beaten despite this.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_203_mic1.flac.wav|VCTK_p226|en|The guidelines are expected to be finalised before next spring.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_329_mic1.flac.wav|VCTK_p226|en|But no such amendment has been brought before the Scottish Parliament.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_093_mic1.flac.wav|VCTK_p226|en|It's never too late.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_073_mic1.flac.wav|VCTK_p226|en|The script was funny.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_092_mic1.flac.wav|VCTK_p226|en|It's just awful.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_307_mic1.flac.wav|VCTK_p226|en|The whole matter is somewhat in the air.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_254_mic1.flac.wav|VCTK_p226|en|At the end of the day, one has to be careful.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_292_mic1.flac.wav|VCTK_p226|en|It goes back a long way.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_221_mic1.flac.wav|VCTK_p226|en|Friends of the Earth Scotland last night welcomed the announcement.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_010_mic1.flac.wav|VCTK_p226|en|People look, but no one ever finds it.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_205_mic1.flac.wav|VCTK_p226|en|I, in the meantime, had been far from chilling.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_263_mic1.flac.wav|VCTK_p226|en|I would have the hammer in the crowd.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_338_mic1.flac.wav|VCTK_p226|en|Later in the day he was forced to explain his position.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_202_mic1.flac.wav|VCTK_p226|en|They are in the euro.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_122_mic1.flac.wav|VCTK_p226|en|Mr Chisholm said the move was made on the advice of consultants.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_050_mic1.flac.wav|VCTK_p226|en|Yesterday, he had a chilling warning for the game in Scotland.
+/home/dataset/VCTK/wav48_silence_trimmed/p226/p226_180_mic1.flac.wav|VCTK_p226|en|I have the first six months of next season to prove myself.

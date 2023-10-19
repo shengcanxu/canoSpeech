@@ -35,7 +35,7 @@ def resample_files(input_dir, output_sr, output_dir=None, file_ext="wav", n_jobs
 
     print("Done ! removing original file if needed")
     if file_ext != "wav":
-        for filename in audio_files:
+        for filename, _, _ in audio_files:
             os.remove(filename)
 
 if __name__ == "__main__":

@@ -1,10 +1,10 @@
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_007_mic1.flac|VCTK_p226|en|The rainbow is a division of white light into many beautiful colors.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_146_mic1.flac|VCTK_p226|en|It is not satisfied with the standard of fire safety provisions.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_317_mic1.flac|VCTK_p226|en|It's about my time as a guitarist.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_231_mic1.flac|VCTK_p226|en|The track is currently covered in snow.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_095_mic1.flac|VCTK_p226|en|That will come after the game on Saturday.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_240_mic1.flac|VCTK_p226|en|She is well balanced.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_119_mic1.flac|VCTK_p226|en|Among them was Gary Robertson from Dundee.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_063_mic1.flac|VCTK_p226|en|It's a real challenge.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_040_mic1.flac|VCTK_p226|en|It was clear.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_311_mic1.flac|VCTK_p226|en|I was concerned with the way they tried to justify his actions.
+D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_007_mic1.flac.wav|VCTK_p226|en|The rainbow is a division of white light into many beautiful colors.
+D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_146_mic1.flac.wav|VCTK_p226|en|It is not satisfied with the standard of fire safety provisions.
+D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_317_mic1.flac.wav|VCTK_p226|en|It's about my time as a guitarist.
+D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_231_mic1.flac.wav|VCTK_p226|en|The track is currently covered in snow.
+D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_095_mic1.flac.wav|VCTK_p226|en|That will come after the game on Saturday.
+D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_240_mic1.flac.wav|VCTK_p226|en|She is well balanced.
+D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_119_mic1.flac.wav|VCTK_p226|en|Among them was Gary Robertson from Dundee.
+D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_063_mic1.flac.wav|VCTK_p226|en|It's a real challenge.
+D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_040_mic1.flac.wav|VCTK_p226|en|It was clear.
+D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_311_mic1.flac.wav|VCTK_p226|en|I was concerned with the way they tried to justify his actions.
