@@ -4,17 +4,16 @@ import os
 from argparse import RawTextHelpFormatter
 from multiprocessing import Pool
 from shutil import copytree
-
-import librosa
-import soundfile as sf
 from tqdm import tqdm
+from pydub import AudioSegment
 
-
+# https://github.com/jaywalnut310/vits/issues/132
+# resample should use ffmpeg or sox.
+# if there are some blank audio at the begining or end, use librosa to trim it
 def resample_file(func_args):
-    filename, output_sr = func_args
-    y, sr = librosa.load(filename, sr=output_sr)
-    sf.write(filename, y, sr)
-
+    filename, output_sr, file_ext = func_args
+    audio = AudioSegment.from_file(filename, file_ext)
+    audio.export(filename+".wav", format="wav", bitrate=output_sr)
 
 def resample_files(input_dir, output_sr, output_dir=None, file_ext="wav", n_jobs=10):
     """
@@ -28,14 +27,16 @@ def resample_files(input_dir, output_sr, output_dir=None, file_ext="wav", n_jobs
     print("Resampling the audio files...")
     audio_files = glob.glob(os.path.join(input_dir, f"**/*.{file_ext}"), recursive=True)
     print(f"Found {len(audio_files)} files...")
-    audio_files = list(zip(audio_files, len(audio_files) * [output_sr]))
+    audio_files = list(zip(audio_files, len(audio_files) * [output_sr], [file_ext] * len(audio_files)))
     with Pool(processes=n_jobs) as p:
         with tqdm(total=len(audio_files)) as pbar:
             for _, _ in enumerate(p.imap_unordered(resample_file, audio_files)):
                 pbar.update()
 
-    print("Done !")
-
+    print("Done ! removing original file if needed")
+    if file_ext != "wav":
+        for filename in audio_files:
+            os.remove(filename)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(

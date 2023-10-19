@@ -2,8 +2,8 @@ import argparse
 import os
 from glob import glob
 
-from dataset.resample import resample_files
-from dataset.download_util import download_kaggle_dataset, download_url, extract_archive
+from resample import resample_files
+from download_util import download_kaggle_dataset, extract_archive
 from typing import Optional
 
 
@@ -130,7 +130,7 @@ def download_vctk(save_path: str, use_kaggle: Optional[bool] = False):
     else:
         os.makedirs(save_path, exist_ok=True)
         url = "https://datashare.ed.ac.uk/bitstream/handle/10283/3443/VCTK-Corpus-0.92.zip"
-        download_url(url, save_path)
+        # download_url(url, save_path)
         basename = os.path.basename(url)
         archive = os.path.join(save_path, basename)
         print(" > Extracting archive file...")

@@ -7,7 +7,6 @@ from text import cleaned_text_to_tokens, _clean_text, _intersperse
 import torch
 from torch.utils.data import Dataset
 import librosa
-from util.audio_processor import AudioProcessor
 from util.mel_processing import wav_to_mel, wav_to_spec, spec_to_mel, load_audio
 
 

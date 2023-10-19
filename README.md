@@ -34,6 +34,9 @@ can be generated using three methods, we use 4:
     2.1. here are some useful introduction of Montreal-Forced-Aligner:
         1) https://techfirst.medium.com/forced-alignment-how-to-match-audio-with-a-transcript-via-machine-learning-dd19da8c0f04
 
+# audio-text align:
+1. there are many tools to align audio and text, start from here: https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner 
+
 #- speaker:
 speaker embedding is generated from  H/ASP model
 paper:  Clova baseline system for the voxceleb speaker recognition challenge
