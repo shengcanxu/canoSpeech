@@ -422,14 +422,14 @@ class VitsTrain(TrainerModelWithDataset):
         print("nothing to do! doing the real train code in train_step. ")
         return input
 
-
-
     def inference(self, text:str):
         tokens = text_to_tokens(text)
         if self.config.text.add_blank:
             tokens = _intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0).cuda()
         x_lengths = torch.LongTensor([tokens.size(1)]).cuda()
+
+        self.generator.eval()
         wav, _, _, _ = self.generator.infer(
             tokens,
             x_lengths,
@@ -452,8 +452,10 @@ class VitsTrain(TrainerModelWithDataset):
 
     @torch.no_grad()
     def test_run(self, assets) -> Tuple[Dict, Dict]:
+        output_path = assets["output_path"]
+
         print("doing test run...")
         text = "Who else do you want to talk to? You can go with me today to the meeting."
         wav = self.inference(text)
         wav = wav[0, 0].cpu().float().numpy()
-        sf.write(f"{self.config.output_path}/test_{int(time.time())}.wav", wav, 22050)
+        sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)

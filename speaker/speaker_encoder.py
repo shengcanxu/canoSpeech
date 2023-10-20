@@ -1,13 +1,11 @@
 from typing import Union, List
-from pysptk.sptk import rapt
 import numpy as np
 import torch
 from coqpit import Coqpit
 from speaker.lstm_speaker import LSTMSpeakerEncoder
 from speaker.resnet_speaker import ResNetSpeakerEncoder
 from speaker.speaker_config import SpeakerConfig
-from util.audio_processor import AudioProcessor
-
+from util.mel_processing import wav_to_mel
 
 class SpeakerEncoder(object):
     def __init__(
@@ -26,7 +24,7 @@ class SpeakerEncoder(object):
             use_cuda=use_cuda,
             cache=True
         )
-        self.audio_processor = AudioProcessor(**self.config.audio, verbose=False)
+        # self.audio_processor = AudioProcessor(**self.config.audio, verbose=False)
         self.use_cuda = use_cuda
 
     def get_encoder_model(self, config: Coqpit):
@@ -68,8 +66,19 @@ class SpeakerEncoder(object):
         """Compute a embedding from a given audio file.
         """
         if not self.config.model_params.get("use_torch_spec", False):
-            m_input = self.audio_processor.melspectrogram(waveform)
-            m_input = torch.FloatTensor(m_input)
+            # m_input = self.audio_processor.melspectrogram(waveform)
+            # m_input = torch.FloatTensor(m_input)
+            m_input = wav_to_mel(
+                y=waveform,
+                n_fft=self.config.audio.fft_size,
+                sample_rate=self.config.audio.sample_rate,
+                num_mels=self.config.audio.num_mels,
+                hop_length=self.config.audio.hop_length,
+                win_length=self.config.audio.win_length,
+                fmin=self.config.audio.mel_fmin,
+                fmax=self.config.audio.mel_fmax,
+                center=False,
+            )
         else:
             m_input = torch.FloatTensor(waveform)
         if self.use_cuda:

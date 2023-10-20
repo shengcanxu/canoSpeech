@@ -2,10 +2,7 @@ import argparse
 import os
 import pickle
 import sys
-import time
 import penn
-import numpy as np
-import pysptk
 from tqdm import tqdm
 from speaker.speaker_encoder import SpeakerEncoder
 import soundfile as sf
@@ -17,7 +14,6 @@ from reference.vits import commons, utils
 from reference.vits.models import SynthesizerTrn
 from reference.vits.text import text_to_sequence
 from reference.vits.text.symbols import symbols
-from util.audio_processor import AudioProcessor
 from util.mel_processing import load_audio, wav_to_mel, wav_to_spec, spec_to_mel
 
 ###
@@ -89,13 +85,12 @@ def main(args):
     config.load_json(args.config)
     dataset_config = config.dataset_config
 
-    vits, vits_config = gen_vits_model()
+    # vits, vits_config = gen_vits_model()
 
-    use_cuda = torch.cuda.is_available()
     speaker_encoder = SpeakerEncoder(
         config_path=args.speaker_config,
         model_path=args.speaker_model,
-        use_cuda=use_cuda,
+        use_cuda=torch.cuda.is_available(),
     )
 
     train_samples = get_metas_from_filelist(dataset_config.meta_file_train)
@@ -188,7 +183,7 @@ def gen_text_pitch(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="../config/naturaltts_ljspeech.json")
+    parser.add_argument("--config", type=str, default="../config/vits_vctk.json")
     parser.add_argument("--speaker_model", type=str, default="D:/dataset/VCTK/model_se.pth.tar")
     parser.add_argument("--speaker_config", type=str, default="D:/dataset/VCTK/config_se.json")
     parser.add_argument("--refresh", type=bool, default=False)

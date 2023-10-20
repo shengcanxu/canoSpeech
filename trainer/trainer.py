@@ -422,6 +422,10 @@ class Trainer:
         self.config = config
         self.output_path = output_path
         self.training_assets = training_assets
+
+        # add data to training_asset for transport to model object
+        self.training_assets["output_path"] = output_path
+
         self.grad_accum_steps = args.grad_accum_steps
         self.overfit_batch = args.overfit_batch
         self.skip_train_epoch = args.skip_train_epoch

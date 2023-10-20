@@ -86,7 +86,7 @@ def wav_to_mel(y, n_fft, num_mels, sample_rate, hop_length, win_length, fmin, fm
     Args Shapes:
         - y : :math:`[B, 1, T]`
     Return Shapes:
-        - spec : :math:`[B,C,T]`
+        - mel-spec : :math:`[B,C,T]`
     """
     y = y.squeeze(1)
     if torch.min(y) < -1.0:

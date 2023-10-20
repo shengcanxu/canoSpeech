@@ -56,7 +56,7 @@ class AudioConfig(Coqpit):
     mel_fmax = None
     hop_length:int = 256
     win_length:int = 1024
-    sample_rate:int = 16000  # sample_rate affect the training time a lot
+    sample_rate:int = 22050  # sample_rate affect the training time a lot
     fft_size:int = 1024
     num_mels:int = 80
     pitch_fmax:float = 640.0
