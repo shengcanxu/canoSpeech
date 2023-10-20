@@ -71,9 +71,9 @@ class TextAudioDataset(Dataset):
     """
     load audio, text and return dataset
     """
-    def __init__(self, samples, config, share_vars={}):
+    def __init__(self, samples, config):
         self.samples = samples
-        self.share_vars = share_vars
+        self.dataset_name = config.dataset_config.dataset_name
         self.use_cache = getattr(config.dataset_config, "use_cache", False)
         self.melspec_use_GPU = getattr(config.dataset_config, "melspec_use_GPU", False)
         self.add_preprocess_data = getattr(config.dataset_config, "add_preprocess_data", True)
@@ -160,8 +160,6 @@ class TextAudioDataset(Dataset):
             else:
                 raise Exception("path doesn't exists! should run preprocess")
 
-            duration = self.share_vars.get(sample["audio"])
-
         return {
             "raw_text": sample["text"], # str
             "phoneme": phoneme, # str
@@ -171,11 +169,17 @@ class TextAudioDataset(Dataset):
             "spec": spec.squeeze(),
             "mel": mel.squeeze(),
             "filename": sample["audio"],
-            "speaker_name": sample["speaker"],
+            "speaker_id": self._get_speaker_id(sample["speaker"], self.dataset_name),
             "speaker_embed": speaker,
             "pitch": pitch,
             "duration": duration
         }
+
+    def _get_speaker_id(self, speaker_name, dataset_name:str):
+        if dataset_name == "vctk":
+            return int(speaker_name[6:]) - 225
+        else:
+            return 0
 
     def _get_text(self, text):
         """format text and add blank"""
@@ -204,6 +208,7 @@ class TextAudioDataset(Dataset):
         token_padded = torch.LongTensor(B, max_text_len)
         token_padded = token_padded.zero_()
 
+        speaker_ids = torch.LongTensor([x["speaker_id"] for x in batch])
         wav_lens = torch.LongTensor([x["wav"].size(1) for x in batch])
         wav_lens_max = torch.max(wav_lens)
         wav_rel_lens = wav_lens / wav_lens_max
@@ -274,18 +279,19 @@ class TextAudioDataset(Dataset):
                 speaker_embed_padded[i, :speaker_embed.size(0)] = torch.FloatTensor(speaker_embed)
 
         return {
-            "tokens": token_padded, # [B, T]
-            "token_lens": token_lens, # [B]
-            "waveform": wav_padded, # [B, 1, T_wav]
-            "waveform_lens": wav_lens,# [B]
-            "waveform_rel_lens": wav_rel_lens, #[B], wave len in percentage
-            "spec": spec_padded, #[B, C, T_spec]
-            "spec_lens": spec_lens, # [B]
-            "mel": mel_padded, # [B, C, T_mel]
-            "mel_lens": mel_lens, # [B]
-            "speaker_embed": speaker_embed_padded,# [B, T_speaker]
-            "pitch": pitch_padded, # [B, T_pitch]
-            "duration": duration_padded, #[B, T_duration]
-            "filenames": filenames,# [B]
-            "raw_texts": raw_texts # [B]
+            "tokens": token_padded,  # [B, T]
+            "token_lens": token_lens,  # [B]
+            "waveform": wav_padded,  # [B, 1, T_wav]
+            "waveform_lens": wav_lens,  # [B]
+            "waveform_rel_lens": wav_rel_lens,  #[B], wave len in percentage
+            "spec": spec_padded,  #[B, C, T_spec]
+            "spec_lens": spec_lens,  # [B]
+            "mel": mel_padded,  # [B, C, T_mel]
+            "mel_lens": mel_lens,  # [B]
+            "speaker_ids": speaker_ids,  # [B]
+            "speaker_embed": speaker_embed_padded,  # [B, T_speaker]
+            "pitch": pitch_padded,  # [B, T_pitch]
+            "duration": duration_padded,  #[B, T_duration]
+            "filenames": filenames,  # [B]
+            "raw_texts": raw_texts  # [B]
         }

@@ -83,8 +83,8 @@ class VitsGeneratorLoss(nn.Module):
         feats_disc_real,  # [B, C, T', P]
         loss_duration,
         use_speaker_encoder_as_loss=False,
-        gt_spk_emb=None,
-        syn_spk_emb=None,
+        gt_speaker_emb=None,
+        syn_speaker_emb=None,
     ):
         loss = 0.0
         z_mask = sequence_mask(z_len).float()
@@ -103,7 +103,7 @@ class VitsGeneratorLoss(nn.Module):
 
         return_dict = {}
         if use_speaker_encoder_as_loss:
-            loss_se = self.cosine_similarity_loss(gt_spk_emb, syn_spk_emb) * self.spk_encoder_loss_alpha
+            loss_se = self.cosine_similarity_loss(gt_speaker_emb, syn_speaker_emb) * self.spk_encoder_loss_alpha
             loss = loss + loss_se
             return_dict["loss_spk_encoder"] = loss_se
         # pass losses to the dict

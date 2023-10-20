@@ -29,11 +29,10 @@ from util.mel_processing import wav_to_mel
 
 
 class NaturalTTSModel(nn.Module):
-    def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None, share_durations = None ):
+    def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None):
         super().__init__()
         self.config = config
         self.model_config = config.model
-        self.share_durations = share_durations
         self.speaker_embed = speaker_embed
         self.language_manager = language_manager
 
@@ -399,8 +398,8 @@ class NaturalTTSTrain(TrainerModelWithDataset):
     """
     Natural Speech model training model.
     """
-    def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None, share_vars = None):
-        super().__init__(share_vars)
+    def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None):
+        super().__init__()
         self.config = config
         self.model_config = config.model
         self.balance_disc_generator = config.balance_disc_generator
@@ -410,7 +409,6 @@ class NaturalTTSTrain(TrainerModelWithDataset):
             config=config,
             speaker_embed=speaker_embed,
             language_manager=language_manager,
-            share_durations = self.share_vars
         )
 
         self.discriminator = VitsDiscriminator(

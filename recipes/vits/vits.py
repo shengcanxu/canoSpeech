@@ -1,4 +1,5 @@
 import math
+import random
 from typing import Dict, List, Union, Tuple
 from torch.cuda.amp.autocast_mode import autocast
 import torch
@@ -148,7 +149,7 @@ class VitsModel(nn.Module):
             y_lengths (torch.tensor): Batch of input spectrogram lengths. [B]`
             waveform (torch.tensor): Batch of ground truth waveforms per sample. [B, 1, T_wav]`
             speaker_embeds:[B, C, 1]: Batch of speaker embedding
-            speaker_ids:`[B]: Batch of speaker ids. use_speaker_embedding should be true
+            speaker_ids:`[B]: Batch of speaker ids. use_speaker_ids should be true
             language_ids:`[B]: Batch of language ids.
         """
         g = None
@@ -158,7 +159,7 @@ class VitsModel(nn.Module):
                 g = g.unsqueeze_(0)
 
         # speaker embedding
-        if self.model_config.use_speaker_embedding and speaker_ids is not None:
+        if self.model_config.use_speaker_ids and speaker_ids is not None:
             g = self.speaker_embedding(speaker_ids).unsqueeze(-1)  # [b, h, 1]
 
         # audio encoder, encode audio to embedding layer z's dimension
@@ -195,7 +196,7 @@ class VitsModel(nn.Module):
             pad_short=True,
         )
 
-        gt_spk_emb, syn_spk_emb = None, None
+        gt_speaker_emb, syn_speaker_emb = None, None
 
         return {
             "y_hat": y_hat,  # [B, 1, T_wav]
@@ -207,8 +208,8 @@ class VitsModel(nn.Module):
             "m_q": m_q,  # [B, C, T_dec]
             "logs_q": logs_q,  # [B, C, T_dec]
             "waveform_seg": wav_seg,  # [B, 1, spec_seg_size * hop_length]
-            "gt_spk_emb": gt_spk_emb,  # [B, 1, speaker_encoder.proj_dim]
-            "syn_spk_emb": syn_spk_emb,  # [B, 1, speaker_encoder.proj_dim]
+            "gt_speaker_emb": gt_speaker_emb,  # [B, 1, speaker_encoder.proj_dim]
+            "syn_speaker_emb": syn_speaker_emb,  # [B, 1, speaker_encoder.proj_dim]
             "slice_ids": slice_ids,
             "loss_duration": loss_duration,
         }
@@ -291,6 +292,7 @@ class VitsTrain(TrainerModelWithDataset):
             token_lens = batch["token_lens"]
             spec = batch["spec"]
             waveform = batch["waveform"]
+            speaker_ids = batch["speaker_ids"]
 
             # generator pass
             outputs = self.generator(
@@ -300,7 +302,7 @@ class VitsTrain(TrainerModelWithDataset):
                 y_lengths=spec_lens,
                 waveform=waveform,
                 speaker_embeds=None,
-                speaker_ids=None,
+                speaker_ids=speaker_ids,
                 language_ids=None
             )
 
@@ -370,8 +372,8 @@ class VitsTrain(TrainerModelWithDataset):
                     feats_disc_real=feats_disc_real,
                     loss_duration=self.model_outputs_cache["loss_duration"],
                     use_speaker_encoder_as_loss=self.model_config.use_speaker_encoder_as_loss,
-                    gt_spk_emb=self.model_outputs_cache["gt_spk_emb"],
-                    syn_spk_emb=self.model_outputs_cache["syn_spk_emb"],
+                    gt_speaker_emb=self.model_outputs_cache["gt_speaker_emb"],
+                    syn_speaker_emb=self.model_outputs_cache["syn_speaker_emb"],
                 )
 
                 if self.balance_disc_generator:
@@ -422,17 +424,19 @@ class VitsTrain(TrainerModelWithDataset):
         print("nothing to do! doing the real train code in train_step. ")
         return input
 
-    def inference(self, text:str):
+    def inference(self, text:str, speaker_id:int=None):
         tokens = text_to_tokens(text)
         if self.config.text.add_blank:
             tokens = _intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0).cuda()
         x_lengths = torch.LongTensor([tokens.size(1)]).cuda()
+        speaker_ids = torch.LongTensor([speaker_id]).cuda() if speaker_id is not None else None
 
         self.generator.eval()
         wav, _, _, _ = self.generator.infer(
             tokens,
             x_lengths,
+            speaker_ids=speaker_ids,
             noise_scale=0.667,
             length_scale=1,
         )
@@ -456,6 +460,7 @@ class VitsTrain(TrainerModelWithDataset):
 
         print("doing test run...")
         text = "Who else do you want to talk to? You can go with me today to the meeting."
-        wav = self.inference(text)
+        speaker_id = random.randint(0, 9)
+        wav = self.inference(text, speaker_id)
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
