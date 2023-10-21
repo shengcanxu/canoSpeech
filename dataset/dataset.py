@@ -4,7 +4,7 @@ import numpy as np
 from collections import Counter
 import pickle
 
-from dataset.VCTK import VCTK_speaker_id_mapping
+from dataset.dataset_constant import VCTK_speaker_id_mapping
 from text import cleaned_text_to_tokens, _clean_text, _intersperse
 import torch
 from torch.utils.data import Dataset
