@@ -3,6 +3,8 @@ import random
 import numpy as np
 from collections import Counter
 import pickle
+
+from dataset.VCTK import VCTK_speaker_id_mapping
 from text import cleaned_text_to_tokens, _clean_text, _intersperse
 import torch
 from torch.utils.data import Dataset
@@ -177,9 +179,9 @@ class TextAudioDataset(Dataset):
 
     def _get_speaker_id(self, speaker_name, dataset_name:str):
         if dataset_name == "vctk":
-            return int(speaker_name[6:]) - 225
+            return VCTK_speaker_id_mapping.get(speaker_name, 1)
         else:
-            return 0
+            return 1
 
     def _get_text(self, text):
         """format text and add blank"""
