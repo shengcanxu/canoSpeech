@@ -2,7 +2,6 @@
     "run_name": "NaturalTTSLJSpeech",
     "run_description": "Cano Speech running on LJSpeech dataset",
     "output_path": "/home/output",
-    "restore_path": "/home/output/vits_checkpoint_175000.pth",
     "balance_disc_generator": false,
 
     "dataset_config": {
