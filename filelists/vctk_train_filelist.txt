@@ -13,18 +13,18 @@ D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_111_mic1.flac.wav|VCTK_p226|en|I
 D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_071_mic1.flac.wav|VCTK_p226|en|I am pleased with the result, as it was a possible upset.
 D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_077_mic1.flac.wav|VCTK_p226|en|Tommy is not a problem.
 D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_165_mic1.flac.wav|VCTK_p226|en|We have to move forward.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_285_mic1.flac.wav|VCTK_p226|en|It was a virus.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_215_mic1.flac.wav|VCTK_p226|en|I am delighted for Simon.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_188_mic1.flac.wav|VCTK_p226|en|Any change would be subject to the Scottish Parliament's approval.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_223_mic1.flac.wav|VCTK_p226|en|But we have not heard a thing from Diego.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_008_mic1.flac.wav|VCTK_p226|en|These take the shape of a long round arch, with its path high above, and its two ends apparently beyond the horizon.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_067_mic1.flac.wav|VCTK_p226|en|It's a matter of balance.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_225_mic1.flac.wav|VCTK_p226|en|A career as a doctor is on hold.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_166_mic1.flac.wav|VCTK_p226|en|However, the French government has a major dilemma on its hands.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_276_mic1.flac.wav|VCTK_p226|en|It's a way of life.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_237_mic1.flac.wav|VCTK_p226|en|It is not an option, but a policy requirement.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_062_mic1.flac.wav|VCTK_p226|en|This is a scheme that has a lot of potential.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_106_mic1.flac.wav|VCTK_p226|en|It was some time before she found out he was safe.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_140_mic1.flac.wav|VCTK_p226|en|They made such decisions in London.
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_059_mic1.flac.wav|VCTK_p226|en|She's a spy!
-D:\dataset\VCTK\wav48_silence_trimmed\p226\p226_121_mic1.flac.wav|VCTK_p226|en|Maybe this battle has been.
+D:\dataset\VCTK\wav48_silence_trimmed\p374\p374_281_mic1.flac.wav|VCTK_p374|en|We are delighted with that.
+D:\dataset\VCTK\wav48_silence_trimmed\p306\p306_339_mic1.flac.wav|VCTK_p306|en|But their bodies were found at lunchtime yesterday.
+D:\dataset\VCTK\wav48_silence_trimmed\p351\p351_025_mic1.flac.wav|VCTK_p351|en|It was by the numbers.
+D:\dataset\VCTK\wav48_silence_trimmed\p295\p295_061_mic1.flac.wav|VCTK_p295|en|I just have no maternal instincts.
+D:\dataset\VCTK\wav48_silence_trimmed\p303\p303_146_mic1.flac.wav|VCTK_p303|en|What was going through her mind that day, that night?
+D:\dataset\VCTK\wav48_silence_trimmed\p308\p308_028_mic1.flac.wav|VCTK_p308|en|Alright, it was a defeat, but it felt like a victory.
+D:\dataset\VCTK\wav48_silence_trimmed\p272\p272_378_mic1.flac.wav|VCTK_p272|en|That's the name of the game, though.
+D:\dataset\VCTK\wav48_silence_trimmed\p255\p255_319_mic1.flac.wav|VCTK_p255|en|For the moment, our position remains the same.
+D:\dataset\VCTK\wav48_silence_trimmed\p251\p251_336_mic1.flac.wav|VCTK_p251|en|In his absence, the council adopted the change.
+D:\dataset\VCTK\wav48_silence_trimmed\p361\p361_363_mic1.flac.wav|VCTK_p361|en|It was up to him.
+D:\dataset\VCTK\wav48_silence_trimmed\p267\p267_146_mic1.flac.wav|VCTK_p267|en|This year, this month, will be special for Torrance.
+D:\dataset\VCTK\wav48_silence_trimmed\p376\p376_117_mic1.flac.wav|VCTK_p376|en|Eleven events are required.
+D:\dataset\VCTK\wav48_silence_trimmed\p247\p247_115_mic1.flac.wav|VCTK_p247|en|Scotland will be an integral part of Abbey National.
+D:\dataset\VCTK\wav48_silence_trimmed\p306\p306_132_mic1.flac.wav|VCTK_p306|en|I've always been desperate to play this part.
+D:\dataset\VCTK\wav48_silence_trimmed\p314\p314_141_mic1.flac.wav|VCTK_p314|en|This is the high point of my career.

@@ -9,7 +9,7 @@ import soundfile as sf
 sys.path.append("D:\\project\\canoSpeech\\preprocess\\reference\\vits")
 import torch
 from config.config import VitsConfig
-from dataset.dataset import get_metas_from_filelist
+from dataset.basic_dataset import get_metas_from_filelist
 from reference.vits import commons, utils
 from reference.vits.models import SynthesizerTrn
 from reference.vits.text import text_to_sequence
@@ -174,7 +174,6 @@ def gen_text_pitch(args):
         pklpath = path + ".pkl"
         text = sample["text"]
         if not os.path.exists(pklpath): continue
-
 
         with open(pklpath, "rb") as fp:
             obj = pickle.load(fp)

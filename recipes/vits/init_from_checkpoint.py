@@ -3,7 +3,7 @@ import fsspec
 import torch
 import json
 from config.config import VitsConfig
-from dataset.dataset import get_metas_from_filelist
+from dataset.basic_dataset import get_metas_from_filelist
 from recipes.vits.vits import VitsTrain
 from trainer import Trainer, TrainerArgs
 

@@ -258,9 +258,9 @@ class VitsModel(nn.Module):
         return wav, attn, y_mask, (z, z_p, m_p, logs_p)
 
     @torch.no_grad()
-    def generate_wav(self, z, speaker_embeds):
+    def generate_wav(self, z, speaker_ids):
         z = z[0].unsqueeze(0)
-        sid, g, lid = self._set_cond_input(speaker_embeds, None, None)
+        g = self.speaker_embedding(speaker_ids).unsqueeze(-1)  # [b, h, 1]
         wav = self.waveform_decoder(z, g=g)
         return wav
 
@@ -445,12 +445,12 @@ class VitsTrain(TrainerModelWithDataset):
     @torch.no_grad()
     def eval_step(self, batch: dict, criterion: nn.Module, optimizer_idx: int):
         output, loss_dict = self.train_step(batch, criterion, optimizer_idx)
-        # if optimizer_idx == 1:
-        #     speaker_embeds = batch["speaker_embed"]
-        #     wav = self.generator.generate_wav(output["z"], speaker_embeds)
-        #     wav = wav[0, 0].cpu().float().numpy()
-        #     filename = os.path.basename(batch["filenames"][0])
-        #     sf.write(f"{self.config.output_path}/{filename}_{int(time.time())}.wav", wav, 22050)
+        if optimizer_idx == 1:
+            speaker_ids = batch["speaker_ids"]
+            wav = self.generator.generate_wav(output["z"], speaker_ids)
+            wav = wav[0, 0].cpu().float().numpy()
+            filename = os.path.basename(batch["filenames"][0])
+            sf.write(f"{self.config.output_path}/{filename}_{int(time.time())}.wav", wav, 22050)
 
         return output, loss_dict
 

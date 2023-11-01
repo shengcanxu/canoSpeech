@@ -1,7 +1,7 @@
 {
     "run_name": "CanoVitsVCTK",
     "run_description": "Cano Speech running on VCTK dataset",
-    "output_path": "/home/output",
+    "output_path": "D:/project/canoSpeech/output",
     "balance_disc_generator": false,
 
     "dataset_config": {
@@ -97,7 +97,7 @@
         "language_embedding_channels": 4,
         "use_language_embedding": false,
         "language_ids_file": null,
-        "num_speakers": 152,
+        "num_speakers": 110,
         "speaker_embedding_channels": 512,
         "use_speaker_ids": true,
         "use_speaker_encoder_as_loss": false,

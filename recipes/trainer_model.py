@@ -6,7 +6,7 @@ from trainer import TrainerModel
 
 from util.helper import sequence_mask
 from util.mel_processing import wav_to_spec, spec_to_mel, wav_to_mel
-from dataset.dataset import TextAudioDataset
+from dataset.basic_dataset import TextAudioDataset
 from typing import Dict, List, Union, Tuple
 from coqpit import Coqpit
 

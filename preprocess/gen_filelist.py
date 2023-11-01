@@ -2,7 +2,7 @@ import argparse
 import text
 from config.config import VitsConfig
 from dataset.VCTK import load_vctk_metas as load_vctk_metas
-from dataset.dataset import split_dataset_metas
+from dataset.basic_dataset import split_dataset_metas
 from dataset.ljspeech import load_ljspeech_metas
 
 """

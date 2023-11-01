@@ -12,8 +12,8 @@ from pydub import AudioSegment
 # if there are some blank audio at the begining or end, use librosa to trim it
 def resample_file(func_args):
     filename, output_sr, file_ext = func_args
-    audio = AudioSegment.from_file(filename, file_ext)
-    audio.export(filename+".wav", format="wav", bitrate=output_sr)
+    audio = AudioSegment.from_file(filename, format=file_ext)
+    audio.export(filename+".wav", format="wav", parameters=["-ar", "22050"])
 
 def resample_files(input_dir, output_sr, output_dir=None, file_ext="wav", n_jobs=10):
     """

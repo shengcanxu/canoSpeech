@@ -77,6 +77,7 @@ class TextAudioDataset(Dataset):
         self.samples = samples
         self.dataset_name = config.dataset_config.dataset_name
         self.use_cache = getattr(config.dataset_config, "use_cache", False)
+        self.use_speaker_ids = config.model.use_speaker_ids
         self.melspec_use_GPU = getattr(config.dataset_config, "melspec_use_GPU", False)
         self.add_preprocess_data = getattr(config.dataset_config, "add_preprocess_data", True)
 
@@ -181,7 +182,7 @@ class TextAudioDataset(Dataset):
         if dataset_name == "vctk":
             return VCTK_speaker_id_mapping.get(speaker_name, 1)
         else:
-            return 1
+            return None
 
     def _get_text(self, text):
         """format text and add blank"""
@@ -210,7 +211,7 @@ class TextAudioDataset(Dataset):
         token_padded = torch.LongTensor(B, max_text_len)
         token_padded = token_padded.zero_()
 
-        speaker_ids = torch.LongTensor([x["speaker_id"] for x in batch])
+        speaker_ids = torch.LongTensor([x["speaker_id"] for x in batch]) if self.use_speaker_ids else None
         wav_lens = torch.LongTensor([x["wav"].size(1) for x in batch])
         wav_lens_max = torch.max(wav_lens)
         wav_rel_lens = wav_lens / wav_lens_max

@@ -1,7 +1,7 @@
 import os
 from trainer import Trainer, TrainerArgs
 from config.config import VitsConfig
-from dataset.dataset import get_metas_from_filelist
+from dataset.basic_dataset import get_metas_from_filelist
 from recipes.vits.vits import VitsTrain
 
 # This paramter is useful to debug, it skips the training epochs and just do the evaluation  and produce the test sentences

@@ -2,7 +2,7 @@ import os
 from trainer import Trainer, TrainerArgs
 
 from config.config import NaturalSpeechConfig
-from dataset.dataset import get_metas_from_filelist
+from dataset.basic_dataset import get_metas_from_filelist
 from recipes.naturalspeech.naturalspeech import NaturalSpeechTrain
 from recipes.vits.vits import VitsTrain
 
