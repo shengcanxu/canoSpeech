@@ -164,25 +164,6 @@ class VitsModel(nn.Module):
 
         # audio encoder, encode audio to embedding layer z's dimension
         z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=g)
-        # flow layers
-        z_p = self.flow(z, y_mask, g=g)
-
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=None)
-
-        # duration predictor
-        attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
-        # expand text token_size to audio token_size
-        m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
-        logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])
-
-        attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
-        log_durations = self.duration_predictor(
-            x.detach(),
-            x_mask,
-            g=g.detach() if g is not None else g,
-            lang_emb=None,
-        )
-        loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
 
         # select a random feature segment for the waveform decoder
         z_slice, slice_ids = rand_segments(z, y_lengths, self.spec_segment_size, let_short_samples=True, pad_short=True)
@@ -196,11 +177,30 @@ class VitsModel(nn.Module):
             pad_short=True,
         )
 
-        gt_speaker_emb, syn_speaker_emb = None, None
+        m_p = logs_p = z_p = loss_duration = torch.LongTensor([0])
+
+        # # flow layers
+        # z_p = self.flow(z, y_mask, g=g)
+        #
+        # x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=None)
+        #
+        # # monotonic align and duration predictor
+        # attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
+        # # expand text token_size to audio token_size
+        # m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
+        # logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])
+        #
+        # attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
+        # log_durations = self.duration_predictor(
+        #     x.detach(),
+        #     x_mask,
+        #     g=g.detach() if g is not None else g,
+        #     lang_emb=None,
+        # )
+        # loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
 
         return {
             "y_hat": y_hat,  # [B, 1, T_wav]
-            "alignments": attn.squeeze(1),  # [B, T_seq, T_dec]
             "m_p": m_p,  # [B, C, T_dec]
             "logs_p": logs_p,  # [B, C, T_dec]
             "z": z,  # [B, C, T_dec]
@@ -208,8 +208,6 @@ class VitsModel(nn.Module):
             "m_q": m_q,  # [B, C, T_dec]
             "logs_q": logs_q,  # [B, C, T_dec]
             "waveform_seg": wav_seg,  # [B, 1, spec_seg_size * hop_length]
-            "gt_speaker_emb": gt_speaker_emb,  # [B, 1, speaker_encoder.proj_dim]
-            "syn_speaker_emb": syn_speaker_emb,  # [B, 1, speaker_encoder.proj_dim]
             "slice_ids": slice_ids,
             "loss_duration": loss_duration,
         }
@@ -372,8 +370,8 @@ class VitsTrain(TrainerModelWithDataset):
                     feats_disc_real=feats_disc_real,
                     loss_duration=self.model_outputs_cache["loss_duration"],
                     use_speaker_encoder_as_loss=self.model_config.use_speaker_encoder_as_loss,
-                    gt_speaker_emb=self.model_outputs_cache["gt_speaker_emb"],
-                    syn_speaker_emb=self.model_outputs_cache["syn_speaker_emb"],
+                    gt_speaker_emb=None,
+                    syn_speaker_emb=None,
                 )
 
                 if self.balance_disc_generator:
@@ -450,7 +448,7 @@ class VitsTrain(TrainerModelWithDataset):
             wav = self.generator.generate_wav(output["z"], speaker_ids)
             wav = wav[0, 0].cpu().float().numpy()
             filename = os.path.basename(batch["filenames"][0])
-            sf.write(f"{self.config.output_path}/{filename}_{int(time.time())}.wav", wav, 22050)
+            sf.write(f"{self.config.output_path}/{int(time.time())}_{filename}.wav", wav, 22050)
 
         return output, loss_dict
 
