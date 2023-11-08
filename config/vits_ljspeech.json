@@ -12,7 +12,7 @@
         "path":"D:\\dataset\\LJSpeech",
         "language":"en",
         "ignored_speakers":[],
-        "num_loader_workers": 8,
+        "num_loader_workers": 4,
         "num_eval_loader_workers": 4,
         "use_cache": false,
         "melspec_use_GPU": false,

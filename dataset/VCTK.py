@@ -63,7 +63,7 @@ if __name__ == "__main__":
     VCTK_DOWNLOAD_PATH = "D:\\dataset\\VCTK"
 
     print(">>> Downloading VCTK dataset:")
-    # download_vctk(VCTK_DOWNLOAD_PATH)
+    download_vctk(VCTK_DOWNLOAD_PATH)
     print(">>> resampling VCTK dataset:")
     resample_files(VCTK_DOWNLOAD_PATH, args.sample_rate, file_ext="flac", n_jobs=args.resample_threads)
 

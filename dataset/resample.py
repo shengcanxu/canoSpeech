@@ -1,3 +1,6 @@
+###
+# change the sameple rate of files, change to wav file if needed
+#####
 import argparse
 import glob
 import os

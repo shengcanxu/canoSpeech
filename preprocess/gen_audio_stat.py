@@ -6,12 +6,12 @@ import penn
 from tqdm import tqdm
 from speaker.speaker_encoder import SpeakerEncoder
 import soundfile as sf
-sys.path.append("D:\\project\\canoSpeech\\preprocess\\reference\\vits")
+#sys.path.append("D:\\project\\canoSpeech\\preprocess\\reference\\vits")
 import torch
 from config.config import VitsConfig
 from dataset.basic_dataset import get_metas_from_filelist
 from reference.vits import commons, utils
-from reference.vits.models import SynthesizerTrn
+# from reference.vits.models import SynthesizerTrn
 from reference.vits.text import text_to_sequence
 from reference.vits.text.symbols import symbols
 from util.mel_processing import load_audio, wav_to_mel, wav_to_spec, spec_to_mel
@@ -27,26 +27,26 @@ def get_text(text, config):
     text_norm = torch.LongTensor(text_norm)
     return text_norm
 
-def gen_vits_model():
-    current_path = os.path.dirname(os.path.abspath(__file__))
-    os.chdir(os.path.join(current_path, "reference/vits"))  # change the path to vits path
-    config = utils.get_hparams_from_file("./configs/vctk_base.json")
-
-    vits_model = SynthesizerTrn(
-        len(symbols),
-        config.data.filter_length // 2 + 1,
-        config.train.segment_size // config.data.hop_length,
-        n_speakers=config.data.n_speakers,
-        **config.model
-    ).cuda()
-    # _ = vits_model.train()
-    _ = vits_model.eval()
-
-    print("loading pretrained checkpoint")
-    _ = utils.load_checkpoint("../vits_pretrained_vctk.pth", vits_model, None)
-
-    os.chdir(current_path)  # change the path back
-    return vits_model, config
+# def gen_vits_model():
+#     current_path = os.path.dirname(os.path.abspath(__file__))
+#     os.chdir(os.path.join(current_path, "reference/vits"))  # change the path to vits path
+#     config = utils.get_hparams_from_file("./configs/vctk_base.json")
+#
+#     vits_model = SynthesizerTrn(
+#         len(symbols),
+#         config.data.filter_length // 2 + 1,
+#         config.train.segment_size // config.data.hop_length,
+#         n_speakers=config.data.n_speakers,
+#         **config.model
+#     ).cuda()
+#     # _ = vits_model.train()
+#     _ = vits_model.eval()
+#
+#     print("loading pretrained checkpoint")
+#     _ = utils.load_checkpoint("../vits_pretrained_vctk.pth", vits_model, None)
+#
+#     os.chdir(current_path)  # change the path back
+#     return vits_model, config
 
 #TODO: maybe it's broken already. the sampling_rate of vits is different from naturaltts
 def gen_duration_using_vits(vits_model:torch.nn.Module, config, text:str, spec:torch.Tensor, sid=4):
@@ -119,9 +119,8 @@ def main(args):
             hopsize=config.audio.hop_length / config.audio.sample_rate,
             fmin=config.audio.pitch_fmin,
             fmax=config.audio.pitch_fmax,
-            checkpoint="D:\\dataset\\VCTK\\fcnf0++.pt",
+            checkpoint=args.pitch_checkpoint,
             batch_size=256,
-            pad=True,
             interp_unvoiced_at=0.065,
             gpu=0
         )
@@ -185,15 +184,22 @@ if __name__ == "__main__":
     parser.add_argument("--config", type=str, default="../config/vits_vctk.json")
     parser.add_argument("--speaker_model", type=str, default="D:/dataset/VCTK/model_se.pth.tar")
     parser.add_argument("--speaker_config", type=str, default="D:/dataset/VCTK/config_se.json")
+    parser.add_argument("--pitch_checkpoint", type=str, default="D:/dataset/VCTK/fcnf0++.pt")
     parser.add_argument("--refresh", type=bool, default=False)
     args = parser.parse_args()
 
     args.refresh = True
     main(args)
-    # gen_text_pitch(args)
 
-    # pklpath = 'D:\\dataset\\VCTK\\wav48_silence_trimmed\\p226\\p226_089_mic1.flac.pkl'
-    # with open(pklpath, "rb") as fp:
-    #     obj = pickle.load(fp)
-    #     print(obj)
-    #     print(len(obj["pitch"]))
+
+    # # linux config
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument("--config", type=str, default="/home/cano/canoSpeech/config/vits_vctk.json")
+    # parser.add_argument("--speaker_model", type=str, default="/home/cano/dataset/VCTK/model_se.pth.tar")
+    # parser.add_argument("--speaker_config", type=str, default="/home/cano/dataset/VCTK/config_se.json")
+    # parser.add_argument("--pitch_checkpoint", type=str, default="/home/cano/dataset/VCTK/fcnf0++.pt")
+    # parser.add_argument("--refresh", type=bool, default=False)
+    # args = parser.parse_args()
+    #
+    # args.refresh = True
+    # main(args)

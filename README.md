@@ -61,6 +61,11 @@ speaker enbedding encoder configs:
 4. useful checkpoints
    1. H/ASP speaker embedding model checkpoint: https://github.com/coqui-ai/TTS/releases/download/speaker_encoder_model/model_se.pth.tar
    2. RQV quantizer checkpoint: https://huggingface.co/Dongchao/AcademiCodec/tree/main
+
+# findings
+1. the learning rate is key for training. train vits with a bit learning rate will fail, but with small learning rate like 2e-4 success. 
+   The reason is, big learning rate makes HiFiGAN training fails with descriminator decline more faster than the generator
+2. 
    
    
 
