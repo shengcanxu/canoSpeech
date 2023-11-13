@@ -198,6 +198,7 @@ class ResidualBlock1(torch.nn.Module):
                 ),
             ]
         )
+        self.convs2.apply(init_weights)
 
     def forward(self, x):
         """ Args:
@@ -258,6 +259,7 @@ class ResidualBlock2(torch.nn.Module):
                 ),
             ]
         )
+        self.convs.apply(init_weights)
 
     def forward(self, x):
         for c in self.convs:
