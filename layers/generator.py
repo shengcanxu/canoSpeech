@@ -4,6 +4,7 @@ from torch import nn
 from torch.nn import Conv1d, ConvTranspose1d
 from torch.nn import functional as F
 from torch.nn.utils import remove_weight_norm, weight_norm
+from util.helper import init_weights
 
 LRELU_SLOPE = 0.1
 
@@ -75,9 +76,10 @@ class HifiganGenerator(torch.nn.Module):
                 self.resblocks.append(resblock(ch, k, d))
         # post convolution layer
         self.conv_post = weight_norm(Conv1d(ch, out_channels, 7, 1, padding=3, bias=conv_post_bias))
+        self.ups.apply(init_weights)
+
         if cond_channels > 0:
             self.cond_layer = nn.Conv1d(cond_channels, upsample_initial_channel, 1)
-
         if not conv_pre_weight_norm:
             remove_weight_norm(self.conv_pre)
 

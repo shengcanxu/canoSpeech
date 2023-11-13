@@ -63,9 +63,8 @@ speaker enbedding encoder configs:
    2. RQV quantizer checkpoint: https://huggingface.co/Dongchao/AcademiCodec/tree/main
 
 # findings
-1. the learning rate is key for training. train vits with a bit learning rate will fail, but with small learning rate like 2e-4 success. 
-   The reason is, big learning rate makes HiFiGAN training fails with descriminator decline more faster than the generator
-2. 
+1. learning rate非常重要. vits用大learning rate失败, 但是用 2e-4 成功. 可能是由于打learning rate的时候descriminator收敛的比generator快很多
+2. 在刚开始学习的时候，很容易产生loss=NaN，甚至简单的weight_norm(Conv1d(in_channels, upsample_initial_channel, 7, 1, padding=3)) 都可能让结果变成NaN
    
    
 

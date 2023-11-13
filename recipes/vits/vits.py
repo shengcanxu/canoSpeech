@@ -90,8 +90,8 @@ class VitsModel(nn.Module):
             upsample_factors=self.model_config.waveform_decoder.upsample_rates,
             inference_padding=0,
             cond_channels=self.embedded_speaker_dim,
-            conv_pre_weight_norm=False,
-            conv_post_weight_norm=False,
+            conv_pre_weight_norm=True,
+            conv_post_weight_norm=True,
             conv_post_bias=False,
         )
 

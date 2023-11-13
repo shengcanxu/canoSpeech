@@ -8,6 +8,11 @@ from pathlib import Path
 from typing import Dict
 import sys
 
+def init_weights(m, mean=0.0, std=0.01):
+    classname = m.__class__.__name__
+    if classname.find("Conv") != -1:
+        m.weight.data.normal_(mean, std)
+
 # from https://gist.github.com/jihunchoi/f1434a77df9db1bb337417854b398df1
 def sequence_mask(sequence_length, max_len=None):
     """Create a sequence mask for filtering padding in a sequence tensor.

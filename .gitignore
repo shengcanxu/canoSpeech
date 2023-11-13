@@ -11,3 +11,4 @@ monotonic_align.build
 /monotonic_align/monotonic_align/*
 /monotonic_align/build/*
 /preprocess/reference/vits/*
+.vscode/*
