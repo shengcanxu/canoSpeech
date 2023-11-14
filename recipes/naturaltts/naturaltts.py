@@ -399,7 +399,7 @@ class NaturalTTSTrain(TrainerModelWithDataset):
     Natural Speech model training model.
     """
     def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None):
-        super().__init__()
+        super().__init__(config)
         self.config = config
         self.model_config = config.model
         self.balance_disc_generator = config.balance_disc_generator
@@ -604,17 +604,6 @@ class NaturalTTSTrain(TrainerModelWithDataset):
             model=self.generator
         )
         return [discOptimizer, genOptimizer]
-
-    def get_scheduler(self, optimizer) -> List:
-        """Set the schedulers for each optimizer.
-        Args:
-            optimizer (List[`torch.optim.Optimizer`]): List of optimizers.
-        Returns:
-            List: Schedulers, one for each optimizer.
-        """
-        scheduler_D = get_scheduler(self.config.lr_scheduler, self.config.lr_scheduler_params, optimizer[0])
-        scheduler_G = get_scheduler(self.config.lr_scheduler, self.config.lr_scheduler_params, optimizer[1])
-        return [scheduler_D, scheduler_G]
 
     def forward(self, input: torch.Tensor) -> Dict:
         print("nothing to do! doing the real train code in train_step. ")

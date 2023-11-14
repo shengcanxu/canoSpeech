@@ -102,6 +102,7 @@ class DistributedBucketSampler(DistributedSampler):
         self.total_size = sum(self.num_samples_per_bucket)
         self.num_samples = self.total_size // self.num_replicas
 
+    # distribute samples into buckets according to boundaries
     def _create_buckets(self):
         buckets = [[] for _ in range(len(self.boundaries) - 1)]
         for i in range(len(self.lengths)):
@@ -161,7 +162,12 @@ class DistributedBucketSampler(DistributedSampler):
         self.batches = batches
 
         assert len(self.batches) * self.batch_size == self.num_samples
-        return iter(self.batches)
+        # expand batches to list so that this sampler can be called using data loader using samper = DistributedBucketSampler but not batch_sampler = DistributedBucketSampler
+        idxs = []
+        for batch in self.batches:
+            idxs.extend(batch)
+        self.idxs = idxs
+        return iter(self.idxs)
 
     def _bisect(self, x, lo=0, hi=None):
         if hi is None:
@@ -179,4 +185,5 @@ class DistributedBucketSampler(DistributedSampler):
             return -1
 
     def __len__(self):
-        return self.num_samples // self.batch_size
+        # return self.num_samples // self.batch_size
+        return self.num_samples
