@@ -180,27 +180,28 @@ class VitsModel(nn.Module):
             pad_short=True,
         )
 
-        m_p = logs_p = z_p = loss_duration = torch.LongTensor([0])
+        # # for test
+        # m_p = logs_p = z_p = loss_duration = torch.LongTensor([0])
 
-        # # flow layers
-        # z_p = self.flow(z, y_mask, g=g)
-        #
-        # x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=None)
-        #
-        # # monotonic align and duration predictor
-        # attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
-        # # expand text token_size to audio token_size
-        # m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
-        # logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])
-        #
-        # attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
-        # log_durations = self.duration_predictor(
-        #     x.detach(),
-        #     x_mask,
-        #     g=g.detach() if g is not None else g,
-        #     lang_emb=None,
-        # )
-        # loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
+        # flow layers
+        z_p = self.flow(z, y_mask, g=g)
+
+        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=None)
+
+        # monotonic align and duration predictor
+        attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
+        # expand text token_size to audio token_size
+        m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
+        logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])
+
+        attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
+        log_durations = self.duration_predictor(
+            x.detach(),
+            x_mask,
+            g=g.detach() if g is not None else g,
+            lang_emb=None,
+        )
+        loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
 
         return {
             "y_hat": y_hat,  # [B, 1, T_wav]
