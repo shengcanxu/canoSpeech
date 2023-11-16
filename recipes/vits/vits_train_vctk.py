@@ -1,3 +1,4 @@
+import argparse
 import os
 from trainer import Trainer, TrainerArgs
 from config.config import VitsConfig
@@ -8,9 +9,9 @@ from recipes.vits.vits import VitsTrain
 SKIP_TRAIN_EPOCH = False
 
 
-def main():
+def main(config_path:str):
     config = VitsConfig()
-    config.load_json("./config/vits_vctk.json")
+    config.load_json(config_path)
     data_config = config.dataset_config
 
     train_samples = get_metas_from_filelist(data_config.meta_file_train)
@@ -31,4 +32,8 @@ def main():
     trainer.fit()
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="vits vctk train", formatter_class=argparse.RawTextHelpFormatter, )
+    parser.add_argument("--config_path", type=str, default="./config/vits_vctk.json", required=False)
+    args = parser.parse_args()
+
+    main(args.config_path)
