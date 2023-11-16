@@ -1,4 +1,6 @@
 import argparse
+import os
+
 import text
 from config.config import VitsConfig
 from dataset.VCTK import load_vctk_metas as load_vctk_metas

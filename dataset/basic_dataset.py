@@ -108,14 +108,17 @@ class TextAudioDataset(Dataset):
         # Store spectrogram lengths for Bucketing
         # wav_length ~= file_size / (wav_channels * Bytes per dim) = file_size / (1 * 2)
         # spec_length = wav_length // hop_length
+        # audio_len = file_size / (sample_rate * 2)
         samples_new, lengths = [], []
         for sample in self.samples:
             filepath = sample["audio"]
-            audio_len = librosa.get_duration(path=filepath)
+            filesize = os.path.getsize(filepath)
             # audio_len should less than config.audio.max_audio_length. it controls the max dimention of mel
+            # audio_len = librosa.get_duration(path=filepath)
+            audio_len = filesize / (self.sample_rate * 2)
             if self.min_audio_length <= audio_len <= self.max_audio_length:
                 samples_new.append(sample)
-                lengths.append(os.path.getsize(filepath) // (2 * self.hop_length))
+                lengths.append(filesize // (2 * self.hop_length))
         self.samples = samples_new
         self.lengths = lengths
 
