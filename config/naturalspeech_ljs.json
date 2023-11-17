@@ -12,7 +12,6 @@
         "num_loader_workers": 4,
         "num_eval_loader_workers": 4,
         "use_cache": false,
-        "melspec_use_GPU": true,
         "add_preprocess_data": true
     },
     "text": {

@@ -78,7 +78,6 @@ class TextAudioDataset(Dataset):
         self.dataset_name = config.dataset_config.dataset_name
         self.use_cache = getattr(config.dataset_config, "use_cache", False)
         self.use_speaker_ids = config.model.use_speaker_ids
-        self.melspec_use_GPU = getattr(config.dataset_config, "melspec_use_GPU", False)
         self.add_preprocess_data = getattr(config.dataset_config, "add_preprocess_data", True)
 
         self.hop_length = config.audio.hop_length
@@ -150,11 +149,10 @@ class TextAudioDataset(Dataset):
         wav, sr = load_audio(sample["audio"])
 
         spec, mel = None, None
-        if not self.melspec_use_GPU:
-            spec = wav_to_spec(wav, self.fft_size, self.hop_length, self.win_length)
-            mel = spec_to_mel(spec, self.fft_size, self.num_mels, self.sample_rate, self.mel_fmin, self.mel_fmax)
-            spec = torch.FloatTensor(spec)
-            mel = torch.FloatTensor(mel)
+        spec = wav_to_spec(wav, self.fft_size, self.hop_length, self.win_length)
+        mel = spec_to_mel(spec, self.fft_size, self.num_mels, self.sample_rate, self.mel_fmin, self.mel_fmax)
+        spec = torch.FloatTensor(spec)
+        mel = torch.FloatTensor(mel)
 
         pitch, duration, speaker = None, None, None
         if self.add_preprocess_data:
@@ -224,18 +222,18 @@ class TextAudioDataset(Dataset):
 
         spec_lens, mel_lens = [], []
         spec_padded, mel_padded = None, None
-        if not self.melspec_use_GPU:  # if mel spec generated using GPU, it will be generate in format_batch_on_device callback
-            spec_feat_len = batch[0]["spec"].size(0)
-            spec_lens = torch.LongTensor([x["spec"].size(1) for x in batch])
-            spec_lens_max = torch.max(spec_lens)
-            spec_padded = torch.FloatTensor(B, spec_feat_len, spec_lens_max)
-            spec_padded = spec_padded.zero_()
 
-            mel_feat_len = batch[0]["mel"].size(0)
-            mel_lens = torch.LongTensor([x["mel"].size(1) for x in batch])
-            mel_lens_max = torch.max(mel_lens)
-            mel_padded = torch.FloatTensor(B, mel_feat_len, mel_lens_max)
-            mel_padded = mel_padded.zero_()
+        spec_feat_len = batch[0]["spec"].size(0)
+        spec_lens = torch.LongTensor([x["spec"].size(1) for x in batch])
+        spec_lens_max = torch.max(spec_lens)
+        spec_padded = torch.FloatTensor(B, spec_feat_len, spec_lens_max)
+        spec_padded = spec_padded.zero_()
+
+        mel_feat_len = batch[0]["mel"].size(0)
+        mel_lens = torch.LongTensor([x["mel"].size(1) for x in batch])
+        mel_lens_max = torch.max(mel_lens)
+        mel_padded = torch.FloatTensor(B, mel_feat_len, mel_lens_max)
+        mel_padded = mel_padded.zero_()
 
         pitch_padded, duration_padded, speaker_embed_padded = None, None, None
         should_pad_duration = True
@@ -270,11 +268,11 @@ class TextAudioDataset(Dataset):
             token_padded[i, : tokens.size(0)] = torch.LongTensor(tokens)
             wav = item["wav"]
             wav_padded[i, :, : wav.size(1)] = torch.FloatTensor(wav)
-            if not self.melspec_use_GPU:
-                spec = item["spec"]
-                spec_padded[i, :, :spec.size(1)] = torch.FloatTensor(spec)
-                mel = item["mel"]
-                mel_padded[i, :, :mel.size(1)] = torch.FloatTensor(mel)
+
+            spec = item["spec"]
+            spec_padded[i, :, :spec.size(1)] = torch.FloatTensor(spec)
+            mel = item["mel"]
+            mel_padded[i, :, :mel.size(1)] = torch.FloatTensor(mel)
 
             if self.add_preprocess_data:
                 pitch = item["pitch"]

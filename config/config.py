@@ -39,7 +39,6 @@ class TTSDatasetConfig(Coqpit):
 
     num_loader_workers:int = 8
     num_eval_loader_workers:int = 8
-    melspec_use_GPU:bool = False
     add_preprocess_data:bool = True
 
 @dataclass
