@@ -6,26 +6,22 @@ import penn
 from tqdm import tqdm
 from speaker.speaker_encoder import SpeakerEncoder
 import soundfile as sf
-#sys.path.append("D:\\project\\canoSpeech\\preprocess\\reference\\vits")
+
 import torch
 from config.config import VitsConfig
 from dataset.basic_dataset import get_metas_from_filelist
-from reference.vits import commons, utils
-# from reference.vits.models import SynthesizerTrn
-from reference.vits.text import text_to_sequence
-from reference.vits.text.symbols import symbols
 from util.mel_processing import load_audio, wav_to_mel, wav_to_spec, spec_to_mel
 
 ###
 # generate audio pitch, duration and save to file
 ###
 
-def get_text(text, config):
-    text_norm = text_to_sequence(text, config.data.text_cleaners)
-    if config.data.add_blank:
-        text_norm = commons.intersperse(text_norm, 0)
-    text_norm = torch.LongTensor(text_norm)
-    return text_norm
+# def get_text(text, config):
+#     text_norm = text_to_sequence(text, config.data.text_cleaners)
+#     if config.data.add_blank:
+#         text_norm = commons.intersperse(text_norm, 0)
+#     text_norm = torch.LongTensor(text_norm)
+#     return text_norm
 
 # def gen_vits_model():
 #     current_path = os.path.dirname(os.path.abspath(__file__))
@@ -49,35 +45,35 @@ def get_text(text, config):
 #     return vits_model, config
 
 #TODO: maybe it's broken already. the sampling_rate of vits is different from naturaltts
-def gen_duration_using_vits(vits_model:torch.nn.Module, config, text:str, spec:torch.Tensor, sid=4):
-    current_path = os.path.dirname(os.path.abspath(__file__))
-    os.chdir(os.path.join(current_path, "reference/vits"))  # change the path to vits path
-
-    x_text = get_text(text, config)
-    with torch.no_grad():
-        x_text = x_text.cuda().unsqueeze(0)
-        x_text_lengths = torch.LongTensor([x_text.size(1)]).cuda()
-        y_spec = spec.cuda()
-        y_spec_lengths = torch.LongTensor([y_spec.size(2)]).cuda()
-        sid = torch.LongTensor([sid]).cuda()
-
-        audio1, _, attn1, _, _, _, _ = vits_model.forward(
-            x=x_text,
-            x_lengths=x_text_lengths,
-            y=y_spec,
-            y_lengths=y_spec_lengths,
-            sid=sid
-        )
-        audio1 = audio1[0, 0].data.cpu().float().numpy()
-        sf.write("D:/project/canoSpeech/output/test1.wav", audio1, 22050)
-
-        audio2, attn2, y_mask, _ = vits_model.infer(x_text, x_text_lengths, sid=sid, noise_scale=1, noise_scale_w=1, length_scale=1)
-        audio2 = audio2[0,0].data.cpu().float().numpy()
-        sf.write("D:/project/canoSpeech/output/test2.wav", audio2, 22050)
-
-    duration = attn1.sum(2)
-    os.chdir(current_path)  #change the path back
-    return audio2, duration
+# def gen_duration_using_vits(vits_model:torch.nn.Module, config, text:str, spec:torch.Tensor, sid=4):
+#     current_path = os.path.dirname(os.path.abspath(__file__))
+#     os.chdir(os.path.join(current_path, "reference/vits"))  # change the path to vits path
+#
+#     x_text = get_text(text, config)
+#     with torch.no_grad():
+#         x_text = x_text.cuda().unsqueeze(0)
+#         x_text_lengths = torch.LongTensor([x_text.size(1)]).cuda()
+#         y_spec = spec.cuda()
+#         y_spec_lengths = torch.LongTensor([y_spec.size(2)]).cuda()
+#         sid = torch.LongTensor([sid]).cuda()
+#
+#         audio1, _, attn1, _, _, _, _ = vits_model.forward(
+#             x=x_text,
+#             x_lengths=x_text_lengths,
+#             y=y_spec,
+#             y_lengths=y_spec_lengths,
+#             sid=sid
+#         )
+#         audio1 = audio1[0, 0].data.cpu().float().numpy()
+#         sf.write("D:/project/canoSpeech/output/test1.wav", audio1, 22050)
+#
+#         audio2, attn2, y_mask, _ = vits_model.infer(x_text, x_text_lengths, sid=sid, noise_scale=1, noise_scale_w=1, length_scale=1)
+#         audio2 = audio2[0,0].data.cpu().float().numpy()
+#         sf.write("D:/project/canoSpeech/output/test2.wav", audio2, 22050)
+#
+#     duration = attn1.sum(2)
+#     os.chdir(current_path)  #change the path back
+#     return audio2, duration
 
 
 def main(args):
