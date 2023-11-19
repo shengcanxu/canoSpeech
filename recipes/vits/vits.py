@@ -240,12 +240,21 @@ class VitsModel(nn.Module):
 
         x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=None)
 
-        logw = self.duration_predictor(
-            x=x,
-            x_mask=x_mask,
-            g=g if g is not None else g,
-            lang_emb=None
-        )
+        if self.use_sdp:
+            logw = self.duration_predictor(
+                x=x,
+                x_mask=x_mask,
+                g=g if g is not None else g,
+                reverse=True,
+                noise_scale=noise_scale,
+            )
+        else:
+            logw = self.duration_predictor(
+                x=x,
+                x_mask=x_mask,
+                g=g if g is not None else g,
+                lang_emb=None
+            )
         w = torch.exp(logw) * x_mask * length_scale
 
         w_ceil = torch.ceil(w)
