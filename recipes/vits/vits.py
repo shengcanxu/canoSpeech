@@ -189,15 +189,25 @@ class VitsModel(nn.Module):
         m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
         logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])
 
-        attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
-        log_durations = self.duration_predictor(
-            x.detach(),
-            x_mask,
-            g=g.detach() if g is not None else g,
-            lang_emb=None,
-        )
-        loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
-        # loss_duration = torch.sum((torch.exp(log_durations) - attn_durations) ** 2, [1, 2]) / torch.sum(x_mask)
+        if self.use_sdp:
+            loss_duration = self.duration_predictor(
+                x=x.detach(),
+                x_mask=x_mask,
+                dr=attn_durations,
+                g=g.detach() if g is not None else g,
+                lang_emb=None,
+            )
+            loss_duration = loss_duration / torch.sum(x_mask)
+        else:
+            attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
+            log_durations = self.duration_predictor(
+                x=x.detach(),
+                x_mask=x_mask,
+                g=g.detach() if g is not None else g,
+                lang_emb=None,
+            )
+            loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
+            # loss_duration = torch.sum((torch.exp(log_durations) - attn_durations) ** 2, [1, 2]) / torch.sum(x_mask)
 
         return {
             "y_hat": y_hat,  # [B, 1, T_wav]

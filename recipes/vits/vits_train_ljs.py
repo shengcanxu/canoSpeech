@@ -5,7 +5,7 @@ import time
 from typing import Dict, Tuple, List
 from text import text_to_tokens, _intersperse
 import torch
-from torch import nn, autocast
+from torch import nn
 from coqpit import Coqpit
 from dataset.sampler import DistributedBucketSampler
 from language.languages import LanguageManager
@@ -13,6 +13,7 @@ from layers.discriminator import VitsDiscriminator
 from layers.losses import VitsDiscriminatorLoss, VitsGeneratorLoss
 from recipes.trainer_model import TrainerModelWithDataset
 from recipes.vits.vits import VitsModel
+from torch.cuda.amp import autocast
 
 from trainer import Trainer, TrainerArgs, get_optimizer
 from config.config import VitsConfig
