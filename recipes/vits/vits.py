@@ -6,7 +6,7 @@ from coqpit import Coqpit
 from torch import nn
 from config.config import VitsConfig
 from language.languages import LanguageManager
-from layers.duration_predictor import VitsDurationPredictor, generate_path
+from layers.duration_predictor import VitsDurationPredictor, generate_path, StochasticDurationPredictor
 from layers.flow import ResidualCouplingBlocks
 from layers.generator import HifiganGenerator
 from layers.encoder import TextEncoder, AudioEncoder
@@ -22,6 +22,7 @@ class VitsModel(nn.Module):
         self.speaker_embed = speaker_embed
         self.language_manager = language_manager
 
+        self.use_sdp = self.model_config.use_sdp
         # init multi-speaker, speaker_embedding is used when the speaker_embed is not provided
         self.num_speakers = self.model_config.num_speakers
         self.spec_segment_size = self.model_config.spec_segment_size
@@ -60,14 +61,25 @@ class VitsModel(nn.Module):
             num_layers=self.model_config.flow.num_layers_in_flow,
             cond_channels=self.embedded_speaker_dim,
         )
-        self.duration_predictor = VitsDurationPredictor(
-            in_channels=self.model_config.hidden_channels,
-            hidden_channels=256,
-            kernel_size=self.model_config.duration_predictor.kernel_size,
-            dropout_p=self.model_config.duration_predictor.dropout_p,
-            cond_channels=self.embedded_speaker_dim,
-            language_emb_dim=self.embedded_language_dim,
-        )
+        if self.use_sdp:
+            self.duration_predictor = StochasticDurationPredictor(
+                in_channels=self.model_config.hidden_channels,
+                hidden_channels=256,
+                kernel_size=self.model_config.duration_predictor.kernel_size,
+                dropout_p=self.model_config.duration_predictor.dropout_p,
+                num_flows=4,
+                cond_channels=self.embedded_speaker_dim,
+                language_emb_dim=self.embedded_language_dim,
+            )
+        else:
+            self.duration_predictor = VitsDurationPredictor(
+                in_channels=self.model_config.hidden_channels,
+                hidden_channels=256,
+                kernel_size=self.model_config.duration_predictor.kernel_size,
+                dropout_p=self.model_config.duration_predictor.dropout_p,
+                cond_channels=self.embedded_speaker_dim,
+                language_emb_dim=self.embedded_language_dim,
+            )
         self.waveform_decoder = HifiganGenerator(
             in_channels=self.model_config.hidden_channels,
             out_channels=1,
@@ -184,8 +196,8 @@ class VitsModel(nn.Module):
             g=g.detach() if g is not None else g,
             lang_emb=None,
         )
-        # loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
-        loss_duration = torch.sum((torch.exp(log_durations) - attn_durations) ** 2, [1, 2]) / torch.sum(x_mask)
+        loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
+        # loss_duration = torch.sum((torch.exp(log_durations) - attn_durations) ** 2, [1, 2]) / torch.sum(x_mask)
 
         return {
             "y_hat": y_hat,  # [B, 1, T_wav]

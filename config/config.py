@@ -118,6 +118,7 @@ class BaseModelConfig(Coqpit):
     out_channels:int = 513
     spec_segment_size:int = 32
 
+    use_sdp: bool = True
     language_embedding_channels: int = 4
     use_language_embedding:bool = False
     language_ids_file:str = None

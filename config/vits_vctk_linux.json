@@ -101,6 +101,7 @@
         "use_speaker_ids": true,
         "use_speaker_encoder_as_loss": false,
         "use_gt_duration": true,
+        "use_sdp": true,
 
         "text_encoder": {
             "num_chars": 178,
