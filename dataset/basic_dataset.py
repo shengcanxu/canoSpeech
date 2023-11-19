@@ -166,8 +166,8 @@ class TextAudioDataset(Dataset):
                 raise Exception("path doesn't exists! should run preprocess")
 
         return {
-            "raw_text": sample["text"], # str
-            "phoneme": phoneme, # str
+            "raw_text": sample["text"],  # str
+            "phoneme": phoneme,  # str
             "tokens": tokens,
             "token_len": len(tokens),
             "wav": wav,

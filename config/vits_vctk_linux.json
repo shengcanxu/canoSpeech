@@ -13,7 +13,7 @@
         "ignored_speakers":[],
         "num_loader_workers": 4,
         "num_eval_loader_workers": 4,
-        "use_cache": false,
+        "use_cache": true,
         "add_preprocess_data": true
     },
     "text": {
