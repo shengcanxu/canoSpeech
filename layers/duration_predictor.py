@@ -192,7 +192,7 @@ class StochasticDurationPredictor(nn.Module):
             noise = torch.randn(dr.size(0), 2, dr.size(2)).to(device=x.device, dtype=x.dtype) * x_mask
             z_q = noise
 
-            # posterior encoder
+            # posterior encoder  (flow model)
             logdet_tot_q = 0.0
             for idx, flow in enumerate(self.post_flows):
                 z_q, logdet_q = flow(z_q, x_mask, g=(x + h))

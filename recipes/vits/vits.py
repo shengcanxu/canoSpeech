@@ -15,22 +15,22 @@ from util.helper import sequence_mask, segment, rand_segments
 
 
 class VitsModel(nn.Module):
-    def __init__(self, config:VitsConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None ):
+    def __init__(self, config:VitsConfig):
         super().__init__()
         self.config = config
         self.model_config = config.model
-        self.speaker_embed = speaker_embed
-        self.language_manager = language_manager
 
         self.use_sdp = self.model_config.use_sdp
-        # init multi-speaker, speaker_embedding is used when the speaker_embed is not provided
-        self.num_speakers = self.model_config.num_speakers
         self.spec_segment_size = self.model_config.spec_segment_size
+
         self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
+        self.num_speakers = self.model_config.num_speakers
         if self.num_speakers > 0:
             self.speaker_embedding = nn.Embedding(self.num_speakers, self.embedded_speaker_dim)
+        else:
+            self.speaker_embedding = None
 
-        self.init_multilingual(config)
+        self.embedded_language_dim = 0
 
         self.text_encoder = TextEncoder(
             n_vocab=self.model_config.text_encoder.num_chars,
@@ -64,7 +64,7 @@ class VitsModel(nn.Module):
         if self.use_sdp:
             self.duration_predictor = StochasticDurationPredictor(
                 in_channels=self.model_config.hidden_channels,
-                hidden_channels=256,
+                hidden_channels=self.model_config.hidden_channels,
                 kernel_size=self.model_config.duration_predictor.kernel_size,
                 dropout_p=self.model_config.duration_predictor.dropout_p,
                 num_flows=4,
@@ -95,23 +95,6 @@ class VitsModel(nn.Module):
             conv_post_weight_norm=True,
             conv_post_bias=False,
         )
-
-    def init_multilingual(self, config: Coqpit):
-        """Initialize multilingual modules of a model.
-        Args:
-            config (Coqpit): Model configuration.
-        """
-        if self.model_config.language_ids_file is not None:
-            self.language_manager = LanguageManager(language_ids_file_path=config.language_ids_file)
-
-        if self.model_config.use_language_embedding and self.language_manager:
-            print(" > initialization of language-embedding layers.")
-            self.num_languages = self.language_manager.num_languages
-            self.embedded_language_dim = self.model_config.language_embedding_channels
-            self.language_embedding = nn.Embedding(self.num_languages, self.embedded_language_dim)
-            torch.nn.init.xavier_uniform_(self.language_embedding.weight)
-        else:
-            self.embedded_language_dim = 0
 
     def monotonic_align(self, z_p, m_p, logs_p, x, x_mask, y_mask):
         # find the alignment path
@@ -153,15 +136,14 @@ class VitsModel(nn.Module):
             speaker_ids:`[B]: Batch of speaker ids. use_speaker_ids should be true
             language_ids:`[B]: Batch of language ids.
         """
-        g = None
-        if speaker_embeds is not None:
+        # speaker embedding
+        g = None # [b, h, 1]
+        if self.model_config.use_speaker_embeds and speaker_embeds is not None:
             g = F.normalize(speaker_embeds).unsqueeze(-1)
             if g.ndim == 2:
                 g = g.unsqueeze_(0)
-
-        # speaker embedding
-        if self.model_config.use_speaker_ids and speaker_ids is not None:
-            g = self.speaker_embedding(speaker_ids).unsqueeze(-1)  # [b, h, 1]
+        elif self.model_config.use_speaker_ids and speaker_ids is not None:
+            g = self.speaker_embedding(speaker_ids).unsqueeze(-1)
 
         # audio encoder, encode audio to embedding layer z's dimension
         z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=g)
@@ -227,16 +209,20 @@ class VitsModel(nn.Module):
         self,
         x,  # [B, T_seq]
         x_lengths,  # [B]
+        speaker_embeds=None,  # [T]
         speaker_ids=None,  # [B]
         noise_scale=1.0,
         length_scale=1.0,
         max_len=None
     ):
         # speaker embedding
-        if self.num_speakers > 1 and speaker_ids is not None:
-            g = self.speaker_embedding(speaker_ids).unsqueeze(-1)  # [b, h, 1]
-        else:
-            g = None
+        g = None  # [b, h, 1]
+        if self.model_config.use_speaker_embeds and speaker_embeds is not None:
+            g = F.normalize(speaker_embeds).unsqueeze(-1)
+            if g.ndim == 2:
+                g = g.unsqueeze_(0)
+        elif self.speaker_embedding is not None and speaker_ids is not None:
+            g = self.speaker_embedding(speaker_ids).unsqueeze(-1)
 
         x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=None)
 

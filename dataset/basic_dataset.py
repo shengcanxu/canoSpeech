@@ -276,7 +276,7 @@ class TextAudioDataset(Dataset):
             "mel": mel_padded,  # [B, C, T_mel]
             "mel_lens": mel_lens,  # [B]
             "speaker_ids": speaker_ids,  # [B]
-            "speaker_embed": speaker_embed_padded,  # [B, T_speaker]
+            "speaker_embeds": speaker_embed_padded,  # [B, T_speaker]
             "pitch": pitch_padded,  # [B, T_pitch]
             "filenames": filenames,  # [B]
             "raw_texts": raw_texts  # [B]

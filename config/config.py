@@ -125,6 +125,7 @@ class BaseModelConfig(Coqpit):
     num_speakers:int = 0
     speaker_embedding_channels:int = 512
     use_speaker_ids:bool = False
+    use_speaker_embeds:bool = False
     use_speaker_encoder_as_loss:bool = False
 
 @dataclass

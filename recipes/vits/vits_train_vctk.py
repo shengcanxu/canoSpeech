@@ -1,5 +1,6 @@
 import argparse
 import os
+import pickle
 import random
 import time
 from typing import Dict, Tuple, List
@@ -26,18 +27,14 @@ class VitsTrain(TrainerModelWithDataset):
     """
     VITS and YourTTS model training model.
     """
-    def __init__(self, config:VitsConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None, ):
+    def __init__(self, config:VitsConfig):
         super().__init__(config)
         self.config = config
         self.model_config = config.model
         self.balance_disc_generator = config.balance_disc_generator
         self.skip_discriminator = False
 
-        self.generator = VitsModel(
-            config=config,
-            speaker_embed=speaker_embed,
-            language_manager=language_manager
-        )
+        self.generator = VitsModel(config=config)
         self.discriminator = VitsDiscriminator(
             periods=self.model_config.discriminator.periods_multi_period,
             use_spectral_norm=self.model_config.discriminator.use_spectral_norm,
@@ -51,6 +48,7 @@ class VitsTrain(TrainerModelWithDataset):
             spec = batch["spec"]
             waveform = batch["waveform"]
             speaker_ids = batch["speaker_ids"]
+            speaker_embeds = batch["speaker_embeds"]
 
             # generator pass
             outputs = self.generator(
@@ -59,7 +57,7 @@ class VitsTrain(TrainerModelWithDataset):
                 y=spec,
                 y_lengths=spec_lens,
                 waveform=waveform,
-                speaker_embeds=None,
+                speaker_embeds=speaker_embeds,
                 speaker_ids=speaker_ids,
                 language_ids=None
             )
@@ -184,20 +182,23 @@ class VitsTrain(TrainerModelWithDataset):
         print("nothing to do! doing the real train code in train_step. ")
         return input
 
-    def inference(self, text:str, speaker_id:int=None):
+    def inference(self, text:str, speaker_id:int=None, speaker_embed=None):
         tokens = text_to_tokens(text)
         if self.config.text.add_blank:
             tokens = _intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0).cuda()
         x_lengths = torch.LongTensor([tokens.size(1)]).cuda()
+
         speaker_ids = torch.LongTensor([speaker_id]).cuda() if speaker_id is not None else None
+        speaker_embed = torch.FloatTensor(speaker_embed).unsqueeze(0).cuda()
 
         self.generator.eval()
         wav, _, _, _ = self.generator.infer(
             tokens,
             x_lengths,
             speaker_ids=speaker_ids,
-            noise_scale=0.667,
+            speaker_embeds=speaker_embed,
+            noise_scale=0.8,
             length_scale=1,
         )
         return wav
@@ -220,11 +221,18 @@ class VitsTrain(TrainerModelWithDataset):
     @torch.no_grad()
     def test_run(self, assets) -> Tuple[Dict, Dict]:
         output_path = assets["output_path"]
-
         print("doing test run...")
         text = "Who else do you want to talk to? You can go with me today to the meeting."
-        speaker_id = random.randint(0, 9)
-        wav = self.inference(text, speaker_id)
+
+        # speaker_id = random.randint(0, 9)
+        path1 = "D:/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
+        path2 = "D:/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
+        path = path1 if random.randint(1,10) >= 5 else path2
+        fp = open(path, "rb")
+        pickleObj = pickle.load(fp)
+        speaker_embed = pickleObj["speaker"]
+
+        wav = self.inference(text, speaker_embed=speaker_embed)
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 
