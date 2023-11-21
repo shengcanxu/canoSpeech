@@ -209,9 +209,7 @@ class VitsTrain(TrainerModelWithDataset):
         if optimizer_idx == 0:
             spec = batch["spec"][[0]]
             spec_len = batch["spec_lens"][[0]]
-            speaker_id = batch["speaker_ids"][[0]]
-            speaker_embed = batch["speaker_embeds"][[0]]
-            wav = self.generator.generate_z_wav(spec, spec_len, speaker_id, speaker_embed)
+            wav = self.generator.generate_z_wav(spec, spec_len)
 
             wav = wav[0, 0].cpu().float().numpy()
             filename = os.path.basename(batch["filenames"][0])
@@ -223,19 +221,9 @@ class VitsTrain(TrainerModelWithDataset):
     def test_run(self, assets) -> Tuple[Dict, Dict]:
         output_path = assets["output_path"]
         print("doing test run...")
-        text = "Who else do you want to talk to? You can go with me today to the meeting."
+        text = "wo3 men2 dou1 shi4 zhong1 guo2 ren2 ， wo3 ai4 jia1 xiang1 。"
 
-        # speaker_id = random.randint(0, 9)
-        # path1 = "D:/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
-        # path2 = "D:/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
-        path1 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
-        path2 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
-        path = path1 if random.randint(1,10) >= 5 else path2
-        fp = open(path, "rb")
-        pickleObj = pickle.load(fp)
-        speaker_embed = pickleObj["speaker"]
-
-        wav = self.inference(text, speaker_embed=speaker_embed)
+        wav = self.inference(text)
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 
@@ -263,8 +251,8 @@ def main(config_path:str):
     trainer.fit()
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="vits vctk train", formatter_class=argparse.RawTextHelpFormatter, )
-    parser.add_argument("--config_path", type=str, default="./config/vits_vctk.json", required=False)
+    parser = argparse.ArgumentParser(description="vits baker train", formatter_class=argparse.RawTextHelpFormatter, )
+    parser.add_argument("--config_path", type=str, default="./config/vits_baker.json", required=False)
     args = parser.parse_args()
 
     main(args.config_path)

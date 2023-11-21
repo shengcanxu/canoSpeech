@@ -1,8 +1,11 @@
-import argparse
-import os
 from glob import glob
-
-from dataset.resample import resample_files
+import argparse
+import glob
+import os
+from multiprocessing import Pool
+from shutil import copytree
+from tqdm import tqdm
+from pydub import AudioSegment
 from dataset.download_util import download_kaggle_dataset, extract_archive, download_url
 from typing import Optional
 
@@ -46,11 +49,42 @@ def load_vctk_metas(root_path:str, wavs_path="wav48_silence_trimmed", mic="mic1"
         else:
             wav_file = os.path.join(root_path, wavs_path, speaker_id, file_id + f"_{mic}.{file_ext}")
         if os.path.exists(wav_file):
-            items.append({"text": text, "audio": wav_file, "speaker": "VCTK_" + speaker_id, "root_path": root_path})
+            items.append({"text": text, "audio": wav_file, "speaker": "VCTK_" + speaker_id, "root_path": root_path, "language":"en"})
         else:
             print(f" [!] wav files don't exist - {wav_file}")
     return items
 
+
+# https://github.com/jaywalnut310/vits/issues/132
+# resample should use ffmpeg or sox.
+# if there are some blank audio at the begining or end, use librosa to trim it
+def resample_file(func_args):
+    filename, output_sr, file_ext = func_args
+    audio = AudioSegment.from_file(filename, format=file_ext)
+    audio.export(filename+".wav", format="wav", parameters=["-ar", "22050"])
+
+def resample_files(input_dir, output_sr, output_dir=None, file_ext="wav", n_jobs=10):
+    """
+    change all the files to output_sr. sr = sample rate
+    """
+    if output_dir:
+        print("Recursively copying the input folder...")
+        copytree(input_dir, output_dir)
+        input_dir = output_dir
+
+    print("Resampling the audio files...")
+    audio_files = glob.glob(os.path.join(input_dir, f"**/*.{file_ext}"), recursive=True)
+    print(f"Found {len(audio_files)} files...")
+    audio_files = list(zip(audio_files, len(audio_files) * [output_sr], [file_ext] * len(audio_files)))
+    with Pool(processes=n_jobs) as p:
+        with tqdm(total=len(audio_files)) as pbar:
+            for _, _ in enumerate(p.imap_unordered(resample_file, audio_files)):
+                pbar.update()
+
+    print("Done ! removing original file if needed")
+    if file_ext != "wav":
+        for filename, _, _ in audio_files:
+            os.remove(filename)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="download and resample VCTK dataset", formatter_class=argparse.RawTextHelpFormatter, )

@@ -1,3 +1,4 @@
+import argparse
 import os
 from typing import Optional
 
@@ -31,7 +32,7 @@ def load_ljspeech_metas(root_path:str, wavs_path="wavs"):
             cols = line.split("|")
             wav_file = os.path.join(root_path, "wavs", cols[0] + ".wav")
             text = cols[1]
-            items.append({"text": text, "audio": wav_file, "speaker": speaker_name, "root_path": root_path})
+            items.append({"text": text, "audio": wav_file, "speaker": speaker_name, "root_path": root_path, "language":"en"})
     return items
 
 if __name__ == "__main__":
@@ -45,6 +46,6 @@ if __name__ == "__main__":
     LJSpeech_DOWNLOAD_PATH = "D:\\dataset\\LJSpeech"
 
     print(">>> Downloading VCTK dataset:")
-    download_vctk(LJSpeech_DOWNLOAD_PATH)
+    download_ljspeech(LJSpeech_DOWNLOAD_PATH)
     print(">>> resampling VCTK dataset:")
     resample_files(LJSpeech_DOWNLOAD_PATH, args.sample_rate, file_ext="flac", n_jobs=args.resample_threads)

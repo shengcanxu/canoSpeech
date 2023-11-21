@@ -1,0 +1,8 @@
+D:/dataset/baker/Wave/005894.wav|baker|zh|该男子圆头大耳，打扮得像个公司老总。
+D:/dataset/baker/Wave/000899.wav|baker|zh|老杨不给，两人又争吵并抓扯起来。
+D:/dataset/baker/Wave/006151.wav|baker|zh|作为纽约州的参议员，希拉里在国会上仍然是个小”字辈。
+D:/dataset/baker/Wave/005328.wav|baker|zh|他撇过头去，目光盯着大海。
+D:/dataset/baker/Wave/007981.wav|baker|zh|投入不足、区域封锁等问题，制约了图书业的发展。
+D:/dataset/baker/Wave/004618.wav|baker|zh|骑到桥上，突然颠簸差点摔倒。
+D:/dataset/baker/Wave/004255.wav|baker|zh|图为肖向阳躺在病床上，他的表姐在一旁陪护。
+D:/dataset/baker/Wave/006453.wav|baker|zh|天龙八部影视城，主人快带我去嘛。

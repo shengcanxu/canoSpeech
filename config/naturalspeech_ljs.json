@@ -98,7 +98,7 @@
         "use_gt_duration": false,
 
         "text_encoder": {
-            "num_chars": 178,
+            "num_chars": 204,
             "hidden_channels_ffn": 768,
             "num_heads": 2,
             "num_layers": 10,

@@ -242,7 +242,6 @@ class TextAudioDataset(Dataset):
             item = batch[ids_sorted_decreasing[i]]
             filenames.append(item["filename"])
             raw_texts.append(item["raw_text"])
-            speaker_ids[i] = item["speaker_id"]
 
             tokens = item["tokens"]
             token_padded[i, : tokens.size(0)] = torch.LongTensor(tokens)
@@ -263,6 +262,7 @@ class TextAudioDataset(Dataset):
             if self.add_preprocess_data:
                 pitch = item["pitch"]
                 pitch_padded[i, :pitch.size(0)] = torch.FloatTensor(pitch)
+                speaker_ids[i] = item["speaker_id"]
                 speaker_embed = item["speaker_embed"]
                 speaker_embed_padded[i, :speaker_embed.size(0)] = torch.FloatTensor(speaker_embed)
 

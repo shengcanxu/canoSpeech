@@ -261,7 +261,7 @@ class VitsModel(nn.Module):
         return wav, attn, y_mask, (z, z_p, m_p, logs_p)
 
     @torch.no_grad()
-    def generate_z_wav(self, spec, spec_len, speaker_id, speaker_embed):
+    def generate_z_wav(self, spec, spec_len, speaker_id=None, speaker_embed=None):
         g = None  # [b, h, 1]
         if self.model_config.use_speaker_embeds and speaker_embed is not None:
             g = F.normalize(speaker_embed).unsqueeze(-1)
