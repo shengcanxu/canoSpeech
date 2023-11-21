@@ -210,7 +210,8 @@ class VitsTrain(TrainerModelWithDataset):
             spec = batch["spec"][[0]]
             spec_len = batch["spec_lens"][[0]]
             speaker_id = batch["speaker_ids"][[0]]
-            wav = self.generator.generate_z_wav(spec, spec_len, speaker_id)
+            speaker_embed = batch["speaker_embeds"][[0]]
+            wav = self.generator.generate_z_wav(spec, spec_len, speaker_id, speaker_embed)
 
             wav = wav[0, 0].cpu().float().numpy()
             filename = os.path.basename(batch["filenames"][0])

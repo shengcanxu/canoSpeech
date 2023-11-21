@@ -261,8 +261,14 @@ class VitsModel(nn.Module):
         return wav, attn, y_mask, (z, z_p, m_p, logs_p)
 
     @torch.no_grad()
-    def generate_z_wav(self, spec, spec_len, speaker_id):
-        g = self.speaker_embedding(speaker_id).unsqueeze(-1)  # [b, h, 1]
+    def generate_z_wav(self, spec, spec_len, speaker_id, speaker_embed):
+        g = None  # [b, h, 1]
+        if self.model_config.use_speaker_embeds and speaker_embed is not None:
+            g = F.normalize(speaker_embed).unsqueeze(-1)
+            if g.ndim == 2:
+                g = g.unsqueeze_(0)
+        elif self.speaker_embedding is not None and speaker_id is not None:
+            g = self.speaker_embedding(speaker_id).unsqueeze(-1)
         z, _, _, _ = self.audio_encoder(spec, spec_len, g=g)
         wav = self.waveform_decoder(z, g=g)
         return wav
