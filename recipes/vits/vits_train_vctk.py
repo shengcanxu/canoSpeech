@@ -4,6 +4,8 @@ import pickle
 import random
 import time
 from typing import Dict, Tuple, List
+
+from speaker.speaker_encoder import SpeakerEncoder
 from text import text_to_tokens, _intersperse
 import torch
 from torch import nn
@@ -21,7 +23,8 @@ from config.config import VitsConfig
 from dataset.basic_dataset import get_metas_from_filelist, TextAudioDataset
 import soundfile as sf
 from util.helper import segment
-from util.mel_processing import wav_to_mel
+from util.mel_processing import wav_to_mel, load_audio
+
 
 class VitsTrain(TrainerModelWithDataset):
     """
@@ -239,6 +242,22 @@ class VitsTrain(TrainerModelWithDataset):
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 
+def test(model, filepath:str):
+    # speaker embedding
+    wav, sr = load_audio(filepath)
+    speaker_encoder = SpeakerEncoder(
+        config_path="/home/cano/dataset/VCTK/config_se.json",
+        model_path="/home/cano/dataset/VCTK/model_se.pth.tar",
+        use_cuda=True
+    )
+    speaker_embed = speaker_encoder.compute_embedding_from_waveform(wav)
+    speaker_embed = speaker_embed.squeeze(0)
+    speaker_embed = speaker_embed.cpu().float().numpy()
+
+    text = "I am a student but I don't want to do any homework."
+    wav = model.inference(text, speaker_embed=speaker_embed)
+    wav = wav[0, 0].cpu().float().numpy()
+    sf.write(f"{filepath}.test.wav", wav, 22050)
 
 def main(config_path:str):
     config = VitsConfig()
@@ -260,7 +279,11 @@ def main(config_path:str):
         train_samples=train_samples,
         eval_samples=test_samples,
     )
-    trainer.fit()
+    # trainer.fit()
+
+    test(train_model, "/home/cano/output/test/test.wav")
+    test(train_model, "/home/cano/output/test/test2.wav")
+    test(train_model, "/home/cano/output/test/test3.wav")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="vits vctk train", formatter_class=argparse.RawTextHelpFormatter, )

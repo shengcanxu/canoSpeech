@@ -141,15 +141,15 @@ def main(args):
             refined_pitch = pitch
 
         # speaker embedding
-        speaker_embedd = speaker_encoder.compute_embedding_from_waveform(wav)
-        speaker_embedd = speaker_embedd.squeeze(0)
-        speaker_embedd = speaker_embedd.cpu().float().numpy()
+        speaker_embed = speaker_encoder.compute_embedding_from_waveform(wav)
+        speaker_embed = speaker_embed.squeeze(0)
+        speaker_embed = speaker_embed.cpu().float().numpy()
 
         obj = {
             "text": text,
             "pitch": refined_pitch,
             # "duration": duration,
-            "speaker": speaker_embedd
+            "speaker": speaker_embed
         }
         with open(pklpath, "wb") as fp:
             pickle.dump(obj=obj, file=fp )
