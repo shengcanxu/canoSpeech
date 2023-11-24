@@ -57,10 +57,10 @@ def gen_filelist(config_path:str):
         _gen_filelist_cleaned(train_filelist, test_filelist, text_config.text_cleaners)
     elif language == "zh":
         print("generate chinese cleaned filelist....")
-        _write_filelist_cleaned(train_filelist, train_datas, test_filelist, test_datas)
+        _gen_filelist_cleaned_cn(train_filelist, train_datas, test_filelist, test_datas)
 
 # create cleaned filelist from original filelist
-def _write_filelist_cleaned(train_filelist:str, train_datas:list, test_filelist:str, test_datas:list):
+def _gen_filelist_cleaned_cn(train_filelist:str, train_datas:list, test_filelist:str, test_datas:list):
     train_filelist_cleaned = train_filelist + ".cleaned"
     if not os.path.exists(train_filelist_cleaned):
         with open(train_filelist_cleaned, "w", encoding="utf-8") as f:
