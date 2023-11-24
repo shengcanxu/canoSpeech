@@ -4,7 +4,7 @@ import pickle
 import random
 import time
 from typing import Dict, Tuple, List
-from text import text_to_tokens, _intersperse
+from text import text_to_tokens, _intersperse, text_to_tokens_cn
 import torch
 from torch import nn
 from coqpit import Coqpit
@@ -183,7 +183,7 @@ class VitsTrain(TrainerModelWithDataset):
         return input
 
     def inference(self, text:str, speaker_id:int=None, speaker_embed=None):
-        tokens = text_to_tokens(text)
+        tokens = text_to_tokens_cn(text)
         if self.config.text.add_blank:
             tokens = _intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0).cuda()
@@ -221,7 +221,7 @@ class VitsTrain(TrainerModelWithDataset):
     def test_run(self, assets) -> Tuple[Dict, Dict]:
         output_path = assets["output_path"]
         print("doing test run...")
-        text = "wo3 men2 dou1 shi4 zhong1 guo2 ren2 ， wo3 ai4 jia1 xiang1 。"
+        text = "wo3 men2 dou1 shi4 zhong1 guo2 ren2 sp wo3 ai4 jia1 xiang1 sp"
 
         wav = self.inference(text)
         wav = wav[0, 0].cpu().float().numpy()

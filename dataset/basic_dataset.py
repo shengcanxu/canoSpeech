@@ -79,6 +79,7 @@ class TextAudioDataset(Dataset):
         self.use_cache = getattr(config.dataset_config, "use_cache", False)
         self.use_speaker_ids = config.model.use_speaker_ids
         self.add_preprocess_data = getattr(config.dataset_config, "add_preprocess_data", True)
+        self.language = config.dataset_config.language or "en"
 
         self.hop_length = config.audio.hop_length
         self.win_length = config.audio.win_length
@@ -190,10 +191,10 @@ class TextAudioDataset(Dataset):
         """format text and add blank"""
         if self.cleaned_text:
             cleaned_text = text
-            tokens = cleaned_text_to_tokens(cleaned_text)
+            tokens = cleaned_text_to_tokens(cleaned_text, lang=self.language)
         else:
             cleaned_text = _clean_text(text, self.text_cleaners)
-            tokens = cleaned_text_to_tokens(cleaned_text)
+            tokens = cleaned_text_to_tokens(cleaned_text, lang=self.language)
         if self.add_blank:
             tokens = _intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens)

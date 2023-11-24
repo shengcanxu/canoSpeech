@@ -461,7 +461,8 @@ def load_baker_metas(root_path:str, wavs_path="Wave"):
             for word in text:
                 if is_chinese(word):
                     if word == '儿' and (idx >= len_pinyin or (pinyins[idx] != 'er2' and pinyins[idx] != 'er5' )):  # 跳过儿化音
-                        continue
+                        print(f"skip: {text}")
+                        break
                     if idx >= len_pinyin:
                         print(f"error! idx is larger than length of pinyins")
                         break
@@ -469,11 +470,11 @@ def load_baker_metas(root_path:str, wavs_path="Wave"):
                     pinyin = pinyins[idx][0:-1]
                     ton = pinyins[idx][-1]
                     sheng_mu, yun_mu = pinyin_dict[pinyin]
-                    new_pinyins.append(sheng_mu)
-                    new_pinyins.append(yun_mu + ton)
+                    new_pinyins += [sheng_mu, yun_mu + ton, "#0"]
                     idx += 1
                 else:
-                    new_pinyins.append(word)
+                    new_pinyins.append("sp")
+            new_pinyins += ["eos"]
 
             if idx == len_pinyin:
                 pinyin = ' '.join(new_pinyins)
@@ -483,8 +484,7 @@ def load_baker_metas(root_path:str, wavs_path="Wave"):
                 #TODO: 需要处理中英混合的情况
 
         except Exception as e:
-            print(e)
-            break
+            print(f"error on {text}, skip!")
 
     return items
 

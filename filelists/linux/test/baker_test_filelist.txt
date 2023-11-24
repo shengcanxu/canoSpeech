@@ -1,0 +1,16 @@
+/home/dataset/baker/Wave/004558.wav|baker|zh|两者均未透露消息来源，但否认消息来自一嗨。
+/home/dataset/baker/Wave/009697.wav|baker|zh|窗外晚风吹拂，树叶有了活力，哗啦啦地响，像在诉说着什么。
+/home/dataset/baker/Wave/007854.wav|baker|zh|他称之为“愉快的早晨”。
+/home/dataset/baker/Wave/004976.wav|baker|zh|我会玩很多游戏呢。
+/home/dataset/baker/Wave/004050.wav|baker|zh|假驾驶证字体光滑，没有凹凸感。
+/home/dataset/baker/Wave/008672.wav|baker|zh|沙河市褡裢村项目现场。
+/home/dataset/baker/Wave/000589.wav|baker|zh|因无法忍受病痛折磨选择跳楼了。
+/home/dataset/baker/Wave/004824.wav|baker|zh|雅典称王的韩国小子柳承敏有望创造历史吗？
+/home/dataset/baker/Wave/005310.wav|baker|zh|前晚，刘华清的侄儿侄女们临时搭起了灵堂。
+/home/dataset/baker/Wave/008495.wav|baker|zh|整条公路多处损毁严重，险象环生。
+/home/dataset/baker/Wave/007412.wav|baker|zh|齐亚丽的养父在外地打工，养母在家操持家务。
+/home/dataset/baker/Wave/009096.wav|baker|zh|会后，绿色立委表示，相信总统合乎逻辑的说法。
+/home/dataset/baker/Wave/001125.wav|baker|zh|对于梅耶尔而言，巴雷特确实“物有所值”。
+/home/dataset/baker/Wave/002897.wav|baker|zh|让原本微薄的资金捉襟见肘。
+/home/dataset/baker/Wave/001817.wav|baker|zh|大楚网以及新恩施论坛上，对此建议的评论不断。
+/home/dataset/baker/Wave/009689.wav|baker|zh|这也是作为网络写手最痛苦的事。
