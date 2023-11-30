@@ -1,12 +1,10 @@
 from glob import glob
 import argparse
-import glob
 import os
 from multiprocessing import Pool
 from shutil import copytree
 from tqdm import tqdm
-from pydub import AudioSegment
-from dataset.download_util import download_kaggle_dataset, extract_archive, download_url
+from dataset.dataset_util import download_kaggle_dataset, extract_archive, resample_file
 from typing import Optional
 
 def download_vctk(save_path: str, use_kaggle: Optional[bool] = False):
@@ -54,14 +52,6 @@ def load_vctk_metas(root_path:str, wavs_path="wav48_silence_trimmed", mic="mic1"
             print(f" [!] wav files don't exist - {wav_file}")
     return items
 
-
-# https://github.com/jaywalnut310/vits/issues/132
-# resample should use ffmpeg or sox.
-# if there are some blank audio at the begining or end, use librosa to trim it
-def resample_file(func_args):
-    filename, output_sr, file_ext = func_args
-    audio = AudioSegment.from_file(filename, format=file_ext)
-    audio.export(filename+".wav", format="wav", parameters=["-ar", "22050", "-ac", "1"])
 
 def resample_files(input_dir, output_sr, output_dir=None, file_ext="wav", n_jobs=10):
     """

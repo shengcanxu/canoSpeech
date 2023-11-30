@@ -1,8 +1,6 @@
 import argparse
 import os
-from typing import Optional
-
-from dataset.download_util import download_url, extract_archive
+from dataset.dataset_util import download_url, extract_archive
 
 
 def download_ljspeech(save_path: str):

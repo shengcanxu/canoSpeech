@@ -1,88 +1,26 @@
-class TextAudioSpeakerLoader(torch.utils.data.Dataset):
-    """
-        1) loads audio, speaker_id, text pairs
-        2) normalizes text and converts them to sequences of integers
-        3) computes spectrograms from audio files.
-    """
-    def __init__(self, audiopaths_sid_text, hparams):
-        self.audiopaths_sid_text = load_filepaths_and_text(audiopaths_sid_text)
-        self.text_cleaners = hparams.text_cleaners
-        self.max_wav_value = hparams.max_wav_value
-        self.sampling_rate = hparams.sampling_rate
-        self.filter_length  = hparams.filter_length
-        self.hop_length     = hparams.hop_length
-        self.win_length     = hparams.win_length
-        self.sampling_rate  = hparams.sampling_rate
+import PyPDF2
 
-        self.cleaned_text = getattr(hparams, "cleaned_text", False)
 
-        self.add_blank = hparams.add_blank
-        self.min_text_len = getattr(hparams, "min_text_len", 1)
-        self.max_text_len = getattr(hparams, "max_text_len", 190)
+def split_pdf(file_path, output_folder, output_name):
+    # 打开PDF文件
+    with open(file_path, 'rb') as file:
+        # 创建一个PDF阅读器对象
+        reader = PyPDF2.PdfFileReader(file)
+        # 获取PDF文件的页数
+        num_pages = reader.numPages
+        # 循环遍历每一页并保存为单独的文件
 
-        random.seed(1234)
-        random.shuffle(self.audiopaths_sid_text)
-        self._filter()
+        last_page = 1
+        writer = PyPDF2.PdfFileWriter()
+        for page in range(num_pages):
+            writer.addPage(reader.getPage(page))
 
-    def _filter(self):
-        """
-        Filter text & store spec lengths
-        """
-        # Store spectrogram lengths for Bucketing
-        # wav_length ~= file_size / (wav_channels * Bytes per dim) = file_size / (1 * 2)
-        # spec_length = wav_length // hop_length
+            if (page+1) % 50 == 0 or page == num_pages - 1:
+                with open(output_folder + output_name + "-" + str(last_page) + '-' + str(page) + '.pdf', 'wb') as output:
+                    writer.write(output)
+                    last_page = page + 1
+                    writer = PyPDF2.PdfFileWriter()
 
-        audiopaths_sid_text_new = []
-        lengths = []
-        for audiopath, sid, text in self.audiopaths_sid_text:
-            if self.min_text_len <= len(text) and len(text) <= self.max_text_len:
-                audiopaths_sid_text_new.append([audiopath, sid, text])
-                lengths.append(os.path.getsize(audiopath) // (2 * self.hop_length))
-        self.audiopaths_sid_text = audiopaths_sid_text_new
-        self.lengths = lengths
 
-    def get_audio_text_speaker_pair(self, audiopath_sid_text):
-        # separate filename, speaker_id and text
-        audiopath, sid, text = audiopath_sid_text[0], audiopath_sid_text[1], audiopath_sid_text[2]
-        text = self.get_text(text)
-        spec, wav = self.get_audio(audiopath)
-        sid = self.get_sid(sid)
-        return (text, spec, wav, sid)
-
-    def get_audio(self, filename):
-        audio, sampling_rate = load_wav_to_torch(filename)
-        if sampling_rate != self.sampling_rate:
-            raise ValueError("{} {} SR doesn't match target {} SR".format(
-                sampling_rate, self.sampling_rate))
-        audio_norm = audio / self.max_wav_value
-        audio_norm = audio_norm.unsqueeze(0)
-        spec_filename = filename.replace(".wav", ".spec.pt")
-        if os.path.exists(spec_filename):
-            spec = torch.load(spec_filename)
-        else:
-            spec = spectrogram_torch(audio_norm, self.filter_length,
-                self.sampling_rate, self.hop_length, self.win_length,
-                center=False)
-            spec = torch.squeeze(spec, 0)
-            torch.save(spec, spec_filename)
-        return spec, audio_norm
-
-    def get_text(self, text):
-        if self.cleaned_text:
-            text_norm = cleaned_text_to_sequence(text)
-        else:
-            text_norm = text_to_sequence(text, self.text_cleaners)
-        if self.add_blank:
-            text_norm = commons.intersperse(text_norm, 0)
-        text_norm = torch.LongTensor(text_norm)
-        return text_norm
-
-    def get_sid(self, sid):
-        sid = torch.LongTensor([int(sid)])
-        return sid
-
-    def __getitem__(self, index):
-        return self.get_audio_text_speaker_pair(self.audiopaths_sid_text[index])
-
-    def __len__(self):
-        return len(self.audiopaths_sid_text)
+# 使用函数拆分PDF文件
+split_pdf('D:\\test\\2024 • LEVEL 1 • VOLUME 6.pdf', 'D:\\test\\', '2024-LEVEL1-VOLUME6')

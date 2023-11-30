@@ -1,0 +1,32 @@
+D:/dataset/LibriTTS/train-clean-100/6209/34600/6209_34600_000020_000000.wav|libritts_6209|en|Three o'clock tolled slowly behind him from the old belfry of saint Nicholas.
+D:/dataset/LibriTTS/train-clean-100/7402/59171/7402_59171_000021_000002.wav|libritts_7402|en|I do not mean that he was not intensely serious in all that he wrote about the war.
+D:/dataset/LibriTTS/train-clean-100/200/126784/200_126784_000009_000000.wav|libritts_200|en|As nothing could be seen likely to interrupt the enjoyments and harmony of such a day, the sisters descended to the parlor, with a returning confidence in their brother's security, and their own happiness.
+D:/dataset/LibriTTS/train-clean-100/5808/54425/5808_54425_000038_000002.wav|libritts_5808|en|He never stole that money.
+D:/dataset/LibriTTS/train-clean-100/2843/152918/2843_152918_000001_000002.wav|libritts_2843|en|In the course of the night the wind had gone back to the north, and increased to a gale.
+D:/dataset/LibriTTS/train-clean-100/7800/283478/7800_283478_000038_000001.wav|libritts_7800|en|That glorious spell we had out on mr Mabie's ranch among the Rockies has haunted me ever since."
+D:/dataset/LibriTTS/train-clean-100/8797/294123/8797_294123_000036_000000.wav|libritts_8797|en|No great race adventure can go far nor endure long which has no deeper foundation than material success, no higher prompting than conquest for conquest's sake and mere race glorification.
+D:/dataset/LibriTTS/train-clean-100/3240/131231/3240_131231_000041_000001.wav|libritts_3240|en|In this letter the fishes are said to have been about four inches long, but there is some question of species.
+D:/dataset/LibriTTS/train-clean-100/6529/62554/6529_62554_000017_000005.wav|libritts_6529|en|We have contracted a debt, and I hope that we shall one day pay it."
+D:/dataset/LibriTTS/train-clean-100/405/130895/405_130895_000022_000001.wav|libritts_405|en|The Nautilus traveled swiftly.
+D:/dataset/LibriTTS/train-clean-100/6836/61804/6836_61804_000010_000000.wav|libritts_6836|en|The stunning shock-with the mental and corporeal excitement-long sustained-did not fail to produce its effect; and the mind of Maurice Gerald once more returned to its delirious dreaming.
+D:/dataset/LibriTTS/train-clean-100/40/121026/40_121026_000159_000000.wav|libritts_40|en|"You think so?"
+D:/dataset/LibriTTS/train-clean-100/8324/286683/8324_286683_000001_000000.wav|libritts_8324|en|THE PLAYFUL MUSKRATS
+D:/dataset/LibriTTS/train-clean-100/7264/92310/7264_92310_000021_000000.wav|libritts_7264|en|How did such a catastrophe come about?
+D:/dataset/LibriTTS/train-clean-100/4195/186236/4195_186236_000046_000000.wav|libritts_4195|en|The lawyer hesitated.
+D:/dataset/LibriTTS/train-clean-100/1081/128618/1081_128618_000013_000000.wav|libritts_1081|en|PERCH A L'ALLEMANDE
+D:/dataset/LibriTTS/train-clean-100/7264/92314/7264_92314_000004_000001.wav|libritts_7264|en|This gives them so distinct a character, of parliamentary falsehood, and that falsehood is so clearly dictated by their connection with executive power that they merit the title "Official."
+D:/dataset/LibriTTS/train-clean-100/6437/66172/6437_66172_000010_000002.wav|libritts_6437|en|I was then conducted to the brink of several other precipices, and ordered to step over many dangerous chasms, where the result would have been instant death if I had committed the least mistake.
+D:/dataset/LibriTTS/train-clean-100/8063/274115/8063_274115_000038_000000.wav|libritts_8063|en|As soon as they had finished eating they set off.
+D:/dataset/LibriTTS/train-clean-100/3374/298026/3374_298026_000006_000001.wav|libritts_3374|en|One thing crowds out another, and that which just now was near and present soon sinks back into obscurity.
+D:/dataset/LibriTTS/train-clean-100/250/142276/250_142276_000005_000004.wav|libritts_250|en|But he had the same large, soft eyes as his daughter,--eyes which moved slowly and almost grandly round in their orbits, and were well veiled by their transparent white eyelids. Margaret was more like him than like her mother.
+D:/dataset/LibriTTS/train-clean-100/887/123290/887_123290_000008_000000.wav|libritts_887|en|"To the raft!" he shouted.
+D:/dataset/LibriTTS/train-clean-100/6848/252323/6848_252323_000004_000000.wav|libritts_6848|en|"Didn't I tell you how it would be?" said Billy, as he re-entered the kitchen, now crowded by the workpeople, anxious for tidings of the sick man.
+D:/dataset/LibriTTS/train-clean-100/1116/132847/1116_132847_000075_000000.wav|libritts_1116|en|With one of the leaves of the cabbage they made her a coat, and another served for a waistcoat; but it took two for the wide breeches which were then in fashion.
+D:/dataset/LibriTTS/train-clean-100/5022/29405/5022_29405_000086_000000.wav|libritts_5022|en|"You ought to know me better than that, Cristel!"
+D:/dataset/LibriTTS/train-clean-100/7794/295947/7794_295947_000012_000001.wav|libritts_7794|en|How shall we hand him over to you?"
+D:/dataset/LibriTTS/train-clean-100/4214/7146/4214_7146_000031_000000.wav|libritts_4214|en|"Oh, you mustn't dream of going home without your tea," cried Anne in distress.
+D:/dataset/LibriTTS/train-clean-100/8838/298546/8838_298546_000016_000000.wav|libritts_8838|en|"Yes, and it set badly.
+D:/dataset/LibriTTS/train-clean-100/3240/131232/3240_131232_000045_000000.wav|libritts_3240|en|If we try to accept that these snakes had been raised from some other part of this earth's surface in a whirlwind:
+D:/dataset/LibriTTS/train-clean-100/3526/175658/3526_175658_000002_000002.wav|libritts_3526|en|At last I concluded it would be a waste of labour.
+D:/dataset/LibriTTS/train-clean-100/7078/271888/7078_271888_000120_000000.wav|libritts_7078|en|"Dinner will be ready almost immediately," he said.
+D:/dataset/LibriTTS/train-clean-100/3879/173592/3879_173592_000011_000002.wav|libritts_3879|en|In vain the watchman on the hill surveyed the solitude of waters.

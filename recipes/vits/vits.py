@@ -137,7 +137,7 @@ class VitsModel(nn.Module):
             language_ids:`[B]: Batch of language ids.
         """
         # speaker embedding
-        g = None # [b, h, 1]
+        g = None  # [b, h, 1]
         if self.model_config.use_speaker_embeds and speaker_embeds is not None:
             g = F.normalize(speaker_embeds).unsqueeze(-1)
             if g.ndim == 2:

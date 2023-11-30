@@ -1,11 +1,11 @@
 from glob import glob
 import argparse
-import glob
 import os
 from multiprocessing import Pool
 from shutil import copytree
 from tqdm import tqdm
-from pydub import AudioSegment
+from dataset.dataset_util import resample_file
+
 
 def is_chinese(uchar):
     if uchar >= u'\u4e00' and uchar <= u'\u9fa5':
@@ -487,14 +487,6 @@ def load_baker_metas(root_path:str, wavs_path="Wave"):
             print(f"error on {text}, skip!")
 
     return items
-
-# https://github.com/jaywalnut310/vits/issues/132
-# resample should use ffmpeg or sox.
-# if there are some blank audio at the begining or end, use librosa to trim it
-def resample_file(func_args):
-    filename, output_sr, file_ext = func_args
-    audio = AudioSegment.from_file(filename, format=file_ext)
-    audio.export(filename, format="wav", parameters=["-ar", "22050"])
 
 def resample_files(input_dir, output_sr, output_dir=None, file_ext="wav", n_jobs=10):
     """

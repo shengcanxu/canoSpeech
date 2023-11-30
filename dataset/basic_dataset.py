@@ -4,7 +4,7 @@ import numpy as np
 from collections import Counter
 import pickle
 
-from dataset.dataset_constant import VCTK_speaker_id_mapping
+from dataset.dataset_constant import VCTK_speaker_id_mapping, LibriTTS_speaker_id_mapping
 from text import cleaned_text_to_tokens, _clean_text, _intersperse
 import torch
 from torch.utils.data import Dataset
@@ -88,7 +88,7 @@ class TextAudioDataset(Dataset):
         self.num_mels = config.audio.num_mels
         self.mel_fmin = config.audio.mel_fmin
         self.mel_fmax = config.audio.mel_fmax
-        self.max_audio_length = getattr(config.audio, "max_audio_length", 10.0)
+        self.max_audio_length = getattr(config.audio, "max_audio_length", 20.0)
         self.min_audio_length = getattr(config.audio, "min_audio_length", 1.0)
 
         self.cleaned_text = getattr(config.text, "cleaned_text", False)
@@ -184,6 +184,8 @@ class TextAudioDataset(Dataset):
     def _get_speaker_id(self, speaker_name, dataset_name:str):
         if dataset_name == "vctk":
             return VCTK_speaker_id_mapping.get(speaker_name, 1)
+        elif dataset_name == "libritts":
+            return LibriTTS_speaker_id_mapping.get(speaker_name, 1)
         else:
             return None
 
@@ -226,9 +228,11 @@ class TextAudioDataset(Dataset):
         mel_padded = torch.FloatTensor(B, batch[0]["mel"].size(0), torch.max(mel_lens))
         mel_padded = mel_padded.zero_()
 
+        speaker_ids = torch.LongTensor(len(batch))
+        speaker_ids = speaker_ids.zero_()
+
         pitch_padded = torch.LongTensor(len(batch))
         speaker_embed_padded = torch.LongTensor(len(batch))
-        speaker_ids = torch.LongTensor(len(batch))
         if self.add_preprocess_data:
             pitch_lens = torch.LongTensor([x["pitch"].size(0) for x in batch])
             pitch_padded = torch.FloatTensor(B, torch.max(pitch_lens))
@@ -260,10 +264,10 @@ class TextAudioDataset(Dataset):
             mel_padded[i, :, :mel.size(1)] = torch.FloatTensor(mel)
             mel_lens[i] = mel.size(1)
 
+            speaker_ids[i] = item["speaker_id"]
             if self.add_preprocess_data:
                 pitch = item["pitch"]
                 pitch_padded[i, :pitch.size(0)] = torch.FloatTensor(pitch)
-                speaker_ids[i] = item["speaker_id"]
                 speaker_embed = item["speaker_embed"]
                 speaker_embed_padded[i, :speaker_embed.size(0)] = torch.FloatTensor(speaker_embed)
 
