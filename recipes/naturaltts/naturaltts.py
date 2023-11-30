@@ -402,7 +402,6 @@ class NaturalTTSTrain(TrainerModelWithDataset):
         super().__init__(config)
         self.config = config
         self.model_config = config.model
-        self.balance_disc_generator = config.balance_disc_generator
         self.skip_discriminator = False
 
         self.generator = NaturalTTSModel(

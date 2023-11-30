@@ -2,7 +2,6 @@
     "run_name": "CanoVitsVCTK",
     "run_description": "Cano Speech running on VCTK dataset",
     "output_path": "/home/output",
-    "balance_disc_generator": false,
 
     "dataset_config": {
         "dataset_name":"vctk",

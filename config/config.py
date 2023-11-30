@@ -168,8 +168,6 @@ class VitsConfig(TrainerConfig):
     # path for continue training
     continue_path: str = None
     restore_path: str = None
-    # stop running discriminator
-    balance_disc_generator: bool = False
 
     #loss
     loss:LossConfig = field(default_factory=lambda: LossConfig())
@@ -285,8 +283,6 @@ class NaturalTTSConfig(TrainerConfig):
     # path for continue training
     continue_path: str = None
     restore_path: str = None
-    # stop running discriminator
-    balance_disc_generator: bool = False
 
     # loss
     loss: LossConfig = field(default_factory=lambda: LossConfig())
