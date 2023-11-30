@@ -1,7 +1,7 @@
 {
     "run_name": "CanoVitsLibriTTS",
     "run_description": "Cano Speech running on LibriTTS dataset",
-    "output_path": "/home/cano/canoSpeech/output",
+    "output_path": "/home/cano/output",
     "balance_disc_generator": false,
 
     "dataset_config": {

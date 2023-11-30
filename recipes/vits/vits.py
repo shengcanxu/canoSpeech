@@ -14,6 +14,7 @@ from monotonic_align.maximum_path import maximum_path
 from util.helper import sequence_mask, segment, rand_segments
 
 
+# VITS model and yourTTS model 
 class VitsModel(nn.Module):
     def __init__(self, config:VitsConfig):
         super().__init__()
