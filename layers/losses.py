@@ -62,12 +62,13 @@ class VitsGeneratorLoss(nn.Module):
         l = kl / torch.sum(z_mask)
 
         # don't know why kl_loss will be negative, maybe it's because the batch size is not big enough that makes the sample numbers not big enough to make it ocationaly be negative.
-        l = torch.abs(l)
+        # l = torch.abs(l)
         return l
 
     @staticmethod
     def cosine_similarity_loss(gt_spk_emb, syn_spk_emb):
-        return -torch.nn.functional.cosine_similarity(gt_spk_emb, syn_spk_emb).mean()
+        # add 1 to make it a positive number
+        return 1 - torch.nn.functional.cosine_similarity(gt_spk_emb, syn_spk_emb).mean()
 
     def forward(
         self,

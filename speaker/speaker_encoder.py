@@ -16,7 +16,11 @@ class SpeakerEncoder(object):
     ):
         self.config = SpeakerConfig()
         self.config.load_json(config_path)
+        self.audio_config = self.config.audio
         self.encoder = self.get_encoder_model(self.config)
+
+        # 虽然训练过程中backward的过程会更新SpeakerEncoder的参数， 但是因为每次训练和inference中使用的
+        # Speaker Embedding都是用原来的checkpoint来生成的，所以实际上backword只是保证训练的时候用同样的speaker
         self.encoder.load_checkpoint(
             self.config,
             model_path,
@@ -24,8 +28,9 @@ class SpeakerEncoder(object):
             use_cuda=use_cuda,
             cache=True
         )
-        # self.audio_processor = AudioProcessor(**self.config.audio, verbose=False)
         self.use_cuda = use_cuda
+        if self.use_cuda:
+            self.encoder.cuda()
 
     def get_encoder_model(self, config: Coqpit):
         if config.model_params["model_name"].lower() == "lstm":

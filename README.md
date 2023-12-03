@@ -62,9 +62,12 @@ speaker enbedding encoder configs:
    1. H/ASP speaker embedding model checkpoint: https://github.com/coqui-ai/TTS/releases/download/speaker_encoder_model/model_se.pth.tar
    2. RQV quantizer checkpoint: https://huggingface.co/Dongchao/AcademiCodec/tree/main
 
+# models
+1. many models includes in TTS:  https://github.com/mozilla/TTS/wiki/Released-Models 
+
 # findings
 1. learning rate非常重要. vits用大learning rate失败, 但是用 2e-4 成功. 可以用fastai里面的find_lr方法获得最佳lr
 2. 在刚开始学习的时候，很容易产生loss=NaN，甚至简单的weight_norm(Conv1d(in_channels, upsample_initial_channel, 7, 1, padding=3)) 都可能让结果变成NaN
    
-   
+
 

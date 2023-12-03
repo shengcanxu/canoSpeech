@@ -1,6 +1,7 @@
 import math
 from typing import Dict
 import torch
+import torchaudio
 from torch.nn import functional as F
 from coqpit import Coqpit
 from torch import nn
@@ -11,6 +12,7 @@ from layers.flow import ResidualCouplingBlocks
 from layers.generator import HifiganGenerator
 from layers.encoder import TextEncoder, AudioEncoder
 from monotonic_align.maximum_path import maximum_path
+from speaker.speaker_encoder import SpeakerEncoder
 from util.helper import sequence_mask, segment, rand_segments
 
 
@@ -30,6 +32,16 @@ class VitsModel(nn.Module):
             self.speaker_embedding = nn.Embedding(self.num_speakers, self.embedded_speaker_dim)
         else:
             self.speaker_embedding = None
+        if self.model_config.use_speaker_encoder_as_loss:
+            self.speaker_encoder = SpeakerEncoder(
+                config_path="speaker/speaker_encoder_config.json",
+                model_path="speaker/speaker_encoder_model.pth.tar",
+                use_cuda=torch.cuda.is_available(),
+            )
+            self.audio_transform = torchaudio.transforms.Resample(
+                orig_freq=self.config.audio.sample_rate,
+                new_freq=self.speaker_encoder.encoder.audio_config["sample_rate"],
+            )
 
         self.embedded_language_dim = 0
 
@@ -192,6 +204,20 @@ class VitsModel(nn.Module):
             loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
             # loss_duration = torch.sum((torch.exp(log_durations) - attn_durations) ** 2, [1, 2]) / torch.sum(x_mask)
 
+        if self.model_config.use_speaker_encoder_as_loss and self.speaker_encoder.encoder is not None:
+            # concate generated and GT waveforms
+            wavs_batch = torch.cat((wav_seg, y_hat), dim=0)
+
+            # resample audio to speaker encoder sample_rate
+            if self.audio_transform is not None:
+                wavs_batch = self.audio_transform(wavs_batch)
+
+            pred_embs = self.speaker_encoder.encoder.forward(wavs_batch, l2_norm=True)
+            # split generated and GT speaker embeddings
+            gt_speaker_emb, syn_speaker_emb = torch.chunk(pred_embs, 2, dim=0)
+        else:
+            gt_speaker_emb, syn_speaker_emb = None, None
+
         return {
             "y_hat": y_hat,  # [B, 1, T_wav]
             "m_p": m_p,  # [B, C, T_dec]
@@ -203,6 +229,8 @@ class VitsModel(nn.Module):
             "waveform_seg": wav_seg,  # [B, 1, spec_seg_size * hop_length]
             "slice_ids": slice_ids,
             "loss_duration": loss_duration,
+            "gt_speaker_emb": gt_speaker_emb,
+            "syn_speaker_emb": syn_speaker_emb,
         }
 
     @torch.no_grad()

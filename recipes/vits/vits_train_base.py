@@ -118,8 +118,8 @@ class VitsTrain_Base(TrainerModelWithDataset):
                     feats_disc_real=feats_disc_real,
                     loss_duration=self.model_outputs_cache["loss_duration"],
                     use_speaker_encoder_as_loss=self.model_config.use_speaker_encoder_as_loss,
-                    gt_speaker_emb=None,
-                    syn_speaker_emb=None,
+                    gt_speaker_emb=self.model_outputs_cache["gt_speaker_emb"],
+                    syn_speaker_emb=self.model_outputs_cache["syn_speaker_emb"],
                 )
 
             return self.model_outputs_cache, loss_dict
