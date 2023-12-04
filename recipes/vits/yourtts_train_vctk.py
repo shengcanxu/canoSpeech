@@ -96,6 +96,12 @@ class YourttsTrain(VitsTrain_Base):
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 
+def find_lr(trainer:Trainer, config:Coqpit):
+    losses = trainer.find_lr_fit(steps = 20)
+    with open(f"{config.output_path}/lr.txt", "w") as fp:
+        for loss in losses:
+            fp.write(",".join([str(ll) for ll in loss]) + "\n")
+
 def main(config_path:str):
     config = VitsConfig()
     config.load_json(config_path)
@@ -116,7 +122,9 @@ def main(config_path:str):
         train_samples=train_samples,
         eval_samples=test_samples,
     )
-    trainer.fit()
+    # trainer.fit()
+
+    find_lr(trainer, config)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="yourtts vctk train", formatter_class=argparse.RawTextHelpFormatter, )

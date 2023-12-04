@@ -1892,6 +1892,60 @@ class Trainer:
         self.torch_profiler.stop()
         return self.torch_profiler
 
+    def find_lr_fit(self, steps=1000):
+        # some initialization in train_epoch
+        if self.num_gpus > 1:
+            # let all processes sync up before starting with a new epoch of training
+            dist.barrier()
+        self.callbacks.on_epoch_start(self)
+        self.keep_avg_train = KeepAverage()
+        self.keep_avg_eval = KeepAverage() if self.config.run_eval else None
+        self.epochs_done = 0
+
+        print("start finding the right learning rate .... ")
+        if isinstance(self.optimizer, list):
+            schedulers = []
+            for optim in self.optimizer:
+                scheduler = torch.optim.lr_scheduler.MultiplicativeLR(optim, lr_lambda=lambda step: 1.03)
+                schedulers.append(scheduler)
+            self.scheduler = schedulers
+        else:
+            self.scheduler = torch.optim.lr_scheduler.MultiplicativeLR(self.optimizer, lr_lambda=lambda step: 1.03)
+
+        if self.train_loader is None:
+            self.train_loader = self.get_train_dataloader(
+                self.training_assets,
+                self.train_samples,
+                verbose=True,
+            )
+
+        # set model to training mode
+        torch.set_grad_enabled(True)
+        if self.num_gpus > 1:
+            self.model.module.train()
+        else:
+            self.model.train()
+
+        self.c_logger.print_train_start()
+        loader_start_time = time.time()
+
+        batch_num_steps = len(self.train_loader)
+        losses = []
+        for cur_step, batch in enumerate(self.train_loader):
+            outputs, loss_dict = self.train_step(batch, batch_num_steps, cur_step, loader_start_time)
+            del outputs
+            loader_start_time = time.time()
+
+            loss = []
+            for idx in range(len(self.optimizer)):
+                loss.append(loss_dict.get(f"current_lr_{idx}", 0))
+                loss.append(loss_dict.get(f"loss_{idx}", 0))
+            losses.append(loss)
+            print(loss[-1])
+
+            if cur_step >= steps: break
+        return losses
+
     @rank_zero_only
     def save_best_model(self) -> None:
         """Save the best model. It only saves if the current target loss is smaller then the previous."""
