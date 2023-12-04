@@ -1892,6 +1892,7 @@ class Trainer:
         self.torch_profiler.stop()
         return self.torch_profiler
 
+    # need to change lr to a low number(e.g.: 1e-8), and change scheduler_after_epoch to false
     def find_lr_fit(self, steps=1000):
         # some initialization in train_epoch
         if self.num_gpus > 1:

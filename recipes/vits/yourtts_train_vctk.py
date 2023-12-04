@@ -96,8 +96,9 @@ class YourttsTrain(VitsTrain_Base):
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 
-def find_lr(trainer:Trainer, config:Coqpit):
-    losses = trainer.find_lr_fit(steps = 20)
+# need to change lr to a low number(e.g.: 1e-8), and change scheduler_after_epoch to false
+def find_lr(trainer:Trainer, config:Coqpit, steps=1000):
+    losses = trainer.find_lr_fit(steps = steps)
     with open(f"{config.output_path}/lr.txt", "w") as fp:
         for loss in losses:
             fp.write(",".join([str(ll) for ll in loss]) + "\n")
@@ -124,7 +125,7 @@ def main(config_path:str):
     )
     # trainer.fit()
 
-    find_lr(trainer, config)
+    find_lr(trainer, config, 20)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="yourtts vctk train", formatter_class=argparse.RawTextHelpFormatter, )
