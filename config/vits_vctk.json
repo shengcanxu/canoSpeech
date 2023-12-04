@@ -1,6 +1,7 @@
 {
     "run_name": "CanoVitsVCTK",
     "run_description": "Cano Speech running on VCTK dataset",
+    "restore_path": "D:\\project\\canoSpeech\\output\\online\\best_model_176015.pth",
     "output_path": "D:/project/canoSpeech/output",
 
     "dataset_config": {

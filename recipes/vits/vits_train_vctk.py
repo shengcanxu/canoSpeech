@@ -16,7 +16,7 @@ from speaker.speaker_encoder import SpeakerEncoder
 from text import text_to_tokens, _intersperse
 from torch import nn
 from trainer import Trainer, TrainerArgs
-from util.mel_processing import load_audio
+from util.mel_processing import load_audio, wav_to_spec
 
 
 class VitsTrain(VitsTrain_Base):
@@ -36,6 +36,7 @@ class VitsTrain(VitsTrain_Base):
             shuffle=True
         )
 
+    @torch.no_grad()
     def inference(self, text:str, speaker_id:int=None, speaker_embed=None):
         tokens = text_to_tokens(text)
         if self.config.text.add_blank:
@@ -55,6 +56,23 @@ class VitsTrain(VitsTrain_Base):
             noise_scale=0.8,
             length_scale=1,
         )
+        return wav
+
+    @torch.no_grad()
+    def inference_voice_conversion(self, reference_wav, ref_speaker_id=None, ref_speaker_embed=None, speaker_id=None, speaker_embed=None):
+        y = wav_to_spec(
+            reference_wav,
+            self.config.audio.fft_size,
+            self.config.audio.hop_length,
+            self.config.audio.win_length,
+            center=False,
+        ).cuda()
+        y_lengths = torch.tensor([y.size(-1)]).cuda()
+        source_speaker = ref_speaker_id if ref_speaker_id is not None else ref_speaker_embed
+        target_speaker = speaker_id if speaker_id is not None else speaker_embed
+        source_speaker = source_speaker.cuda()
+        target_speaker = target_speaker.cuda()
+        wav, _, _ = self.generator.voice_conversion(y, y_lengths, source_speaker, target_speaker)
         return wav
 
     @torch.no_grad()
@@ -97,8 +115,8 @@ def test(model, filepath:str):
     # speaker embedding
     wav, sr = load_audio(filepath)
     speaker_encoder = SpeakerEncoder(
-        config_path="/home/cano/dataset/VCTK/config_se.json",
-        model_path="/home/cano/dataset/VCTK/model_se.pth.tar",
+        config_path=os.path.dirname(__file__) + "/../../speaker/speaker_encoder_config.json",
+        model_path=os.path.dirname(__file__) + "/../../speaker/speaker_encoder_model.pth.tar",
         use_cuda=True
     )
     speaker_embed = speaker_encoder.compute_embedding_from_waveform(wav)
@@ -109,6 +127,32 @@ def test(model, filepath:str):
     wav = model.inference(text, speaker_embed=speaker_embed)
     wav = wav[0, 0].cpu().float().numpy()
     sf.write(f"{filepath}.test.wav", wav, 22050)
+
+def test_voice_conversion(model, ref_wav_filepath:str):
+    wav, sr = load_audio(ref_wav_filepath)
+    speaker_encoder = SpeakerEncoder(
+        config_path= os.path.dirname(__file__) + "/../../speaker/speaker_encoder_config.json",
+        model_path= os.path.dirname(__file__) + "/../../speaker/speaker_encoder_model.pth.tar",
+        use_cuda=True
+    )
+    source_speaker = speaker_encoder.compute_embedding_from_waveform(wav)
+
+    path1 = "D:/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
+    # path2 = "D:/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
+    # path1 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
+    # path2 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
+    # path = path1 if random.randint(1, 10) >= 5 else path2
+    path = path1
+    fp = open(path, "rb")
+    pickleObj = pickle.load(fp)
+    target_speaker = pickleObj["speaker"]
+    target_speaker = torch.from_numpy(target_speaker).unsqueeze(0)
+
+    out_wav = model.inference_voice_conversion(
+        reference_wav = wav, ref_speaker_embed = source_speaker, speaker_embed = target_speaker
+    )
+    out_wav = out_wav[0, 0].cpu().float().numpy()
+    sf.write(f"{ref_wav_filepath}.out.wav", out_wav, 22050)
 
 def main(config_path:str):
     config = VitsConfig()
@@ -130,11 +174,12 @@ def main(config_path:str):
         train_samples=train_samples,
         eval_samples=test_samples,
     )
-    trainer.fit()
+    # trainer.fit()
 
     # test(train_model, "/home/cano/output/test/test.wav")
     # test(train_model, "/home/cano/output/test/test2.wav")
     # test(train_model, "/home/cano/output/test/test3.wav")
+    test_voice_conversion(train_model, "D:\\project\\canoSpeech\\output\\test2.wav")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="vits vctk train", formatter_class=argparse.RawTextHelpFormatter, )

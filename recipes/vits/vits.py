@@ -1,5 +1,8 @@
 import math
+import os
 from typing import Dict
+
+import numpy as np
 import torch
 import torchaudio
 from torch.nn import functional as F
@@ -34,8 +37,8 @@ class VitsModel(nn.Module):
             self.speaker_embedding = None
         if self.model_config.use_speaker_encoder_as_loss:
             self.speaker_encoder = SpeakerEncoder(
-                config_path="speaker/speaker_encoder_config.json",
-                model_path="speaker/speaker_encoder_model.pth.tar",
+                config_path=os.path.dirname(__file__) + "/../../speaker/speaker_encoder_config.json",
+                model_path=os.path.dirname(__file__) + "/../../speaker/speaker_encoder_model.pth.tar",
                 use_cuda=torch.cuda.is_available(),
             )
             self.audio_transform = torchaudio.transforms.Resample(
@@ -302,3 +305,27 @@ class VitsModel(nn.Module):
         wav = self.waveform_decoder(z, g=g)
         return wav
 
+    def voice_conversion(self, y, y_lengths, source_speaker, target_speaker):
+        """Forward pass for voice conversion
+        Args:
+            y (Tensor): Reference spectrograms. Tensor of shape [B, T, C]
+            y_lengths (Tensor): Length of each reference spectrogram. Tensor of shape [B]
+            source_speaker (Tensor): Reference speaker ID. Tensor of shape [B, T]
+            target_speaker (Tensor): Target speaker ID. Tensor of shape [B, T]
+        """
+        assert self.num_speakers > 0, "num_speakers have to be larger than 0."
+        # speaker embedding
+        if self.model_config.use_speaker_ids:
+            g_src = self.emb_g(torch.from_numpy((np.array(source_speaker))).unsqueeze(0)).unsqueeze(-1)
+            g_tgt = self.emb_g(torch.from_numpy((np.array(target_speaker))).unsqueeze(0)).unsqueeze(-1)
+        elif self.model_config.use_speaker_embeds:
+            g_src = F.normalize(source_speaker).unsqueeze(-1)
+            g_tgt = F.normalize(target_speaker).unsqueeze(-1)
+        else:
+            raise RuntimeError(" [!] Voice conversion is only supported on multi-speaker models.")
+
+        z, _, _, y_mask = self.audio_encoder(y, y_lengths, g=g_src)
+        z_p = self.flow(z, y_mask, g=g_src)
+        z_hat = self.flow(z_p, y_mask, g=g_tgt, reverse=True)
+        o_hat = self.waveform_decoder(z_hat * y_mask, g=g_tgt)
+        return o_hat, y_mask, (z, z_p, z_hat)

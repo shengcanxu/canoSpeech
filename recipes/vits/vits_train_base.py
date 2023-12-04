@@ -154,4 +154,3 @@ class VitsTrain_Base(TrainerModelWithDataset):
     def forward(self, input: torch.Tensor) -> Dict:
         print("nothing to do! doing the real train code in train_step. ")
         return input
-
