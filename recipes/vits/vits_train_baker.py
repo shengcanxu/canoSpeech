@@ -71,7 +71,7 @@ class VitsTrain(VitsTrain_Base):
     def test_run(self, assets) -> Tuple[Dict, Dict]:
         output_path = assets["output_path"]
         print("doing test run...")
-        text = "wo3 men2 dou1 shi4 zhong1 guo2 ren2 sp wo3 ai4 jia1 xiang1 sp"
+        text = "我们都是中国人，我爱家乡！"
 
         wav = self.inference(text)
         wav = wav[0, 0].cpu().float().numpy()
