@@ -66,7 +66,7 @@ class AudioConfig(Coqpit):
 
 @dataclass
 class TextEncoderConfig(Coqpit):
-    num_chars:int = 165
+    num_chars:int = 178
     hidden_channels_ffn:int = 768
     num_heads:int = 2
     num_layers:int = 10

@@ -1,256 +1,256 @@
-D:/dataset/baker/Wave/004558.wav|baker|zh|l iang2 #0 zh e3 #0 j vn1 #0 ^ uei4 #0 t ou4 #0 l u4 #0 x iao1 #0 x i5 #0 l ai2 #0 ^ van2 #0 sp d an4 #0 f ou3 #0 r en4 #0 x iao1 #0 x i5 #0 l ai2 #0 z ii4 #0 ^ i4 #0 h ai1 #0 sp eos
-D:/dataset/baker/Wave/009697.wav|baker|zh|ch uang1 #0 ^ uai4 #0 ^ uan3 #0 f eng1 #0 ch uei1 #0 f u2 #0 sp sh u4 #0 ^ ie4 #0 ^ iou3 #0 l e5 #0 h uo2 #0 l i4 #0 sp h ua1 #0 l a1 #0 l a1 #0 d e5 #0 x iang3 #0 sp x iang4 #0 z ai4 #0 s u4 #0 sh uo1 #0 zh e5 #0 sh en2 #0 m e5 #0 sp eos
-D:/dataset/baker/Wave/007854.wav|baker|zh|t a1 #0 ch eng1 #0 zh iii1 #0 ^ uei2 #0 sp ^ v2 #0 k uai4 #0 d e5 #0 z ao3 #0 ch en2 #0 sp sp eos
-D:/dataset/baker/Wave/004976.wav|baker|zh|^ uo3 #0 h uei4 #0 ^ uan2 #0 h en3 #0 d uo1 #0 ^ iou2 #0 x i4 #0 n e5 #0 sp eos
-D:/dataset/baker/Wave/004050.wav|baker|zh|j ia3 #0 j ia4 #0 sh iii3 #0 zh eng4 #0 z ii4 #0 t i3 #0 g uang1 #0 h ua2 #0 sp m ei2 #0 ^ iou3 #0 ^ ao1 #0 t u1 #0 g an3 #0 sp eos
-D:/dataset/baker/Wave/008672.wav|baker|zh|sh a1 #0 h e2 #0 sh iii4 #0 d a1 #0 l ian2 #0 c uen1 #0 x iang4 #0 m u4 #0 x ian4 #0 ch ang3 #0 sp eos
-D:/dataset/baker/Wave/000589.wav|baker|zh|^ in1 #0 ^ u2 #0 f a2 #0 r en3 #0 sh ou4 #0 b ing4 #0 t ong4 #0 zh e2 #0 m o2 #0 x van3 #0 z e2 #0 t iao4 #0 l ou2 #0 l e5 #0 sp eos
-D:/dataset/baker/Wave/004824.wav|baker|zh|^ ia2 #0 d ian3 #0 ch eng1 #0 ^ uang2 #0 d e5 #0 h an2 #0 g uo2 #0 x iao3 #0 z ii5 #0 l iou3 #0 ch eng2 #0 m in3 #0 ^ iou3 #0 ^ uang4 #0 ch uang4 #0 z ao4 #0 l i4 #0 sh iii3 #0 m a5 #0 sp eos
-D:/dataset/baker/Wave/005310.wav|baker|zh|q ian2 #0 ^ uan3 #0 sp l iou2 #0 h ua2 #0 q ing1 #0 d e5 #0 zh iii2 #0 ^ er2 #0 zh iii2 #0 n v3 #0 m en5 #0 l in2 #0 sh iii2 #0 d a1 #0 q i3 #0 l e5 #0 l ing2 #0 t ang2 #0 sp eos
-D:/dataset/baker/Wave/008495.wav|baker|zh|zh eng3 #0 t iao2 #0 g ong1 #0 l u4 #0 d uo1 #0 ch u4 #0 s uen2 #0 h uei3 #0 ^ ian2 #0 zh ong4 #0 sp x ian3 #0 x iang4 #0 h uan2 #0 sh eng1 #0 sp eos
-D:/dataset/baker/Wave/007412.wav|baker|zh|q i2 #0 ^ ia4 #0 l i4 #0 d e5 #0 ^ iang3 #0 f u4 #0 z ai4 #0 ^ uai4 #0 d i4 #0 d a3 #0 g ong1 #0 sp ^ iang2 #0 m u3 #0 z ai4 #0 j ia1 #0 c ao1 #0 ch iii2 #0 j ia1 #0 ^ u4 #0 sp eos
-D:/dataset/baker/Wave/009096.wav|baker|zh|h uei4 #0 h ou4 #0 sp l v4 #0 s e4 #0 l i4 #0 ^ uei2 #0 b iao3 #0 sh iii4 #0 sp x iang1 #0 x in4 #0 z ong2 #0 t ong3 #0 h e2 #0 h u1 #0 l uo2 #0 j i5 #0 d e5 #0 sh uo1 #0 f a3 #0 sp eos
-D:/dataset/baker/Wave/001125.wav|baker|zh|d uei4 #0 ^ v2 #0 m ei2 #0 ^ ie1 #0 ^ er3 #0 ^ er2 #0 ^ ian2 #0 sp b a1 #0 l ei2 #0 t e4 #0 q ve4 #0 sh iii2 #0 sp ^ u4 #0 ^ iou2 #0 s uo3 #0 zh iii2 #0 sp sp eos
-D:/dataset/baker/Wave/002897.wav|baker|zh|r ang4 #0 ^ van2 #0 b en3 #0 ^ uei1 #0 b o2 #0 d e5 #0 z ii1 #0 j in1 #0 zh uo1 #0 j in1 #0 j ian4 #0 zh ou3 #0 sp eos
-D:/dataset/baker/Wave/001817.wav|baker|zh|d a4 #0 ch u2 #0 ^ uang3 #0 ^ i3 #0 j i2 #0 x in1 #0 ^ en1 #0 sh iii1 #0 l uen4 #0 t an2 #0 sh ang4 #0 sp d uei4 #0 c ii3 #0 j ian4 #0 ^ i4 #0 d e5 #0 p ing2 #0 l uen4 #0 b u2 #0 d uan4 #0 sp eos
-D:/dataset/baker/Wave/009689.wav|baker|zh|zh e4 #0 ^ ie3 #0 sh iii4 #0 z uo4 #0 ^ uei2 #0 ^ uang3 #0 l uo4 #0 x ie2 #0 sh ou3 #0 z uei4 #0 t ong4 #0 k u3 #0 d e5 #0 sh iii4 #0 sp eos
-D:/dataset/baker/Wave/001138.wav|baker|zh|b en3 #0 h uan4 #0 l ao3 #0 h e2 #0 sh ang5 #0 s uei1 #0 ^ i2 #0 b ai3 #0 s uei4 #0 ^ iou2 #0 ^ u3 #0 sp d an4 #0 sh en1 #0 t i3 #0 ^ ing4 #0 l ang3 #0 sp sh eng1 #0 h uo2 #0 ^ uan2 #0 q van2 #0 z ii4 #0 l i3 #0 sp eos
-D:/dataset/baker/Wave/002037.wav|baker|zh|t a1 #0 ^ u2 #0 s ii1 #0 d e5 #0 p in3 #0 g e2 #0 l ing4 #0 r en2 #0 j ing4 #0 ^ iang3 #0 sp eos
-D:/dataset/baker/Wave/001396.wav|baker|zh|t ou2 #0 t ai1 #0 sh iii4 #0 ^ i4 #0 m en2 #0 x ve2 #0 ^ uen4 #0 ^ a5 #0 sp eos
-D:/dataset/baker/Wave/001366.wav|baker|zh|zh iii2 #0 f a3 #0 d uei4 #0 ^ van2 #0 ^ iang2 #0 l in2 #0 ch uan1 #0 k an4 #0 d ao4 #0 sp zh e4 #0 l iang4 #0 ^ uo4 #0 ^ er3 #0 ^ uo4 #0 g ao1 #0 s u4 #0 c ong2 #0 p o1 #0 d ing3 #0 sh iii3 #0 d ao4 #0 p o1 #0 d i3 #0 sp eos
-D:/dataset/baker/Wave/001815.wav|baker|zh|^ iong1 #0 d uen3 #0 m en5 #0 d e5 #0 ^ i2 #0 ^ uei4 #0 zh uei1 #0 p eng3 #0 sp sh iii3 #0 t a1 #0 g eng4 #0 j ia1 #0 ^ uang4 #0 h u1 #0 s uo2 #0 ^ i3 #0 sp ^ ve4 #0 f a1 #0 j iao1 #0 h eng4 #0 l e5 #0 sp eos
-D:/dataset/baker/Wave/000685.wav|baker|zh|d ang1 #0 j i4 #0 zh e3 #0 ^ an4 #0 x ia4 #0 m iao2 #0 b iao3 #0 h ou4 #0 sp g ong1 #0 zh ao4 #0 ch uen1 #0 k ai1 #0 sh iii3 #0 ^ ian2 #0 zh e5 #0 r uan3 #0 t i1 #0 x iang4 #0 x ia4 #0 p a2 #0 sp eos
-D:/dataset/baker/Wave/009061.wav|baker|zh|z uo2 #0 r iii4 #0 sp b ei3 #0 j ing1 #0 ^ ao4 #0 ^ vn4 #0 h uei4 #0 k ai1 #0 m u4 #0 sh iii4 #0 d ao2 #0 ^ ian3 #0 zh iii1 #0 ^ i1 #0 d e5 #0 ^ uang2 #0 ch ao2 #0 g e1 #0 t ou4 #0 l u4 #0 l e5 #0 zh e4 #0 ^ i4 #0 x iao1 #0 x i5 #0 sp eos
-D:/dataset/baker/Wave/009929.wav|baker|zh|z uei4 #0 zh ong1 #0 sp zh ong1 #0 g uo2 #0 n an2 #0 z ii3 #0 p ing1 #0 p ang1 #0 q iou2 #0 d uei4 #0 h uo4 #0 d e2 #0 c ii2 #0 j iang3 #0 x iang4 #0 sp eos
-D:/dataset/baker/Wave/002167.wav|baker|zh|sh ang4 #0 b an1 #0 z u2 #0 x iao2 #0 g eng3 #0 j iou4 #0 sh iii4 #0 q i2 #0 zh ong1 #0 ^ i2 #0 ^ uei4 #0 sp eos
-D:/dataset/baker/Wave/003543.wav|baker|zh|b ang2 #0 f ei3 #0 x ian4 #0 j ie1 #0 d uan4 #0 m ei2 #0 ^ iou2 #0 s uo3 #0 ^ iao4 #0 sh u2 #0 j in1 #0 sp eos
-D:/dataset/baker/Wave/005489.wav|baker|zh|ch en2 #0 j ia1 #0 h uan2 #0 d uei4 #0 c ii3 #0 ^ i2 #0 g ai4 #0 m ei2 #0 ^ iou3 #0 h uei2 #0 d a2 #0 sp zh iii2 #0 n ing3 #0 ^ uai1 #0 l ian3 #0 k an4 #0 zh e5 #0 l v4 #0 sh iii1 #0 sp x iang4 #0 l v4 #0 sh iii1 #0 q iou2 #0 j iou4 #0 sp eos
-D:/dataset/baker/Wave/006594.wav|baker|zh|c ii3 #0 h ou4 #0 sp z ai4 #0 l ao3 #0 x iang1 #0 l iou2 #0 ^ iou3 #0 ^ v2 #0 d e5 #0 s ong2 #0 ^ iong3 #0 x ia4 #0 sp q i2 #0 sh iii2 #0 g uang1 #0 zh an1 #0 r an3 #0 sh ang4 #0 l e5 #0 d u2 #0 p in3 #0 sp eos
-D:/dataset/baker/Wave/005662.wav|baker|zh|b u2 #0 g uo4 #0 g ong1 #0 s ii1 #0 b iao3 #0 sh iii4 #0 sp j i2 #0 sh iii3 #0 g ao1 #0 ^ v2 #0 l iou4 #0 sp q i3 #0 ^ ie4 #0 ^ ie3 #0 ^ u2 #0 k e3 #0 n ai4 #0 h e2 #0 sp eos
-D:/dataset/baker/Wave/005068.wav|baker|zh|x iao3 #0 t u4 #0 z ai3 #0 z ii5 #0 sp n i3 #0 ^ iao4 #0 sh iii4 #0 g an2 #0 ^ uang3 #0 x ia4 #0 b ian1 #0 l a1 #0 sh iii3 #0 sp n i3 #0 j iou4 #0 s ii3 #0 d ing4 #0 l e5 #0 sp eos
-D:/dataset/baker/Wave/005745.wav|baker|zh|sh iii4 #0 h ou4 #0 sp t a1 #0 sh iii2 #0 f en1 #0 h ou4 #0 h uei3 #0 sp b u4 #0 g ai1 #0 z ong3 #0 q i1 #0 f u5 #0 zh e4 #0 g e4 #0 ^ ai2 #0 x iao3 #0 ^ iou4 #0 l ao3 #0 sh iii5 #0 d e5 #0 t ong2 #0 sh iii4 #0 sp eos
-D:/dataset/baker/Wave/004126.wav|baker|zh|sh en4 #0 zh iii4 #0 j vn1 #0 zh eng4 #0 f u3 #0 z ii4 #0 ^ van4 #0 j iao1 #0 q van2 #0 ^ v2 #0 m in2 #0 x van3 #0 zh eng4 #0 f u3 #0 sp ^ ie3 #0 sh iii4 #0 zh e4 #0 zh ong3 #0 x in4 #0 n ian4 #0 d e5 #0 ch an3 #0 ^ u4 #0 sp eos
-D:/dataset/baker/Wave/000183.wav|baker|zh|zh u1 #0 l ei4 #0 x ia4 #0 l uo4 #0 q ing2 #0 s a3 #0 k ong1 #0 ch uang2 #0 sp eos
-D:/dataset/baker/Wave/005064.wav|baker|zh|z ai4 #0 b a2 #0 l ao3 #0 zh ang1 #0 b ao4 #0 d a3 #0 ^ i2 #0 d uen4 #0 h ou4 #0 sp s an1 #0 r en2 #0 h ai2 #0 b u4 #0 j ie3 #0 h en4 #0 ^ iou4 #0 ch uai4 #0 l e5 #0 l ao3 #0 zh ang1 #0 d e5 #0 ch e1 #0 j i2 #0 j iao3 #0 sp eos
-D:/dataset/baker/Wave/002320.wav|baker|zh|j ia3 #0 p ing2 #0 ^ ao1 #0 k an4 #0 d ao4 #0 h ua4 #0 h en3 #0 g ao1 #0 x ing4 #0 sp eos
-D:/dataset/baker/Wave/002862.wav|baker|zh|m i2 #0 ^ er3 #0 n a4 #0 j iang1 #0 zh e4 #0 zh ong3 #0 t ou2 #0 z ii1 #0 f ang1 #0 f a3 #0 ch eng1 #0 ^ uei2 #0 sp ^ uan3 #0 q i1 #0 t ou2 #0 z ii1 #0 sp sp eos
-D:/dataset/baker/Wave/002130.wav|baker|zh|^ ie3 #0 h uei4 #0 t i2 #0 g ong1 #0 sh eng1 #0 z ii3 #0 p ian1 #0 f ang1 #0 g ei2 #0 x iao3 #0 l iang2 #0 k ou3 #0 sp eos
-D:/dataset/baker/Wave/005024.wav|baker|zh|q i3 #0 n eng2 #0 z uo4 #0 sh iii4 #0 ^ a1 #0 b ian3 #0 ^ iou3 #0 r en4 #0 h e2 #0 p ian4 #0 m ian4 #0 g ai3 #0 b ian4 #0 x ian4 #0 zh uang4 #0 d e5 #0 x ing2 #0 ^ uei2 #0 sp eos
-D:/dataset/baker/Wave/001868.wav|baker|zh|^ o4 #0 sp h ao3 #0 x iang4 #0 sh iii4 #0 d ai4 #0 ^ uang4 #0 sh u1 #0 h uo4 #0 l iou3 #0 ^ ia4 #0 z ii2 #0 x ie3 #0 d e5 #0 sp x ie3 #0 d e5 #0 z en3 #0 m e5 #0 ^ iang4 #0 sp eos
-D:/dataset/baker/Wave/002304.wav|baker|zh|zh e4 #0 t iao2 #0 x ian4 #0 z uei4 #0 zh ong1 #0 b ei4 #0 f ou3 #0 d iao4 #0 sp eos
-D:/dataset/baker/Wave/007228.wav|baker|zh|d uei4 #0 c ii3 #0 t a1 #0 x iao4 #0 n a4 #0 sp sp p in2 #0 d ian2 #0 h ao3 #0 sp b u4 #0 zh ang3 #0 ch ong2 #0 ^ er5 #0 sp sp eos
-D:/dataset/baker/Wave/003802.wav|baker|zh|k e3 #0 n eng2 #0 t ing1 #0 sh ang4 #0 q v4 #0 ^ iou2 #0 d ian2 #0 sh a3 #0 sp eos
-D:/dataset/baker/Wave/001977.wav|baker|zh|zh ao4 #0 r uei2 #0 r uei3 #0 c eng2 #0 sh iii4 #0 zh ong1 #0 g uo2 #0 n v3 #0 p ai2 #0 d e5 #0 h e2 #0 x in1 #0 q iou2 #0 ^ van2 #0 sp k e3 #0 x i1 #0 ^ in1 #0 ^ uei4 #0 sh ang1 #0 b ing4 #0 ^ er2 #0 ^ van3 #0 l i2 #0 s ai4 #0 ch ang3 #0 sp eos
-D:/dataset/baker/Wave/002806.wav|baker|zh|h ei1 #0 g ou2 #0 l ie3 #0 zh e5 #0 d a4 #0 z uei3 #0 sp l u4 #0 r en2 #0 j ian4 #0 l e5 #0 f en1 #0 f en1 #0 d uo3 #0 b i4 #0 sp eos
-D:/dataset/baker/Wave/004701.wav|baker|zh|^ u2 #0 b o2 #0 x iong2 #0 ^ i1 #0 ^ i1 #0 d uan1 #0 x iang2 #0 g uo2 #0 m in2 #0 zh eng4 #0 f u3 #0 sh iii2 #0 q i1 #0 d e5 #0 l ao3 #0 zh ao4 #0 p ian4 #0 sp eos
-D:/dataset/baker/Wave/000388.wav|baker|zh|g ong1 #0 ^ van2 #0 j iou2 #0 b ai3 #0 q i1 #0 sh iii5 #0 ^ u3 #0 n ian2 #0 sp s ong4 #0 ch ao2 #0 c ao2 #0 b in1 #0 p o4 #0 j in1 #0 l ing2 #0 sp n an2 #0 t ang2 #0 g uei1 #0 s ong4 #0 sp eos
-D:/dataset/baker/Wave/004714.wav|baker|zh|^ iou3 #0 sh iii2 #0 h ou4 #0 sp ^ i2 #0 g e4 #0 ^ uei1 #0 ^ ian2 #0 s ong3 #0 t ing1 #0 d e5 #0 j ia3 #0 x in4 #0 x i5 #0 j iou4 #0 n eng2 #0 r ang4 #0 g uan1 #0 ^ van2 #0 sh en1 #0 b ai4 #0 m ing2 #0 l ie4 #0 sp eos
-D:/dataset/baker/Wave/007834.wav|baker|zh|d i4 #0 ^ er4 #0 t ian1 #0 z ao3 #0 sh ang4 #0 ^ iong3 #0 q i2 #0 ch uan1 #0 sh ang4 #0 l e5 #0 j iao1 #0 ^ u3 #0 sh iii2 #0 k uai4 #0 q ian2 #0 x ve2 #0 x iao4 #0 f a1 #0 d e5 #0 x iao4 #0 f u2 #0 sp eos
-D:/dataset/baker/Wave/009626.wav|baker|zh|m ei2 #0 ^ iou3 #0 r en2 #0 f a1 #0 l ao2 #0 s ao5 #0 sp ^ er2 #0 sh iii4 #0 m ao3 #0 z u2 #0 j in4 #0 sp zh uo2 #0 sh ou3 #0 zh eng2 #0 g ai3 #0 sp eos
-D:/dataset/baker/Wave/007980.wav|baker|zh|j ing3 #0 f ang1 #0 ch eng1 #0 sp sh eng4 #0 x ia4 #0 k u4 #0 r e4 #0 n an2 #0 n ai4 #0 sp h en3 #0 d uo1 #0 r en2 #0 d ao4 #0 j iang1 #0 h e2 #0 ^ iou2 #0 ^ iong3 #0 j ie2 #0 sh u3 #0 sp eos
-D:/dataset/baker/Wave/009691.wav|baker|zh|d an1 #0 x in1 #0 zh ang1 #0 m ou3 #0 b ao4 #0 j ing3 #0 sp l iang3 #0 r en2 #0 ^ iong4 #0 zh en3 #0 j in1 #0 ^ u3 #0 zh u4 #0 l e5 #0 zh ang1 #0 m ou3 #0 d e5 #0 z uei3 #0 sp zh iii2 #0 zh iii4 #0 t a1 #0 b u2 #0 z ai4 #0 d ong4 #0 t an5 #0 sp eos
-D:/dataset/baker/Wave/008229.wav|baker|zh|^ i3 #0 j vn1 #0 z ong3 #0 c an1 #0 m ou2 #0 zh ang3 #0 h a1 #0 l u3 #0 c ii2 #0 j iang1 #0 j vn5 #0 l ing2 #0 ch en2 #0 zh ao4 #0 k ai1 #0 j in3 #0 j i2 #0 h uei4 #0 ^ i4 #0 t ao3 #0 l uen4 #0 d uei4 #0 c e4 #0 sp eos
-D:/dataset/baker/Wave/005591.wav|baker|zh|^ uo3 #0 d e5 #0 b ao3 #0 b ao5 #0 ch u1 #0 sh eng1 #0 l a5 #0 sp n in2 #0 m en5 #0 d e5 #0 b ei4 #0 f en4 #0 ^ iou4 #0 t i2 #0 g ao1 #0 l e5 #0 sp eos
-D:/dataset/baker/Wave/001092.wav|baker|zh|x ve1 #0 ^ ve4 #0 ^ e2 #0 x i3 #0 h uan5 #0 x iao4 #0 sp x i3 #0 h uan1 #0 sp ^ ia2 #0 ch iii3 #0 t ian1 #0 t ian1 #0 sh ai4 #0 t ai4 #0 ^ iang5 #0 sp d e5 #0 g an3 #0 j ve2 #0 sp eos
-D:/dataset/baker/Wave/007615.wav|baker|zh|zh iii3 #0 ^ iao4 #0 d a4 #0 j ia1 #0 k en2 #0 j iang3 #0 sp t a1 #0 j iou4 #0 k en3 #0 t ing1 #0 sp eos
-D:/dataset/baker/Wave/007142.wav|baker|zh|s uo2 #0 ^ i3 #0 sp z uei4 #0 d a4 #0 d e5 #0 x ve2 #0 ^ uen4 #0 sh iii4 #0 q ian1 #0 x vn4 #0 sp eos
-D:/dataset/baker/Wave/004638.wav|baker|zh|d ang1 #0 j v2 #0 sh ang4 #0 ^ ve4 #0 zh iii3 #0 k ong4 #0 l u2 #0 c en2 #0 k e1 #0 l an4 #0 ^ iong4 #0 zh iii2 #0 q van2 #0 h e2 #0 q in1 #0 zh an4 #0 g uo2 #0 j ia1 #0 c ai2 #0 ch an3 #0 sp eos
-D:/dataset/baker/Wave/009387.wav|baker|zh|b a4 #0 b a5 #0 d uan1 #0 x iang2 #0 ^ i2 #0 h uei4 #0 sh uo1 #0 sp sp ^ uo3 #0 f a1 #0 sh iii4 #0 sp zh e4 #0 sh iii4 #0 ^ uo3 #0 j ian4 #0 g uo4 #0 d e5 #0 z uei4 #0 sh uai4 #0 d e5 #0 g uang1 #0 t ou2 #0 sp eos
-D:/dataset/baker/Wave/003731.wav|baker|zh|n an2 #0 l ai2 #0 b ei2 #0 ^ uang3 #0 sp ^ iou2 #0 r en2 #0 r u2 #0 zh iii1 #0 sp eos
-D:/dataset/baker/Wave/000305.wav|baker|zh|x ian4 #0 ^ in1 #0 zh iii2 #0 x ing2 #0 x ing2 #0 m an3 #0 ^ v2 #0 ^ i3 #0 sh iii4 #0 f ang4 #0 sp eos
-D:/dataset/baker/Wave/009688.wav|baker|zh|h ai3 #0 d eng1 #0 d uei4 #0 z ou1 #0 j ia1 #0 h ua2 #0 d e5 #0 l ai2 #0 f ang2 #0 b iao3 #0 sh iii4 #0 h uan1 #0 ^ ing2 #0 sp eos
-D:/dataset/baker/Wave/005979.wav|baker|zh|n an2 #0 g uai4 #0 t a1 #0 m en5 #0 h uei4 #0 ch eng2 #0 ^ uei2 #0 r iii4 #0 b en3 #0 r en2 #0 z uei4 #0 x ian4 #0 m u4 #0 d e5 #0 f u1 #0 q i1 #0 ^ ou3 #0 x iang4 #0 sp eos
-D:/dataset/baker/Wave/000865.wav|baker|zh|^ in4 #0 n i2 #0 d uei4 #0 d e5 #0 s ang1 #0 t uo1 #0 s a4 #0 h e2 #0 l a1 #0 zh a1 #0 k e4 #0 p eng2 #0 z ou3 #0 n an2 #0 sh uang1 #0 g uan4 #0 j vn1 #0 b ei1 #0 sp eos
-D:/dataset/baker/Wave/005910.wav|baker|zh|p eng2 #0 h ong2 #0 b a3 #0 t u2 #0 p ian4 #0 f u4 #0 zh iii4 #0 g uo4 #0 l ai2 #0 sp j ia1 #0 sh ang4 #0 b iao1 #0 t i2 #0 sp zh e4 #0 b a2 #0 s an2 #0 h ao3 #0 g uai4 #0 ^ iou5 #0 sp sp ^ iou4 #0 f a1 #0 ch u1 #0 q v4 #0 sp eos
-D:/dataset/baker/Wave/003432.wav|baker|zh|zh e4 #0 sh ou3 #0 sh iii1 #0 d e5 #0 m ing2 #0 z ii4 #0 j iao4 #0 sp m in3 #0 n ong2 #0 sp eos
-D:/dataset/baker/Wave/004790.wav|baker|zh|t ou2 #0 d ing2 #0 ^ iou3 #0 g en1 #0 sh eng2 #0 l ian2 #0 zh e5 #0 sh u4 #0 sp eos
-D:/dataset/baker/Wave/002584.wav|baker|zh|c ii3 #0 h ou4 #0 sp c ai2 #0 f eng5 #0 t an1 #0 s uei1 #0 j i3 #0 c ii4 #0 b an1 #0 q ian1 #0 sp sp d a1 #0 d a1 #0 d a1 #0 sp d e5 #0 f eng2 #0 r en4 #0 j i1 #0 sh eng1 #0 q ve4 #0 c ong2 #0 ^ uei4 #0 t ing2 #0 g uo4 #0 sp eos
-D:/dataset/baker/Wave/004407.wav|baker|zh|zh ong1 #0 x i1 #0 l i3 #0 l ai2 #0 ch u1 #0 q van2 #0 l uo2 #0 x ie3 #0 zh en1 #0 sp eos
-D:/dataset/baker/Wave/007431.wav|baker|zh|f eng1 #0 x ian3 #0 ^ ie3 #0 sh iii4 #0 l ang4 #0 m an4 #0 d e5 #0 ^ i2 #0 b u4 #0 f en5 #0 m a5 #0 sp eos
-D:/dataset/baker/Wave/000800.wav|baker|zh|d an4 #0 sh iii4 #0 sp h ua2 #0 q iang2 #0 ^ v4 #0 ^ v4 #0 g ua3 #0 h uan1 #0 sp eos
-D:/dataset/baker/Wave/000915.wav|baker|zh|d ong1 #0 j ing1 #0 ^ ing1 #0 h ua1 #0 sp r an2 #0 j ing3 #0 j i2 #0 ^ ie3 #0 sp ch u1 #0 k ai1 #0 sp eos
-D:/dataset/baker/Wave/007260.wav|baker|zh|x v1 #0 ^ iao4 #0 d a4 #0 ^ ve1 #0 sp l iang2 #0 x iao3 #0 sh iii2 #0 sp sp eos
-D:/dataset/baker/Wave/002774.wav|baker|zh|^ er2 #0 q ie3 #0 h ai2 #0 sh iii4 #0 d i1 #0 ^ iao1 #0 d e5 #0 ^ o5 #0 sp eos
-D:/dataset/baker/Wave/007021.wav|baker|zh|^ iou3 #0 sh en2 #0 m e5 #0 zh eng4 #0 j v4 #0 n eng2 #0 g ou4 #0 zh eng4 #0 m ing2 #0 l i3 #0 ^ uan4 #0 j vn1 #0 ^ iou3 #0 f ei1 #0 f a3 #0 zh an4 #0 ^ iou3 #0 d e5 #0 m u4 #0 d i4 #0 n e5 #0 sp eos
-D:/dataset/baker/Wave/009101.wav|baker|zh|z ai4 #0 ^ uei4 #0 l ai2 #0 ^ u3 #0 t ian1 #0 l i3 #0 sp d ou1 #0 ^ iou3 #0 j iang4 #0 ^ v3 #0 sp ^ uai4 #0 ch u1 #0 j i4 #0 d e5 #0 d ai4 #0 h ao2 #0 ^ v3 #0 j v4 #0 sp eos
-D:/dataset/baker/Wave/000544.wav|baker|zh|k ong3 #0 m ing2 #0 d eng1 #0 x iang1 #0 ch uan2 #0 ^ iou2 #0 zh u1 #0 g e2 #0 k ong3 #0 m ing2 #0 f a1 #0 m ing2 #0 sp eos
-D:/dataset/baker/Wave/008838.wav|baker|zh|sh iii4 #0 f a1 #0 z ao3 #0 ^ ing2 #0 n an2 #0 l i3 #0 l iou4 #0 h ao4 #0 l ou2 #0 q i1 #0 l ing2 #0 l iou4 #0 sh iii4 #0 d e5 #0 ^ i2 #0 g e4 #0 x iao3 #0 ^ uo4 #0 sh iii4 #0 sp eos
-D:/dataset/baker/Wave/002511.wav|baker|zh|sh en1 #0 ^ ua1 #0 x i4 #0 ch a2 #0 sp b a2 #0 ch u1 #0 l uo2 #0 b o5 #0 d ai4 #0 ch u1 #0 n i2 #0 sp eos
-D:/dataset/baker/Wave/001690.wav|baker|zh|s uei2 #0 h ou4 #0 sp n ie4 #0 d ao4 #0 x i3 #0 t uei1 #0 k ai1 #0 ch uang1 #0 h u5 #0 t iao4 #0 x ia4 #0 l ou2 #0 t ao2 #0 sh eng1 #0 sp eos
-D:/dataset/baker/Wave/007480.wav|baker|zh|j i4 #0 zh e2 #0 z ou3 #0 j in4 #0 ^ i4 #0 j ia1 #0 q i4 #0 ch e1 #0 g ai3 #0 zh uang1 #0 z uo1 #0 f ang5 #0 sp eos
-D:/dataset/baker/Wave/004113.wav|baker|zh|ch u1 #0 r u4 #0 ^ iou3 #0 ch e1 #0 d ai4 #0 b u4 #0 sp ch e1 #0 x ing2 #0 z ii4 #0 x van3 #0 sp h ai2 #0 ^ iou3 #0 b ao2 #0 m a3 #0 ^ o5 #0 sp eos
-D:/dataset/baker/Wave/002516.wav|baker|zh|f ei1 #0 ^ er5 #0 ^ ve1 #0 d ong2 #0 m ou3 #0 d i4 #0 ^ er4 #0 t ian1 #0 d ao4 #0 q i2 #0 z u1 #0 zh u4 #0 d e5 #0 g ong1 #0 ^ v4 #0 ^ ve1 #0 h uei4 #0 sp d ong2 #0 m ou3 #0 x in1 #0 r an2 #0 t ong2 #0 ^ i4 #0 sp eos
-D:/dataset/baker/Wave/007640.wav|baker|zh|^ iou3 #0 sh iii2 #0 z ai4 #0 sh ang1 #0 q van1 #0 q ing3 #0 g e5 #0 b ang4 #0 b ang5 #0 d ou1 #0 n an2 #0 sp eos
-D:/dataset/baker/Wave/002539.wav|baker|zh|zh eng4 #0 f u3 #0 ^ iou4 #0 sh e4 #0 l i4 #0 r e4 #0 x ian4 #0 ^ er4 #0 s an1 #0 j iou2 #0 j iou3 #0 ^ er4 #0 ^ iao1 #0 ^ u2 #0 j iou3 #0 g ong1 #0 ch a2 #0 x vn2 #0 sp eos
-D:/dataset/baker/Wave/006346.wav|baker|zh|^ uo3 #0 j in2 #0 g uan3 #0 z uo4 #0 l e5 #0 ^ i4 #0 x ie1 #0 f u4 #0 z e2 #0 d e5 #0 g ong1 #0 z uo4 #0 sp d an4 #0 ^ ie3 #0 f an4 #0 g uo4 #0 c uo4 #0 ^ u4 #0 sp z ai1 #0 g uo4 #0 g en1 #0 d ou5 #0 sp p eng4 #0 g uo4 #0 d ing1 #0 z ii5 #0 sp eos
-D:/dataset/baker/Wave/002901.wav|baker|zh|m ei3 #0 sh ao4 #0 n v3 #0 ^ uei4 #0 n in2 #0 f u2 #0 ^ u4 #0 sp eos
-D:/dataset/baker/Wave/008214.wav|baker|zh|t a1 #0 d a3 #0 s uan4 #0 n u3 #0 l i4 #0 g ong1 #0 z uo4 #0 z an3 #0 q ian2 #0 sp s an1 #0 n ian2 #0 h ou4 #0 k ai1 #0 zh e5 #0 ch e1 #0 q v4 #0 z ii4 #0 j ia4 #0 ^ iou2 #0 sp eos
-D:/dataset/baker/Wave/008724.wav|baker|zh|f u1 #0 m ian4 #0 m o2 #0 l ou5 #0 sp eos
-D:/dataset/baker/Wave/003711.wav|baker|zh|t a1 #0 ^ ian4 #0 ^ u4 #0 ^ i4 #0 sh u4 #0 m o4 #0 l uo4 #0 sp t uei2 #0 f ei4 #0 d e5 #0 x ian4 #0 x iang4 #0 sp eos
-D:/dataset/baker/Wave/004793.wav|baker|zh|g eng4 #0 ^ uei2 #0 ^ ian2 #0 zh ong4 #0 h ai2 #0 z ai4 #0 ^ v2 #0 sp z an3 #0 x iang4 #0 m u5 #0 sp sp eos
-D:/dataset/baker/Wave/007686.wav|baker|zh|z uo4 #0 ^ uei2 #0 x iao3 #0 j iou4 #0 z ii3 #0 d e5 #0 ^ uo3 #0 q v4 #0 q van4 #0 j ia4 #0 sp g uo3 #0 r an2 #0 ^ iou3 #0 ^ iong4 #0 sp eos
-D:/dataset/baker/Wave/000910.wav|baker|zh|z ai4 #0 j ie1 #0 t ou2 #0 m ai4 #0 ^ i4 #0 d e5 #0 l i3 #0 ^ v4 #0 x van1 #0 d ie1 #0 d ie5 #0 sp eos
-D:/dataset/baker/Wave/007998.wav|baker|zh|^ uo3 #0 m en5 #0 d e5 #0 sh eng1 #0 h uo2 #0 zh en1 #0 sh iii4 #0 b i3 #0 m i4 #0 h ai2 #0 t ian2 #0 n a5 #0 sp eos
-D:/dataset/baker/Wave/001131.wav|baker|zh|sh iii4 #0 b u2 #0 sh iii4 #0 sh ang4 #0 g e5 #0 ^ ve4 #0 j ing1 #0 ch ang2 #0 ^ ao2 #0 ^ ie4 #0 ^ ia5 #0 sp eos
-D:/dataset/baker/Wave/007372.wav|baker|zh|t ing1 #0 ^ i4 #0 x ie1 #0 x iao4 #0 ^ van2 #0 m in2 #0 ^ iao2 #0 sp b i3 #0 r u2 #0 l ao3 #0 l ang2 #0 d e5 #0 sp ^ ve4 #0 g uang1 #0 q ing1 #0 ch eng2 #0 sp sp sp m ei3 #0 r en2 #0 sp eos
-D:/dataset/baker/Wave/002637.wav|baker|zh|m u3 #0 q in1 #0 ^ uang2 #0 x iao3 #0 h ong2 #0 ^ i4 #0 r en2 #0 l a1 #0 ch e3 #0 t a1 #0 zh ang3 #0 d a4 #0 sp eos
-D:/dataset/baker/Wave/002297.wav|baker|zh|^ i1 #0 zh uo2 #0 d a3 #0 b an4 #0 ^ ie2 #0 h en2 #0 j ian3 #0 d an1 #0 g an4 #0 l ian4 #0 sp eos
-D:/dataset/baker/Wave/008450.wav|baker|zh|g u2 #0 s uei3 #0 j van1 #0 x ian4 #0 g uo4 #0 ch eng2 #0 zh ong1 #0 d e5 #0 f an4 #0 h ao2 #0 j ie2 #0 sp eos
-D:/dataset/baker/Wave/004540.wav|baker|zh|^ iong4 #0 t a1 #0 m en5 #0 sh ou1 #0 c ang2 #0 zh e3 #0 d e5 #0 h ang2 #0 h ua4 #0 sp g ai1 #0 q ian2 #0 b i4 #0 j iao4 #0 m eng3 #0 j iang1 #0 ^ u3 #0 q ian1 #0 sp eos
-D:/dataset/baker/Wave/004930.wav|baker|zh|^ er2 #0 j v4 #0 l ing4 #0 ^ i4 #0 zh iii1 #0 q ing2 #0 r en2 #0 sh iii4 #0 t ou4 #0 l u4 #0 sp n v3 #0 sh eng1 #0 d e5 #0 s ii3 #0 ^ uang2 #0 x i4 #0 ch iii1 #0 d uo4 #0 t ai1 #0 ^ iao4 #0 s uo3 #0 zh iii4 #0 sp eos
-D:/dataset/baker/Wave/001760.wav|baker|zh|zh an1 #0 c ang1 #0 ^ ing5 #0 d e5 #0 zh iii3 #0 f ang4 #0 ^ i4 #0 t ian1 #0 h uei4 #0 zh an1 #0 m an3 #0 c ang1 #0 ^ ing5 #0 sp ^ er4 #0 h uo4 #0 p eng2 #0 ^ iou5 #0 sh uo1 #0 ^ uei4 #0 sh en2 #0 m e5 #0 d ou1 #0 n a4 #0 m e5 #0 sh a3 #0 sp m ei2 #0 k an4 #0 d ao4 #0 t ong2 #0 b an4 #0 d ou1 #0 s ii3 #0 l e5 #0 m a5 #0 sp eos
-D:/dataset/baker/Wave/005074.wav|baker|zh|^ iang2 #0 b ing1 #0 b ei4 #0 j i1 #0 sh ang1 #0 h ou4 #0 sp b ei4 #0 j ing3 #0 ch a2 #0 f an2 #0 n ing3 #0 zh e5 #0 sh uang1 #0 b i4 #0 sp j iou1 #0 zh u4 #0 ^ i1 #0 l ing3 #0 sp ^ ia1 #0 x ia4 #0 ch e1 #0 l ai2 #0 sp eos
-D:/dataset/baker/Wave/009971.wav|baker|zh|d a2 #0 s ao3 #0 ^ uan2 #0 n i3 #0 h uei4 #0 h en2 #0 ^ iou3 #0 ch eng2 #0 j iou4 #0 g an3 #0 d e5 #0 sp sh iii4 #0 ^ i2 #0 sh iii4 #0 sp n i3 #0 j iou4 #0 x in4 #0 l e5 #0 sp eos
-D:/dataset/baker/Wave/008618.wav|baker|zh|s an1 #0 sh iii4 #0 ^ iao4 #0 j ia1 #0 k uai4 #0 sh eng1 #0 t ai4 #0 h an2 #0 ^ iang3 #0 f a1 #0 zh an3 #0 q v1 #0 j ian4 #0 sh e4 #0 sp eos
-D:/dataset/baker/Wave/008971.wav|baker|zh|^ er2 #0 ^ an4 #0 zh ao4 #0 n ong2 #0 c uen1 #0 f eng1 #0 s u2 #0 ^ uang2 #0 ^ uang3 #0 sh iii4 #0 j ie2 #0 h uen1 #0 sh iii2 #0 n an2 #0 f ang1 #0 ch u1 #0 f ang2 #0 z ii5 #0 sp n v3 #0 f ang1 #0 ch u1 #0 j ia4 #0 zh uang5 #0 sp eos
-D:/dataset/baker/Wave/000010.wav|baker|zh|k e1 #0 t e4 #0 n i1 #0 sh en1 #0 ch uan1 #0 b ao4 #0 ^ uen2 #0 d a4 #0 ^ i1 #0 sp eos
-D:/dataset/baker/Wave/004711.wav|baker|zh|b ie2 #0 ^ uei4 #0 b u4 #0 g ai1 #0 ^ uei4 #0 d e5 #0 r en2 #0 sp sh ang1 #0 l e5 #0 b u4 #0 g ai1 #0 sh ang1 #0 d e5 #0 x in1 #0 sp eos
-D:/dataset/baker/Wave/007272.wav|baker|zh|d u2 #0 ch ang3 #0 n ei4 #0 d e5 #0 zh uan1 #0 ^ ie4 #0 zh uang1 #0 b ei4 #0 sp eos
-D:/dataset/baker/Wave/001372.wav|baker|zh|k ao3 #0 sh eng1 #0 ch ang2 #0 q v1 #0 j ie3 #0 ^ uen2 #0 ^ ian2 #0 ^ uen2 #0 sp ^ iou4 #0 c u1 #0 x in1 #0 d a4 #0 ^ i4 #0 sp h uen4 #0 x iao2 #0 sh iii4 #0 j ian4 #0 q ing2 #0 j ie2 #0 sp eos
-D:/dataset/baker/Wave/006915.wav|baker|zh|^ ua2 #0 ^ er2 #0 t an3 #0 ch eng2 #0 f ei1 #0 ch ang2 #0 q i1 #0 d ai4 #0 sp d a3 #0 ^ vn1 #0 sh ou4 #0 h ai4 #0 r en2 #0 sp b ang2 #0 q i3 #0 t a1 #0 d e5 #0 sh ou2 #0 j iao3 #0 j i2 #0 s ai1 #0 zh e5 #0 q i2 #0 z uei3 #0 b a1 #0 sp sp eos
-D:/dataset/baker/Wave/005233.wav|baker|zh|d an4 #0 ^ v2 #0 c ii3 #0 t ong2 #0 sh iii2 #0 sp sp s ao2 #0 m a3 #0 l u4 #0 sp d e5 #0 g ong1 #0 z uo4 #0 j ing4 #0 r an2 #0 ^ ie3 #0 z ao1 #0 sp f eng1 #0 q iang3 #0 sp sp j iou4 #0 b u4 #0 m ian3 #0 r ang4 #0 r en2 #0 j ing1 #0 ch a4 #0 sp eos
-D:/dataset/baker/Wave/004002.wav|baker|zh|^ o5 #0 sp zh e4 #0 zh en1 #0 b a2 #0 ^ uo3 #0 ^ uen4 #0 zh u4 #0 l e5 #0 sp n i3 #0 x i1 #0 ^ uang4 #0 ^ uo3 #0 sh ang4 #0 ^ uang3 #0 s ou1 #0 s uo3 #0 d a2 #0 ^ an4 #0 m a5 #0 sp eos
-D:/dataset/baker/Wave/007964.wav|baker|zh|t a1 #0 t i2 #0 ch u1 #0 zh en3 #0 d uan4 #0 d an1 #0 b iao3 #0 sh iii4 #0 z ii4 #0 j i3 #0 d e5 #0 z uo3 #0 x i1 #0 sp ^ iou4 #0 sh ou2 #0 zh ou3 #0 d ou1 #0 c uo4 #0 sh ang1 #0 sp eos
-D:/dataset/baker/Wave/002895.wav|baker|zh|^ iou2 #0 ^ v2 #0 g uan3 #0 n ei4 #0 b ing4 #0 ^ uei4 #0 ch en2 #0 l ie4 #0 sp n i2 #0 q iou5 #0 sp sp c an1 #0 g uan1 #0 zh e3 #0 f en1 #0 f en1 #0 j ia1 #0 ^ i3 #0 x vn2 #0 ^ uen4 #0 sp eos
-D:/dataset/baker/Wave/003603.wav|baker|zh|m ei3 #0 g uo2 #0 zh u4 #0 ^ ai1 #0 j i2 #0 k ai1 #0 l uo2 #0 d a4 #0 sh iii2 #0 g uan3 #0 ^ ie3 #0 z ao1 #0 x i2 #0 j i1 #0 sp x ing1 #0 t iao2 #0 q i2 #0 b ei4 #0 s ii1 #0 ch e3 #0 sp eos
-D:/dataset/baker/Wave/001094.wav|baker|zh|^ an4 #0 ^ uo3 #0 sh e4 #0 x iang3 #0 sh iii4 #0 g uei1 #0 g uei5 #0 j v1 #0 j v1 #0 b a2 #0 ^ uan2 #0 l uo2 #0 b o5 #0 sp d i4 #0 l i2 #0 ^ ie3 #0 g an1 #0 g an1 #0 j ing4 #0 j ing4 #0 d e5 #0 sp eos
-D:/dataset/baker/Wave/001389.wav|baker|zh|d an4 #0 s uei2 #0 h ou4 #0 h uei4 #0 ^ v4 #0 j iou4 #0 c ii3 #0 p i4 #0 ^ iao2 #0 sp eos
-D:/dataset/baker/Wave/008694.wav|baker|zh|^ uo3 #0 m en5 #0 k e3 #0 m ei2 #0 ^ iou3 #0 d ai4 #0 m ian4 #0 j v4 #0 ^ iou5 #0 sp eos
-D:/dataset/baker/Wave/000460.wav|baker|zh|j v4 #0 ^ an1 #0 n i2 #0 b ao3 #0 b ei4 #0 t ou4 #0 l u4 #0 sp sp d a4 #0 f ang1 #0 sp s uo2 #0 x van3 #0 p ian1 #0 m u4 #0 j ve2 #0 ^ u2 #0 q ian1 #0 z ii4 #0 ^ uen2 #0 sp eos
-D:/dataset/baker/Wave/005632.wav|baker|zh|^ i2 #0 h uei4 #0 ^ iou4 #0 sh uo1 #0 ^ i2 #0 ^ v3 #0 x v2 #0 ^ vn1 #0 d uan4 #0 j ve2 #0 l e5 #0 f u4 #0 n v3 #0 g uan1 #0 x i5 #0 sp ^ ian3 #0 x ia4 #0 b u4 #0 zh iii1 #0 n v3 #0 ^ er2 #0 x ia4 #0 l uo4 #0 sp eos
-D:/dataset/baker/Wave/004588.wav|baker|zh|t a1 #0 g an3 #0 j ve2 #0 ^ iou3 #0 x ie1 #0 ^ uei1 #0 m iao4 #0 sp j iou4 #0 g en1 #0 t a1 #0 z ai4 #0 ^ uei1 #0 b o2 #0 sh ang4 #0 sp ^ iao1 #0 h e5 #0 sp ^ i2 #0 ch uan1 #0 p ing2 #0 g uo3 #0 ^ i2 #0 ^ iang4 #0 sp eos
-D:/dataset/baker/Wave/009274.wav|baker|zh|l eng3 #0 m o4 #0 sp g uo4 #0 h e2 #0 ch ai1 #0 q iao2 #0 sp x in1 #0 ^ uen2 #0 c ong2 #0 h uei2 #0 ^ i4 #0 l i3 #0 zh uai4 #0 ch u1 #0 zh e4 #0 x ie1 #0 z ii4 #0 ^ ian3 #0 sp eos
-D:/dataset/baker/Wave/006689.wav|baker|zh|s an1 #0 sh iii4 #0 j ia1 #0 q iang2 #0 k ua4 #0 j ing4 #0 z ii1 #0 j in1 #0 l iou2 #0 d ong4 #0 j ian1 #0 c e4 #0 g uan2 #0 l i3 #0 sp eos
-D:/dataset/baker/Wave/006455.wav|baker|zh|^ uo3 #0 z ai4 #0 l ang2 #0 f ang2 #0 d ai1 #0 l e5 #0 ^ i4 #0 n ian2 #0 b an4 #0 sp eos
-D:/dataset/baker/Wave/005722.wav|baker|zh|m eng4 #0 m ai3 #0 z ai4 #0 ^ in4 #0 d u4 #0 j ing1 #0 j i4 #0 f ang1 #0 m ian4 #0 zh an4 #0 j v3 #0 z u2 #0 q ing1 #0 zh ong4 #0 d e5 #0 d i4 #0 ^ uei4 #0 sp eos
-D:/dataset/baker/Wave/005743.wav|baker|zh|zh e4 #0 j iang1 #0 j ia1 #0 s u4 #0 h uan2 #0 j ie3 #0 g ao1 #0 zh ong1 #0 x ve2 #0 ^ uei4 #0 d e5 #0 j in3 #0 q ve1 #0 n an2 #0 t i2 #0 sp eos
-D:/dataset/baker/Wave/001324.wav|baker|zh|s uen1 #0 m ou3 #0 ^ iong4 #0 b u4 #0 t iao2 #0 j iang1 #0 x iao3 #0 l an2 #0 k uen2 #0 b ang3 #0 s ai1 #0 d ao4 #0 ch uang2 #0 x ia4 #0 sp eos
-D:/dataset/baker/Wave/002854.wav|baker|zh|d an4 #0 sh iii4 #0 sp zh en1 #0 b u4 #0 zh iii1 #0 d ao4 #0 n v3 #0 ^ er2 #0 d e5 #0 k ang4 #0 ^ ia1 #0 n eng2 #0 l i4 #0 ^ iou3 #0 d uo1 #0 d a4 #0 sp r en2 #0 ^ ian2 #0 k e3 #0 ^ uei4 #0 ^ a5 #0 sp eos
-D:/dataset/baker/Wave/009658.wav|baker|zh|t a1 #0 m en5 #0 b en2 #0 x iao3 #0 l i4 #0 ^ uei1 #0 sp z uei4 #0 n an2 #0 j ing1 #0 sh ou4 #0 sh iii4 #0 ch ang3 #0 d e5 #0 zh en4 #0 d ang4 #0 sp eos
-D:/dataset/baker/Wave/005413.wav|baker|zh|d an4 #0 zh e4 #0 ^ uei4 #0 n eng2 #0 z u2 #0 zh iii3 #0 b ei4 #0 ch ai1 #0 j ie3 #0 sp eos
-D:/dataset/baker/Wave/005759.wav|baker|zh|f an4 #0 ^ uei2 #0 d ong1 #0 zh iii4 #0 k ang1 #0 ^ ou1 #0 l u4 #0 sp n an2 #0 zh iii4 #0 g uei1 #0 h ua4 #0 l u4 #0 sp x i1 #0 zh iii4 #0 zh u1 #0 m ao3 #0 h e2 #0 sp b ei3 #0 zh iii4 #0 k ang1 #0 g ong1 #0 l u4 #0 sp eos
-D:/dataset/baker/Wave/006478.wav|baker|zh|^ uo3 #0 b a4 #0 ch ang2 #0 sh uo1 #0 sh iii4 #0 g ou2 #0 sh iii3 #0 h u2 #0 l e5 #0 ^ ian3 #0 j ing5 #0 c ai2 #0 k an4 #0 sh ang4 #0 ^ uo3 #0 m a1 #0 d e5 #0 sp n i2 #0 ^ ie3 #0 sh iii4 #0 m a5 #0 sp eos
-D:/dataset/baker/Wave/001114.wav|baker|zh|l iang3 #0 m ing2 #0 x iang1 #0 q in1 #0 n v3 #0 ch a4 #0 d ian3 #0 j iou4 #0 sp ^ iang2 #0 r u4 #0 h u2 #0 k ou3 #0 sp sp eos
-D:/dataset/baker/Wave/009055.wav|baker|zh|b ai3 #0 m ing2 #0 j iang1 #0 j vn5 #0 zh iii2 #0 sh u4 #0 ^ i3 #0 ch eng2 #0 ^ uei2 #0 ^ i4 #0 ^ u4 #0 zh iii2 #0 sh u4 #0 h uo2 #0 d ong4 #0 d e5 #0 d ian3 #0 f an4 #0 sp eos
-D:/dataset/baker/Wave/007192.wav|baker|zh|^ uo3 #0 zh e4 #0 m e5 #0 g uan1 #0 x in1 #0 n i3 #0 n i3 #0 h ai2 #0 sh uo1 #0 ^ uo3 #0 f an2 #0 sp eos
-D:/dataset/baker/Wave/000045.wav|baker|zh|sh a1 #0 ch ang3 #0 j ing4 #0 ^ vn3 #0 m ing4 #0 sp zh uang4 #0 zh iii4 #0 ^ ie3 #0 ^ u2 #0 ^ uei2 #0 sp eos
-D:/dataset/baker/Wave/008430.wav|baker|zh|h e1 #0 z uei4 #0 l e5 #0 d e5 #0 l i2 #0 k an3 #0 b ei4 #0 t i1 #0 x ing3 #0 h ou4 #0 sp f an1 #0 sh en1 #0 zh an4 #0 q i3 #0 ^ v3 #0 zh e4 #0 m ing2 #0 m in2 #0 j ing3 #0 s ii1 #0 ch e2 #0 q i3 #0 l ai2 #0 sp eos
-D:/dataset/baker/Wave/008806.wav|baker|zh|j i4 #0 zh e2 #0 p ao3 #0 l ai2 #0 d i4 #0 ^ i1 #0 g e4 #0 ^ uen4 #0 t a1 #0 sp n i3 #0 m en5 #0 d uei4 #0 sh u3 #0 j ia4 #0 d e5 #0 x vn4 #0 l ian4 #0 ^ iou3 #0 sh en2 #0 m e5 #0 k an4 #0 f a3 #0 sp eos
-D:/dataset/baker/Wave/006802.wav|baker|zh|x iou4 #0 zh iii4 #0 r iii4 #0 q ian2 #0 ^ i4 #0 p ian1 #0 g uan1 #0 ^ v2 #0 t a1 #0 d e5 #0 b ao4 #0 d ao4 #0 sp r e2 #0 q i3 #0 n ei4 #0 d i4 #0 ^ uang3 #0 m in2 #0 b u4 #0 m an3 #0 sp eos
-D:/dataset/baker/Wave/001933.wav|baker|zh|ch en2 #0 b ing1 #0 ^ i2 #0 x ia4 #0 z ii5 #0 h uo3 #0 l e5 #0 sp d a4 #0 h ou2 #0 q i3 #0 l ai2 #0 sp eos
-D:/dataset/baker/Wave/006506.wav|baker|zh|ch e1 #0 zh an4 #0 d e5 #0 ^ uen4 #0 x vn4 #0 d ian4 #0 h ua4 #0 ^ uei2 #0 b a1 #0 l iou4 #0 s ii4 #0 s an1 #0 s an1 #0 ^ er4 #0 s an1 #0 ^ er4 #0 sp eos
-D:/dataset/baker/Wave/001332.wav|baker|zh|g ang2 #0 f u3 #0 x in1 #0 ^ ian4 #0 ch u1 #0 s ii4 #0 k uan3 #0 r iii4 #0 b en3 #0 ^ ing1 #0 ^ er2 #0 p ei4 #0 f ang1 #0 n ai2 #0 f en3 #0 d ian3 #0 h an2 #0 l iang4 #0 j iao4 #0 d i1 #0 sp eos
-D:/dataset/baker/Wave/009076.wav|baker|zh|m ai3 #0 p ing2 #0 ^ in3 #0 l iao4 #0 sp p ing2 #0 g ai4 #0 sh ang4 #0 x ie3 #0 d e5 #0 sp z ai4 #0 l ai2 #0 ^ i4 #0 p ing2 #0 sp sp eos
-D:/dataset/baker/Wave/002435.wav|baker|zh|n a4 #0 n v3 #0 h ai2 #0 d e5 #0 sh uang1 #0 ch uen2 #0 ^ uei1 #0 m in3 #0 zh e5 #0 sp h ong2 #0 r uen4 #0 ^ iou3 #0 g uang1 #0 sp f ang3 #0 f u2 #0 z ai4 #0 g ou1 #0 ^ in3 #0 l uo2 #0 t ian1 #0 ch eng2 #0 d e5 #0 z uei3 #0 ch uen2 #0 sp eos
-D:/dataset/baker/Wave/005126.wav|baker|zh|l ing4 #0 ^ i2 #0 g e5 #0 r e2 #0 ^ ian3 #0 d e5 #0 m ing2 #0 x ing1 #0 d ang1 #0 sh u3 #0 ^ ueng1 #0 h ong2 #0 sp eos
-D:/dataset/baker/Wave/002088.wav|baker|zh|x ian4 #0 z ai4 #0 h ao3 #0 l e5 #0 sp ^ i2 #0 c ii4 #0 m ai3 #0 k e2 #0 ^ i3 #0 ^ iong4 #0 sh ang4 #0 ^ i4 #0 n ian2 #0 b an4 #0 z ai3 #0 d e5 #0 l iang4 #0 b ei5 #0 sp eos
-D:/dataset/baker/Wave/003985.wav|baker|zh|b ei4 #0 r en2 #0 ch uo1 #0 zh e5 #0 j i2 #0 l iang2 #0 g u3 #0 sp h uo2 #0 zh e5 #0 ^ ie3 #0 n an2 #0 sh ou4 #0 sp b u2 #0 sh iii4 #0 ^ uo3 #0 z uan1 #0 n iou2 #0 j iao3 #0 j ian1 #0 sp eos
-D:/dataset/baker/Wave/006591.wav|baker|zh|c ii3 #0 ^ an4 #0 z ai4 #0 q van2 #0 x ia4 #0 m en2 #0 ^ in3 #0 f a1 #0 g e4 #0 f ang1 #0 g uan1 #0 zh u4 #0 sp eos
-D:/dataset/baker/Wave/004580.wav|baker|zh|h ao3 #0 d e5 #0 ^ ia5 #0 sp ^ iao4 #0 ^ i4 #0 q i3 #0 m e5 #0 sp eos
-D:/dataset/baker/Wave/006026.wav|baker|zh|t u3 #0 d i4 #0 ch u1 #0 r ang4 #0 ^ ing1 #0 g ai1 #0 g en1 #0 j v4 #0 k ai1 #0 f a1 #0 sh ang1 #0 d e5 #0 j i4 #0 sh u4 #0 h e2 #0 z ii1 #0 j in1 #0 t iao2 #0 j ian4 #0 sh ai1 #0 x van3 #0 k ai1 #0 f a1 #0 sh ang1 #0 sp eos
-D:/dataset/baker/Wave/009129.wav|baker|zh|x ve2 #0 d ao4 #0 ch eng2 #0 ch u2 #0 f a3 #0 sh iii2 #0 j iou4 #0 h uei4 #0 b ei4 #0 j iou2 #0 j iou3 #0 ch eng2 #0 f a2 #0 b iao3 #0 sp eos
-D:/dataset/baker/Wave/000473.wav|baker|zh|^ uei4 #0 q ing4 #0 sp n ian2 #0 l i4 #0 sp sp g ai1 #0 c uen1 #0 ^ uei3 #0 q ing3 #0 l ai2 #0 t uo1 #0 ^ i1 #0 ^ u3 #0 n iang2 #0 zh u4 #0 x ing4 #0 sp eos
-D:/dataset/baker/Wave/002685.wav|baker|zh|ch u1 #0 r u4 #0 c ii3 #0 d ao4 #0 d e5 #0 t ou2 #0 z ii1 #0 zh e3 #0 q ie4 #0 m o4 #0 m ang2 #0 m u4 #0 g en1 #0 j in4 #0 sp eos
-D:/dataset/baker/Wave/004615.wav|baker|zh|sh an1 #0 zh ong1 #0 n a4 #0 m i2 #0 m eng2 #0 d e5 #0 x iao3 #0 j ing4 #0 sp x iang4 #0 m i2 #0 z ou3 #0 sh en2 #0 j ing1 #0 ^ i2 #0 ^ iang4 #0 ^ uan1 #0 ^ ian2 #0 j in4 #0 ^ ueng3 #0 ^ v4 #0 d e5 #0 g uo3 #0 l in2 #0 sp x iao1 #0 sh iii1 #0 b u2 #0 j ian4 #0 sp eos
-D:/dataset/baker/Wave/006379.wav|baker|zh|n i3 #0 c ai1 #0 ^ a5 #0 n i3 #0 c ai1 #0 ^ a5 #0 n i3 #0 c ai1 #0 ^ a5 #0 sp n i3 #0 c ai1 #0 d uei4 #0 l e5 #0 ^ uo3 #0 j iou4 #0 g ao4 #0 s u5 #0 n i3 #0 sp eos
-D:/dataset/baker/Wave/006858.wav|baker|zh|c eng2 #0 b ei4 #0 f a3 #0 g uo2 #0 m ei2 #0 t i3 #0 g uan1 #0 zh u4 #0 d e5 #0 l ei2 #0 n uo4 #0 sp g ong1 #0 ^ ie4 #0 j ian4 #0 d ie2 #0 ^ an4 #0 sp h en2 #0 k e3 #0 n eng2 #0 x i4 #0 r en2 #0 ^ uei2 #0 n ie1 #0 z ao4 #0 sp eos
-D:/dataset/baker/Wave/007833.wav|baker|zh|^ i1 #0 sh iii4 #0 j i1 #0 ch u3 #0 ^ iang2 #0 l ao3 #0 j in1 #0 t ai4 #0 d i1 #0 sp eos
-D:/dataset/baker/Wave/006954.wav|baker|zh|b ei3 #0 j ing1 #0 g e4 #0 b ie2 #0 j ian1 #0 c e4 #0 d ian3 #0 sp x i1 #0 h ong2 #0 sh iii4 #0 sp q ie2 #0 z ii5 #0 sp t u3 #0 d ou4 #0 sp ^ iang2 #0 c ong1 #0 ^ in1 #0 x ia4 #0 x ve3 #0 ^ van2 #0 ^ in1 #0 d uan4 #0 h uo4 #0 sp eos
-D:/dataset/baker/Wave/005497.wav|baker|zh|h uang2 #0 sh ang4 #0 sp n in2 #0 h ai2 #0 j i4 #0 d e5 #0 d a4 #0 m ing2 #0 h u2 #0 p an4 #0 d e5 #0 x ia4 #0 ^ v3 #0 h e2 #0 m a5 #0 sp eos
-D:/dataset/baker/Wave/008370.wav|baker|zh|j i4 #0 zh e2 #0 g an3 #0 d ao4 #0 ^ iao1 #0 ^ iao1 #0 q i1 #0 ^ i1 #0 ^ van4 #0 j i1 #0 ch ang3 #0 l u4 #0 f en1 #0 ^ van4 #0 j i2 #0 zh en2 #0 q iang3 #0 j iou4 #0 sh iii4 #0 sp eos
-D:/dataset/baker/Wave/008237.wav|baker|zh|^ uo3 #0 m en5 #0 j iou4 #0 j van2 #0 q i3 #0 p u1 #0 g ai4 #0 sp n a2 #0 zh e5 #0 ^ ia2 #0 sh ua1 #0 sh en2 #0 m e5 #0 d e5 #0 q v4 #0 x i3 #0 sh u4 #0 sp eos
-D:/dataset/baker/Wave/003491.wav|baker|zh|^ uo3 #0 j in4 #0 l e5 #0 z uei4 #0 d a4 #0 d e5 #0 n u3 #0 l i4 #0 sp ^ uei4 #0 l e5 #0 l iou2 #0 ^ i2 #0 g e5 #0 ^ van2 #0 g ong1 #0 ^ ao2 #0 ^ ie4 #0 p ei2 #0 t a1 #0 l iao2 #0 sp eos
-D:/dataset/baker/Wave/003620.wav|baker|zh|ch en2 #0 sh uei4 #0 d e5 #0 h an4 #0 ch ao2 #0 z en3 #0 m e5 #0 j iao4 #0 ^ ie3 #0 j iao4 #0 b u4 #0 x ing3 #0 sp eos
-D:/dataset/baker/Wave/007012.wav|baker|zh|k e2 #0 n i3 #0 m en5 #0 zh e4 #0 x ie1 #0 m ing2 #0 m ing2 #0 zh iii1 #0 d ao4 #0 sh iii2 #0 q ing2 #0 d e5 #0 r en2 #0 z en2 #0 k e3 #0 r u2 #0 c ii2 #0 h en3 #0 x in1 #0 sp eos
-D:/dataset/baker/Wave/000281.wav|baker|zh|ch u1 #0 q v4 #0 h ou4 #0 x iang3 #0 d ao4 #0 ^ uai4 #0 m ian4 #0 q v4 #0 ch uang3 #0 ^ i4 #0 ch uang3 #0 sp eos
-D:/dataset/baker/Wave/006202.wav|baker|zh|l a1 #0 m ei2 #0 z ong3 #0 m ian4 #0 j i1 #0 l iang3 #0 q ian1 #0 l ing2 #0 q i1 #0 sh iii5 #0 ^ uan4 #0 p ing2 #0 f ang1 #0 g ong1 #0 l i3 #0 sp r en2 #0 k ou3 #0 l iou4 #0 d ian3 #0 l ing2 #0 s an1 #0 ^ i4 #0 sp eos
-D:/dataset/baker/Wave/009172.wav|baker|zh|^ v2 #0 c ii3 #0 t ong2 #0 sh iii2 #0 sp x iao1 #0 sh ou4 #0 h uei2 #0 n uan3 #0 sh iii3 #0 f ang2 #0 q i3 #0 d e5 #0 z ii1 #0 j in1 #0 ^ ia1 #0 l i4 #0 d e2 #0 d ao4 #0 j i2 #0 d a4 #0 h uan2 #0 j ie3 #0 sp eos
-D:/dataset/baker/Wave/008680.wav|baker|zh|z ai4 #0 ^ i2 #0 c e4 #0 t ie2 #0 g uei3 #0 x ia4 #0 d ao4 #0 zh a3 #0 sh ang4 #0 sp r eng2 #0 n eng2 #0 k an4 #0 j ian4 #0 x ve4 #0 j i4 #0 sp eos
-D:/dataset/baker/Wave/009798.wav|baker|zh|g an1 #0 d ie1 #0 d ie5 #0 ch eng1 #0 q i3 #0 ^ v2 #0 s an3 #0 sp m an4 #0 m an4 #0 z ou3 #0 l e5 #0 g uo4 #0 q v4 #0 sp eos
-D:/dataset/baker/Wave/002351.wav|baker|zh|t u2 #0 ^ uei2 #0 ^ i2 #0 d ong4 #0 f ang2 #0 ^ u1 #0 s uen2 #0 h uei3 #0 ^ ian2 #0 zh ong4 #0 sp eos
-D:/dataset/baker/Wave/006878.wav|baker|zh|ch uen1 #0 l an2 #0 g u3 #0 f en4 #0 s ii4 #0 ^ ve4 #0 f en4 #0 sh iii4 #0 f ou3 #0 zh en1 #0 d e5 #0 t uei4 #0 sh iii4 #0 sp eos
-D:/dataset/baker/Wave/006606.wav|baker|zh|sh iii1 #0 t i3 #0 j ing1 #0 ^ v3 #0 ^ i1 #0 b ao1 #0 g uo3 #0 sp d ian4 #0 x ian4 #0 k uen3 #0 zh a1 #0 sp b ei4 #0 b ao4 #0 d ao4 #0 l e5 #0 h uang2 #0 x v2 #0 g en1 #0 d e5 #0 m o2 #0 t uo1 #0 ch e1 #0 h ou4 #0 z uo4 #0 sp eos
-D:/dataset/baker/Wave/004415.wav|baker|zh|g an3 #0 j ve2 #0 t ian1 #0 q i4 #0 h en3 #0 r ou2 #0 h e2 #0 sp eos
-D:/dataset/baker/Wave/000582.wav|baker|zh|zh ang1 #0 m in2 #0 f u3 #0 m o1 #0 zh e5 #0 t a1 #0 d e5 #0 t ou2 #0 sp h an2 #0 zh e5 #0 l ei4 #0 q van4 #0 ^ uei4 #0 sp eos
-D:/dataset/baker/Wave/006335.wav|baker|zh|m u4 #0 q ian2 #0 sp n ian1 #0 h ua1 #0 s ii4 #0 d e5 #0 sh iii3 #0 ^ iong4 #0 q van2 #0 g uei1 #0 sh u3 #0 zh ong1 #0 g uo2 #0 r en2 #0 m in2 #0 d a4 #0 x ve2 #0 ^ in4 #0 sh ua1 #0 ch ang3 #0 sp eos
-D:/dataset/baker/Wave/009069.wav|baker|zh|g ong1 #0 n ei4 #0 zh eng3 #0 j ie2 #0 l i4 #0 s uo5 #0 sp l ang2 #0 zh u4 #0 m en2 #0 ch uang1 #0 ^ ian2 #0 s e4 #0 x ian1 #0 ^ ian4 #0 sp j i3 #0 m ing2 #0 d ian4 #0 g ong1 #0 zh eng4 #0 z ai4 #0 ^ uei2 #0 x iou1 #0 x ian4 #0 l u5 #0 sp eos
-D:/dataset/baker/Wave/001123.wav|baker|zh|^ uo3 #0 b ao1 #0 l e5 #0 zh u2 #0 s uen1 #0 l ao3 #0 ^ ia1 #0 t ang1 #0 sp h en3 #0 x iang1 #0 d e5 #0 sp eos
-D:/dataset/baker/Wave/008877.wav|baker|zh|f an3 #0 d uei4 #0 zh e3 #0 r en4 #0 ^ uei2 #0 sp t i2 #0 q v3 #0 p ei1 #0 t ai1 #0 g an4 #0 x i4 #0 b ao1 #0 x iang1 #0 d ang1 #0 ^ v2 #0 sp ^ e4 #0 sh a1 #0 sp sh eng1 #0 m ing4 #0 sp eos
-D:/dataset/baker/Wave/008222.wav|baker|zh|t a1 #0 sh uo1 #0 sp f ei1 #0 j i1 #0 z ai4 #0 d ian1 #0 b o3 #0 d i4 #0 ^ i1 #0 c ii4 #0 sh iii1 #0 zh ong4 #0 h ou4 #0 sp g uang3 #0 b o1 #0 c ai2 #0 sh uo1 #0 f ei1 #0 j i1 #0 ^ v4 #0 d ao4 #0 q iang2 #0 q i4 #0 l iou2 #0 sp eos
-D:/dataset/baker/Wave/009733.wav|baker|zh|ch uan1 #0 sh ang4 #0 x i4 #0 zh uang1 #0 sh iii4 #0 ^ ian3 #0 ^ van2 #0 sp t uo1 #0 x ia4 #0 x i4 #0 zh uang1 #0 sh iii4 #0 n ong2 #0 m in2 #0 sp eos
-D:/dataset/baker/Wave/009034.wav|baker|zh|^ iou2 #0 ^ v2 #0 h uo2 #0 ch ang3 #0 sh ang4 #0 f eng1 #0 l i4 #0 b u2 #0 d uan4 #0 j ia1 #0 d a4 #0 sp ^ iou4 #0 j ia1 #0 s u4 #0 l e5 #0 k e3 #0 r an2 #0 ^ u4 #0 r an2 #0 sh ao1 #0 sp eos
-D:/dataset/baker/Wave/008373.wav|baker|zh|zh iii3 #0 sh iii4 #0 sp p ao3 #0 b u4 #0 k e2 #0 ^ i3 #0 q ia1 #0 m iao2 #0 b iao3 #0 sp ^ er2 #0 ^ v2 #0 l e4 #0 q van1 #0 q ve4 #0 m ei2 #0 ^ iou3 #0 d ing4 #0 l uen4 #0 sp eos
-D:/dataset/baker/Wave/001350.wav|baker|zh|c ii3 #0 g uan1 #0 d ian3 #0 b ei4 #0 sp x iou1 #0 g ai2 #0 g ao2 #0 sp c ai3 #0 n a4 #0 sp eos
-D:/dataset/baker/Wave/008626.wav|baker|zh|^ iou3 #0 zh e5 #0 j in1 #0 sh u3 #0 l an2 #0 g an1 #0 d e5 #0 d a4 #0 m en2 #0 x v1 #0 ^ ian3 #0 zh e5 #0 sp eos
-D:/dataset/baker/Wave/000256.wav|baker|zh|^ u3 #0 sh iii4 #0 ^ ie4 #0 m ian4 #0 sp s an1 #0 p en1 #0 sp b u3 #0 f ei2 #0 sp eos
-D:/dataset/baker/Wave/005133.wav|baker|zh|l ao3 #0 p o5 #0 h uei2 #0 d ao4 #0 b ing4 #0 f ang2 #0 l i3 #0 sp ^ i4 #0 l ian3 #0 ^ u2 #0 n ai4 #0 sp eos
-D:/dataset/baker/Wave/000821.wav|baker|zh|n a4 #0 m e5 #0 ^ u2 #0 ^ i4 #0 ^ v2 #0 ^ i2 #0 l uan3 #0 j i1 #0 sh iii2 #0 sp eos
-D:/dataset/baker/Wave/001878.wav|baker|zh|t a1 #0 ^ i3 #0 ^ uei2 #0 h ai2 #0 z ii5 #0 ^ e4 #0 l e5 #0 sp j iou4 #0 ch ong1 #0 n ai2 #0 f en3 #0 g ei3 #0 t a1 #0 h e1 #0 sp x iao3 #0 d ong1 #0 h e1 #0 ^ uan2 #0 h ou4 #0 r eng2 #0 r an2 #0 k u1 #0 n ao4 #0 sp eos
-D:/dataset/baker/Wave/001520.wav|baker|zh|zh u1 #0 h ao3 #0 l ong2 #0 m o1 #0 l e5 #0 m o1 #0 sh uei3 #0 n iou2 #0 sp sh uei3 #0 n iou2 #0 g uai1 #0 g uai1 #0 sh uei4 #0 l e5 #0 x ia4 #0 l ai2 #0 sp eos
-D:/dataset/baker/Wave/009617.wav|baker|zh|q i2 #0 zh ong1 #0 b ao1 #0 k uo4 #0 l ao3 #0 p ai2 #0 r u2 #0 p in2 #0 q i3 #0 ^ ie4 #0 h ang2 #0 zh ou1 #0 m ei3 #0 l i4 #0 j ian4 #0 r u3 #0 ^ ie4 #0 ^ iou3 #0 x ian4 #0 g ong1 #0 s ii1 #0 sp eos
-D:/dataset/baker/Wave/005586.wav|baker|zh|d an1 #0 r en4 #0 ^ ueng4 #0 ^ an1 #0 x ian4 #0 zh ang3 #0 zh iii1 #0 q ian2 #0 sp x ie4 #0 x iao3 #0 d ong1 #0 sh iii4 #0 g uei4 #0 zh ou1 #0 sh eng2 #0 l v3 #0 ^ iou2 #0 j v2 #0 z ong1 #0 h e2 #0 x ie2 #0 t iao2 #0 ch u4 #0 ch u4 #0 zh ang3 #0 sp eos
-D:/dataset/baker/Wave/008661.wav|baker|zh|n a4 #0 t ou2 #0 ^ i2 #0 j v4 #0 b u2 #0 x in4 #0 s uan4 #0 l e5 #0 b ian4 #0 g ua4 #0 l e5 #0 sp eos
-D:/dataset/baker/Wave/004655.wav|baker|zh|n i3 #0 d uei4 #0 ^ uai4 #0 ch u1 #0 z u1 #0 d e5 #0 sh iii4 #0 d a1 #0 l ian2 #0 d ao3 #0 h e2 #0 x iao3 #0 h ao4 #0 d ao3 #0 sp eos
-D:/dataset/baker/Wave/000734.wav|baker|zh|l uo4 #0 p ei4 #0 z ii1 #0 z ai4 #0 d u4 #0 d ang1 #0 x van2 #0 sp m ei3 #0 t uen2 #0 t ian1 #0 h ou4 #0 sp sp eos
-D:/dataset/baker/Wave/006582.wav|baker|zh|l iang3 #0 r en2 #0 g eng4 #0 j ia1 #0 d ang1 #0 zh ong4 #0 z uo4 #0 ch u1 #0 l ou3 #0 b ao4 #0 sp q in1 #0 z uei3 #0 sp n ie1 #0 l ian3 #0 d an4 #0 h e2 #0 h u4 #0 ^ uei4 #0 sh iii2 #0 ^ u4 #0 d eng3 #0 q in1 #0 m i4 #0 d ong4 #0 z uo4 #0 sp eos
-D:/dataset/baker/Wave/004910.wav|baker|zh|h u2 #0 t uei3 #0 m ai4 #0 zh e5 #0 q ing1 #0 ^ vn2 #0 b u4 #0 sp h u3 #0 t ou2 #0 d ing3 #0 zh e5 #0 h ao3 #0 sh iii4 #0 t u2 #0 sp eos
-D:/dataset/baker/Wave/000499.wav|baker|zh|l uo2 #0 t i3 #0 p an1 #0 ^ ian2 #0 sh iii4 #0 j ia1 #0 zh ou1 #0 sh e4 #0 ^ ing3 #0 sh iii1 #0 j ian1 #0 p an1 #0 ^ ian2 #0 ^ ai4 #0 h ao4 #0 zh e3 #0 d i2 #0 ^ an1 #0 d e5 #0 ch uang4 #0 ^ i4 #0 sp eos
-D:/dataset/baker/Wave/007205.wav|baker|zh|^ uo3 #0 p i2 #0 q i4 #0 ch ao1 #0 j i2 #0 h ao3 #0 sp b u2 #0 h uei4 #0 j i2 #0 d e5 #0 sp eos
-D:/dataset/baker/Wave/002635.wav|baker|zh|m a3 #0 x iou1 #0 sh iii4 #0 zh e4 #0 g e5 #0 l ing3 #0 ^ v4 #0 d e5 #0 q van2 #0 ^ uei1 #0 sp c eng2 #0 z ai4 #0 t ong1 #0 x in4 #0 h ang2 #0 ^ ie4 #0 m o1 #0 p a2 #0 g uen2 #0 d a3 #0 d uo1 #0 n ian2 #0 sp eos
-D:/dataset/baker/Wave/001604.wav|baker|zh|q ian2 #0 x iao4 #0 zh ang3 #0 ^ iou4 #0 h uan2 #0 h uan3 #0 b ao4 #0 ^ i2 #0 g e4 #0 sp b a3 #0 t a1 #0 d e5 #0 l ing4 #0 ^ uai4 #0 b an4 #0 b ian1 #0 t ian1 #0 ^ ie3 #0 ch ai1 #0 l e5 #0 sp eos
-D:/dataset/baker/Wave/005536.wav|baker|zh|^ uo3 #0 h ai2 #0 b u2 #0 h uei4 #0 t iao4 #0 ^ u3 #0 ^ ie5 #0 sp eos
-D:/dataset/baker/Wave/009070.wav|baker|zh|d eng1 #0 sh ang4 #0 m o2 #0 t ian1 #0 l uen2 #0 sp ^ iou2 #0 k e4 #0 m en5 #0 n eng2 #0 f u3 #0 k an4 #0 z ii4 #0 ^ iou2 #0 n v3 #0 sh en2 #0 x iang4 #0 sp t iao4 #0 ^ uang4 #0 m an4 #0 h a1 #0 d uen4 #0 t ian1 #0 j i4 #0 x ian4 #0 sp eos
-D:/dataset/baker/Wave/002569.wav|baker|zh|d uei4 #0 ^ v2 #0 g e3 #0 h ong2 #0 l in2 #0 t ong4 #0 k uai4 #0 d e5 #0 d a2 #0 f u4 #0 sp g uo1 #0 t ai2 #0 m ing2 #0 r eng2 #0 x in1 #0 c uen2 #0 ^ i2 #0 l v4 #0 sp eos
-D:/dataset/baker/Wave/006232.wav|baker|zh|l ao3 #0 sh iii1 #0 sp zh e4 #0 m en2 #0 k e4 #0 ^ uo3 #0 m ei2 #0 h ao2 #0 h ao3 #0 x ve2 #0 sp h en3 #0 d uei4 #0 b u4 #0 q i2 #0 n i3 #0 sp eos
-D:/dataset/baker/Wave/001478.wav|baker|zh|l in2 #0 x i1 #0 l ei3 #0 sh eng1 #0 n v3 #0 h ou4 #0 t i3 #0 t ai4 #0 b i3 #0 h uai2 #0 ^ vn4 #0 q ian2 #0 h ai2 #0 m iao2 #0 t iao2 #0 x ian1 #0 x i4 #0 sp eos
-D:/dataset/baker/Wave/009065.wav|baker|zh|q i4 #0 j in1 #0 ^ uei2 #0 zh iii3 #0 sp t a1 #0 r eng2 #0 r an2 #0 b i3 #0 g eng1 #0 b u2 #0 ch uo4 #0 sp eos
-D:/dataset/baker/Wave/009277.wav|baker|zh|ch en2 #0 h ong2 #0 zh iii2 #0 h ao2 #0 q ing3 #0 l e5 #0 l iang3 #0 g e4 #0 b ang4 #0 b ang5 #0 sp b a2 #0 m u3 #0 q in1 #0 t ai2 #0 h uei2 #0 l e5 #0 j ia1 #0 sp eos
-D:/dataset/baker/Wave/005769.wav|baker|zh|z u1 #0 l in4 #0 f ang2 #0 zh iii3 #0 n eng2 #0 ^ an1 #0 l iang3 #0 zh ang1 #0 ch uang2 #0 sp eos
-D:/dataset/baker/Wave/005034.wav|baker|zh|d i4 #0 s an1 #0 t iao2 #0 sp d uen1 #0 sh uei4 #0 sh e4 #0 zh iii4 #0 ^ iou1 #0 h uei4 #0 sh uei4 #0 l v4 #0 h e2 #0 p u3 #0 t ong1 #0 sh uei4 #0 l v4 #0 sp eos
-D:/dataset/baker/Wave/000197.wav|baker|zh|j ing3 #0 f ang1 #0 k u2 #0 k u3 #0 zh uei1 #0 z ong1 #0 ^ uei4 #0 m ou3 #0 sp eos
-D:/dataset/baker/Wave/009631.wav|baker|zh|b u2 #0 l iao4 #0 zh e4 #0 ^ i2 #0 j v4 #0 h ua4 #0 r e2 #0 n ao3 #0 l e5 #0 l i3 #0 ^ ao2 #0 sp eos
-D:/dataset/baker/Wave/008847.wav|baker|zh|x iang1 #0 x in4 #0 d a4 #0 j ia1 #0 ^ i2 #0 d ing4 #0 sh ou4 #0 ^ i4 #0 f ei2 #0 q ian3 #0 sp eos
-D:/dataset/baker/Wave/000229.wav|baker|zh|^ i2 #0 k an4 #0 sp sp ^ i4 #0 t uan2 #0 n ong2 #0 ^ ian1 #0 zh iii2 #0 ^ uang3 #0 t ian1 #0 k ong1 #0 c uan1 #0 sp sp eos
-D:/dataset/baker/Wave/004498.wav|baker|zh|s uei2 #0 h ou4 #0 sp j i4 #0 zh e2 #0 ^ v3 #0 ^ a1 #0 h ua2 #0 j i4 #0 x v4 #0 sh ang4 #0 l u4 #0 sp eos
-D:/dataset/baker/Wave/002146.wav|baker|zh|t u2 #0 ^ uei2 #0 l i3 #0 b o2 #0 sh uo4 #0 h e2 #0 x iao2 #0 s a3 #0 h e2 #0 ^ ing3 #0 sp eos
-D:/dataset/baker/Wave/002842.wav|baker|zh|k uai4 #0 q v4 #0 zh ao3 #0 zh ang1 #0 d ian4 #0 r e4 #0 t an3 #0 sp eos
-D:/dataset/baker/Wave/003623.wav|baker|zh|q i2 #0 zh ong1 #0 sp h ua1 #0 d a4 #0 r u2 #0 ^ uan2 #0 k ou3 #0 sp j iang4 #0 h ong2 #0 d e5 #0 h ua1 #0 b an4 #0 sp j in1 #0 s e4 #0 d e5 #0 h ua1 #0 r uei3 #0 sp ^ iong1 #0 r ong2 #0 h ua2 #0 g uei4 #0 sp eos
-D:/dataset/baker/Wave/002082.wav|baker|zh|t a1 #0 x ing3 #0 l ai2 #0 h ou4 #0 x ian1 #0 zh ao3 #0 q ing2 #0 sh iii1 #0 sp z ai4 #0 ch uan1 #0 h ao3 #0 ^ i1 #0 f u5 #0 sp h uei2 #0 x iang3 #0 z uo2 #0 ^ ie4 #0 d e5 #0 m eng4 #0 sp k e3 #0 m eng4 #0 j ing4 #0 q van2 #0 ^ u2 #0 sp eos
-D:/dataset/baker/Wave/001015.wav|baker|zh|z ang1 #0 ^ u4 #0 d e2 #0 sh ou3 #0 h ou4 #0 sp t a1 #0 j ing4 #0 j iang1 #0 q i2 #0 s ai1 #0 r u4 #0 x iong1 #0 zh ao4 #0 ^ ian3 #0 r en2 #0 ^ er3 #0 m u4 #0 sp eos
-D:/dataset/baker/Wave/002035.wav|baker|zh|^ iou3 #0 ^ i4 #0 t ian1 #0 sp ^ iou3 #0 r en2 #0 t ong1 #0 g uo4 #0 q vn2 #0 l i3 #0 d e5 #0 d uan3 #0 x in4 #0 ^ uen4 #0 t a1 #0 sp ^ iao4 #0 b u2 #0 ^ iao4 #0 m ai3 #0 zh iii1 #0 f ang3 #0 zh en1 #0 q iang1 #0 ^ uan2 #0 ^ uan5 #0 sp eos
-D:/dataset/baker/Wave/001846.wav|baker|zh|zh e4 #0 b u4 #0 ^ in1 #0 ^ uei4 #0 g ong1 #0 sh ang1 #0 m a5 #0 sp sh ang4 #0 b an1 #0 m ang2 #0 h u2 #0 l uan4 #0 ch iii1 #0 z ao3 #0 f an4 #0 sp j ia1 #0 b an1 #0 ^ ao2 #0 ^ ie4 #0 sp j iou3 #0 z uo4 #0 b u2 #0 ^ vn4 #0 d ong4 #0 sp sp eos
-D:/dataset/baker/Wave/003602.wav|baker|zh|^ ie3 #0 ^ iou2 #0 k e3 #0 n eng2 #0 sh iii4 #0 g eng1 #0 h uan4 #0 d e5 #0 g ang1 #0 j ia4 #0 zh iii4 #0 l iang4 #0 ^ uei4 #0 d a2 #0 b iao1 #0 sp eos
-D:/dataset/baker/Wave/004696.wav|baker|zh|s uei2 #0 h ou4 #0 sp j i4 #0 zh e3 #0 l ai2 #0 d ao4 #0 sh ao2 #0 ^ iao4 #0 j v1 #0 zh an4 #0 sp g ai1 #0 zh an4 #0 d e5 #0 k e4 #0 l iou2 #0 ^ ie3 #0 b u4 #0 d uo1 #0 sp eos
-D:/dataset/baker/Wave/002717.wav|baker|zh|^ uo3 #0 sh iii4 #0 m eng2 #0 m ei4 #0 zh iii3 #0 sp n i3 #0 ^ ai4 #0 x in4 #0 b u2 #0 x in4 #0 sp eos
-D:/dataset/baker/Wave/009753.wav|baker|zh|g uo1 #0 j in1 #0 l ong2 #0 p ing2 #0 j ia4 #0 l u2 #0 ^ iong3 #0 sp sh iii4 #0 ^ ie4 #0 x in1 #0 z e2 #0 r en4 #0 g an3 #0 j iao4 #0 q iang2 #0 sp z u3 #0 zh iii1 #0 x ie2 #0 t iao2 #0 n eng2 #0 l i4 #0 q iang2 #0 sp eos
-D:/dataset/baker/Wave/001837.wav|baker|zh|r u2 #0 ^ i4 #0 d e5 #0 ^ uai4 #0 p o2 #0 sh uo1 #0 sp t a1 #0 ch an2 #0 d e5 #0 h uang1 #0 d e5 #0 sh iii2 #0 h ou5 #0 sp j iou4 #0 ^ iong4 #0 sh e2 #0 t ou5 #0 z ai4 #0 sh iii2 #0 ^ u4 #0 sh ang4 #0 t ian2 #0 l iang3 #0 x ia4 #0 sp eos
-D:/dataset/baker/Wave/006542.wav|baker|zh|s uei4 #0 ^ ve4 #0 j ve2 #0 d uei4 #0 b u2 #0 sh iii4 #0 sh a1 #0 zh u1 #0 d ao1 #0 sp ^ er2 #0 sh iii4 #0 ^ i4 #0 m ing2 #0 ^ iou1 #0 x iou4 #0 d e5 #0 s ii4 #0 ^ iang3 #0 ^ van2 #0 sp eos
-D:/dataset/baker/Wave/000125.wav|baker|zh|^ i1 #0 c eng2 #0 k e2 #0 ^ i3 #0 zh ong4 #0 h ua1 #0 h ua1 #0 c ao2 #0 c ao3 #0 sp eos
-D:/dataset/baker/Wave/001438.wav|baker|zh|b a2 #0 ^ uo3 #0 zh e4 #0 g e4 #0 ^ van4 #0 ^ uang4 #0 g ao4 #0 s u4 #0 z ong3 #0 b ian1 #0 sp eos
-D:/dataset/baker/Wave/000329.wav|baker|zh|t a1 #0 ch uan1 #0 zh e5 #0 sh uei4 #0 ^ i1 #0 ch iii4 #0 j iao2 #0 ^ uang3 #0 ^ uai4 #0 p ao3 #0 sp eos
-D:/dataset/baker/Wave/003769.wav|baker|zh|q ie4 #0 ^ er3 #0 x i1 #0 c ong2 #0 x iao2 #0 x i3 #0 h uan1 #0 p ai2 #0 q iou2 #0 sp ^ uan2 #0 p ai2 #0 sp p ing1 #0 p ang1 #0 q iou2 #0 h ai2 #0 ^ iou3 #0 d ian4 #0 ^ ing3 #0 sp eos
-D:/dataset/baker/Wave/008001.wav|baker|zh|^ i2 #0 g e4 #0 n an2 #0 r en5 #0 t uei2 #0 r an2 #0 d e5 #0 z uo4 #0 z ai4 #0 p ang2 #0 b ian1 #0 sp m u4 #0 g uang1 #0 d ai1 #0 zh iii4 #0 sp eos
-D:/dataset/baker/Wave/008123.wav|baker|zh|h ai2 #0 ^ in1 #0 ^ uei4 #0 m ei2 #0 q ian2 #0 sp zh ong4 #0 g u3 #0 m ing2 #0 x iang1 #0 c ong2 #0 l ai2 #0 b u4 #0 m ai3 #0 ^ ua4 #0 z ii5 #0 ^ ie3 #0 b u4 #0 ch uan1 #0 sp eos
-D:/dataset/baker/Wave/004083.wav|baker|zh|t u1 #0 r an2 #0 b ei4 #0 j i4 #0 zh e3 #0 ^ uei2 #0 d u3 #0 sp h u4 #0 ^ er2 #0 x in1 #0 q ie4 #0 d e5 #0 j iang1 #0 ^ uen2 #0 ^ iong4 #0 sh ou3 #0 t uei1 #0 s ang3 #0 j ing4 #0 t ou2 #0 sp eos
-D:/dataset/baker/Wave/003100.wav|baker|zh|r u2 #0 r uo4 #0 ^ iou3 #0 r en2 #0 f an3 #0 q i2 #0 d ao4 #0 ^ er2 #0 x ing2 #0 zh iii1 #0 sp d ao4 #0 sh iii4 #0 ^ iou3 #0 j iao4 #0 s uo1 #0 f an4 #0 z uei4 #0 d e5 #0 x ian2 #0 ^ i2 #0 sp eos
-D:/dataset/baker/Wave/008558.wav|baker|zh|sh uang1 #0 sh ou3 #0 b ei4 #0 x i4 #0 t ie3 #0 s ii1 #0 k uen3 #0 z a1 #0 sp l ian3 #0 s e4 #0 t ie3 #0 q ing1 #0 sp ch u3 #0 ^ v2 #0 h uen1 #0 m i2 #0 zh uang4 #0 t ai4 #0 sp eos
-D:/dataset/baker/Wave/003276.wav|baker|zh|^ uei4 #0 m in3 #0 sh eng1 #0 b iao3 #0 sh iii4 #0 sp sp b o2 #0 ^ uang2 #0 ^ an4 #0 sp ^ in1 #0 m a4 #0 ^ in3 #0 f a1 #0 sp c ong2 #0 sh en1 #0 c eng2 #0 c ii4 #0 k an4 #0 sp sh iii4 #0 l i4 #0 ^ i4 #0 t uan2 #0 h uo3 #0 d e5 #0 n ei4 #0 h ong4 #0 sp eos
-D:/dataset/baker/Wave/002473.wav|baker|zh|z an2 #0 b u2 #0 sh ang4 #0 m ei3 #0 sh u4 #0 b an1 #0 l e5 #0 b a5 #0 sp eos
-D:/dataset/baker/Wave/006634.wav|baker|zh|j ian3 #0 f ang1 #0 r en4 #0 ^ uei2 #0 sp ^ iang2 #0 ch uen1 #0 m ei4 #0 sh e4 #0 x ian2 #0 t an1 #0 ^ u1 #0 z uei4 #0 h e2 #0 n uo2 #0 ^ iong4 #0 g ong1 #0 k uan3 #0 z uei4 #0 sp eos
-D:/dataset/baker/Wave/004219.wav|baker|zh|j ing1 #0 q iang3 #0 j iou4 #0 ^ u2 #0 x iao4 #0 sp x iao3 #0 ^ iang2 #0 t uo2 #0 s ii3 #0 ^ uang2 #0 sp eos
-D:/dataset/baker/Wave/009043.wav|baker|zh|c e4 #0 j ing3 #0 j i4 #0 sh u4 #0 sp d uei4 #0 sh iii2 #0 ^ iou2 #0 k an1 #0 t an4 #0 d e5 #0 x iao4 #0 l v4 #0 h e2 #0 zh iii4 #0 l iang5 #0 zh iii4 #0 g uan1 #0 zh ong4 #0 ^ iao4 #0 sp eos
-D:/dataset/baker/Wave/002008.wav|baker|zh|t ong2 #0 x ve2 #0 ^ iao4 #0 ^ uo3 #0 b ang1 #0 n i3 #0 p ei2 #0 ^ iang3 #0 zh eng4 #0 q ve4 #0 s an1 #0 g uan1 #0 m e5 #0 sp eos
-D:/dataset/baker/Wave/006462.wav|baker|zh|t a1 #0 b a1 #0 ^ er4 #0 n ian2 #0 sh eng1 #0 sp h e2 #0 b ei3 #0 r en2 #0 sp d a4 #0 x ve2 #0 b en3 #0 k e1 #0 b i4 #0 ^ ie4 #0 sh eng1 #0 sp eos
-D:/dataset/baker/Wave/006429.wav|baker|zh|s uo2 #0 ^ i2 #0 ^ iou3 #0 x ie1 #0 x iong2 #0 m ao1 #0 d e5 #0 zh ua3 #0 z ii5 #0 h en3 #0 ch ang2 #0 sp sh en1 #0 sh ang4 #0 ^ ie2 #0 ^ iou3 #0 ^ i4 #0 x ie1 #0 ^ i4 #0 ^ uei4 #0 sp eos
-D:/dataset/baker/Wave/000703.wav|baker|zh|t a2 #0 l i3 #0 m u4 #0 ^ iou2 #0 t ian2 #0 q ing1 #0 n ian2 #0 ^ van2 #0 g ong1 #0 f eng4 #0 x ian4 #0 d a4 #0 m o4 #0 sp eos
-D:/dataset/baker/Wave/001227.wav|baker|zh|c ai3 #0 zh ai1 #0 sh an1 #0 h e2 #0 t ao5 #0 d e5 #0 n ong2 #0 m in2 #0 ^ i2 #0 g e4 #0 l ie4 #0 q ie5 #0 d ie1 #0 x ia4 #0 q v4 #0 sp t ou2 #0 p eng4 #0 d ao4 #0 sh iii2 #0 t ou5 #0 j iou4 #0 k e3 #0 n eng2 #0 sh uai1 #0 s ii3 #0 sp eos
-D:/dataset/baker/Wave/006714.wav|baker|zh|f u2 #0 j ian4 #0 ^ iou2 #0 c ii3 #0 l a1 #0 x iang3 #0 ^ ian2 #0 h ai3 #0 h e2 #0 t ai2 #0 ^ uan1 #0 h ai3 #0 x ia2 #0 d a4 #0 f eng1 #0 j ing3 #0 b ao4 #0 sp eos
-D:/dataset/baker/Wave/002367.wav|baker|zh|zh e4 #0 sh iii4 #0 h ou4 #0 f a3 #0 ^ iou1 #0 ^ v2 #0 x ian1 #0 f a3 #0 sp t e4 #0 sh u1 #0 f a3 #0 ^ iou1 #0 ^ v2 #0 p u3 #0 t ong1 #0 f a3 #0 d e5 #0 g uan1 #0 x i5 #0 sp eos
-D:/dataset/baker/Wave/001966.wav|baker|zh|c uen2 #0 z ai4 #0 ^ ian1 #0 j ing2 #0 ^ in3 #0 h uan4 #0 d e5 #0 k uang4 #0 j ing3 #0 sp b ao4 #0 ^ v3 #0 q i1 #0 j ian1 #0 ^ i2 #0 l v4 #0 ^ ian2 #0 j in4 #0 j ing3 #0 x ia4 #0 z uo4 #0 ^ ie4 #0 sp eos
-D:/dataset/baker/Wave/009042.wav|baker|zh|j ie2 #0 g uo3 #0 ^ in1 #0 c ii3 #0 m ei2 #0 ch ou3 #0 j ian4 #0 q ian2 #0 m ian4 #0 d e5 #0 d ian4 #0 x ian4 #0 g an1 #0 z ii5 #0 sp ^ i4 #0 t ou2 #0 z ai1 #0 sh ang4 #0 l e5 #0 sp eos
-D:/dataset/baker/Wave/008997.wav|baker|zh|r u2 #0 g uo3 #0 sh uai4 #0 sh iii4 #0 ^ i4 #0 zh ong3 #0 z uei4 #0 sp n a4 #0 j in1 #0 t ian1 #0 zh u3 #0 r en2 #0 n i2 #0 ^ i3 #0 j ing1 #0 z uei4 #0 ^ e4 #0 t ao1 #0 t ian1 #0 l e5 #0 sp eos
-D:/dataset/baker/Wave/000568.wav|baker|zh|z uei4 #0 ^ ian2 #0 zh ong4 #0 sh iii2 #0 sp x iong1 #0 q ian2 #0 h ai2 #0 ^ iao5 #0 f ang4 #0 ^ i2 #0 g e5 #0 b ian4 #0 p en2 #0 ch eng2 #0 ^ ou3 #0 t u4 #0 ^ u4 #0 sp eos
-D:/dataset/baker/Wave/007797.wav|baker|zh|^ er4 #0 sh iii4 #0 z ong3 #0 l iang4 #0 k ong4 #0 zh iii4 #0 sp b u4 #0 n eng2 #0 x iang4 #0 g uen2 #0 x ve3 #0 q iou2 #0 sp eos
-D:/dataset/baker/Wave/007044.wav|baker|zh|^ uei4 #0 m ing2 #0 l uen2 #0 zh iii3 #0 ch u1 #0 q i2 #0 zh ong1 #0 d e5 #0 p ing2 #0 z e4 #0 c uo4 #0 l uan4 #0 sp eos
-D:/dataset/baker/Wave/002270.wav|baker|zh|l uo2 #0 h an2 #0 r iii4 #0 q ian2 #0 z ai4 #0 f a3 #0 g uo2 #0 c an1 #0 j ia1 #0 g a1 #0 n a4 #0 d ian4 #0 ^ ing3 #0 j ie2 #0 sp eos
-D:/dataset/baker/Wave/007033.wav|baker|zh|g ei3 #0 t uan2 #0 d uei4 #0 n ing2 #0 j in3 #0 f a1 #0 t iao2 #0 sp sh iii4 #0 q iao2 #0 b u4 #0 s ii1 #0 f u4 #0 ^ v3 #0 z ii4 #0 j i3 #0 d e5 #0 z e2 #0 r en4 #0 sp eos
+D:/dataset/baker/Wave/004558.wav|baker|zh|liɑŋ3dʒø3 dʑyn1 wei4 tou4lu4ɕiaʌ1ɕi1 lai2yɛn2 , dan4 fou3ʐœn4 ɕiaʌ1ɕi1 lai2dzɪ4 i1 xai1 .
+D:/dataset/baker/Wave/009697.wav|baker|zh|ʈʂuɑŋ1wai4 wan3fɵŋ1 ʈʂuei1fu2 , ʂu4ie4 io3 lø5 xuo2li4 , xua1la1la1 di4 ɕiɑŋ3 , ɕiɑŋ4 dzai4 su4ʂuo1dʒø5 ʂœn2mø5 .
+D:/dataset/baker/Wave/007854.wav|baker|zh|ta1 ʈʂɵŋ1dʒʏ1wei4 y2kuai4 dø5 dzaʌ3ʈʂœn2 .
+D:/dataset/baker/Wave/004976.wav|baker|zh|wo3xuei4 wan2 xœn3duo1 io2ɕi4 nø5 .
+D:/dataset/baker/Wave/004050.wav|baker|zh|dʑia3 dʑia4ʂʏ3dʒɵŋ4 dzɪ4ti3 guɑŋ1xua2 , mei2io3 aʌ1tu1gan3 .
+D:/dataset/baker/Wave/008672.wav|baker|zh|ʂa1xø2ʂʏ4 da1liɛn2 tsun1 ɕiɑŋ4mu4 ɕiɛn4ʈʂɑŋ3 .
+D:/dataset/baker/Wave/000589.wav|baker|zh|in1 wu2fa3ʐœn3ʂou4 bɨŋ4toŋ4 dʒø2mo2 ɕyɛn3dzø2 tiaʌ4lou2 lø5 .
+D:/dataset/baker/Wave/004824.wav|baker|zh|ia3diɛn3 ʈʂɵŋ1wɑŋ2 dø5 xan2guo2 ɕiaʌ3dzɪ5 lio3ʈʂɵŋ2min3 io3wɑŋ4 ʈʂuɑŋ4dzaʌ4 li4ʂʏ3 ma5 ?
+D:/dataset/baker/Wave/005310.wav|baker|zh|tɕiɛn2 wan3 , lio2xua2tɕɨŋ1 dø5 dʒʏ2er5 dʒʏ2ny3 mœn5 lin2ʂʏ2 da1 tɕi3 lø5 lɨŋ2tɑŋ2 .
+D:/dataset/baker/Wave/008495.wav|baker|zh|dʒɵŋ3tiaʌ2 goŋ1lu4 duo1ʈʂu4 sun3xuei3 iɛn2dʒoŋ4 , ɕiɛn3ɕiɑŋ4xuan2ʂɵŋ1 .
+D:/dataset/baker/Wave/007412.wav|baker|zh|tɕi2 ia4 li4 dø5 iɑŋ3fu4 dzai4 wai4di4 da3goŋ1 , iɑŋ3mu3 dzai4dʑia1 tsaʌ1ʈʂʏ2dʑia1wu4 .
+D:/dataset/baker/Wave/009096.wav|baker|zh|xuei4xou4 , ly4sø4 li4wei3 biaʌ3ʂʏ4 , ɕiɑŋ1ɕin4 dzoŋ3toŋ3 xø2xu1luo2dʑi2 dø5 ʂuo1fa3 .
+D:/dataset/baker/Wave/001125.wav|baker|zh|duei4y2 mei2ie2er3 er2iɛn2 , ba1lei2tø4 tɕye4ʂʏ2 wu4io3suo3dʒʏ2 .
+D:/dataset/baker/Wave/002897.wav|baker|zh|ʐɑŋ4 yɛn2bœn3 wei1bo2 dø5 dzɪ1dʑin1 dʒuo1dʑin1dʑiɛn4dʒou3 .
+D:/dataset/baker/Wave/001817.wav|baker|zh|da4 ʈʂu3 wɑŋ3 i3dʑi2 ɕin1 œn1ʂʏ1 lun4tan2 ʂɑŋ4 , duei4tsɪ3 dʑiɛn4i4 dø5 pɨŋ2lun4 bu4duan4 .
+D:/dataset/baker/Wave/009689.wav|baker|zh|dʒø4 ie3 ʂʏ4 dzuo4wei2 wɑŋ3luo4 ɕie3ʂou3 dzuei4 toŋ4ku3 dø5 ʂʏ4 .
+D:/dataset/baker/Wave/001138.wav|baker|zh|bœn3 xuan4 laʌ3xø2ʂɑŋ4 suei1 i3 bai3suei4 io3 wu3 , dan4 ʂœn1ti3 ɨŋ4lɑŋ3 , ʂɵŋ1xuo2 wan2tɕyɛn2 dzɪ4li3 .
+D:/dataset/baker/Wave/002037.wav|baker|zh|ta1 wu2sɪ1 dø5 pin3gø2 lɨŋ4ʐœn2 dʑɨŋ4iɑŋ3 .
+D:/dataset/baker/Wave/001396.wav|baker|zh|tou2tai1 ʂʏ4 i1mœn2 ɕye2wœn4 a5 .
+D:/dataset/baker/Wave/001366.wav|baker|zh|dʒʏ2fa3 duei4yɛn2 iɑŋ2 lin2 ʈʂuan1 kan4daʌ4 , dʒø4liɑŋ4 wo4er3wo4 gaʌ1su4 tsoŋ2 po1dɨŋ3 ʂʏ3 daʌ4 po1di3 .
+D:/dataset/baker/Wave/001815.wav|baker|zh|ioŋ1 dun3 mœn5 dø5 i1wei4 dʒuei1pɵŋ3 , ʂʏ3 ta1 gɵŋ4dʑia1 wɑŋ4xu1suo3i3 , ye4fa1 dʑiaʌ1xɵŋ4 lø5 .
+D:/dataset/baker/Wave/000685.wav|baker|zh|dɑŋ1 dʑi4dʒø3 an4 ɕia4 miaʌ3biaʌ3 xou4 , goŋ1 dʒaʌ4 ʈʂun1 kai1ʂʏ3 iɛn2dʒø5 ʐuan3ti1 ɕiɑŋ4ɕia4 pa2 .
+D:/dataset/baker/Wave/009061.wav|baker|zh|dzuo2ʐʏ4 , bɛi3dʑɨŋ1 aʌ4yn4xuei4 kai1mu4ʂʏ4 daʌ3iɛn3 dʒʏ1i1 dø5 wɑŋ2 ʈʂaʌ2 gø1 tou4lu4 lø5 dʒø4 i1 ɕiaʌ1ɕi1 .
+D:/dataset/baker/Wave/009929.wav|baker|zh|dzuei4dʒoŋ1 , dʒoŋ1guo2nan2dzɪ5pɨŋ1pɑŋ1tɕio2duei4 xuo4dø2 tsɪ3 dʑiɑŋ3ɕiɑŋ4 .
+D:/dataset/baker/Wave/002167.wav|baker|zh|ʂɑŋ4ban1dzu2 ɕiaʌ3 gɵŋ3 dʑio4ʂʏ4 tɕi2dʒoŋ1 i1wei4 .
+D:/dataset/baker/Wave/003543.wav|baker|zh|bɑŋ3fei3 ɕiɛn4dʑie1duan4 mei2io3 suo3iaʌ4 ʂu2dʑin1 .
+D:/dataset/baker/Wave/005489.wav|baker|zh|ʈʂœn2 dʑia1 xuan2 duei4tsɪ3 i1gai4 mei2io3 xuei2da2 , dʒʏ3 nɨŋ2 wai1 liɛn3 kan4dʒø5 ly4ʂʏ1 , ɕiɑŋ4 ly4ʂʏ1 tɕio2dʑio4 .
+D:/dataset/baker/Wave/006594.wav|baker|zh|tsɪ3xou4 , dzai4 laʌ3ɕiɑŋ1 lio2 io3y2 dø5 soŋ3ioŋ3 ɕia4 , tɕi2 ʂʏ2 guɑŋ1 dʒan1ʐan3ʂɑŋ4 lø5 du2pin3 .
+D:/dataset/baker/Wave/005662.wav|baker|zh|bu4guo4 goŋ1sɪ1 biaʌ3ʂʏ4 , dʑi2ʂʏ3 gaʌ1y2 lio4 , tɕi3ie4 ie3 wu2kø3nai4xø2 .
+D:/dataset/baker/Wave/005068.wav|baker|zh|ɕiaʌ3 tu4dzai3dzɪ5 , ni3 iaʌ4ʂʏ4 gan3 wɑŋ3 ɕia4biɛn1 la1ʂʏ3 , ni3 dʑio4 sɪ3dɨŋ4lø5 !
+D:/dataset/baker/Wave/005745.wav|baker|zh|ʂʏ4xou4 , ta1 ʂʏ2fœn1 xou4xuei3 , bu4gai1 dzoŋ3 tɕi1fu4 dʒø4gø4 ai3ɕiaʌ3 io4 laʌ3ʂʏ2 dø5 toŋ2ʂʏ4 .
+D:/dataset/baker/Wave/004126.wav|baker|zh|ʂœn4dʒʏ4 dʑyn1dʒɵŋ4fu3 dzɪ4yɛn4 dʑiaʌ1tɕyɛn2 y2 min2ɕyɛn3 dʒɵŋ4fu3 , ie3 ʂʏ4 dʒø4dʒoŋ3 ɕin4niɛn4 dø5 ʈʂan3wu4 .
+D:/dataset/baker/Wave/000183.wav|baker|zh|dʒu1lei4 ɕia4luo4 tɕɨŋ2 sa3 koŋ1ʈʂuɑŋ2 .
+D:/dataset/baker/Wave/005064.wav|baker|zh|dzai4 ba3 laʌ3dʒɑŋ1 baʌ4da3 i1dun4 xou4 , san1 ʐœn2 xai2 bu4 dʑie3xœn4 io4 ʈʂuai4 lø5 laʌ3dʒɑŋ1 dø5 ʈʂø1 dʑi3dʑiaʌ3 .
+D:/dataset/baker/Wave/002320.wav|baker|zh|dʑia3pɨŋ2aʌ1 kan4daʌ4 xua4 xœn3 gaʌ1ɕɨŋ4 .
+D:/dataset/baker/Wave/002862.wav|baker|zh|mi3er3na4 dʑiɑŋ1 dʒø4dʒoŋ3 tou2dzɪ1 fɑŋ1fa3 ʈʂɵŋ1wei2 wan3tɕi1 tou2dzɪ1 .
+D:/dataset/baker/Wave/002130.wav|baker|zh|ie3 xuei4 ti2goŋ1 ʂɵŋ1dzɪ5 piɛn1fɑŋ1 gei3 ɕiaʌ3liɑŋ3kou3 .
+D:/dataset/baker/Wave/005024.wav|baker|zh|tɕi3nɵŋ2 dzuo4ʂʏ4 a1 biɛn3 io3 ʐœn4xø2 piɛn4miɛn4 gai3biɛn4ɕiɛn4dʒuɑŋ4 dø5 ɕɨŋ2wei2 ?
+D:/dataset/baker/Wave/001868.wav|baker|zh|o2 , xaʌ3ɕiɑŋ4 ʂʏ4 dai4wɑŋ4ʂu1 xuo4 lio3ia4dzɪ5 ɕie3 dø5 , ɕie3 dø2 dzœn3mø5iɑŋ4 ?
+D:/dataset/baker/Wave/002304.wav|baker|zh|dʒø4 tiaʌ2 ɕiɛn4 dzuei4dʒoŋ1 bɛi4 fou3 diaʌ4 .
+D:/dataset/baker/Wave/007228.wav|baker|zh|duei4tsɪ3 ta1 ɕiaʌ4na4 , pin2 diɛn3 xaʌ3 , bu4 dʒɑŋ3 ʈʂoŋ2er2 .
+D:/dataset/baker/Wave/003802.wav|baker|zh|kø3nɵŋ2 tɨŋ1 ʂɑŋ3tɕy4 io3diɛn3 ʂa3 .
+D:/dataset/baker/Wave/001977.wav|baker|zh|dʒaʌ4 ʐuei3 ʐuei3 tsɵŋ2 ʂʏ4 dʒoŋ1guo2ny3pai2 dø5 xø2ɕin1 tɕio2yɛn2 , kø3ɕi1 in1wei4 ʂɑŋ1bɨŋ4 er2 yɛn3li2 sai4ʈʂɑŋ3 .
+D:/dataset/baker/Wave/002806.wav|baker|zh|xei1gou3 lie3dʒø5 da4 dzuei3 , lu4 ʐœn2 dʑiɛn4 lø5 fœn1fœn1 duo3bi4 .
+D:/dataset/baker/Wave/004701.wav|baker|zh|wu2bo2ɕioŋ2 i1i1 duan1ɕiɑŋ2 guo2min2dʒɵŋ4fu3 ʂʏ2tɕi1 dø5 laʌ3dʒaʌ4piɛn1 .
+D:/dataset/baker/Wave/000388.wav|baker|zh|goŋ1yɛn2 dʑio3bai3 tɕi1ʂʏ2wu3niɛn2 , soŋ4ʈʂaʌ2 tsaʌ2 bin1 po4 dʑin1lɨŋ2 , nan2tɑŋ2 guei1 soŋ4 .
+D:/dataset/baker/Wave/004714.wav|baker|zh|io3ʂʏ2xou4 , i2gø4 wei1iɛn2soŋ3tɨŋ1 dø5 dʑia3 ɕin4ɕi1 dʑio4 nɵŋ2 ʐɑŋ4 guan1yɛn2 ʂœn1bai4mɨŋ2lie4 .
+D:/dataset/baker/Wave/007834.wav|baker|zh|di4er4tiɛn1 dzaʌ3ʂɑŋ4 ioŋ3 tɕi2 ʈʂuan1 ʂɑŋ4 lø5 dʑiaʌ1 wu3ʂʏ2kuai4 tɕiɛn2 ɕye2ɕiaʌ4 fa1 dø5 ɕiaʌ4fu2 .
+D:/dataset/baker/Wave/009626.wav|baker|zh|mei2io3 ʐœn2 fa1laʌ2saʌ1 , er2ʂʏ4 maʌ3 dzu2 dʑin4 , dʒuo2ʂou3 dʒɵŋ3gai3 .
+D:/dataset/baker/Wave/007980.wav|baker|zh|dʑɨŋ3fɑŋ1 ʈʂɵŋ1 , ʂɵŋ4ɕia4 ku4ʐø4 nan2nai4 , xœn3duo1 ʐœn2 daʌ4 dʑiɑŋ1xø2 io2ioŋ3 dʑie3ʂu3 .
+D:/dataset/baker/Wave/009691.wav|baker|zh|dan1ɕin1 dʒɑŋ1 mou3 baʌ4dʑɨŋ3 , liɑŋ3 ʐœn2 ioŋ4 dʒœn3dʑin1 wu3dʒu4 lø5 dʒɑŋ1 mou3 dø5 dzuei3 , dʒʏ2dʒʏ4 ta1 bu4dzai4 doŋ4tan2 .
+D:/dataset/baker/Wave/008229.wav|baker|zh|i3dʑyn1 dzoŋ3tsan1mou2dʒɑŋ3 xa1 lu3tsɪ2 dʑiɑŋ1dʑyn1 lɨŋ2ʈʂœn2 dʒaʌ4kai1 dʑin3dʑi2xuei4i4 taʌ3lun4 duei4tsø4 .
+D:/dataset/baker/Wave/005591.wav|baker|zh|wo3 dø5 baʌ3baʌ3 ʈʂu1ʂɵŋ1 la5 , nin2mœn5 dø5 bɛi4fœn4 io4 ti2gaʌ1 lø5 .
+D:/dataset/baker/Wave/001092.wav|baker|zh|ɕye1 ye4 ø2 ɕi3xuan1 ɕiaʌ4 , ɕi3xuan1 ia2ʈʂʏ3 tiɛn1tiɛn1 ʂai4tai4iɑŋ2 dø5 gan3dʑye2 .
+D:/dataset/baker/Wave/007615.wav|baker|zh|dʒʏ3iaʌ4 da4dʑia1 kœn3 dʑiɑŋ3 , ta1 dʑio4 kœn3 tɨŋ1 .
+D:/dataset/baker/Wave/007142.wav|baker|zh|suo3i3 , dzuei4da4 dø5 ɕye2wœn4 ʂʏ4 tɕiɛn1ɕyn4 .
+D:/dataset/baker/Wave/004638.wav|baker|zh|dɑŋ1dʑy2 ʂɑŋ4 ye4 dʒʏ3koŋ4 lu2 tsœn2 kø1 lan4ioŋ4dʒʏ2tɕyɛn2 xø2 tɕin1dʒan4 guo2dʑia1 tsai2ʈʂan3 .
+D:/dataset/baker/Wave/009387.wav|baker|zh|ba4ba4 duan1ɕiɑŋ2 i1xuei4 ʂuo1 , wo3 fa1ʂʏ4 , dʒø4 ʂʏ4 wo3 dʑiɛn4 guo4 dø5 dzuei4 ʂuai4 dø5 guɑŋ1tou2 .
+D:/dataset/baker/Wave/003731.wav|baker|zh|nan2lai2bɛi3wɑŋ3 , io2ʐœn2ʐu2dʒʏ1 .
+D:/dataset/baker/Wave/000305.wav|baker|zh|ɕiɛn4 in1 dʒʏ2ɕɨŋ2 ɕɨŋ2man3 y3i3 ʂʏ4fɑŋ4 .
+D:/dataset/baker/Wave/009688.wav|baker|zh|xai3dɵŋ1 duei4 dzou1dʑia1xua2 dø5 lai2fɑŋ3 biaʌ3ʂʏ4 xuan1ɨŋ2 .
+D:/dataset/baker/Wave/005979.wav|baker|zh|nan2guai4 ta1mœn5 xuei4 ʈʂɵŋ2wei2 ʐʏ4bœn3 ʐœn2 dzuei4 ɕiɛn4mu4 dø5 fu1tɕi1 ou3ɕiɑŋ4 .
+D:/dataset/baker/Wave/000865.wav|baker|zh|in4ni2duei4 dø5 sɑŋ1 tuo1 sa4 xø2 la1 dʒa1kø4 pɵŋ3 dzou3 nan2ʂuɑŋ1 guan4dʑyn1bɛi1 .
+D:/dataset/baker/Wave/005910.wav|baker|zh|pɵŋ2 xoŋ2 ba3 tu2piɛn4 fu4dʒʏ4 guo4lai2 , dʑia1ʂɑŋ4 biaʌ1ti2 dʒø4 ba3 san3 xaʌ3 guai4 io1 , io4 fa1ʈʂu1 tɕy4 .
+D:/dataset/baker/Wave/003432.wav|baker|zh|dʒø4 ʂou3 ʂʏ1 dø5 mɨŋ2dzɪ4 dʑiaʌ4 min3 noŋ2
+D:/dataset/baker/Wave/004790.wav|baker|zh|tou2dɨŋ3 io3 gœn1 ʂɵŋ2 liɛn2 dʒø5 ʂu4 .
+D:/dataset/baker/Wave/002584.wav|baker|zh|tsɪ3xou4 , tsai2fɵŋ2 tan1 suei1 dʑi3tsɪ4 ban1tɕiɛn1 , da2 da2 da2 dø5 fɵŋ2ʐœn4dʑi1 ʂɵŋ1 tɕye4 tsoŋ2wei4 tɨŋ2 guo4 .
+D:/dataset/baker/Wave/004407.wav|baker|zh|dʒoŋ1ɕi1 li3 lai2 ʈʂu1 tɕyɛn2luo3 ɕie3dʒœn1 .
+D:/dataset/baker/Wave/007431.wav|baker|zh|fɵŋ1ɕiɛn3 ie3 ʂʏ4 lɑŋ4man4 dø5 i1bu4fœn4 ma5 ?
+D:/dataset/baker/Wave/000800.wav|baker|zh|dan4ʂʏ4 , xua2 tɕiɑŋ2 y4y4gua3xuan1 .
+D:/dataset/baker/Wave/000915.wav|baker|zh|doŋ1dʑɨŋ1 ɨŋ1xua1 ʐan3 dʑɨŋ3 dʑi2ie3 ʈʂu1 kai1 .
+D:/dataset/baker/Wave/007260.wav|baker|zh|ɕy1iaʌ4 da4ye1 liɑŋ3 ɕiaʌ3ʂʏ2 .
+D:/dataset/baker/Wave/002774.wav|baker|zh|er2tɕie3 xai2ʂʏ4 di1iaʌ1 dø5 o2 .
+D:/dataset/baker/Wave/007021.wav|baker|zh|io3 ʂœn2mø5 dʒɵŋ4dʑy4 nɵŋ2gou4 dʒɵŋ4mɨŋ2 li3 wan4 dʑyn1 io3 fei1fa3dʒan4io3 dø5 mu4di4 nø5 ?
+D:/dataset/baker/Wave/009101.wav|baker|zh|dzai4 wei4lai2 wu3tiɛn1 li3 , dou1 io3 dʑiɑŋ4y3 , wai4ʈʂu1 dʑi4dø5 dai4 xaʌ3 y3dʑy4 .
+D:/dataset/baker/Wave/000544.wav|baker|zh|koŋ3mɨŋ2dɵŋ1 ɕiɑŋ1ʈʂuan2 io2 dʒu1gø3koŋ3mɨŋ2 fa1mɨŋ2 .
+D:/dataset/baker/Wave/008838.wav|baker|zh|ʂʏ4fa1 dzaʌ3 ɨŋ2 nan2 li3 lio4xaʌ4lou2 tɕi1 lɨŋ2lio4 ʂʏ4 dø5 i2gø4 ɕiaʌ3 wo4ʂʏ4 .
+D:/dataset/baker/Wave/002511.wav|baker|zh|ʂœn1wa1 ɕi4ʈʂa2 , ba2ʈʂu1 luo2bo5 dai4 ʈʂu1 ni2 .
+D:/dataset/baker/Wave/001690.wav|baker|zh|suei2xou4 , nie4 daʌ4ɕi3 tuei1kai1 ʈʂuɑŋ1xu4 tiaʌ4 ɕia4lou2 taʌ2ʂɵŋ1 .
+D:/dataset/baker/Wave/007480.wav|baker|zh|dʑi4dʒø3 dzou3dʑin4 i1dʑia1 tɕi4ʈʂø1 gai3dʒuɑŋ1 dzuo1fɑŋ1 .
+D:/dataset/baker/Wave/004113.wav|baker|zh|ʈʂu1ʐu4 io3 ʈʂø1 dai4bu4 , ʈʂø1ɕɨŋ2 dzɪ4ɕyɛn3 , xai2io3 baʌ3ma3 o2 !
+D:/dataset/baker/Wave/002516.wav|baker|zh|fei1 er2 ye1 doŋ3 mou3 di4er4tiɛn1 daʌ4 tɕi2 dzu1dʒu4 dø5 goŋ1y4 ye1xuei4 , doŋ3 mou3 ɕin1ʐan2toŋ2i4 .
+D:/dataset/baker/Wave/007640.wav|baker|zh|io3ʂʏ2 dzai4 ʂɑŋ1tɕyɛn1 tɕɨŋ3 gø4 bɑŋ4bɑŋ4 dou1 nan2 .
+D:/dataset/baker/Wave/002539.wav|baker|zh|dʒɵŋ4fu3 io4 ʂø4li4 ʐø4ɕiɛn4 er4san1 dʑio3dʑio3 er4 iaʌ1 wu3dʑio3 goŋ1 ʈʂa2ɕyn2 .
+D:/dataset/baker/Wave/006346.wav|baker|zh|wo3 dʑin3guan3 dzuo4 lø5 i1ɕie1 fu4dzø2 dø5 goŋ1dzuo4 , dan4 ie3 fan4 guo4 tsuo4wu4 , dzai1 guo4 gœn1dou3 , pɵŋ4 guo4 dɨŋ1dzɪ5 .
+D:/dataset/baker/Wave/002901.wav|baker|zh|mei3ʂaʌ4ny3 wei4nin2fu2wu4 .
+D:/dataset/baker/Wave/008214.wav|baker|zh|ta1 da3suan4 nu3li4 goŋ1dzuo4 dzan3tɕiɛn2 , san1niɛn2 xou4 kai1dʒø5ʈʂø1 tɕy4 dzɪ4dʑia4io2 .
+D:/dataset/baker/Wave/008724.wav|baker|zh|fu1 miɛn4mo2 lou2 .
+D:/dataset/baker/Wave/003711.wav|baker|zh|ta1 iɛn4wu4 i4ʂu4 mo4luo4 , tuei2fei4 dø5 ɕiɛn4ɕiɑŋ4 .
+D:/dataset/baker/Wave/004793.wav|baker|zh|gɵŋ4wei2iɛn2dʒoŋ4 xai2 dzai4y2 dzan3 ɕiɑŋ4mu4 .
+D:/dataset/baker/Wave/007686.wav|baker|zh|dzuo4wei2 ɕiaʌ3dʑio4dzɪ5 dø5 wo3 tɕy4 tɕyɛn4dʑia4 , guo3ʐan2 io3ioŋ4 !
+D:/dataset/baker/Wave/000910.wav|baker|zh|dzai4 dʑie1tou2 mai4i4 dø5 li3 y4 ɕyɛn1 die1die1 .
+D:/dataset/baker/Wave/007998.wav|baker|zh|wo3mœn5 dø5 ʂɵŋ1xuo2 dʒœn1ʂʏ4 bi3 mi4 xai2 tiɛn2 na4 !
+D:/dataset/baker/Wave/001131.wav|baker|zh|ʂʏ4bu2ʂʏ4 ʂɑŋ4gø4ye4 dʑɨŋ1ʈʂɑŋ2 aʌ2ie4 ia5 .
+D:/dataset/baker/Wave/007372.wav|baker|zh|tɨŋ1 i1ɕie1 ɕiaʌ4yɛn2 min2iaʌ2 , bi3ʐu2 laʌ3lɑŋ2 dø5 ye4guɑŋ1 tɕɨŋ1ʈʂɵŋ2 , mei3 ʐœn2
+D:/dataset/baker/Wave/002637.wav|baker|zh|mu3tɕin1 wɑŋ2 ɕiaʌ3 xoŋ2 i1 ʐœn2 la1ʈʂø3 ta1 dʒɑŋ3da4 .
+D:/dataset/baker/Wave/002297.wav|baker|zh|i1dʒuo2da3ban4 ie3 xœn3 dʑiɛn3dan1 gan4liɛn4 .
+D:/dataset/baker/Wave/008450.wav|baker|zh|gu3suei3 dʑyɛn1ɕiɛn4 guo4ʈʂɵŋ2 dʒoŋ1 dø5 fan4 xaʌ2dʑie2 .
+D:/dataset/baker/Wave/004540.wav|baker|zh|ioŋ4 ta1mœn5 ʂou1tsɑŋ2dʒø3 dø5 xɑŋ2xua4 , gai1 tɕiɛn2bi4 dʑiaʌ4 mɵŋ2 dʑiɑŋ1 wu3tɕiɛn1 .
+D:/dataset/baker/Wave/004930.wav|baker|zh|er2 dʑy4 lɨŋ4 i1 dʒʏ1tɕɨŋ2 ʐœn2ʂʏ4 tou4lu4 , ny3ʂɵŋ1 dø5 sɪ3wɑŋ2 ɕi4 ʈʂʏ1 duo4tai1iaʌ4 suo3dʒʏ4 .
+D:/dataset/baker/Wave/001760.wav|baker|zh|dʒan1 tsɑŋ1ɨŋ2 dø5 dʒʏ3 fɑŋ4 i1tiɛn1 xuei4 dʒan1 man3 tsɑŋ1ɨŋ2 , er4 xuo4 pɵŋ2io3 ʂuo1 wei4ʂœn2mø5 dou1 na4mø5 ʂa3 , mei2 kan4daʌ4 toŋ2ban4 dou1 sɪ3 lø5 ma5 ?
+D:/dataset/baker/Wave/005074.wav|baker|zh|iɑŋ2 bɨŋ1 bɛi4 dʑi1ʂɑŋ1 xou4 , bɛi4 dʑɨŋ3ʈʂa2 fan3 nɨŋ2 dʒø5 ʂuɑŋ1bi4 , dʑio1dʒu4 i1lɨŋ3 , ia1 ɕia4ʈʂø1 lai2 .
+D:/dataset/baker/Wave/009971.wav|baker|zh|da3saʌ3 wan2 ni3 xuei4 xœn3 io3 ʈʂɵŋ2dʑio4gan3 dø5 , ʂʏ4i1ʂʏ4 , ni3 dʑio4 ɕin4 lø5 .
+D:/dataset/baker/Wave/008618.wav|baker|zh|san1 ʂʏ4 iaʌ4 dʑia1kuai4 ʂɵŋ1tai4 xan2iɑŋ3 fa1dʒan3 tɕy1 dʑiɛn4ʂø4 .
+D:/dataset/baker/Wave/008971.wav|baker|zh|er2 an4dʒaʌ4 noŋ2tsun1 fɵŋ1su2 wɑŋ3wɑŋ3 ʂʏ4 dʑie2xun1 ʂʏ2 nan2fɑŋ1 ʈʂu1 fɑŋ2dzɪ5 , ny3fɑŋ1 ʈʂu1 dʑia4dʒuɑŋ1 .
+D:/dataset/baker/Wave/000010.wav|baker|zh|kø1 tø4 ni1 ʂœn1ʈʂuan1 baʌ4wœn2 da4i1 .
+D:/dataset/baker/Wave/004711.wav|baker|zh|bie2 wei4 bu4gai1 wei4 dø5 ʐœn2 , ʂɑŋ1 lø5 bu4gai1 ʂɑŋ1 dø5 ɕin1 .
+D:/dataset/baker/Wave/007272.wav|baker|zh|du3ʈʂɑŋ3 nei4 dø5 dʒuan1ie4 dʒuɑŋ1bɛi4 .
+D:/dataset/baker/Wave/001372.wav|baker|zh|kaʌ3ʂɵŋ1 ʈʂɑŋ2 tɕy1dʑie3 wœn2iɛn2wœn2 , io4 tsu1ɕin1da4i4 , xun4ɕiaʌ2 ʂʏ4dʑiɛn4 tɕɨŋ2dʑie2 .
+D:/dataset/baker/Wave/006915.wav|baker|zh|wa3er3 tan3ʈʂɵŋ2 fei1ʈʂɑŋ2 tɕi1dai4 da3 yn1 ʂou4xai4ʐœn2 , bɑŋ3 tɕi3 ta1 dø5 ʂou3dʑiaʌ3 dʑi2 sai1 dʒø5 tɕi2 dzuei3ba1 .
+D:/dataset/baker/Wave/005233.wav|baker|zh|dan4 y3tsɪ3toŋ2ʂʏ2 , saʌ3 ma3lu4 dø5 goŋ1dzuo4 dʑɨŋ4ʐan2 ie3 dzaʌ1 fɵŋ1 tɕiɑŋ3 , dʑio4 bu4miɛn3 ʐɑŋ4 ʐœn2 dʑɨŋ1ʈʂa4 .
+D:/dataset/baker/Wave/004002.wav|baker|zh|o2 , dʒø4 dʒœn1 ba3 wo3 wœn4 dʒu4 lø5 , ni3 ɕi1wɑŋ4 wo3 ʂɑŋ4wɑŋ3 sou1suo3 da2an4 ma5 ?
+D:/dataset/baker/Wave/007964.wav|baker|zh|ta1 ti2ʈʂu1 dʒœn3duan4 dan1 biaʌ3ʂʏ4 dzɪ4dʑi3 dø5 dzuo3 ɕi1 , io4ʂou3 dʒou3 dou1 tsuo4ʂɑŋ1 .
+D:/dataset/baker/Wave/002895.wav|baker|zh|io2y2 guan3nei4 bɨŋ4wei4 ʈʂœn2lie4 ni2tɕio1 , tsan1guan1dʒø3 fœn1fœn1 dʑia1i3 ɕyn2wœn4 .
+D:/dataset/baker/Wave/003603.wav|baker|zh|mei3guo2 dʒu4 ai1dʑi2 kai1luo2 da4ʂʏ3guan3 ie3 dzaʌ1 ɕi2dʑi1 , ɕɨŋ1tiaʌ2tɕi2 bɛi4 sɪ1ʈʂø3 .
+D:/dataset/baker/Wave/001094.wav|baker|zh|an4 wo3 ʂø4ɕiɑŋ3 ʂʏ4 guei1guei1dʑy3dʑy3 ba2 wan2 luo2bo5 , di4li3 ie3 gan1gan1dʑɨŋ4dʑɨŋ4 dø5 .
+D:/dataset/baker/Wave/001389.wav|baker|zh|dan4 suei2xou4 xuei4 y4 dʑio4tsɪ3 pi4iaʌ2 .
+D:/dataset/baker/Wave/008694.wav|baker|zh|wo3mœn5 kø3 mei2io3 dai4miɛn4dʑy4 io1 !
+D:/dataset/baker/Wave/000460.wav|baker|zh|dʑy4 an1ni1 baʌ3bɛi4 tou4lu4 , da4fɑŋ1 suo3 ɕyɛn3 piɛn1mu4 dʑye2wu2 tɕiɛn1dzɪ4wœn2 .
+D:/dataset/baker/Wave/005632.wav|baker|zh|i1xuei4 io4 ʂuo1 i3 y3 ɕy2 yn1 duan4dʑye2 lø5 fu4ny3guan1ɕi4 , iɛn3ɕia4 bu4dʒʏ1 ny3er2 ɕia4luo4 .
+D:/dataset/baker/Wave/004588.wav|baker|zh|ta1 gan3dʑye2 io3ɕie1 wei1miaʌ4 , dʑio4 gœn1 ta1 dzai4 wei1 bo2 ʂɑŋ4 iaʌ1xø1 i2ʈʂuan1 pɨŋ2guo3 i1iɑŋ4 .
+D:/dataset/baker/Wave/009274.wav|baker|zh|lɵŋ3mo4 , guo4xø2ʈʂai1tɕiaʌ2 , ɕin1 wœn2 tsoŋ2 xuei2i4 li3 dʒuai1 ʈʂu1 dʒø4ɕie1 dzɪ4iɛn3 .
+D:/dataset/baker/Wave/006689.wav|baker|zh|san1 ʂʏ4 dʑia1tɕiɑŋ2 kua4dʑɨŋ4 dzɪ1dʑin1 lio2doŋ4 dʑiɛn1tsø4 guan3li3 .
+D:/dataset/baker/Wave/006455.wav|baker|zh|wo3 dzai4 lɑŋ2fɑŋ1 dai1 lø5 i1niɛn2 ban4 .
+D:/dataset/baker/Wave/005722.wav|baker|zh|mɵŋ4mai3 dzai4 in4du4 dʑɨŋ1dʑi4 fɑŋ1miɛn4 dʒan4 dʑy3dzu2tɕɨŋ1dʒoŋ4 dø5 di4wei4 .
+D:/dataset/baker/Wave/005743.wav|baker|zh|dʒø4 dʑiɑŋ1 dʑia1su4 xuan3dʑie3 gaʌ1dʒoŋ1 ɕye2wei4 dø5 dʑin3tɕye1 nan2ti2 .
+D:/dataset/baker/Wave/001324.wav|baker|zh|sun1 mou3 ioŋ4 bu4tiaʌ2 dʑiɑŋ1 ɕiaʌ3 lan2 kun3bɑŋ3 sai1 daʌ4 ʈʂuɑŋ2 ɕia4 .
+D:/dataset/baker/Wave/002854.wav|baker|zh|dan4ʂʏ4 , dʒœn1bu4dʒʏ1daʌ4 ny3er2 dø5 kɑŋ4ia1 nɵŋ2li4 io3 duo1 da4 , ʐœn2iɛn2kø3wei4 a5 !
+D:/dataset/baker/Wave/009658.wav|baker|zh|ta1mœn5 bœn3ɕiaʌ3li4wei1 , dzuei4 nan2 dʑɨŋ1ʂou4 ʂʏ4ʈʂɑŋ3 dø5 dʒœn4dɑŋ4 .
+D:/dataset/baker/Wave/005413.wav|baker|zh|dan4 dʒø4 wei4nɵŋ2 dzu3dʒʏ3 bɛi4 ʈʂai1dʑie3 .
+D:/dataset/baker/Wave/005759.wav|baker|zh|fan4wei2 doŋ1dʒʏ4 kɑŋ1 ou1 lu4 , nan2 dʒʏ4 guei1xua4 lu4 , ɕi1 dʒʏ4 dʒu1 maʌ3 xø2 , bɛi3 dʒʏ4 kɑŋ1 goŋ1 lu4 .
+D:/dataset/baker/Wave/006478.wav|baker|zh|wo3 ba4 ʈʂɑŋ2 ʂuo1 ʂʏ4 gou3ʂʏ3 xu2 lø5 iɛn3dʑɨŋ1 tsai2 kan4 ʂɑŋ4 wo3 ma1 dø5 , ni3 ie3 ʂʏ4 ma5 ?
+D:/dataset/baker/Wave/001114.wav|baker|zh|liɑŋ3mɨŋ2 ɕiɑŋ1tɕin1 ny3 ʈʂa4diɛn3 dʑio4 iɑŋ2ʐu4xu3kou3 .
+D:/dataset/baker/Wave/009055.wav|baker|zh|bai3mɨŋ2 dʑiɑŋ1dʑyn1 dʒʏ2ʂu4 i3 ʈʂɵŋ2wei2 i4wu4 dʒʏ2ʂu4 xuo2doŋ4 dø5 diɛn3fan4 .
+D:/dataset/baker/Wave/007192.wav|baker|zh|wo3 dʒø4mø5 guan1ɕin1 ni3 ni3 xai2 ʂuo1 wo3 fan2 .
+D:/dataset/baker/Wave/000045.wav|baker|zh|ʂa1ʈʂɑŋ3 dʑɨŋ4 yn3mɨŋ4 , dʒuɑŋ4dʒʏ4 ie3 wu2 wei2 .
+D:/dataset/baker/Wave/008430.wav|baker|zh|xø1dzuei4 lø5 dø5 li3 kan3 bɛi4 ti1 ɕɨŋ3 xou4 , fan1ʂœn1 dʒan4 tɕi3 y3 dʒø4 mɨŋ2 min2dʑɨŋ3 sɪ1ʈʂø3 tɕi3lai2 .
+D:/dataset/baker/Wave/008806.wav|baker|zh|dʑi4dʒø3 paʌ3 lai2 di4i2gø4 wœn4 ta1 , ni3mœn5 duei4 ʂu3dʑia4 dø5 ɕyn4liɛn4 io3 ʂœn2mø5 kan4fa3 ?
+D:/dataset/baker/Wave/006802.wav|baker|zh|ɕio4 dʒʏ4 ʐʏ4tɕiɛn2 i1piɛn1 guan1y2 ta1 dø5 baʌ4daʌ4 , ʐø3tɕi3 nei4di4 wɑŋ3min2 bu4man3 .
+D:/dataset/baker/Wave/001933.wav|baker|zh|ʈʂœn2bɨŋ1 i1ɕia4dzɪ5 xuo3 lø5 , da4 xou3tɕi3lai2 .
+D:/dataset/baker/Wave/006506.wav|baker|zh|ʈʂø1dʒan4 dø5 wœn4ɕyn4 diɛn4xua4 wei4 ba1 lio4 sɪ4san1san1 er4san1 er4 .
+D:/dataset/baker/Wave/001332.wav|baker|zh|gɑŋ3fu3 ɕin1 iɛn4 ʈʂu1 sɪ4kuan3 ʐʏ4bœn3 ɨŋ1er2 pei4fɑŋ1 nai3fœn3 diɛn3 xan2liɑŋ4 dʑiaʌ4 di1 .
+D:/dataset/baker/Wave/009076.wav|baker|zh|mai3 pɨŋ2 in3liaʌ4 , pɨŋ2gai4 ʂɑŋ4 ɕie3 dø5 dzai4 lai2 i1pɨŋ2 .
+D:/dataset/baker/Wave/002435.wav|baker|zh|na4 ny3xai2 dø5 ʂuɑŋ1ʈʂun2 wei1 min3dʒø5 , xoŋ2ʐun4 io3 guɑŋ1 , fɑŋ3fu2 dzai4 gou1in3 luo2 tiɛn1 ʈʂɵŋ2 dø5 dzuei3ʈʂun2 .
+D:/dataset/baker/Wave/005126.wav|baker|zh|lɨŋ4 i2gø4 ʐø3iɛn3 dø5 mɨŋ2ɕɨŋ1 dɑŋ1 ʂu3 wɵŋ1 xoŋ2 .
+D:/dataset/baker/Wave/002088.wav|baker|zh|ɕiɛn4dzai4 xaʌ3 lø5 , i1tsɪ4 mai3 kø3i3 ioŋ4 ʂɑŋ4 i1niɛn2ban4dzai3 dø5 liɑŋ4 bɛi5 .
+D:/dataset/baker/Wave/003985.wav|baker|zh|bɛi4 ʐœn2 ʈʂuo1 dʒø5 dʑi3liɑŋ2gu3 , xuo2dʒø5 ie3 nan2ʂou4 , bu2ʂʏ4 wo3 dzuan1nio2dʑiaʌ3dʑiɛn1 .
+D:/dataset/baker/Wave/006591.wav|baker|zh|tsɪ3an4 dzai4 tɕyɛn2 ɕia4mœn2 in3fa1 gø4fɑŋ1 guan1dʒu4 .
+D:/dataset/baker/Wave/004580.wav|baker|zh|xaʌ3 dø5 ia5 ? iaʌ4 i4tɕi3 mø5 ?
+D:/dataset/baker/Wave/006026.wav|baker|zh|tu3di4ʈʂu1ʐɑŋ4 ɨŋ1gai1 gœn1dʑy4 kai1fa1ʂɑŋ1 dø5 dʑi4ʂu4 xø2 dzɪ1dʑin1 tiaʌ2dʑiɛn4 ʂai1ɕyɛn3 kai1fa1ʂɑŋ1 .
+D:/dataset/baker/Wave/009129.wav|baker|zh|ɕye2daʌ4 ʈʂɵŋ2ʈʂu2 fa3 ʂʏ2 dʑio4 xuei4 bɛi4 dʑio3dʑio3ʈʂɵŋ2fa3 biaʌ3 .
+D:/dataset/baker/Wave/000473.wav|baker|zh|wei4 tɕɨŋ4 niɛn2 li4 , gai1 tsun1wei3 tɕɨŋ3lai2 tuo1i1wu3niɑŋ2 dʒu4ɕɨŋ4 .
+D:/dataset/baker/Wave/002685.wav|baker|zh|ʈʂu1 ʐu4 tsɪ3 daʌ4 dø5 tou2dzɪ1dʒø3 tɕie4mo4 mɑŋ2mu4 gœn1dʑin4 .
+D:/dataset/baker/Wave/004615.wav|baker|zh|ʂan1dʒoŋ1 na4 mi2mɵŋ2 dø5 ɕiaʌ3dʑɨŋ4 , ɕiɑŋ4 mi2dzou3ʂœn2dʑɨŋ1 i1iɑŋ4 wan1iɛn2 dʑin4 wɵŋ3y4 dø5 guo3lin2 , ɕiaʌ1ʂʏ1 bu2dʑiɛn4 .
+D:/dataset/baker/Wave/006379.wav|baker|zh|ni3 tsai1 a5 ni3 tsai1 a5 ni3 tsai1 a5 , ni3 tsai1 duei4 lø5 wo3 dʑio4 gaʌ4su4 ni3 .
+D:/dataset/baker/Wave/006858.wav|baker|zh|tsɵŋ2 bɛi4 fa3guo2 mei2ti3 guan1dʒu4 dø5 lei2nuo4 goŋ1ie4 dʑiɛn4die2an4 xœn3 kø3nɵŋ2 ɕi4 ʐœn2wei2 nie1dzaʌ4 .
+D:/dataset/baker/Wave/007833.wav|baker|zh|i1 ʂʏ4 dʑi1ʈʂu3 iɑŋ3laʌ3dʑin1 tai4 di1 .
+D:/dataset/baker/Wave/006954.wav|baker|zh|bɛi3dʑɨŋ1 gø4bie2 dʑiɛn1tsø4diɛn3 , ɕi1xoŋ2ʂʏ4 , tɕie2dzɪ5 , tu3dou4 , iɑŋ2tsoŋ1 in1 ɕia4ɕye3 yɛn2in1 duan4 xuo4 .
+D:/dataset/baker/Wave/005497.wav|baker|zh|xuɑŋ2ʂɑŋ4 ! nin2 xai2 dʑi4dø5 da4mɨŋ2 xu2pan4 dø5 ɕia4 y3 xø2 ma5 ?
+D:/dataset/baker/Wave/008370.wav|baker|zh|dʑi4dʒø3 gan3daʌ4 iaʌ1 iaʌ1 tɕi1 i1yɛn4 dʑi1ʈʂɑŋ3lu4 fœn1yɛn4 dʑi2dʒœn3 tɕiɑŋ3dʑio4ʂʏ4 .
+D:/dataset/baker/Wave/008237.wav|baker|zh|wo3mœn5 dʑio4 dʑyɛn3tɕi3 pu1gai4 , na2 dʒø5 ia2ʂua1 ʂœn2mø5 dø5 tɕy4 ɕi3ʂu4 .
+D:/dataset/baker/Wave/003491.wav|baker|zh|wo3 dʑin3 lø5 dzuei4da4 dø5 nu3li4 , wei4lø5 lio2 i2gø4 yɛn2goŋ1 aʌ2ie4 pei2 ta1 liaʌ2 .
+D:/dataset/baker/Wave/003620.wav|baker|zh|ʈʂœn2ʂuei4 dø5 xan4ʈʂaʌ2 dzœn3mø5 dʑiaʌ4 ie3 dʑiaʌ4 bu4 ɕɨŋ3 .
+D:/dataset/baker/Wave/007012.wav|baker|zh|kø3 ni3mœn5 dʒø4ɕie1 mɨŋ2mɨŋ2 dʒʏ1daʌ4 ʂʏ2tɕɨŋ2 dø5 ʐœn2 dzœn3 kø3 ʐu2tsɪ3 xœn3ɕin1 .
+D:/dataset/baker/Wave/000281.wav|baker|zh|ʈʂu1tɕy4 xou4 ɕiɑŋ3daʌ4 wai4miɛn4 tɕy4 ʈʂuɑŋ3 i1 ʈʂuɑŋ3 .
+D:/dataset/baker/Wave/006202.wav|baker|zh|la1mei3 dzoŋ3miɛn4dʑi1 liɑŋ3tɕiɛn1 lɨŋ2 tɕi1ʂʏ2 wan4pɨŋ2fɑŋ1goŋ1li3 , ʐœn2kou3 lio4diɛn3 lɨŋ2 san1i4 .
+D:/dataset/baker/Wave/009172.wav|baker|zh|y3tsɪ3toŋ2ʂʏ2 , ɕiaʌ1ʂou4 xuei2nuan3 ʂʏ3 fɑŋ2 tɕi3 dø5 dzɪ1dʑin1 ia1li4 dø2daʌ4 dʑi2da4 xuan3dʑie3 .
+D:/dataset/baker/Wave/008680.wav|baker|zh|dzai4 i1tsø4 tie3guei3 ɕia4 daʌ4 dʒa3 ʂɑŋ4 , ʐɵŋ2 nɵŋ2 kan4dʑiɛn4 ɕye4dʑi4 .
+D:/dataset/baker/Wave/009798.wav|baker|zh|gan1 die1die1 ʈʂɵŋ1tɕi3 y3san3 , man4man4 dzou3 lø5 guo4tɕy4 .
+D:/dataset/baker/Wave/002351.wav|baker|zh|tu2 wei4 i1doŋ4 fɑŋ2wu1 sun3xuei3 iɛn2dʒoŋ4 .
+D:/dataset/baker/Wave/006878.wav|baker|zh|ʈʂun1lan2 gu3fœn4 sɪ4ye4fœn4 ʂʏ4fou3 dʒœn1dø5 tuei4ʂʏ4 ?
+D:/dataset/baker/Wave/006606.wav|baker|zh|ʂʏ1ti3 dʑɨŋ1 y3i1 baʌ1guo3 , diɛn4ɕiɛn4 kun3dʒa1 , bɛi4 baʌ4 daʌ4 lø5 xuɑŋ2 ɕy2 gœn1 dø5 mo2tuo1ʈʂø1 xou4dzuo4 .
+D:/dataset/baker/Wave/004415.wav|baker|zh|gan3dʑye2 tiɛn1tɕi4 xœn3 ʐou2xø2 .
+D:/dataset/baker/Wave/000582.wav|baker|zh|dʒɑŋ1 min3 fu3mo1 dʒø5 ta1 dø5 tou2 , xan2dʒø5lei4 tɕyɛn4wei4 .
+D:/dataset/baker/Wave/006335.wav|baker|zh|mu4tɕiɛn2 , niɛn1xua1 sɪ4 dø5 ʂʏ3ioŋ4tɕyɛn2 guei1ʂu3 dʒoŋ1guo2ʐœn2min2da4ɕye2 in4ʂua1ʈʂɑŋ3 .
+D:/dataset/baker/Wave/009069.wav|baker|zh|goŋ1nei4 dʒɵŋ3dʑie2 li4suo3 , lɑŋ2dʒu4 mœn2ʈʂuɑŋ1 iɛn2sø4 ɕiɛn1iɛn4 , dʑi3mɨŋ2 diɛn4goŋ1 dʒɵŋ4dzai4 wei2ɕio1 ɕiɛn4lu4 .
+D:/dataset/baker/Wave/001123.wav|baker|zh|wo3 baʌ1 lø5 dʒu2sun1 laʌ3 ia1tɑŋ1 , xœn3 ɕiɑŋ1 dø5 .
+D:/dataset/baker/Wave/008877.wav|baker|zh|fan3duei4dʒø3 ʐœn4wei2 , ti2tɕy3 pei1tai1 gan4ɕi4baʌ1 ɕiɑŋ1dɑŋ1y2 ø4ʂa1 ʂɵŋ1mɨŋ4 .
+D:/dataset/baker/Wave/008222.wav|baker|zh|ta1 ʂuo1 , fei1dʑi1 dzai4 diɛn1bo3 di4i1tsɪ4 ʂʏ1dʒoŋ4 xou4 , guɑŋ3bo1 tsai2 ʂuo1 fei1dʑi1 y4daʌ4 tɕiɑŋ2 tɕi4lio2 .
+D:/dataset/baker/Wave/009733.wav|baker|zh|ʈʂuan1 ʂɑŋ4 ɕi4dʒuɑŋ1 ʂʏ4 iɛn3yɛn2 , tuo1 ɕia4 ɕi4dʒuɑŋ1 ʂʏ4 noŋ2min2 .
+D:/dataset/baker/Wave/009034.wav|baker|zh|io2y2 xuo3ʈʂɑŋ3 ʂɑŋ4 fɵŋ1li4 bu4duan4 dʑia1da4 , io4 dʑia1su4 lø5 kø3ʐan2wu4 ʐan2ʂaʌ1 .
+D:/dataset/baker/Wave/008373.wav|baker|zh|dʒʏ3ʂʏ4 , paʌ3bu4 kø3i3 tɕia1 miaʌ3biaʌ3 , er2 y2lø4tɕyɛn1 tɕye4 mei2io3 dɨŋ4lun4 .
+D:/dataset/baker/Wave/001350.wav|baker|zh|tsɪ3 guan1diɛn3 bɛi4 ɕio1gai3gaʌ3 tsai3na4 .
+D:/dataset/baker/Wave/008626.wav|baker|zh|io3dʒø5 dʑin1ʂu3 lan2gan1 dø5 da4mœn2 ɕy1iɛn3 dʒø5 .
+D:/dataset/baker/Wave/000256.wav|baker|zh|wu3 ʂʏ4 ie4miɛn4 san1 pœn1 bu3 fei2 .
+D:/dataset/baker/Wave/005133.wav|baker|zh|laʌ3po2 xuei2daʌ4 bɨŋ4fɑŋ2 li3 , i1liɛn3 wu2nai4 .
+D:/dataset/baker/Wave/000821.wav|baker|zh|na4mø5 wu2i4y2 i3luan3dʑi1ʂʏ2 .
+D:/dataset/baker/Wave/001878.wav|baker|zh|ta1 i3wei2 xai2dzɪ5 ø4 lø5 , dʑio4 ʈʂoŋ1 nai3fœn3 gei3 ta1 xø1 , ɕiaʌ3 doŋ1 xø1wan2 xou4 ʐɵŋ2ʐan2 ku1naʌ4 .
+D:/dataset/baker/Wave/001520.wav|baker|zh|dʒu1 xaʌ3 loŋ2 mo1lø5mo1 ʂuei3nio2 , ʂuei3nio2 guai1guai1 ʂuei4 lø5 ɕia4lai2 .
+D:/dataset/baker/Wave/009617.wav|baker|zh|tɕi2dʒoŋ1 baʌ1kuo4 laʌ3pai2 ʐu3pin3 tɕi3ie4 xɑŋ2dʒou1 mei3li4 dʑiɛn4 ʐu3ie4 io3ɕiɛn4goŋ1sɪ1 .
+D:/dataset/baker/Wave/005586.wav|baker|zh|dan1ʐœn4 wɵŋ4an1ɕiɛn4 dʒɑŋ3 dʒʏ1tɕiɛn2 , ɕie4ɕiaʌ3doŋ1 ʂʏ4 guei4dʒou1ʂɵŋ3ly3io2dʑy2 dzoŋ1xø2 ɕie2tiaʌ2 ʈʂu3ʈʂu4dʒɑŋ3 .
+D:/dataset/baker/Wave/008661.wav|baker|zh|na4 tou2 i1dʑy4 bu4 ɕin4 suan4lø5 biɛn4 gua4 lø5 .
+D:/dataset/baker/Wave/004655.wav|baker|zh|ni3 duei4wai4 ʈʂu1dzu1 dø5 ʂʏ4 da1liɛn2 daʌ3 xø2 ɕiaʌ3 xaʌ4 daʌ3 .
+D:/dataset/baker/Wave/000734.wav|baker|zh|luo4pei4dzɪ1 dzai4du4 dɑŋ1ɕyɛn3 mei3 tun2 tiɛn1 xou4 .
+D:/dataset/baker/Wave/006582.wav|baker|zh|liɑŋ3 ʐœn2 gɵŋ4dʑia1 dɑŋ1dʒoŋ4 dzuo4ʈʂu1 lou3baʌ4 , tɕin1dzuei3 , nie1 liɛn3dan4 xø2 xu4 wei4 ʂʏ2wu4 dɵŋ3 tɕin1mi4 doŋ4dzuo4 .
+D:/dataset/baker/Wave/004910.wav|baker|zh|xu3 tuei3 mai4dʒø5 tɕɨŋ1yn2 bu4 , xu3 tou2dɨŋ3 dʒø5 xaʌ3 ʂʏ4tu2 .
+D:/dataset/baker/Wave/000499.wav|baker|zh|luo3ti3 pan1iɛn2 ʂʏ4 dʑia1dʒou1 ʂø4ɨŋ3ʂʏ1 dʑiɛn1 pan1iɛn2 ai4xaʌ4dʒø3 di2an1 dø5 ʈʂuɑŋ4i4 .
+D:/dataset/baker/Wave/007205.wav|baker|zh|wo3 pi2tɕi4 ʈʂaʌ1dʑi2 xaʌ3 , bu2xuei4 dʑi2 dø5 .
+D:/dataset/baker/Wave/002635.wav|baker|zh|ma3 ɕio1 ʂʏ4 dʒø4gø4 lɨŋ3y4 dø5 tɕyɛn2wei1 , tsɵŋ2 dzai4 toŋ1ɕin4 xɑŋ2ie4 mo1pa2gun3da3 duo1niɛn2 .
+D:/dataset/baker/Wave/001604.wav|baker|zh|tɕiɛn2 ɕiaʌ4dʒɑŋ3 io4 xuan3xuan3 baʌ4 i2gø4 , ba3 ta1 dø5 lɨŋ4wai4 ban4biɛn1tiɛn1 ie3 ʈʂai1 lø5 .
+D:/dataset/baker/Wave/005536.wav|baker|zh|wo3 xai2 bu2xuei4 tiaʌ4wu3 ie2 .
+D:/dataset/baker/Wave/009070.wav|baker|zh|dɵŋ1ʂɑŋ4 mo2tiɛn1lun2 , io2kø4 mœn5 nɵŋ2 fu3kan4 dzɪ4io2 ny3ʂœn2ɕiɑŋ4 , tiaʌ4wɑŋ4 man4xa1dun4 tiɛn1dʑi4ɕiɛn4 .
+D:/dataset/baker/Wave/002569.wav|baker|zh|duei4y2 gø2xoŋ2lin2 toŋ4kuai4 dø5 da2fu4 , guo1tai2mɨŋ2 ʐɵŋ2 ɕin1tsun2 i2ly4 .
+D:/dataset/baker/Wave/006232.wav|baker|zh|laʌ3ʂʏ1 , dʒø4 mœn2 kø4 wo3 mei2 xaʌ3xaʌ3ɕye2 , xœn3 duei4bu4tɕi3 ni3 .
+D:/dataset/baker/Wave/001478.wav|baker|zh|lin2ɕi1lei3 ʂɵŋ1 ny3 xou4 ti3tai4 bi3 xuai2yn4 tɕiɛn2 xai2 miaʌ2tiaʌ2 ɕiɛn1ɕi4 .
+D:/dataset/baker/Wave/009065.wav|baker|zh|tɕi4dʑin1wei2dʒʏ3 , ta1 ʐɵŋ2ʐan2 bi3gɵŋ1bu4ʈʂuo4 .
+D:/dataset/baker/Wave/009277.wav|baker|zh|ʈʂœn2 xoŋ2 dʒʏ3xaʌ3 tɕɨŋ3 lø5 liɑŋ3gø4 bɑŋ4bɑŋ4 , ba3 mu3tɕin1 tai2xuei2 lø5 dʑia1 .
+D:/dataset/baker/Wave/005769.wav|baker|zh|dzu1lin4 fɑŋ2 dʒʏ3nɵŋ2 an1 liɑŋ3dʒɑŋ1ʈʂuɑŋ2 .
+D:/dataset/baker/Wave/005034.wav|baker|zh|di4san1tiaʌ2 , dun1 ʂuei4 ʂø4dʒʏ4 io1xuei4 ʂuei4ly4 xø2 pu3toŋ1 ʂuei4ly4 .
+D:/dataset/baker/Wave/000197.wav|baker|zh|dʑɨŋ3fɑŋ1 ku3ku3 dʒuei1dzoŋ1 wei4 mou3 .
+D:/dataset/baker/Wave/009631.wav|baker|zh|bu4liaʌ4 dʒø4 i1dʑy4 xua4 ʐø3naʌ3 lø5 li3 aʌ2 .
+D:/dataset/baker/Wave/008847.wav|baker|zh|ɕiɑŋ1ɕin4 da4dʑia1 i2dɨŋ4 ʂou4i4fei3tɕiɛn3 .
+D:/dataset/baker/Wave/000229.wav|baker|zh|i1 kan4 , i1tuan2 noŋ2iɛn1 dʒʏ2 wɑŋ3 tiɛn1koŋ1 tsuan1 .
+D:/dataset/baker/Wave/004498.wav|baker|zh|suei2xou4 , dʑi4dʒø3 y3 a1 xua2 dʑi4ɕy4 ʂɑŋ4lu4 .
+D:/dataset/baker/Wave/002146.wav|baker|zh|tu2 wei4 li3 bo2 ʂuo4 xø2 ɕiaʌ3 sa1 xø2ɨŋ3 .
+D:/dataset/baker/Wave/002842.wav|baker|zh|kuai4 tɕy4 dʒaʌ3 dʒɑŋ1 diɛn4ʐø4tan3 !
+D:/dataset/baker/Wave/003623.wav|baker|zh|tɕi2dʒoŋ1 , xua1 da4 ʐu2 wan3kou3 , dʑiɑŋ4 xoŋ2 dø5 xua1ban4 , dʑin1sø4 dø5 xua1ʐuei3 , ioŋ1ʐoŋ2xua2guei4 .
+D:/dataset/baker/Wave/002082.wav|baker|zh|ta1 ɕɨŋ3lai2 xou4 ɕiɛn1 dʒaʌ3 tɕɨŋ2ʂʏ1 , dzai4 ʈʂuan1 xaʌ3 i1fu2 , xuei2ɕiɑŋ3 dzuo2ie4 dø5 mɵŋ4 , kø3 mɵŋ4dʑɨŋ4 tɕyɛn2 wu2 .
+D:/dataset/baker/Wave/001015.wav|baker|zh|dzɑŋ1wu4 dø2ʂou3 xou4 , ta1 dʑɨŋ4 dʑiɑŋ1 tɕi2 sai1ʐu4 ɕioŋ1dʒaʌ4 iɛn3ʐœn2er3mu4 .
+D:/dataset/baker/Wave/002035.wav|baker|zh|io3 i1tiɛn1 , io3ʐœn2 toŋ1guo4 tɕyn2 li3 dø5 duan3ɕin4 wœn4 ta1 , iaʌ4 bu2iaʌ4 mai3 dʒʏ1 fɑŋ3dʒœn1tɕiɑŋ1 wan2wan2 .
+D:/dataset/baker/Wave/001846.wav|baker|zh|dʒø4 bu4 in1wei4 goŋ1ʂɑŋ1 ma5 ? ʂɑŋ4ban1 mɑŋ2 xu2luan4 ʈʂʏ1 dzaʌ3fan4 , dʑia1ban1 aʌ2ie4 , dʑio3dzuo4 bu4 yn4doŋ4 … …
+D:/dataset/baker/Wave/003602.wav|baker|zh|ie3 io3 kø3nɵŋ2 ʂʏ4 gɵŋ1xuan4 dø5 gɑŋ1dʑia4 dʒʏ4liɑŋ4 wei4da2biaʌ1 .
+D:/dataset/baker/Wave/004696.wav|baker|zh|suei2xou4 , dʑi4dʒø3 lai2daʌ4 ʂaʌ2iaʌ4dʑy1 dʒan4 , gai1dʒan4 dø5 kø4lio2 ie3 bu4 duo1 .
+D:/dataset/baker/Wave/002717.wav|baker|zh|wo3 ʂʏ4 mɵŋ2 mei4 dʒʏ3 , ni3 ai4 ɕin4bu4ɕin4 .
+D:/dataset/baker/Wave/009753.wav|baker|zh|guo1dʑin1loŋ2 pɨŋ2dʑia4 lu3 ioŋ3 , ʂʏ4ie4ɕin1 dzø2ʐœn4gan3 dʑiaʌ4 tɕiɑŋ2 , dzu3dʒʏ1ɕie2tiaʌ2 nɵŋ2li4 tɕiɑŋ2 .
+D:/dataset/baker/Wave/001837.wav|baker|zh|ʐu2i4 dø5 wai4po2 ʂuo1 , ta1 ʈʂan2 dø2 xuɑŋ1 dø5 ʂʏ2xou4 , dʑio4 ioŋ4 ʂø2tou5 dzai4 ʂʏ2wu4 ʂɑŋ4 tiɛn3 liɑŋ3ɕia4 .
+D:/dataset/baker/Wave/006542.wav|baker|zh|suei4ye4 dʑye2duei4 bu2ʂʏ4 ʂa1dʒu1daʌ1 , er2ʂʏ4 i1mɨŋ2 io1ɕio4 dø5 sɪ4iɑŋ3yɛn2 !
+D:/dataset/baker/Wave/000125.wav|baker|zh|i1tsɵŋ2 kø3i3 dʒoŋ3 xua1xua1tsaʌ3tsaʌ3 .
+D:/dataset/baker/Wave/001438.wav|baker|zh|ba3 wo3 dʒø4gø4 yɛn4wɑŋ4 gaʌ4su4 dzoŋ3biɛn1 .
+D:/dataset/baker/Wave/000329.wav|baker|zh|ta1 ʈʂuan1dʒø5 ʂuei4i1 ʈʂʏ4dʑiaʌ3 wɑŋ3 wai4 paʌ3 .
+D:/dataset/baker/Wave/003769.wav|baker|zh|tɕie4er3ɕi1 tsoŋ2ɕiaʌ3 ɕi3xuan1 pai2tɕio2 , wan2pai2 , pɨŋ1pɑŋ1tɕio2 xai2io3 diɛn4ɨŋ3 .
+D:/dataset/baker/Wave/008001.wav|baker|zh|i2gø4 nan2ʐœn2 tuei2ʐan2 di4 dzuo4dzai4 pɑŋ2biɛn1 , mu4guɑŋ1 dai1dʒʏ4 .
+D:/dataset/baker/Wave/008123.wav|baker|zh|xai2 in1wei4 mei2 tɕiɛn2 , dʒoŋ4 gu3 mɨŋ2 ɕiɑŋ1 tsoŋ2lai2bu4 mai3 wa4dzɪ5 ie3 bu4 ʈʂuan1 .
+D:/dataset/baker/Wave/004083.wav|baker|zh|tu1ʐan2 bɛi4 dʑi4dʒø3 wei2du3 , xu4 er2 ɕin1tɕie4 dø5 dʑiɑŋ1wœn2 ioŋ4 ʂou3 tuei1sɑŋ3 dʑɨŋ4tou2 .
+D:/dataset/baker/Wave/003100.wav|baker|zh|ʐu2ʐuo4 io3ʐœn2 fan3tɕi2daʌ4er2ɕɨŋ2dʒʏ1 , daʌ4 ʂʏ4 io3 dʑiaʌ4suo1 fan4dzuei4 dø5 ɕiɛn2i2 .
+D:/dataset/baker/Wave/008558.wav|baker|zh|ʂuɑŋ1ʂou3 bɛi4 ɕi4tie3sɪ1 kun3dʒa1 , liɛn3sø4tie3tɕɨŋ1 , ʈʂu3y2 xun1mi2 dʒuɑŋ4tai4 .
+D:/dataset/baker/Wave/003276.wav|baker|zh|wei4 min3 ʂɵŋ1 biaʌ3ʂʏ4 , baʌ2 wɑŋ2 an4 in1 ma4 in3fa1 , tsoŋ2 ʂœn1tsɵŋ2tsɪ4 kan4 , ʂʏ4 li4i4 tuan2xuo3 dø5 nei4xoŋ4 .
+D:/dataset/baker/Wave/002473.wav|baker|zh|dzan2 bu4 ʂɑŋ4 mei3ʂu4ban1 lø5 ba5 ?
+D:/dataset/baker/Wave/006634.wav|baker|zh|dʑiɛn3fɑŋ1 ʐœn4wei2 , iɑŋ2 ʈʂun1 mei4 ʂø4ɕiɛn2 tan1wu1dzuei4 xø2 nuo2ioŋ4goŋ1kuan3 dzuei4 .
+D:/dataset/baker/Wave/004219.wav|baker|zh|dʑɨŋ1 tɕiɑŋ3dʑio4wu2ɕiaʌ4 , ɕiaʌ3iɑŋ2 tuo2 sɪ3wɑŋ2 .
+D:/dataset/baker/Wave/009043.wav|baker|zh|tsø4dʑɨŋ3dʑi4ʂu4 , duei4 ʂʏ2io2kan1tan4 dø5 ɕiaʌ4ly4 xø2 dʒʏ4liɑŋ4 dʒʏ4guan1dʒoŋ4iaʌ4 .
+D:/dataset/baker/Wave/002008.wav|baker|zh|toŋ2ɕye2 iaʌ4 wo3 bɑŋ1 ni3 pei2iɑŋ3 dʒɵŋ4tɕye4 san1guan1 mø5 .
+D:/dataset/baker/Wave/006462.wav|baker|zh|ta1 ba1 er4niɛn2ʂɵŋ1 , xø2bɛi3ʐœn2 , da4ɕye2bœn3kø1 bi4ie4ʂɵŋ1 .
+D:/dataset/baker/Wave/006429.wav|baker|zh|suo3i3 io3ɕie1 ɕioŋ2maʌ1 dø5 dʒua3dzɪ3 xœn3 dʒɑŋ3 , ʂœn1ʂɑŋ4 ie3 io3 i1ɕie1 i4wei4 .
+D:/dataset/baker/Wave/000703.wav|baker|zh|ta3li3mu4 io2tiɛn2 tɕɨŋ1niɛn2 yɛn2goŋ1 fɵŋ4ɕiɛn4 da4mo4 .
+D:/dataset/baker/Wave/001227.wav|baker|zh|tsai3dʒai1 ʂan1xø2taʌ2 dø5 noŋ2min2 i2gø4 lie4tɕie4 die1ɕia4tɕy4 , tou2 pɵŋ4daʌ4 ʂʏ2tou5 dʑio4 kø3nɵŋ2 ʂuai1sɪ3 .
+D:/dataset/baker/Wave/006714.wav|baker|zh|fu2dʑiɛn4 io2tsɪ3 la1 ɕiɑŋ3 iɛn2xai3 xø2 tai2wan1xai3ɕia2 da4fɵŋ1 dʑɨŋ3baʌ4 .
+D:/dataset/baker/Wave/002367.wav|baker|zh|dʒø4 ʂʏ4 xou4 fa3 io1y2 ɕiɛn1 fa3 , tø4ʂu1 fa3 io1y2 pu3toŋ1fa3 dø5 guan1ɕi4 .
+D:/dataset/baker/Wave/001966.wav|baker|zh|tsun2dzai4 iɛn1 dʑɨŋ3 in3xuan4 dø5 kuɑŋ4dʑɨŋ3 , baʌ4y3 tɕi1dʑiɛn1 i1ly4 iɛn2dʑin4 dʑɨŋ3ɕia4 dzuo4ie4 .
+D:/dataset/baker/Wave/009042.wav|baker|zh|dʑie2guo3 in1tsɪ3 mei2 ʈʂou3dʑiɛn4 tɕiɛn2miɛn4 dø5 diɛn4ɕiɛn4gan1 dzɪ5 , i1tou2 dzai1 ʂɑŋ4 lø5 .
+D:/dataset/baker/Wave/008997.wav|baker|zh|ʐu2guo3 ʂuai4 ʂʏ4 i1dʒoŋ3 dzuei4 , na4 dʑin1tiɛn1 dʒu3ʐœn2 ni3 i3dʑɨŋ1 dzuei4ø4taʌ1tiɛn1 lø5 .
+D:/dataset/baker/Wave/000568.wav|baker|zh|dzuei4 iɛn2dʒoŋ4 ʂʏ2 , ɕioŋ1tɕiɛn2 xai2iaʌ4 fɑŋ4 i2gø4 biɛn4pœn2 ʂɵŋ4 ou3tu4wu4 .
+D:/dataset/baker/Wave/007797.wav|baker|zh|er4 ʂʏ4 dzoŋ3liɑŋ4 koŋ4dʒʏ4 , bu4nɵŋ2 ɕiɑŋ4 gun3ɕye3tɕio2 .
+D:/dataset/baker/Wave/007044.wav|baker|zh|wei4mɨŋ2lun2 dʒʏ3ʈʂu1 tɕi2dʒoŋ1 dø5 pɨŋ2dzø4 tsuo4luan4 .
+D:/dataset/baker/Wave/002270.wav|baker|zh|luo2 xan2 ʐʏ4tɕiɛn2 dzai4 fa3guo2 tsan1dʑia1 ga1 na4 diɛn4ɨŋ3dʑie2 .
+D:/dataset/baker/Wave/007033.wav|baker|zh|gei3 tuan2duei4 nɨŋ2dʑin3 fa1tiaʌ2 , ʂʏ4 tɕiaʌ2bu4sɪ1 fu4y3 dzɪ4dʑi3 dø5 dzø2ʐœn4 .

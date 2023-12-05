@@ -10,7 +10,7 @@ from coqpit import Coqpit
 from dataset.basic_dataset import get_metas_from_filelist
 from dataset.sampler import DistributedBucketSampler
 from recipes.vits.vits_train_base import VitsTrain_Base
-from text import _intersperse, text_to_tokens_cn
+from text import _intersperse, text_to_tokens
 from torch import nn
 from trainer import Trainer, TrainerArgs
 
@@ -33,7 +33,7 @@ class VitsTrain(VitsTrain_Base):
         )
 
     def inference(self, text:str, speaker_id:int=None, speaker_embed=None):
-        tokens = text_to_tokens_cn(text)
+        tokens = text_to_tokens(text)
         if self.config.text.add_blank:
             tokens = _intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0).cuda()

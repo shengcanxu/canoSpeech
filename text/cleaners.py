@@ -1,4 +1,6 @@
 """ from https://github.com/keithito/tacotron """
+from anyascii import anyascii
+from text.zh_cn_phonemizer import chinese_text_to_phonemes
 
 """
 Cleaners are transformations that run over the input text at both training and eval time.
@@ -65,7 +67,51 @@ def collapse_whitespace(text):
 
 
 def convert_to_ascii(text):
-    return unidecode(text)
+    return anyascii(text)
+
+
+def replace_symbols(text, lang="en"):
+    """Replace symbols based on the lenguage tag.
+    Args:
+      text:
+       Input text.
+      lang:
+        Lenguage identifier. ex: "en", "fr", "pt", "ca".
+    Returns:
+      The modified text
+      example:
+        input args:
+            text: "si l'avi cau, diguem-ho"
+            lang: "ca"
+        Output:
+            text: "si lavi cau, diguemho"
+    """
+    text = re.sub(r";+", ",", text)
+    text = re.sub("-+", " ", text) if lang != "ca" else re.sub("-+", "", text)
+    text = re.sub(":+", ",", text)
+    if lang == "en":
+        text = re.sub("&+", " and ", text)
+    elif lang == "fr":
+        text = re.sub("&+", " et ", text)
+    elif lang == "pt":
+        text = re.sub("&+", " e ", text)
+    elif lang == "ca":
+        text = re.sub("&+", " i ", text)
+        text = re.sub("'+", "", text)
+    elif lang == "zh":
+        text = re.sub("；+", ",", text)
+        text = re.sub("：+", ",", text)
+        text = re.sub("，+", ",", text)
+        text = re.sub("？+", "?", text)
+        text = re.sub("！+", "!", text)
+        text = re.sub("。+", ".", text)
+        text = re.sub("、+", ",", text)
+    return text
+
+
+def remove_aux_symbols(text):
+    text = re.sub(r"[\<\>\(\)\[\]\"《》（）【】＂”“…]+", "", text)
+    return text
 
 
 def basic_cleaners(text):
@@ -109,4 +155,13 @@ def english_cleaners2(text):
     phonemes = collapse_whitespace(phonemes)
     return phonemes
 
+def chinese_cleaners(text):
+    """pipeline for Chinese text"""
+    text = lowercase(text)
+    text = replace_symbols(text, lang='zh')
+    text = remove_aux_symbols(text)
+
+    phonemes = chinese_text_to_phonemes(text, seperator='')
+    phonemes = collapse_whitespace(phonemes)
+    return phonemes
 

@@ -37,52 +37,52 @@ def gen_filelist(config_path:str):
     train_filelist = "../filelists/%s_train_filelist.txt" % dataset_config.dataset_name
     test_filelist = "../filelists/%s_test_filelist.txt" % dataset_config.dataset_name
 
-    # load dataset metas
-    print("load and split metas....")
-    data_items = load_file_metas(dataset_config)
-    # split train and eval dataset
-    test_datas, train_datas = split_dataset_metas(
-        items=data_items,
-        eval_split_max_size=config.eval_split_max_size,
-        eval_split_size=config.eval_split_size
-    )
+    # # load dataset metas
+    # print("load and split metas....")
+    # data_items = load_file_metas(dataset_config)
+    # # split train and eval dataset
+    # test_datas, train_datas = split_dataset_metas(
+    #     items=data_items,
+    #     eval_split_max_size=config.eval_split_max_size,
+    #     eval_split_size=config.eval_split_size
+    # )
+    #
+    # print("generate filelist....")
+    # if not os.path.exists(train_filelist):
+    #     with open(train_filelist, "w", encoding="utf-8") as f:
+    #         f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["text"].strip() + "\n" for x in train_datas])
+    # if not os.path.exists(test_filelist):
+    #     with open(test_filelist, "w", encoding="utf-8") as f:
+    #         f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["text"].strip() + "\n" for x in test_datas])
 
-    print("generate filelist....")
-    if not os.path.exists(train_filelist):
-        with open(train_filelist, "w", encoding="utf-8") as f:
-            f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["text"].strip() + "\n" for x in train_datas])
-    if not os.path.exists(test_filelist):
-        with open(test_filelist, "w", encoding="utf-8") as f:
-            f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["text"].strip() + "\n" for x in test_datas])
+    # if language == "en":
+    print("generate english cleaned filelist....")
+    _gen_filelist_cleaned(train_filelist, test_filelist, text_config.text_cleaners, lang=language)
+    # elif language == "zh":
+    #     print("generate chinese cleaned filelist....")
+    #     _gen_filelist_cleaned_cn(train_filelist, train_datas, test_filelist, test_datas)
 
-    if language == "en":
-        print("generate english cleaned filelist....")
-        _gen_filelist_cleaned(train_filelist, test_filelist, text_config.text_cleaners)
-    elif language == "zh":
-        print("generate chinese cleaned filelist....")
-        _gen_filelist_cleaned_cn(train_filelist, train_datas, test_filelist, test_datas)
-
-# create cleaned filelist from original filelist
-def _gen_filelist_cleaned_cn(train_filelist:str, train_datas:list, test_filelist:str, test_datas:list):
-    train_filelist_cleaned = train_filelist + ".cleaned"
-    if not os.path.exists(train_filelist_cleaned):
-        with open(train_filelist_cleaned, "w", encoding="utf-8") as f:
-            f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["pinyin"].strip() + "\n" for x in train_datas])
-    test_filelist_cleaned = test_filelist + ".cleaned"
-    if not os.path.exists(test_filelist_cleaned):
-        with open(test_filelist_cleaned, "w", encoding="utf-8") as f:
-            f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["pinyin"].strip() + "\n" for x in test_datas])
+# # create cleaned filelist from original filelist
+# def _gen_filelist_cleaned_cn(train_filelist:str, train_datas:list, test_filelist:str, test_datas:list):
+#     train_filelist_cleaned = train_filelist + ".cleaned"
+#     if not os.path.exists(train_filelist_cleaned):
+#         with open(train_filelist_cleaned, "w", encoding="utf-8") as f:
+#             f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["pinyin"].strip() + "\n" for x in train_datas])
+#     test_filelist_cleaned = test_filelist + ".cleaned"
+#     if not os.path.exists(test_filelist_cleaned):
+#         with open(test_filelist_cleaned, "w", encoding="utf-8") as f:
+#             f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["pinyin"].strip() + "\n" for x in test_datas])
 
 
-def clean_text(args):
-    ptext, text_cleaners = args
+def do_clean_text(args):
+    ptext, text_cleaners, lang = args
     original_text = ptext[3]
     print(original_text)
     cleaned_text = text._clean_text(original_text, text_cleaners)
     return cleaned_text
 
 # clean text and save to filelist file
-def _gen_filelist_cleaned(train_filelist:str, test_filelist:str, text_cleaners):
+def _gen_filelist_cleaned(train_filelist:str, test_filelist:str, text_cleaners, lang="en"):
     for filelist in [train_filelist, test_filelist]:
         print("Start clean:", filelist)
         ptexts = []
@@ -101,9 +101,10 @@ def _gen_filelist_cleaned(train_filelist:str, test_filelist:str, text_cleaners):
             print(pos)
             texts = ptexts[pos:pos+1000]
             pos += 1000
-            clean_args = list(zip(texts, [text_cleaners] * len(texts)))
+            clean_args = list(zip(texts, [text_cleaners] * len(texts), [lang] * len(texts)))
             with Pool(processes=10) as p:
-                cleaned_texts = p.map(clean_text, clean_args)
+                cleaned_texts = p.map(do_clean_text, clean_args)
+                # cleaned_texts = do_clean_text(clean_args[0])
 
                 with open(new_filelist, "a", encoding="utf-8") as fw:
                     for ptext, cleaned_text in zip(texts, cleaned_texts):
@@ -111,7 +112,7 @@ def _gen_filelist_cleaned(train_filelist:str, test_filelist:str, text_cleaners):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="../config/vits_libritts.json")
+    parser.add_argument("--config", type=str, default="../config/vits_baker.json")
     args = parser.parse_args()
 
     gen_filelist(args.config)

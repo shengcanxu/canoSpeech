@@ -187,7 +187,7 @@ class TextAudioDataset(Dataset):
         elif dataset_name == "libritts":
             return LibriTTS_speaker_id_mapping.get(speaker_name, 1)
         else:
-            return None
+            return 0
 
     def _get_text(self, text):
         """format text and add blank"""

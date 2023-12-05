@@ -99,7 +99,7 @@
         "speaker_embedding_channels": 512,
         "use_speaker_ids": false,
         "use_speaker_embeds": true,
-        "use_speaker_encoder_as_loss": true,
+        "use_speaker_encoder_as_loss": false,
         "use_gt_duration": true,
         "use_sdp": true,
 

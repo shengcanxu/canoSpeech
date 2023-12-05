@@ -20,7 +20,7 @@
         "max_text_len": 190,
         "add_blank": false,
         "cleaned_text": true,
-        "text_cleaners":["english_cleaners2"]
+        "text_cleaners":["chinese_cleaners"]
     },
     "audio": {
         "mel_fmin": 0,
@@ -104,7 +104,7 @@
         "use_sdp": true,
 
         "text_encoder": {
-            "num_chars": 219,
+            "num_chars": 188,
             "hidden_channels_ffn": 768,
             "num_heads": 2,
             "num_layers": 10,
