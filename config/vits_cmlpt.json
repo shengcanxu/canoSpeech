@@ -1,5 +1,5 @@
 {
-    "run_name": "CanoVitsCMLTTS",
+    "run_name": "CanoVitsCMLTTS-PT",
     "run_description": "Cano Speech running on CMLTTL-PT dataset",
     "output_path": "D:/project/canoSpeech/output",
 
@@ -97,14 +97,14 @@
         "language_ids_file": null,
         "num_speakers": 244,
         "speaker_embedding_channels": 512,
-        "use_speaker_ids": true,
-        "use_speaker_embeds": false,
+        "use_speaker_ids": false,
+        "use_speaker_embeds": true,
         "use_speaker_encoder_as_loss": false,
         "use_gt_duration": true,
         "use_sdp": true,
 
         "text_encoder": {
-            "num_chars": 178,
+            "num_chars": 189,
             "hidden_channels_ffn": 768,
             "num_heads": 2,
             "num_layers": 10,

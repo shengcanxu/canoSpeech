@@ -120,7 +120,7 @@ def check_symbol_coverage(config_path):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="../config/vits_cmltts.json")
+    parser.add_argument("--config", type=str, default="../config/vits_cmlpt.json")
     args = parser.parse_args()
 
     # gen_filelist(args.config)

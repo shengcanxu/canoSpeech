@@ -161,8 +161,8 @@ class TextAudioDataset(Dataset):
             if os.path.exists(path):
                 fp = open(path, "rb")
                 pickleObj = pickle.load(fp)
-                pitch = torch.FloatTensor(pickleObj["pitch"])
-                speaker = torch.FloatTensor(pickleObj["speaker"])
+                pitch = torch.FloatTensor(pickleObj["pitch"]) if "pitch" in pickleObj else torch.FloatTensor([0])
+                speaker = torch.FloatTensor(pickleObj["speaker"]) if "speaker" in pickleObj else torch.FloatTensor([0])
             else:
                 raise Exception("path doesn't exists! should run preprocess")
 
