@@ -20,7 +20,7 @@ class VitsTrain(VitsTrain_Base):
         super().__init__(config)
 
     def inference(self, text:str, speaker_id:int=None):
-        tokens = text_to_tokens(text)
+        tokens = text_to_tokens(text, cleaner_names=self.config.text.text_cleaners)
         if self.config.text.add_blank:
             tokens = _intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0).cuda()

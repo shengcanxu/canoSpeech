@@ -609,7 +609,7 @@ class NaturalTTSTrain(TrainerModelWithDataset):
         return input
 
     def infer(self, text:str):
-        tokens = text_to_tokens(text)
+        tokens = text_to_tokens(text, cleaner_names=self.config.text.text_cleaners)
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0)
         wav = self.generator.infer(tokens)
         return wav
