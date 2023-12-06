@@ -98,10 +98,10 @@ class VitsTrain(VitsTrain_Base):
         text = "Com quem mais você quer conversar? Você pode ir comigo hoje à reunião."
 
         # speaker_id = random.randint(0, 9)
-        path1 = "D:/dataset/CMLTTS/train/audio/9217/6390/9217_6390_000038.wav.pkl"
-        path2 = "D:/dataset/CMLTTS/train/audio/3427/2564/3427_2564_000000-0001.wav.pkl"
-        # path1 = "/home/cano/dataset/CMLTTS/train/audio/9217/6390/9217_6390_000038.wav.pkl"
-        # path2 = "/home/cano/dataset/CMLTTS/train/audio/3427/2564/3427_2564_000000-0001.wav.pkl"
+        # path1 = "D:/dataset/CMLTTS/train/audio/9217/6390/9217_6390_000038.wav.pkl"
+        # path2 = "D:/dataset/CMLTTS/train/audio/3427/2564/3427_2564_000000-0001.wav.pkl"
+        path1 = "/home/cano/dataset/CMLTTS/train/audio/9217/6390/9217_6390_000038.wav.pkl"
+        path2 = "/home/cano/dataset/CMLTTS/train/audio/3427/2564/3427_2564_000000-0001.wav.pkl"
         path = path1 if random.randint(1,10) >= 5 else path2
         fp = open(path, "rb")
         pickleObj = pickle.load(fp)

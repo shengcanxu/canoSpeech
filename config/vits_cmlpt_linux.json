@@ -1,26 +1,26 @@
 {
-    "run_name": "CanoVitsLibriTTS",
-    "run_description": "Cano Speech running on LibriTTS dataset",
+    "run_name": "CanoVitsCMLTTS-PT",
+    "run_description": "Cano Speech running on CMLTTL-PT dataset",
     "output_path": "/home/cano/output",
 
     "dataset_config": {
-        "dataset_name":"libritts",
-        "meta_file_train":"/home/cano/canoSpeech/filelists/libritts_train_filelist.txt.cleaned",
-        "meta_file_val":"/home/cano/canoSpeech/filelists/libritts_test_filelist.txt.cleaned",
-        "path":"/home/cano/dataset/LibriTTS",
-        "language":"en",
+        "dataset_name":"cmltts",
+        "meta_file_train":"/home/cano/canoSpeech/filelists/cmltts_train_filelist.txt.cleaned",
+        "meta_file_val":"/home/cano/canoSpeech/filelists/cmltts_test_filelist.txt.cleaned",
+        "path":"/home/cano/dataset/CMLTTS",
+        "language":"pt",
         "ignored_speakers":[],
         "num_loader_workers": 4,
         "num_eval_loader_workers": 4,
         "use_cache": true,
-        "add_preprocess_data": false
+        "add_preprocess_data": true
     },
     "text": {
         "min_text_len": 1,
         "max_text_len": 190,
         "add_blank": true,
         "cleaned_text": true,
-        "text_cleaners":["english_cleaners2"]
+        "text_cleaners":["portuguese_cleaners"]
     },
     "audio": {
         "mel_fmin": 0,
@@ -97,14 +97,14 @@
         "language_ids_file": null,
         "num_speakers": 244,
         "speaker_embedding_channels": 512,
-        "use_speaker_ids": true,
-        "use_speaker_embeds": false,
+        "use_speaker_ids": false,
+        "use_speaker_embeds": true,
         "use_speaker_encoder_as_loss": false,
         "use_gt_duration": true,
         "use_sdp": true,
 
         "text_encoder": {
-            "num_chars": 178,
+            "num_chars": 189,
             "hidden_channels_ffn": 768,
             "num_heads": 2,
             "num_layers": 10,
