@@ -1,0 +1,256 @@
+/home/cano/dataset/CMLTTS/train/audio/2961/13488/2961_13488_001195.wav|cmlpt_2961|pt|As calças, de brim pardo, tinham duas fortes joelheiras, em quanto as bainhas eram roidas pelo tacão de um botim sem misericordia nem graxa.
+/home/cano/dataset/CMLTTS/train/audio/2961/8380/2961_8380_000321.wav|cmlpt_2961|pt|Guiomar erigiu o busto e olhou direitamente para a madrinha, com taes signaes de espanto no rosto, que esta não poude deixar de lhe perguntar: --Que tens?
+/home/cano/dataset/CMLTTS/train/audio/10107/12563/10107_12563_000483.wav|cmlpt_10107|pt|era poeta de improviso, não escrevia os versos, os outros é que os ouviam e transladavam ao papel, dando-lhe cópias, muitas das quais perdia.
+/home/cano/dataset/CMLTTS/train/audio/2961/13488/2961_13488_000546-0002.wav|cmlpt_2961|pt|Eu agradeci-lh'o com os olhos humidos.
+/home/cano/dataset/CMLTTS/train/audio/9351/9280/9351_9280_001194-0002.wav|cmlpt_9351|pt|E evocava exemplos, o Partido Progressista, Olinda, Nabuco, Zacarias, que foram eles senão conservadores que compreenderam os tempos novos
+/home/cano/dataset/CMLTTS/train/audio/2961/3702/2961_3702_000143-0003.wav|cmlpt_2961|pt|Até que súbito, meu castíssimo Barreto!
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_001492-0003.wav|cmlpt_12249|pt|Pois então a gente não é senhora de estar um domingo em casa a seu gosto e com os amigos que entender?
+/home/cano/dataset/CMLTTS/train/audio/9351/9018/9351_9018_000989-0001.wav|cmlpt_9351|pt|Que lhe dizia eu?
+/home/cano/dataset/CMLTTS/train/audio/10107/12563/10107_12563_001137.wav|cmlpt_10107|pt|Era um homenzinho seco e baixo, cara lisa, cabelo raro e branco, tenaz um tanto impertinente, creio que desligado de partidos.
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_001036-0002.wav|cmlpt_2961|pt|Ainda mais, sei que a tutela é gratuita, mas assim não deve ser quando os órfãos têm de sobra com que recompensar o trabalho que dão.
+/home/cano/dataset/CMLTTS/train/audio/2961/3765/2961_3765_000052-0004.wav|cmlpt_2961|pt|Mas um dia a miséria, a fome, o frio, Foram pedir um pouso nos teus lares
+/home/cano/dataset/CMLTTS/train/audio/2961/3680/2961_3680_000396-0001.wav|cmlpt_2961|pt|D'esta maneira, foi êle preso do amor da senhora Aonia;
+/home/cano/dataset/CMLTTS/train/audio/12249/12765/12249_12765_000730-0001.wav|cmlpt_12249|pt|Não faça agora como os médicos, que só aparecem com as moléstias!
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_000122-0002.wav|cmlpt_2961|pt|- Se entendes que mereço alguma cousa, pelo que tenho feito por ti, desde que morreu tua mãe, já educando-te, já vestindo-te, já dando-te égua para passeares, já cuidando da tua alma, então traze-me desses santos lugares uma santa relíquia uma relíquia
+/home/cano/dataset/CMLTTS/train/audio/4367/3648/4367_3648_000025-0004.wav|cmlpt_4367|pt|— Não posso agora.
+/home/cano/dataset/CMLTTS/train/audio/2961/3765/2961_3765_000235-0001.wav|cmlpt_2961|pt|Banhem-se em luz os prostíbulos, E das lascas dos patíbulos Erga-se a estátua aos heróis!
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_002044.wav|cmlpt_2961|pt|O Xavier toda a manhã deitara escarros de sangue pela boca. E a Cármen, despenteada, em chinelas, arrastando uma bata de fustão manchada de vinho,
+/home/cano/dataset/CMLTTS/train/audio/6207/5270/6207_5270_000019.wav|cmlpt_6207|pt|ella assanhada, levantan- do-se hum pouco, picou a Cabra em huma teta; mas como o filho logo vies- se a mamar, e chupasse com o leite a peçonha da Bicha, salvou a Mãi, e elle morreo.
+/home/cano/dataset/CMLTTS/train/audio/9351/9280/9351_9280_001881-0003.wav|cmlpt_9351|pt|Juntai-os todos,
+/home/cano/dataset/CMLTTS/train/audio/2961/3765/2961_3765_000063-0002.wav|cmlpt_2961|pt|Depois.  sim.
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_001036-0001.wav|cmlpt_2961|pt|E logo a vi, lá embaixo, junto à ravina do Cédron, sombria, atulhada de conventos e agachada nas suas muralhas caducas - como uma pobre, coberta de piolhos, que para morrer se embrulha a um canto nos farrapos do
+/home/cano/dataset/CMLTTS/train/audio/2961/8729/2961_8729_000742-0001.wav|cmlpt_2961|pt|Regulavam as culturas;  poliam as gentes;
+/home/cano/dataset/CMLTTS/train/audio/10107/12563/10107_12563_000502.wav|cmlpt_10107|pt|Volveram anos; volveram cousas; mas a consciência humana diz-nos que, no meio das obras e dos tempos fugidios, subsiste a flor da poesia,
+/home/cano/dataset/CMLTTS/train/audio/4367/3604/4367_3604_000010.wav|cmlpt_4367|pt|Quem cuidou que se visse neste estado naquelas breves horas de alegria, quando minha ventura consentia que de enganos vivesse meu cuidado?
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_000901-0002.wav|cmlpt_2961|pt|Cedeu pois à instância dos amigos de seu pai que obtiveram encartá-lo em uma secretaria como praticante.
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_002073-0006.wav|cmlpt_2961|pt|- Estou ouvindo-o
+/home/cano/dataset/CMLTTS/train/audio/10107/11436/10107_11436_000448-0002.wav|cmlpt_10107|pt|Esse oficial, autorizado a fazer cativos para indenização das despesas, não respeitou os próprios índios do Jaguaribe, amigos dos portugueses.
+/home/cano/dataset/CMLTTS/train/audio/6207/5270/6207_5270_000015.wav|cmlpt_6207|pt|MORALIDADE. Alêra de mostrar esta Fabula huma cousa tão ordinária como he ódio en- tre noras e sogras, também nos ensi- na quão má cousa he o ódio, e quanto para fugir,
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_000449-0005.wav|cmlpt_2961|pt|Era rica e formosa.
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_001656-0002.wav|cmlpt_12249|pt|As janelas do Miranda fecharam-se.
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_000169-0002.wav|cmlpt_12249|pt|Desde que o vizinho surgiu com o baronato, o vendeiro transformava-se por dentro e por fora a causar pasmo
+/home/cano/dataset/CMLTTS/train/audio/9351/9280/9351_9280_000724-0001.wav|cmlpt_9351|pt|Paulo tinha ido a Minas, uns diziam que a ver noiva, outros que a catar diamantes, mas parece que foi só a passeio.
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_001292-0001.wav|cmlpt_12249|pt|Miranda mesmo, que o via em conta de amigo fiel, muitas e muitas vezes lhas confiara em ocasiões desesperadas de desabafo, declarando francamente o quanto no intimo a desprezava e a razão por que não a punha na rua aos pontapés
+/home/cano/dataset/CMLTTS/train/audio/2961/6361/2961_6361_000250-0001.wav|cmlpt_2961|pt|Mas fe a todas as aflembléas afOítiftes, fe era ali fomente que os negócios fe ponderavam e refol- viam, fe quanto eu propuz parecia então louvável a to- dos os cidadãos, e a ti principalmente
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_000794.wav|cmlpt_12249|pt|distinguia ao primeiro lance de olhos o posto e o corpo a que pertencia qualquer soldado e, apesar dos seus achaques
+/home/cano/dataset/CMLTTS/train/audio/2961/13488/2961_13488_000931-0003.wav|cmlpt_2961|pt|Não digo mais nada, a não ser que a acompanhei até o ultimo jazigo, e me despedi triste, mas sem lagrimas.
+/home/cano/dataset/CMLTTS/train/audio/2961/4739/2961_4739_000188-0005.wav|cmlpt_2961|pt|quero ver se ainda é tempo de arrancar-te a esse abismo.
+/home/cano/dataset/CMLTTS/train/audio/2961/13511/2961_13511_000032.wav|cmlpt_2961|pt|Jogral de um povo rude, o lar tornava-o um patriarcha, um levita, sacrosanto como Moysés descendo o Monte do Senhor.
+/home/cano/dataset/CMLTTS/train/audio/9351/9018/9351_9018_000625-0001.wav|cmlpt_9351|pt|É duvidoso.  Seu futuro tem por ora dois limites únicos, alguns estudos de ciência e os aluguéis das casas que possui.
+/home/cano/dataset/CMLTTS/train/audio/5677/4807/5677_4807_001621-0002.wav|cmlpt_5677|pt|Mas qual!  O secretário chegou, foi ao gabinete do diretor.
+/home/cano/dataset/CMLTTS/train/audio/2961/3702/2961_3702_001406-0001.wav|cmlpt_2961|pt|pirâmides humanas sobre as paralelas, deformando-se para os lados em curvas de braços e ostentações vigorosas de tórax;
+/home/cano/dataset/CMLTTS/train/audio/9351/9163/9351_9163_000450.wav|cmlpt_9351|pt|Fui à Casa Velha, e pedi a D. Antônia que me desse também uma conferência particular. Desconfiada, respondeu que sim, e foi na sala dos livros, enquanto Félix estava fora, que lhe contei o que acabava de saber
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_000001-0002.wav|cmlpt_2961|pt|Fazia cintilar os brilhantes aos raios de luz;
+/home/cano/dataset/CMLTTS/train/audio/2961/13488/2961_13488_001042.wav|cmlpt_2961|pt|E mandou buscar um maço de papeis á escrivaninha; não tendo forças para tirar a fita de borracha que prendia os papeis, pediu-me que os deslaçasse: fil-o.
+/home/cano/dataset/CMLTTS/train/audio/2961/3702/2961_3702_001547.wav|cmlpt_2961|pt|Ainda escrevem. estes peraltas?. disse-nos de enorme altura, à guisa de boas-noites, e desapareceu confiando-nos ao amável João Numa, bácoro, inspetor das salas de cima.
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_001478.wav|cmlpt_12249|pt|Sim, pequeno, naquela porta, onde a preta do tabuleiro está vendendo! Ó diabo! olha que pisas a boneca de anil! Já se viu que sorte? Parece que não vê onde pisa este raio de criança
+/home/cano/dataset/CMLTTS/train/audio/2961/8363/2961_8363_000535-0003.wav|cmlpt_2961|pt|se a minha vida é necessária à sua felicidade, tome-a;
+/home/cano/dataset/CMLTTS/train/audio/9351/9163/9351_9163_000306-0001.wav|cmlpt_9351|pt|Sim, senhor;  mas nesse caso que mal há em casar com o Vitorino?
+/home/cano/dataset/CMLTTS/train/audio/10107/11436/10107_11436_000755-0004.wav|cmlpt_10107|pt|Depois de vencidos os guaraciabas na baía dos papagaios,
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_001685-0004.wav|cmlpt_2961|pt|e padres de cultos rivais puxavam- me pela rabona para me mostrarem relíquias, rivais, heróicas ou divinas -
+/home/cano/dataset/CMLTTS/train/audio/2961/8363/2961_8363_000620-0001.wav|cmlpt_2961|pt|Ela sofria já a ebriedade das luzes, da música e dos perfumes, que a dominava sempre em pleno salão.
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_000116-0001.wav|cmlpt_12249|pt|E depois embarcou para a frente, rugindo e esfocinhando moribunda numa lameira de sangue.
+/home/cano/dataset/CMLTTS/train/audio/9351/9280/9351_9280_000093.wav|cmlpt_9351|pt|Não tenha medo. A baronesa já sabe o que há? - Quando eu saí de casa, não sabia, mas agora é provável. - Pois vá tranquilizá-la; naturalmente está aflita.
+/home/cano/dataset/CMLTTS/train/audio/9351/9018/9351_9018_000972-0002.wav|cmlpt_9351|pt|Nunca a manhã lhe pareceu mais rumorosa e jovial;
+/home/cano/dataset/CMLTTS/train/audio/9351/9280/9351_9280_001706-0002.wav|cmlpt_9351|pt|Aquela cabeça, apenas masculina, era destinada a mudar a marcha do sol, que andava errado.
+/home/cano/dataset/CMLTTS/train/audio/2961/7087/2961_7087_000157-0001.wav|cmlpt_2961|pt|ou mais na berra, como diziam os antigos.
+/home/cano/dataset/CMLTTS/train/audio/4367/4739/4367_4739_000029-0004.wav|cmlpt_4367|pt|Mendonça, conquanto não fosse dado à convivência das salas, era um cavalheiro próprio para entreter duas senhoras que pareciam mortalmente aborrecidas.
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_000098.wav|cmlpt_2961|pt|e reconheceu que suas posses não lhe permitiam por enquanto o casamento com uma moça bonita e elegante, naturalmente inclinada ao luxo, que é a flor dessas borboletas de asas de seda e tule.
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_002004-0002.wav|cmlpt_2961|pt|nem ao menos permitiu-me o prazer da ilusão, que têm as mulheres enganadas.
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_000599-0001.wav|cmlpt_12249|pt|ia mais longe na defesa, porque sempre tivera pena de Leocádia, pois entendia que aquele assanhamento por homem não era maldade dela;
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_000162-0001.wav|cmlpt_2961|pt|A primeira vez que encontrou ao Amaral na Rua do Ouvidor, o velho insinuou-se em sua intimidade;
+/home/cano/dataset/CMLTTS/train/audio/12249/13511/12249_13511_000071-0003.wav|cmlpt_12249|pt|O livro intitulava-se
+/home/cano/dataset/CMLTTS/train/audio/2961/3765/2961_3765_000017-0001.wav|cmlpt_2961|pt|E vós cruzais os braços.
+/home/cano/dataset/CMLTTS/train/audio/2961/8729/2961_8729_000267-0003.wav|cmlpt_2961|pt|Não murmura.  Não reza.
+/home/cano/dataset/CMLTTS/train/audio/10107/11436/10107_11436_000579.wav|cmlpt_10107|pt|Se algum leitor curioso se puser à escuta, deixá-lo. Não havemos por isso de mudar o tom rasteiro da intimidade pela frase garrida das salas.
+/home/cano/dataset/CMLTTS/train/audio/2961/4272/2961_4272_000135-0004.wav|cmlpt_2961|pt|--Mas, como se intende isto?
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_000185-0002.wav|cmlpt_2961|pt|Decerto encontraria uma colônia romana;
+/home/cano/dataset/CMLTTS/train/audio/9351/9280/9351_9280_001187.wav|cmlpt_9351|pt|Sem rodeios, supôs que as duas senhoras vinham de alguma aventura amorosa, e deduziu isto de três fatos, que sou obrigado a enfileirar aqui para não deixar este homem sob a suspeita de caluniador gratuito.
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_002094-0001.wav|cmlpt_2961|pt|Essa última consolação, o senhor a arrebatou.
+/home/cano/dataset/CMLTTS/train/audio/2961/3702/2961_3702_000935-0003.wav|cmlpt_2961|pt|Nenhum mestre é mau para o bom discípulo, afirmava uma das máximas da parede.
+/home/cano/dataset/CMLTTS/train/audio/2961/6187/2961_6187_000129.wav|cmlpt_2961|pt|Todas as suas dívidas acham-se pagas; a sua honra está salva; é tempo de voltar ao mundo. - Mas as seis letras que estão em sua mão? interrompeu o moço. - Aqui as tem, disse o Sr. Almeida entregando-lhe um pequeno maço.
+/home/cano/dataset/CMLTTS/train/audio/5677/4272/5677_4272_000146-0003.wav|cmlpt_5677|pt|Quando os mais nobres senhores se poderiam ufanar da sua alliança!
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_001264-0003.wav|cmlpt_2961|pt|- Sem dúvida!
+/home/cano/dataset/CMLTTS/train/audio/10107/12563/10107_12563_001121-0001.wav|cmlpt_10107|pt|Não cabe inseri-la aqui;
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_001524.wav|cmlpt_2961|pt|E verdade, a Titi tem-me amizade. Mas acredite Vossa Excelência, Doutor Margaride, que o meu futuro inquieta-me às vezes. Olhe que tenho pensado mesmo em ir a um concurso para delegado.
+/home/cano/dataset/CMLTTS/train/audio/2961/3899/2961_3899_000319.wav|cmlpt_2961|pt|esgotando e vencendo a absorção pelas radículas. Sucedem-se outros, diversamente apercebidos, sob novos aprestos, mas igualmente resistentes.
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_001833.wav|cmlpt_2961|pt|Vós sois três torres; e contra cada uma o Rabi de Galiléia ergue o braço e lança a primeira pedrada! Mas vós guardais Israel e o seu Deus e os seus bens,
+/home/cano/dataset/CMLTTS/train/audio/5677/4807/5677_4807_000462-0001.wav|cmlpt_5677|pt|O Doutor Campos não tinha absolutamente nenhuma espécie de ciúme dessa rival.
+/home/cano/dataset/CMLTTS/train/audio/5677/4807/5677_4807_000326.wav|cmlpt_5677|pt|Estavam assim a escolher arados e outros Planets, Bajacs e Brabants de vários feitios, quando o seu pequeno copeiro lhe anunciou a visita do Doutor Campos.
+/home/cano/dataset/CMLTTS/train/audio/9351/9018/9351_9018_001108-0004.wav|cmlpt_9351|pt|logo que as duas senhoras souberam de seu regresso, correram a recebê-lo, ficando D.
+/home/cano/dataset/CMLTTS/train/audio/9351/9163/9351_9163_000317-0004.wav|cmlpt_9351|pt|Enquanto eles iam à cavalariça, ver os animais chegados, dirigi-me para a sala principal, onde achei D.
+/home/cano/dataset/CMLTTS/train/audio/9351/9163/9351_9163_000003.wav|cmlpt_9351|pt|Onde eles viam um simples protetor gratuito existia um homem que, impedido de a amar na terra, procurava ao menos fazê-la feliz com outro. A consciência vaga de um tal estado deu-me ainda mais força para tentar tudo
+/home/cano/dataset/CMLTTS/train/audio/2961/8363/2961_8363_000105.wav|cmlpt_2961|pt|Estava só. De pé no vão da janela cheia de luz, meio reclinada ao peitoril, tinha na mão um livro aberto e lia com atenção.
+/home/cano/dataset/CMLTTS/train/audio/2961/3680/2961_3680_000294-0002.wav|cmlpt_2961|pt|E foi feito assim.
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_000853.wav|cmlpt_12249|pt|O membrudo cavouqueiro havia chegado a fralda do orgulhoso monstro de pedra; tinha-o cara a cara, mediu-o de alto a baixo, arrogante, num desafio surdo
+/home/cano/dataset/CMLTTS/train/audio/10107/12563/10107_12563_000503-0001.wav|cmlpt_10107|pt|logo depois vi assomar à porta da sala o vulto de Conceição.
+/home/cano/dataset/CMLTTS/train/audio/4367/3848/4367_3848_000059-0001.wav|cmlpt_4367|pt|É o recurso dos humoristas à cata de assuntos, ler anúncios.
+/home/cano/dataset/CMLTTS/train/audio/2961/4272/2961_4272_000358-0001.wav|cmlpt_2961|pt|Nem conheceu o Pavel Alexandrovitch, os seus olhos nem se detiveram sequer no semblante de mancebo.
+/home/cano/dataset/CMLTTS/train/audio/5677/4744/5677_4744_000014.wav|cmlpt_5677|pt|replicou o Lobo, que todo o pasto de meu campo estragaste. Mal pôde ser isso, disse o Cordeiro, porque ainda não tenho dentes. O Lo- bo, sem mais razões, saltou sobre elle, e logo o degolou e o comeo
+/home/cano/dataset/CMLTTS/train/audio/4367/4739/4367_4739_000037-0003.wav|cmlpt_4367|pt|Menos ceticismo da parte de Margarida, mais cavalheirismo da parte do rapaz, teriam poupado o desenlace sombrio da comédia do coração.
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_000545-0004.wav|cmlpt_2961|pt|D.  Firmina dobrou seus jornais e despediu-se.
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_001768-0001.wav|cmlpt_2961|pt|Sua entrada foi como sempre um deslumbramento;
+/home/cano/dataset/CMLTTS/train/audio/2961/4572/2961_4572_000025.wav|cmlpt_2961|pt|E contudo, meu Deus! eu sou bem moço, Devera só me rir, E ter fé e ter crença nos amores, Na glória e no porvir! Eu
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_001959.wav|cmlpt_2961|pt|Abri devagarinho o baú, descosi o forro, tirei a carta deliciosa da Teresa, a fita que conservara o aroma da sua pele, e a sua fotografia, de mantilha.
+/home/cano/dataset/CMLTTS/train/audio/2961/13488/2961_13488_001459-0001.wav|cmlpt_2961|pt|Eu mesmo fui injusto com elle durante os annos que se seguiram ao inventario do meu pae.
+/home/cano/dataset/CMLTTS/train/audio/10107/6390/10107_6390_000742-0001.wav|cmlpt_10107|pt|eu sou a Bahia!
+/home/cano/dataset/CMLTTS/train/audio/2961/13488/2961_13488_001579-0001.wav|cmlpt_2961|pt|comparando-nos a bois, porque nós eramos outra especie de animal menos tardo, mais velhaco e lascivo.
+/home/cano/dataset/CMLTTS/train/audio/4367/3698/4367_3698_000140.wav|cmlpt_4367|pt|O senhor Rodrigues não tem remédio senão abrir os olhos. — Que é? que desejam vocês? — Eu queria que papai me dissesse o que é plebiscito. —
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_000290-0002.wav|cmlpt_2961|pt|E que faria lá, pobre, solitário?
+/home/cano/dataset/CMLTTS/train/audio/10107/12266/10107_12266_000119.wav|cmlpt_10107|pt|enquanto os nossos corpos esquecidos, iam maquinalmente prosseguindo, passo a passo, por entre o limo pegajoso e úmido.
+/home/cano/dataset/CMLTTS/train/audio/12249/12765/12249_12765_000162-0003.wav|cmlpt_12249|pt|ora solfejava alguma melodia alemã ou algum romance italiano;
+/home/cano/dataset/CMLTTS/train/audio/2961/4629/2961_4629_000432-0001.wav|cmlpt_2961|pt|-- A colunata êxul do Sonho Morto -- o círio Da Quimera Falaz, o túmulo da Crença, Tudo!
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_002208-0002.wav|cmlpt_12249|pt|o seu pantafaçudo chapéu de imensas abas forradas de velado escarlate, com um pássaro inteiro grudado à copa;
+/home/cano/dataset/CMLTTS/train/audio/2961/8363/2961_8363_000046-0002.wav|cmlpt_2961|pt|porém mano José não entende destas coisas, Geraldo é uma criança.
+/home/cano/dataset/CMLTTS/train/audio/2961/14431/2961_14431_000000-0002.wav|cmlpt_2961|pt|.
+/home/cano/dataset/CMLTTS/train/audio/4367/4272/4367_4272_000285-0002.wav|cmlpt_4367|pt|meu espirito!  Ás vezes--talvez não acredites--mas acontece-me estar um dia inteiro sem me accudir um pensamento a esta cabeça.
+/home/cano/dataset/CMLTTS/train/audio/2961/8363/2961_8363_000040-0002.wav|cmlpt_2961|pt|movia-se em torno de sua beleza, como um anjo que descera do céu para acariciá-la.
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_000700-0002.wav|cmlpt_2961|pt|outra, exausta de lágrimas, jazia numa pedra, com a cabeça caída nos joelhos, e os esplêndidos cabelos louros desmanchados, alastrados até ao chão
+/home/cano/dataset/CMLTTS/train/audio/9351/9280/9351_9280_001443.wav|cmlpt_9351|pt|Devedores de Santos acudiram depressa, outros preferiram continuar o esquecimento. Nomes houve que eles só puderam reconhecer à força de grande pesquisa e muito almanaque.
+/home/cano/dataset/CMLTTS/train/audio/2961/3058/2961_3058_000425-0001.wav|cmlpt_2961|pt|Casa Verde e do terrível Simão Bacamarte.
+/home/cano/dataset/CMLTTS/train/audio/2961/6187/2961_6187_000491-0003.wav|cmlpt_2961|pt|Carlota é amiga íntima de Carolina.
+/home/cano/dataset/CMLTTS/train/audio/2961/3899/2961_3899_000124-0001.wav|cmlpt_2961|pt|Ao passo que a caatinga o afoga;
+/home/cano/dataset/CMLTTS/train/audio/2961/8380/2961_8380_000881-0003.wav|cmlpt_2961|pt|--Oh!  parece que sim!
+/home/cano/dataset/CMLTTS/train/audio/2961/8363/2961_8363_000326-0004.wav|cmlpt_2961|pt|ficou vaga uma cadeira entre ambas;
+/home/cano/dataset/CMLTTS/train/audio/9351/9280/9351_9280_000700.wav|cmlpt_9351|pt|Nóbrega sabia pouca ortografia, nenhuma sintaxe, lições úteis, decerto, mas que não valiam a moral, e a moral, diziam todos, acompanhando o secretário, era o seu principal e maior mérito.
+/home/cano/dataset/CMLTTS/train/audio/5677/4807/5677_4807_000601-0001.wav|cmlpt_5677|pt|Dava-se isso com Albernaz e a sua satisfação de viver e a sua jovialidade natural foram voltando insensivelmente.
+/home/cano/dataset/CMLTTS/train/audio/4367/4272/4367_4272_000021-0003.wav|cmlpt_4367|pt|--Mamã, se está resolvida, é tempo de fazer alguma coisa.
+/home/cano/dataset/CMLTTS/train/audio/4367/3799/4367_3799_000289-0003.wav|cmlpt_4367|pt|Era dela.
+/home/cano/dataset/CMLTTS/train/audio/9351/9280/9351_9280_000828-0003.wav|cmlpt_9351|pt|Santos ainda parou alguns instantes para ver o coupé dar a volta, sair e tornar à cocheira;
+/home/cano/dataset/CMLTTS/train/audio/2961/6187/2961_6187_000474-0001.wav|cmlpt_2961|pt|Já não era o mesmo homem: simples nos seus hábitos e na sua existência, ninguém diria que algum tempo ele tinha gozado de todas as voluptuosidades do luxo;
+/home/cano/dataset/CMLTTS/train/audio/2961/8729/2961_8729_000027-0001.wav|cmlpt_2961|pt|Assim se traduz geometricamente um fato mecânico complexo.
+/home/cano/dataset/CMLTTS/train/audio/2961/3702/2961_3702_000786-0002.wav|cmlpt_2961|pt|Outras ninharias, em tom de sentida brandura, como se desejasse decrescer das proporções sólidas de sua conformação
+/home/cano/dataset/CMLTTS/train/audio/2961/4629/2961_4629_000596.wav|cmlpt_2961|pt|Os terremotos que, abalando os solos, Lembram paióis de pólvora explodindo, A rotação dos fluidos produzindo A depressão geológica dos pólos;
+/home/cano/dataset/CMLTTS/train/audio/2961/8363/2961_8363_000526.wav|cmlpt_2961|pt|A barba fugia-lhe pelo pescoço fino e longo; faces, não as tinha; a testa era comprimida sob as pastas batidas do cabelo, que repuxavam duas tranças compridas e espessas.
+/home/cano/dataset/CMLTTS/train/audio/2961/6361/2961_6361_000165-0003.wav|cmlpt_2961|pt|Se eu tivera pois a
+/home/cano/dataset/CMLTTS/train/audio/9351/9163/9351_9163_000386-0001.wav|cmlpt_9351|pt|Tais eram as reflexões que vim fazendo, quando dali voltei nesse dia, e para quem andava à cata de documentos políticos, não é de crer que semelhante preocupação fosse de grande peso;
+/home/cano/dataset/CMLTTS/train/audio/2961/3702/2961_3702_000270-0002.wav|cmlpt_2961|pt|Quando o vento era mais forte, enfunava as roupas estendidas, inflando ventres de mulher nas saias, nas camisas.
+/home/cano/dataset/CMLTTS/train/audio/4367/4272/4367_4272_000320-0002.wav|cmlpt_4367|pt|que solemnidade!  Em pondo a gravata branca, faz um figurão!
+/home/cano/dataset/CMLTTS/train/audio/4367/4739/4367_4739_000017-0004.wav|cmlpt_4367|pt|Uma coisa concluiu ele logo;
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_001678-0003.wav|cmlpt_2961|pt|Só com os caçadores de dotes era loureira, se tal nome pode-se aplicar ao constante ludíbrio e humilhação a que submetia seus apaixonados.
+/home/cano/dataset/CMLTTS/train/audio/12249/12765/12249_12765_000270-0002.wav|cmlpt_12249|pt|Lá estava D.
+/home/cano/dataset/CMLTTS/train/audio/9351/9280/9351_9280_000356.wav|cmlpt_9351|pt|Conjecturas tudo. Era natural que, assim bonitos, iguais, elegantes, dados à vida e ao passeio, à conversação e à dança, finalmente herdeiros, era natural que mais de uma menina gostasse deles.
+/home/cano/dataset/CMLTTS/train/audio/9351/9280/9351_9280_001656.wav|cmlpt_9351|pt|Assim lhe parecia ao estudante de direito; pelo quê, quando ele desviava o rosto, era para repetir a experiência e tornar a ver-lhe os olhos aguçados do mesmo espírito crítico e de livre exame.
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_001047-0003.wav|cmlpt_2961|pt|- Pode contar com ela.
+/home/cano/dataset/CMLTTS/train/audio/2961/8380/2961_8380_000369.wav|cmlpt_2961|pt|Tu que chegaste ao fim, põe a epistola no fundo da gaveta, e não te lembres de ir ver se ella tem um post-scriptum. Estavão applaudiu a metaphora com um sorriso de bom agouro.
+/home/cano/dataset/CMLTTS/train/audio/10107/11436/10107_11436_000862-0003.wav|cmlpt_10107|pt|murmuraram os lábios trêmulos.
+/home/cano/dataset/CMLTTS/train/audio/10107/11436/10107_11436_000404-0001.wav|cmlpt_10107|pt|Essa é a etimologia verdadeira;
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_000062-0002.wav|cmlpt_12249|pt|comia em hotéis caros e bebia cerveja em larga camaradagem com capitalistas nos cafés do comércio.
+/home/cano/dataset/CMLTTS/train/audio/9351/9280/9351_9280_001655-0002.wav|cmlpt_9351|pt|Tabuletas da minha infância, ai, tabuletas!
+/home/cano/dataset/CMLTTS/train/audio/2961/6187/2961_6187_000208-0002.wav|cmlpt_2961|pt|ocultava o seu tesouro, com medo que lho roubassem;
+/home/cano/dataset/CMLTTS/train/audio/2961/8729/2961_8729_000762.wav|cmlpt_2961|pt|Daí, em grande parte, a paralisia completa das gentes que ali vagam, há três séculos, numa agitação tumultuária e estéril.
+/home/cano/dataset/CMLTTS/train/audio/5677/4807/5677_4807_001130-0002.wav|cmlpt_5677|pt|Dona Quinota retirou-se.
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_001937-0002.wav|cmlpt_2961|pt|A expressão tocante e melancólica da moça ao proferir estas palavras comoveu Seixas, que já não se lembrava de seus ressentimentos.
+/home/cano/dataset/CMLTTS/train/audio/9351/9018/9351_9018_000203-0001.wav|cmlpt_9351|pt|um para outro lado, com um livro aberto nas mãos, algum Tertuliano ou Agostinho, ou qualquer outro da mesma estatura, porque o padre amava contemplar os grandes espíritos do passado, quando não encarava os mistérios do futuro
+/home/cano/dataset/CMLTTS/train/audio/10107/12563/10107_12563_000537-0004.wav|cmlpt_10107|pt|—
+/home/cano/dataset/CMLTTS/train/audio/9351/9018/9351_9018_000367-0002.wav|cmlpt_9351|pt|Helena quis responder, a voz travou-se-lhe na garganta, e a palavra retrocedeu ao coração.
+/home/cano/dataset/CMLTTS/train/audio/2961/3899/2961_3899_000459-0002.wav|cmlpt_2961|pt|A travessia das trincheiras foi lenta.
+/home/cano/dataset/CMLTTS/train/audio/2961/7087/2961_7087_000042-0001.wav|cmlpt_2961|pt|o hymno do snr.
+/home/cano/dataset/CMLTTS/train/audio/5677/4807/5677_4807_000786-0002.wav|cmlpt_5677|pt|O luar continuava lindo, plástico e opalescente.
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_000794-0002.wav|cmlpt_2961|pt|E tendo parado, enquanto ele desenvencilhava os cornos dos ramos de uma das árvores, ouvi de repente ao meu lado um berro: Olha o Teodorico com o Porco-Sujo!
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_001214-0001.wav|cmlpt_2961|pt|Titi, que asco que me fez hoje a casa de Pilatos!
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_000262-0003.wav|cmlpt_2961|pt|abriu a gaveta onde guardava os seus papéis antigos;
+/home/cano/dataset/CMLTTS/train/audio/2961/6361/2961_6361_000430-0002.wav|cmlpt_2961|pt|Segui- ram-fe a propor novos decretos, primeiro Ariftophonte, Hegefippo depois, outra vez Ariftophonte;
+/home/cano/dataset/CMLTTS/train/audio/2961/3702/2961_3702_000050-0001.wav|cmlpt_2961|pt|e ainda mesmo a policia das aparições ubíquas e subitâneas do diretor.
+/home/cano/dataset/CMLTTS/train/audio/9351/9163/9351_9163_000203-0001.wav|cmlpt_9351|pt|Não podia hesitar muito.
+/home/cano/dataset/CMLTTS/train/audio/12865/13396/12865_13396_000036-0004.wav|cmlpt_12865|pt|E começavam as praticas religiosas.
+/home/cano/dataset/CMLTTS/train/audio/9351/9280/9351_9280_001259.wav|cmlpt_9351|pt|Paulo tinha talento. O discurso daquele dia podia pecar aqui ou ali por alguma ênfase, e uma ou outra ideia vulgar e exausta. Tinha talento Paulo.
+/home/cano/dataset/CMLTTS/train/audio/2961/8363/2961_8363_000698-0003.wav|cmlpt_2961|pt|detestava-te com todas as forças de minha alma;
+/home/cano/dataset/CMLTTS/train/audio/2961/3702/2961_3702_000778-0002.wav|cmlpt_2961|pt|O momento presente das gerações nada mais é que a ligação prolífica do passado com a posteridade.
+/home/cano/dataset/CMLTTS/train/audio/10107/12563/10107_12563_000238-0003.wav|cmlpt_10107|pt|ia em vinte e quatro.
+/home/cano/dataset/CMLTTS/train/audio/9351/9018/9351_9018_000286-0002.wav|cmlpt_9351|pt|comprou um bilhete e entrou.
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_001595.wav|cmlpt_12249|pt|a quem Isabel sacrificou tudo para educar, dando-lhe mestre até de francês. Tinha uma cara macilenta de velha portuguesa devota
+/home/cano/dataset/CMLTTS/train/audio/2961/3698/2961_3698_000098-0002.wav|cmlpt_2961|pt|—
+/home/cano/dataset/CMLTTS/train/audio/2961/3680/2961_3680_000487.wav|cmlpt_2961|pt|Para que eram tantas mudanças em uma só terra? Mas parece que tambem a terra se muda como as cousas d'éla. A esta, porque passou o tempo em que foi leda, veio este em que havia de ser triste.
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_002098-0003.wav|cmlpt_2961|pt|E lá do fundo, dentre os cortinados, onde eu a pressentia toda desalinhada e formosa, a minha Adélia gritou com furor: - Atira-lhe para cima dos lombos o balde da água suja!
+/home/cano/dataset/CMLTTS/train/audio/4367/3799/4367_3799_000388-0003.wav|cmlpt_4367|pt|mas tinha a realeza do nosso século, tinha dinheiro.
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_000229-0002.wav|cmlpt_12249|pt|O Pataca acendeu o cachimbo, e os três puseram-se a cavaquear animadamente sobre o efeito que aquela sova havia de produzir;
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_000451-0002.wav|cmlpt_2961|pt|mas estes em vez de flores, recebiam plantas vivas, que formavam assim um bosque a cada ângulo da sala, concorrendo para dar-lhe o aspecto campestre, que tanto se aprecia agora e com razão.
+/home/cano/dataset/CMLTTS/train/audio/2961/8380/2961_8380_000838-0004.wav|cmlpt_2961|pt|A manhã daquelle dia trajava um manto de neblina cerrada, que o nosso inverno lhe poz aos hombros, como para resguardal-a do rigor benigno da temperatura,
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_001746.wav|cmlpt_2961|pt|Mas a afirmação de Topsius desacredita-me perante a burguesia liberal; e só da burguesia liberal, onipresente e onipotente, se alcançam,
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_002242-0002.wav|cmlpt_12249|pt|e todos tiveram confiança nele porque o ladrão, além de tudo, estava rindo
+/home/cano/dataset/CMLTTS/train/audio/10107/12563/10107_12563_000344.wav|cmlpt_10107|pt|A vida livre, para evitar a morte igualmente livre, precisa comer, e daí alguns possíveis assaltos. Assim também o amor livre.
+/home/cano/dataset/CMLTTS/train/audio/2961/8380/2961_8380_000308-0003.wav|cmlpt_2961|pt|Com outra indole, aspirações differentes e vivida em diversa esphera, ama-lo-hia com certeza, do mesmo modo que elle a amava.
+/home/cano/dataset/CMLTTS/train/audio/2961/13511/2961_13511_000042-0004.wav|cmlpt_2961|pt|abriram.  Á luz
+/home/cano/dataset/CMLTTS/train/audio/2961/4629/2961_4629_000786-0001.wav|cmlpt_2961|pt|Em vão com o grito do meu peito impreco!
+/home/cano/dataset/CMLTTS/train/audio/2961/8380/2961_8380_000066-0001.wav|cmlpt_2961|pt|--São nove horas!  disse de longe a ingleza;
+/home/cano/dataset/CMLTTS/train/audio/2961/3702/2961_3702_000019-0002.wav|cmlpt_2961|pt|Safa!  Pois eu cá só digo mal daquele tipo do Liceu.
+/home/cano/dataset/CMLTTS/train/audio/9351/9018/9351_9018_001206-0001.wav|cmlpt_9351|pt|o ideal reconciliava-se com o real.
+/home/cano/dataset/CMLTTS/train/audio/9351/9018/9351_9018_000373-0003.wav|cmlpt_9351|pt|que a amizade é um culto, etc.
+/home/cano/dataset/CMLTTS/train/audio/12249/12765/12249_12765_000423.wav|cmlpt_12249|pt|o quê, coitados! o que às vezes queriam era prevenir o mal, que só depois havia de aparecer! Como agora poderia ele, que só tinha aquela, que só possuía a sua Anica, que a educara
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_002210-0002.wav|cmlpt_2961|pt|Já a firma dizia, compenetrada, na assembléia do Carmo: - Lá o meu Raposo, apesar de Coimbra e dos compêndios que lhe meteram no caco, tem dedo para as cousas sérias
+/home/cano/dataset/CMLTTS/train/audio/4367/3702/4367_3702_000115-0001.wav|cmlpt_4367|pt|Por um dia de muito calor, acabava ele de enunciar como um padre uma página de religião, os diversos atos de Contrição, de Atrição, de Fé, de Esperança, de Caridade, quando propôs que eu lhos repetisse sentado aos seus joelhos.
+/home/cano/dataset/CMLTTS/train/audio/2961/6187/2961_6187_000125-0003.wav|cmlpt_2961|pt|Aí sentou-se.
+/home/cano/dataset/CMLTTS/train/audio/2961/8363/2961_8363_000053-0001.wav|cmlpt_2961|pt|Mas faltava ainda à inteligente menina o tato fino e o suave colorido que o pintor só adquire na tela e a mulher na sala, a qual também é tela para o painel de sua formosura.
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_001444-0002.wav|cmlpt_2961|pt|Ela é chata e mais redonda que um disco;
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_002109-0001.wav|cmlpt_12249|pt|deixando até perceber a sua impaciência para ouvir falar da outra, daquela maldita mulata dos diabos, que, no fim de contas, era a única culpada de tudo aquilo e havia de ser a sua perdição e mais do seu homem
+/home/cano/dataset/CMLTTS/train/audio/2961/8380/2961_8380_000102.wav|cmlpt_2961|pt|A circumstancia de os ver juntos chamou-lhe a attenção para a coincidencia do nome da visinha com o da antiga namorada do collega; era naturalmente a mesma pessoa.
+/home/cano/dataset/CMLTTS/train/audio/2961/8363/2961_8363_000507-0003.wav|cmlpt_2961|pt|Se a nossa mão a alisa, experimenta uma sensação aveludada;
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_001528-0001.wav|cmlpt_12249|pt|Todos eles cantavam em coro, mais afinados que nas outras duas casas;
+/home/cano/dataset/CMLTTS/train/audio/2961/8380/2961_8380_000685-0001.wav|cmlpt_2961|pt|Mrs.  Oswald fez uma pausa para dar aberta ao protesto de Guiomar, mas Guiomar não protestou, quero dizer não protestou de viva voz;
+/home/cano/dataset/CMLTTS/train/audio/10107/12563/10107_12563_000440.wav|cmlpt_10107|pt|umedecê-los. Quando acabei de falar, não me disse nada; ficamos assim alguns segundos. Em seguida, vi-a endireitar a cabeça, cruzar os dedos e sobre eles pousar o queixo,
+/home/cano/dataset/CMLTTS/train/audio/4367/4572/4367_4572_000059.wav|cmlpt_4367|pt|Lá, quando a terra s'embuçar nas sombras E o sol medroso s'esconder nas águas, Teu pensamento, como o sol que morre, Há de cismando mergulhar-se em mágoas!
+/home/cano/dataset/CMLTTS/train/audio/2961/8729/2961_8729_000859.wav|cmlpt_2961|pt|Naqueles lugares, o brasileiro salta: é estrangeiro, e está pisando em terras brasileiras. Antolha-se-lhe um contra-senso pasmoso:
+/home/cano/dataset/CMLTTS/train/audio/2961/8363/2961_8363_000577.wav|cmlpt_2961|pt|Seus lábios úmidos das lágrimas pousaram rápidos na minha face, onde a sua mão tinha tocado. E ela ali estava diante de mim, e sorria submissa e amante.
+/home/cano/dataset/CMLTTS/train/audio/2961/4629/2961_4629_000087-0002.wav|cmlpt_2961|pt|-- O Sol jorrava largos raios longos E em roda víride e nevado, em roda, Lembrava o campo um colorido ondeante De vidros verdes e cristais oblongos!
+/home/cano/dataset/CMLTTS/train/audio/2961/6187/2961_6187_000151.wav|cmlpt_2961|pt|Obrigado, Sr. Almeida, disse o moço comovido, ainda lhe devo mais esse sacrifício. - Está enganado, respondeu o velho querendo dar à sua voz a aspereza habitual;
+/home/cano/dataset/CMLTTS/train/audio/4367/4739/4367_4739_000121-0002.wav|cmlpt_4367|pt|Foi nesse momento, e só então, que Mendonça reconheceu toda a baixeza do seu procedimento, ou para falar mais acertadamente, toda a alucinação do seu espírito
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_001491-0003.wav|cmlpt_12249|pt|tome fundo de garrafa!
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_000148-0001.wav|cmlpt_12249|pt|O prédio do Miranda parecia ter recuado alguns passos, perseguido pelo batalhão das casinhas da esquerda, e agora olhava a medo, por cima dos telhados, para a casa do vendeiro, que lá defronte erguia-se altiva
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_001119-0002.wav|cmlpt_2961|pt|Menahem acudiu também;
+/home/cano/dataset/CMLTTS/train/audio/10107/12563/10107_12563_000813-0001.wav|cmlpt_10107|pt|Foi ele que lhe deu o botão.
+/home/cano/dataset/CMLTTS/train/audio/5677/4272/5677_4272_000103.wav|cmlpt_5677|pt|--Ainda uma pergunta, prosegue ella sem responder. Quem foi que lhe suggeriu a ideia de escutar á porta? Quem será que anda por aqui a espiar-me os passos? É isso o que eu não se me dava de saber!
+/home/cano/dataset/CMLTTS/train/audio/2961/3680/2961_3680_000290-0002.wav|cmlpt_2961|pt|que isto é terra!
+/home/cano/dataset/CMLTTS/train/audio/2961/13488/2961_13488_001238.wav|cmlpt_2961|pt|Um inferno, meu. ia dizer meu amigo. Um inferno! o diabo! todos os diabos! Olhe, ainda hoje não almocei. --Não? --Não
+/home/cano/dataset/CMLTTS/train/audio/9351/9163/9351_9163_000144-0006.wav|cmlpt_9351|pt|—Mas
+/home/cano/dataset/CMLTTS/train/audio/5677/4272/5677_4272_000044-0003.wav|cmlpt_5677|pt|De subito, eis que brota na mente de Maria Alexandrovna, e amadurece do mesmo jacto, uma ideia genial.
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_001989-0001.wav|cmlpt_12249|pt|fingiu indignado, a fungar exageradamente.
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_001086.wav|cmlpt_2961|pt|Numa sala forrada de papel escuro, encontramos uma senhora muito alta, muito seca, vestida de preto, com um grilhão de ouro no peito;
+/home/cano/dataset/CMLTTS/train/audio/10107/11436/10107_11436_000648.wav|cmlpt_10107|pt|Levantam os guerreiros medonho alarido, e cercando seu chefe, o arrebatam ao funesto lugar e à cólera de Tupã, contra eles concitado.
+/home/cano/dataset/CMLTTS/train/audio/2961/4629/2961_4629_000377.wav|cmlpt_2961|pt|Em torno a mim, nesta hora, estriges voam, E o cemitério, em que eu entrei adrede, Dá-me a impressão de um boulevard que fede, Pela degradação dos que o povoam.
+/home/cano/dataset/CMLTTS/train/audio/10107/12563/10107_12563_000032-0002.wav|cmlpt_10107|pt|mas se achar alguma inclinação, pouca que seja, aviso-te, e, ou por bem ou por mal, embarca.
+/home/cano/dataset/CMLTTS/train/audio/9351/9018/9351_9018_001108-0002.wav|cmlpt_9351|pt|Ao portão estava um escravo, a quem deu a espingarda.
+/home/cano/dataset/CMLTTS/train/audio/12249/12879/12249_12879_001590.wav|cmlpt_12249|pt|todo ele se quebrando nos seus movimentos de capoeira. Teria seus trinta e tantos anos, mas não parecia ter mais de vinte e poucos. Pernas e braços finos, pescoço estreito, porém forte
+/home/cano/dataset/CMLTTS/train/audio/2961/3702/2961_3702_001027.wav|cmlpt_2961|pt|mantido por um diretor que de tempos a tempos reformava o estabelecimento, pintando-o jeitosamente de novidade, como os negociantes que liquidam para recomeçar com artigos de última remessa;
+/home/cano/dataset/CMLTTS/train/audio/9351/9018/9351_9018_001218.wav|cmlpt_9351|pt|coração do moço não conhecia o fervor religioso; mas a imagem da morte deu-lhe o que a vida lhe levara, e ele rezou, rezou sozinho, sem hipocrisia nem dúvida
+/home/cano/dataset/CMLTTS/train/audio/9351/9018/9351_9018_000341-0001.wav|cmlpt_9351|pt|A palavra saía-lhe mais fácil, seguida e numerosa;
+/home/cano/dataset/CMLTTS/train/audio/2961/3680/2961_3680_000114-0002.wav|cmlpt_2961|pt|porque, ainda que as mulheres folguem muito de ouvir cavalarias, não lhes está bem contarem-nas, nem élas parecem, nas suas bôcas, como nas dos homens
+/home/cano/dataset/CMLTTS/train/audio/12249/12742/12249_12742_000187-0001.wav|cmlpt_12249|pt|Browninguistas—.  Não sabem o que são os —Browninguistas—?
+/home/cano/dataset/CMLTTS/train/audio/2961/4629/2961_4629_000220.wav|cmlpt_2961|pt|É o júbilo aparente da alma quase A eclipsar-se, no horror da ocídua fase Esterilizadora de órgãos. É o hino Da matéria incapaz,
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_001653.wav|cmlpt_2961|pt|Pois à hora em que pelo cerimonial das províncias tributárias, se bebia à saúde de César e de Roma, entra subitamente na sala, ao som dos tamborins e dançando à maneira de Babilônia, uma virgem maravilhosa.
+/home/cano/dataset/CMLTTS/train/audio/2961/3698/2961_3698_000103.wav|cmlpt_2961|pt|No corredor hesitou alguns segundos antes de subir; mas, enchendo-se de ânimo, galgou ligeiramente as escadas até o segundo andar. Abriram-lhe logo a porta, e ela, trêmula, ofegante,
+/home/cano/dataset/CMLTTS/train/audio/2961/3058/2961_3058_000416-0005.wav|cmlpt_2961|pt|o médico arranjou tudo.
+/home/cano/dataset/CMLTTS/train/audio/2961/3702/2961_3702_001450-0003.wav|cmlpt_2961|pt|gritos escapavam-me, de que me arrependia quando alguém me olhava.
+/home/cano/dataset/CMLTTS/train/audio/2961/4629/2961_4629_000809.wav|cmlpt_2961|pt|Recife, Ponte Buarque de Macedo. Eu, indo em direção à casa do Agra, Assombrado com a minha sombra magra, Pensava no Destino, e tinha medo!
+/home/cano/dataset/CMLTTS/train/audio/2961/8380/2961_8380_000691.wav|cmlpt_2961|pt|--Estamos de accordo, creio eu? perguntou Luiz Alves olhando alternadamente para a baroneza e as outras pessoas. --Não é possível, doutor, respondia a boa senhora.
+/home/cano/dataset/CMLTTS/train/audio/2961/6187/2961_6187_000067-0004.wav|cmlpt_2961|pt|- Ao contrário, julgo que dá um passo acertado;
+/home/cano/dataset/CMLTTS/train/audio/2961/13488/2961_13488_000858-0001.wav|cmlpt_2961|pt|Ursa-Maior.  Riu-se meu pae, e depois de rir, tornou a fallar serio.
+/home/cano/dataset/CMLTTS/train/audio/4367/3799/4367_3799_000322.wav|cmlpt_4367|pt|Não sei que caminho tomavam as minhas idéias; o caso é que daí a pouco descia a serra no meu cavalo, lamentando es- ses nove dias, que talvez me tivessem feito perder para sempre a minha desconhecida.
+/home/cano/dataset/CMLTTS/train/audio/2961/3702/2961_3702_000899-0001.wav|cmlpt_2961|pt|há também quem faça flores, com asas de barata e pernas.
+/home/cano/dataset/CMLTTS/train/audio/2961/4739/2961_4739_000275-0001.wav|cmlpt_2961|pt|Tens interesse em ocultar o nome da pessoa?
+/home/cano/dataset/CMLTTS/train/audio/12249/12765/12249_12765_000161-0003.wav|cmlpt_12249|pt|Faísca e gostava de fazer e adivinhar charadas.
+/home/cano/dataset/CMLTTS/train/audio/2961/3702/2961_3702_000416.wav|cmlpt_2961|pt|Foram respeitados os pavilhões independentes, do pátio. Funcionavam ainda as bombas, refrescando o entalho carbonizado e as paredes.
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_001070-0001.wav|cmlpt_2961|pt|porque estas mesmas dobras do papel vincadas em Jericó, este mesmo nó do nastro atado junto ao Jordão, teriam para a senhora D.
+/home/cano/dataset/CMLTTS/train/audio/2961/4629/2961_4629_000650-0003.wav|cmlpt_2961|pt|Mas através daquelas falsas luzes Pude rever enfim todas as cruzes Que têm pesado sobre a Humanidade!
+/home/cano/dataset/CMLTTS/train/audio/2961/7087/2961_7087_000198-0002.wav|cmlpt_2961|pt|Oitenta, confessou elle o numero, quando a morte lhe acenava de perto, e se lhe desabafava a consciencia, supplicando ao papa contritamente o perdão dos seus peccados.
+/home/cano/dataset/CMLTTS/train/audio/5677/4744/5677_4744_000006.wav|cmlpt_5677|pt|O Homem e a Doninha. Hum Homem que caçava ílato, pren- deo na armadilha huma Doninha.
+/home/cano/dataset/CMLTTS/train/audio/10107/12563/10107_12563_000237-0003.wav|cmlpt_10107|pt|O meu amigo cuidou que eu estivesse doudo;
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_000757-0001.wav|cmlpt_2961|pt|Entretanto Aurélia na janela derramava a vista pelo azul da atmosfera onde se recortava o perfil das montanhas.
+/home/cano/dataset/CMLTTS/train/audio/2961/13488/2961_13488_001001-0004.wav|cmlpt_2961|pt|Grande lascivo, espera-te a voluptuosidade do nada.
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_000245-0003.wav|cmlpt_2961|pt|Pedi aos ventos que sobre ela soprassem todos os lixos da terra!
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_001219.wav|cmlpt_2961|pt|mas orgulhava-me de ter lá, purificando os cheviotes profanos, a minha opa roxa de irmão do Senhor dos Passos, e o devoto hábito cinzento da Ordem Terceira de São Francisco.
+/home/cano/dataset/CMLTTS/train/audio/9351/9280/9351_9280_000788-0001.wav|cmlpt_9351|pt|A primeira que acudiu foi deixarem ambos o campo, mas não os seduziu.
+/home/cano/dataset/CMLTTS/train/audio/2961/4572/2961_4572_000042-0001.wav|cmlpt_2961|pt|Que importa ao viajor que a sede abrasa, Que quer banhar-se nessas águas claras, Ser aqui ou além?
+/home/cano/dataset/CMLTTS/train/audio/2961/3118/2961_3118_001128-0002.wav|cmlpt_2961|pt|Nunca, nos tempos em que ele fazia o contrabando do amor, mulher alguma, por mais defesa que fosse a seu desejo, inspirou-lhe o respeito, ou antes o susto, que o tolhia naquele momento junto de sua esposa.
+/home/cano/dataset/CMLTTS/train/audio/10107/6390/10107_6390_000815.wav|cmlpt_10107|pt|a banda que vos cinge não é cadeia de escravos, é flammula de homens livres. Ao nobre ministro da fazenda: —
+/home/cano/dataset/CMLTTS/train/audio/9351/9018/9351_9018_000141-0003.wav|cmlpt_9351|pt|O ruído externo pode ter os efeitos de que você fala;
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_000814-0001.wav|cmlpt_2961|pt|As lágrimas rolavam pela sua face, tristes como a chuva por um muro em ruínas.
+/home/cano/dataset/CMLTTS/train/audio/9351/9018/9351_9018_001154-0003.wav|cmlpt_9351|pt|Mas era tarde.
+/home/cano/dataset/CMLTTS/train/audio/10107/12563/10107_12563_000243.wav|cmlpt_10107|pt|A primeira crônica do mundo é justamente a que conta a primeira semana dele, dia por dia até o sétimo em que o Senhor descansou.
+/home/cano/dataset/CMLTTS/train/audio/2961/3899/2961_3899_000493-0001.wav|cmlpt_2961|pt|ou, ainda, em padiolas, transportavam malferidos e agonizantes;
+/home/cano/dataset/CMLTTS/train/audio/2961/3702/2961_3702_000823.wav|cmlpt_2961|pt|É a emissão de um som prolongado, a crepitar de consoantes, alteando-se ou baixando, conforme o timbre vogal. O que move o ouvinte é uma impressão de conjunto.
+/home/cano/dataset/CMLTTS/train/audio/2961/7642/2961_7642_000855.wav|cmlpt_2961|pt|O jucundo Pote, porém, menos arqueológico, lembrou o honesto pinho de Flandres benzido pelo patriarca de Jerusalém. Eu diria à Titi que os pregos para o pregar tinham pertencido à Arca de Noé;
+/home/cano/dataset/CMLTTS/train/audio/9351/9280/9351_9280_001698-0001.wav|cmlpt_9351|pt|Batista, sentindo-se apoiado, caminhou para o abismo e deu o salto nas trevas.
+/home/cano/dataset/CMLTTS/train/audio/2961/4272/2961_4272_000089.wav|cmlpt_2961|pt|--Meu amigo, exclama dirigindo-se a Mozgliakov, tinha-me esquecido dizer-te, indagora, que ella me tinha cantado uma romança. em que havia uns cas. tellos. muitos. com
+/home/cano/dataset/CMLTTS/train/audio/2961/3899/2961_3899_000482.wav|cmlpt_2961|pt|Os próprios tiros mal quebravam o silêncio: não havia ecos nos ares rarefeitos, irrespiráveis. Os estampidos estalavam, secos, sem ressoarem;
+/home/cano/dataset/CMLTTS/train/audio/2961/8380/2961_8380_000506-0002.wav|cmlpt_2961|pt|Quando abriu os olhos extranhou o aposento e os objectos que o rodeavam.

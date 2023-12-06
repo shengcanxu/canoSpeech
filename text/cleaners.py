@@ -174,7 +174,7 @@ def portuguese_cleaners(text):
     text = remove_aux_symbols(text)
     phonemes = phonemize(
         text,
-        language="pt",
+        language="pt-br",
         backend="espeak",
         strip=True,
         preserve_punctuation=True,

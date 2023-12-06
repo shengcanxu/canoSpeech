@@ -5,8 +5,8 @@
 
     "dataset_config": {
         "dataset_name":"cmltts",
-        "meta_file_train":"/home/cano/canoSpeech/filelists/cmltts_train_filelist.txt.cleaned",
-        "meta_file_val":"/home/cano/canoSpeech/filelists/cmltts_test_filelist.txt.cleaned",
+        "meta_file_train":"/home/cano/canoSpeech/filelists/cmlpt_train_filelist.txt.cleaned",
+        "meta_file_val":"/home/cano/canoSpeech/filelists/cmlpt_test_filelist.txt.cleaned",
         "path":"/home/cano/dataset/CMLTTS",
         "language":"pt",
         "ignored_speakers":[],

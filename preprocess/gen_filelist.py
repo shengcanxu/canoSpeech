@@ -26,7 +26,7 @@ def load_file_metas(config):
         items = load_baker_metas(root_path=config.path)
     if dataset_name.lower() == "libritts":
         items = load_libritts_metas(root_path=config.path)
-    if dataset_name.lower() == "cmltts":
+    if dataset_name.lower() == "cmlpt":
         items = load_cmlpt_metas(root_path=config.path)
     return items
 
@@ -69,6 +69,7 @@ def do_clean_text(args):
     ptext, text_cleaners, lang = args
     original_text = ptext[3]
     cleaned_text = text._clean_text(original_text, text_cleaners)
+    print(cleaned_text)
     return cleaned_text
 
 # clean text and save to filelist file
@@ -94,6 +95,7 @@ def _gen_filelist_cleaned(train_filelist:str, test_filelist:str, text_cleaners, 
             clean_args = list(zip(texts, [text_cleaners] * len(texts), [lang] * len(texts)))
             with Pool(processes=10) as p:
                 cleaned_texts = p.map(do_clean_text, clean_args)
+                # cleaned_texts = do_clean_text(clean_args[0])
 
                 with open(new_filelist, "a", encoding="utf-8") as fw:
                     for ptext, cleaned_text in zip(texts, cleaned_texts):

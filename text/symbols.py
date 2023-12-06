@@ -12,7 +12,7 @@ _letters_ipa = "ɑɐɒæɓʙβɔɕçɗɖðʤəɘɚɛɜɝɞɟʄɡɠɢʛɦɧħɥʜ
 _number = "0123456789"
 
 # for portuguese
-_pt_symbols = "̃"
+_pt_symbols = "\u0303"
 
 # Export all symbols:
 symbols = [_pad] + list(_punctuation) + list(_letters) + list(_letters_ipa)
