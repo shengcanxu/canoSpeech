@@ -4,7 +4,7 @@
     "output_path": "D:/project/canoSpeech/output",
 
     "dataset_config": {
-        "dataset_name":"cmltts",
+        "dataset_name":"cmlpt",
         "meta_file_train":"D:/project/canoSpeech/filelists/cmltts_train_filelist.txt.cleaned",
         "meta_file_val":"D:/project/canoSpeech/filelists/cmltts_test_filelist.txt.cleaned",
         "path":"D:/dataset/CMLTTS",

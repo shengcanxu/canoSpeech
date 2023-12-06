@@ -4,7 +4,7 @@ import numpy as np
 from collections import Counter
 import pickle
 
-from dataset.dataset_constant import VCTK_speaker_id_mapping, LibriTTS_speaker_id_mapping
+from dataset.dataset_constant import VCTK_speaker_id_mapping, LibriTTS_speaker_id_mapping, CMLPT_speaker_id_mapping
 from text import cleaned_text_to_tokens, _clean_text, _intersperse
 import torch
 from torch.utils.data import Dataset
@@ -186,6 +186,8 @@ class TextAudioDataset(Dataset):
             return VCTK_speaker_id_mapping.get(speaker_name, 1)
         elif dataset_name == "libritts":
             return LibriTTS_speaker_id_mapping.get(speaker_name, 1)
+        elif dataset_name == "cmlpt":
+            return CMLPT_speaker_id_mapping.get(speaker_name, 1)
         else:
             return 0
 

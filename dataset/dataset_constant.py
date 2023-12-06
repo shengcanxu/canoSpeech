@@ -467,3 +467,37 @@ LibriTTS_speaker_id_mapping = {
     'libritts_8838': 242,
     'libritts_8975': 243
 }
+
+
+CMLPT_speaker_id_mapping = {
+    'cmlpt_10107': 1,
+    'cmlpt_10199': 2,
+    'cmlpt_10670': 3,
+    'cmlpt_12249': 4,
+    'cmlpt_12865': 5,
+    'cmlpt_2959': 6,
+    'cmlpt_2961': 7,
+    'cmlpt_3369': 8,
+    'cmlpt_3427': 9,
+    'cmlpt_3814': 10,
+    'cmlpt_3976': 11,
+    'cmlpt_4367': 12,
+    'cmlpt_4778': 13,
+    'cmlpt_4783': 14,
+    'cmlpt_4801': 15,
+    'cmlpt_5025': 16,
+    'cmlpt_5068': 17,
+    'cmlpt_5103': 18,
+    'cmlpt_5677': 19,
+    'cmlpt_5705': 20,
+    'cmlpt_5888': 21,
+    'cmlpt_6207': 22,
+    'cmlpt_6581': 23,
+    'cmlpt_6601': 24,
+    'cmlpt_6700': 25,
+    'cmlpt_7028': 26,
+    'cmlpt_8680': 27,
+    'cmlpt_9217': 28,
+    'cmlpt_9351': 29,
+    'cmlpt_9485': 30
+}
