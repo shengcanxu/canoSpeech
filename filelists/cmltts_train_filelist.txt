@@ -1,32 +1,32 @@
-D:/dataset/CMLTTS\train/audio/2961/8729/2961_8729_000839-0001.wav|cmlpt_2961|pt|E o Amazonas, nesse construir o seu verdadeiro delta em zonas tão remotas do outro hemisfério, traduz, de fato, a viagem incógnita de um território em marcha, mudando-se pelos tempos adiante, sem parar um segundo,
-D:/dataset/CMLTTS\train/audio/2961/14431/2961_14431_000046-0001.wav|cmlpt_2961|pt|o senhor de Lara ditou, atirou roucamente, aos pedaços, aos repelões, uma carta que dizia, quando finda e traçada em letra bem incerta e trémula:--Meu cavaleiro:
-D:/dataset/CMLTTS\train/audio/2961/3680/2961_3680_000144.wav|cmlpt_2961|pt|quando vós vos fostes do eirado, ficou triste, mais que d'antes. Quanto a mim, bastou aquilo para confirmar a minha presunção; porque êle era aquele, como Deus é Deus!
-D:/dataset/CMLTTS\train/audio/2961/13488/2961_13488_001692.wav|cmlpt_2961|pt|Virgilia comprehendeu que estava salva; mostrou-se irritada com a insistencia, jurou que da minha parte só ouvira palavras de gracejo e cortezia.
-D:/dataset/CMLTTS\train/audio/4367/3799/4367_3799_000055.wav|cmlpt_4367|pt|Pouco a pouco fui cedendo àquela atração irresistível e reclinando-me insensivelmente; a pressão tornou-se mais for- te;
-D:/dataset/CMLTTS\train/audio/2961/3702/2961_3702_000575-0001.wav|cmlpt_2961|pt|O melhor é que o Crisóstomo não vai para a rua.
-D:/dataset/CMLTTS\train/audio/2961/3702/2961_3702_001517-0003.wav|cmlpt_2961|pt|Esta mulher, esta cortesã fala-nos da segurança do lugar, do sossego do bosque, da solidão a dois.
-D:/dataset/CMLTTS\train/audio/2961/13842/2961_13842_000256-0001.wav|cmlpt_2961|pt|foi comprada pela livraria do Brandão por um conto e quatro centos mil reis que cedi á empreza.
-D:/dataset/CMLTTS\train/audio/5677/4807/5677_4807_001571-0004.wav|cmlpt_5677|pt|-
-D:/dataset/CMLTTS\train/audio/2961/7642/2961_7642_001445.wav|cmlpt_2961|pt|A quentura do leito revolto, que ficara nas rendas da camisa, atravessou por acaso o papel e veio aquecer-lhe brandamente os joelhos? Quem sabe!
-D:/dataset/CMLTTS\train/audio/12249/12879/12249_12879_001589-0001.wav|cmlpt_12249|pt|amortece a fresca e doce claridade dos céus da Europa, como se o próprio sol americano, vermelho e esbraseado, viesse, na sua luxúria de sultão, beber a lágrima medrosa da decaída rainha dos mares velhos
-D:/dataset/CMLTTS\train/audio/2961/13488/2961_13488_001147-0002.wav|cmlpt_2961|pt|Pobre Destino!  Onde andarás agora, grande procurador dos negocios humanos?
-D:/dataset/CMLTTS\train/audio/2961/8363/2961_8363_000152.wav|cmlpt_2961|pt|As horas que ali passou esteve completamente isolada, ou perto de mim e ao meu braço. Por fim deixou de sair, e fez que cessassem as reuniões em sua própria casa, até nos domingos.
-D:/dataset/CMLTTS\train/audio/10107/6390/10107_6390_000878-0001.wav|cmlpt_10107|pt|dentro e fora da assembléa, de que poderiam resultar effeiTescencias populares.
-D:/dataset/CMLTTS\train/audio/12249/12879/12249_12879_000334-0004.wav|cmlpt_12249|pt|a sua infeliz inteligência, nascida
-D:/dataset/CMLTTS\train/audio/12249/12765/12249_12765_000476.wav|cmlpt_12249|pt|Havia, empregado no armazém do pai de Ana Rosa, um rapaz português, de nome Luís Dias; muito ativo, econômico, discreto, trabalhador, com uma bonita letra, e muito estimado na Praça
-D:/dataset/CMLTTS\train/audio/12249/12765/12249_12765_000695-0001.wav|cmlpt_12249|pt|e cambraia.  As damas, finamente envolvidas nas ondas dos seus pufes, subiam, arrepanhando a cauda, aos salões do baile, pelo braço de homens sérios de casaca.
-D:/dataset/CMLTTS\train/audio/2961/13488/2961_13488_001318-0001.wav|cmlpt_2961|pt|Veja, é de graça, concluiu elle depois de lida a ultima conta.
-D:/dataset/CMLTTS\train/audio/2961/3702/2961_3702_001267-0003.wav|cmlpt_2961|pt|E tanto mais exato, que o encontro e a confusão das classes e das fortunas equipara tudo,
-D:/dataset/CMLTTS\train/audio/2961/3765/2961_3765_000319.wav|cmlpt_2961|pt|Oh! que doce harmonia traz-me a brisa! Que música suave ao longe soa! Meu Deus! como é sublime um canto ardente Pelas vagas sem fim boiando à toa!
-D:/dataset/CMLTTS\train/audio/9351/9018/9351_9018_000782-0001.wav|cmlpt_9351|pt|Mas não!  é impossível!
-D:/dataset/CMLTTS\train/audio/9351/9018/9351_9018_001079-0005.wav|cmlpt_9351|pt|Estácio tinha vinte e sete anos, e era formado em matemáticas
-D:/dataset/CMLTTS\train/audio/2961/13987/2961_13987_000097.wav|cmlpt_2961|pt|guia. igmol-a nessa delicia perturba- dora, ó homens mortaes e fracos, porque no seu sorriso divino enb perdeu dão e nos salva a nós, o flirt é talvez o desabrochar da per- feição !.
-D:/dataset/CMLTTS\train/audio/2961/3118/2961_3118_002079.wav|cmlpt_2961|pt|pois bem, disse eu, essa riqueza servirá para dar-me a única satisfação que ainda posso ter neste mundo. Mostrar a esse homem que não me soube compreender, que mulher o amava, e que alma perdeu.
-D:/dataset/CMLTTS\train/audio/2961/13488/2961_13488_001406-0001.wav|cmlpt_2961|pt|Então eu, com a delicadeza nativa de um homem do nosso século, puz na palma da mão aquelle casal de mortificados;
-D:/dataset/CMLTTS\train/audio/2961/4629/2961_4629_000820-0002.wav|cmlpt_2961|pt|E tudo riu-se, e como Lúcia, agora, O sol, alegre e rubro, também ria!
-D:/dataset/CMLTTS\train/audio/2961/14431/2961_14431_000074-0001.wav|cmlpt_2961|pt|Numeroso povo de Segóvia se ajuntara já no Cêrro, pasmando para o maravilhoso horror--o morto que fôra morto!
-D:/dataset/CMLTTS\train/audio/2961/3118/2961_3118_000073-0003.wav|cmlpt_2961|pt|Aurélia fitou em seu pretendente um olhar que desmentia o sorriso em flor de seus lábios.
-D:/dataset/CMLTTS\train/audio/2961/8363/2961_8363_000459-0003.wav|cmlpt_2961|pt|Não!  pensava eu.
-D:/dataset/CMLTTS\train/audio/2961/3118/2961_3118_000555-0005.wav|cmlpt_2961|pt|Oh!  ela tem o instinto da perversidade.
-D:/dataset/CMLTTS\train/audio/4367/4572/4367_4572_000055.wav|cmlpt_4367|pt|Um anjo dorme aqui: na aurora apenas, Disse adeus ao brilhar das açucenas Sem ter da vida alevantado o véu.
-D:/dataset/CMLTTS\train/audio/2961/4629/2961_4629_000285.wav|cmlpt_2961|pt|Caíam sobre os meus centros nervosos, Como os pingos ardentes de cem velas, O uivo desenganado das cadelas E o gemido dos homens bexigosos. Pensava!
+D:/dataset/CMLTTS/train/audio/2961/8729/2961_8729_000839-0001.wav|cmlpt_2961|pt|E o Amazonas, nesse construir o seu verdadeiro delta em zonas tão remotas do outro hemisfério, traduz, de fato, a viagem incógnita de um território em marcha, mudando-se pelos tempos adiante, sem parar um segundo,
+D:/dataset/CMLTTS/train/audio/2961/14431/2961_14431_000046-0001.wav|cmlpt_2961|pt|o senhor de Lara ditou, atirou roucamente, aos pedaços, aos repelões, uma carta que dizia, quando finda e traçada em letra bem incerta e trémula:--Meu cavaleiro:
+D:/dataset/CMLTTS/train/audio/2961/3680/2961_3680_000144.wav|cmlpt_2961|pt|quando vós vos fostes do eirado, ficou triste, mais que d'antes. Quanto a mim, bastou aquilo para confirmar a minha presunção; porque êle era aquele, como Deus é Deus!
+D:/dataset/CMLTTS/train/audio/2961/13488/2961_13488_001692.wav|cmlpt_2961|pt|Virgilia comprehendeu que estava salva; mostrou-se irritada com a insistencia, jurou que da minha parte só ouvira palavras de gracejo e cortezia.
+D:/dataset/CMLTTS/train/audio/4367/3799/4367_3799_000055.wav|cmlpt_4367|pt|Pouco a pouco fui cedendo àquela atração irresistível e reclinando-me insensivelmente; a pressão tornou-se mais for- te;
+D:/dataset/CMLTTS/train/audio/2961/3702/2961_3702_000575-0001.wav|cmlpt_2961|pt|O melhor é que o Crisóstomo não vai para a rua.
+D:/dataset/CMLTTS/train/audio/2961/3702/2961_3702_001517-0003.wav|cmlpt_2961|pt|Esta mulher, esta cortesã fala-nos da segurança do lugar, do sossego do bosque, da solidão a dois.
+D:/dataset/CMLTTS/train/audio/2961/13842/2961_13842_000256-0001.wav|cmlpt_2961|pt|foi comprada pela livraria do Brandão por um conto e quatro centos mil reis que cedi á empreza.
+D:/dataset/CMLTTS/train/audio/5677/4807/5677_4807_001571-0004.wav|cmlpt_5677|pt|-
+D:/dataset/CMLTTS/train/audio/2961/7642/2961_7642_001445.wav|cmlpt_2961|pt|A quentura do leito revolto, que ficara nas rendas da camisa, atravessou por acaso o papel e veio aquecer-lhe brandamente os joelhos? Quem sabe!
+D:/dataset/CMLTTS/train/audio/12249/12879/12249_12879_001589-0001.wav|cmlpt_12249|pt|amortece a fresca e doce claridade dos céus da Europa, como se o próprio sol americano, vermelho e esbraseado, viesse, na sua luxúria de sultão, beber a lágrima medrosa da decaída rainha dos mares velhos
+D:/dataset/CMLTTS/train/audio/2961/13488/2961_13488_001147-0002.wav|cmlpt_2961|pt|Pobre Destino!  Onde andarás agora, grande procurador dos negocios humanos?
+D:/dataset/CMLTTS/train/audio/2961/8363/2961_8363_000152.wav|cmlpt_2961|pt|As horas que ali passou esteve completamente isolada, ou perto de mim e ao meu braço. Por fim deixou de sair, e fez que cessassem as reuniões em sua própria casa, até nos domingos.
+D:/dataset/CMLTTS/train/audio/10107/6390/10107_6390_000878-0001.wav|cmlpt_10107|pt|dentro e fora da assembléa, de que poderiam resultar effeiTescencias populares.
+D:/dataset/CMLTTS/train/audio/12249/12879/12249_12879_000334-0004.wav|cmlpt_12249|pt|a sua infeliz inteligência, nascida
+D:/dataset/CMLTTS/train/audio/12249/12765/12249_12765_000476.wav|cmlpt_12249|pt|Havia, empregado no armazém do pai de Ana Rosa, um rapaz português, de nome Luís Dias; muito ativo, econômico, discreto, trabalhador, com uma bonita letra, e muito estimado na Praça
+D:/dataset/CMLTTS/train/audio/12249/12765/12249_12765_000695-0001.wav|cmlpt_12249|pt|e cambraia.  As damas, finamente envolvidas nas ondas dos seus pufes, subiam, arrepanhando a cauda, aos salões do baile, pelo braço de homens sérios de casaca.
+D:/dataset/CMLTTS/train/audio/2961/13488/2961_13488_001318-0001.wav|cmlpt_2961|pt|Veja, é de graça, concluiu elle depois de lida a ultima conta.
+D:/dataset/CMLTTS/train/audio/2961/3702/2961_3702_001267-0003.wav|cmlpt_2961|pt|E tanto mais exato, que o encontro e a confusão das classes e das fortunas equipara tudo,
+D:/dataset/CMLTTS/train/audio/2961/3765/2961_3765_000319.wav|cmlpt_2961|pt|Oh! que doce harmonia traz-me a brisa! Que música suave ao longe soa! Meu Deus! como é sublime um canto ardente Pelas vagas sem fim boiando à toa!
+D:/dataset/CMLTTS/train/audio/9351/9018/9351_9018_000782-0001.wav|cmlpt_9351|pt|Mas não!  é impossível!
+D:/dataset/CMLTTS/train/audio/9351/9018/9351_9018_001079-0005.wav|cmlpt_9351|pt|Estácio tinha vinte e sete anos, e era formado em matemáticas
+D:/dataset/CMLTTS/train/audio/2961/13987/2961_13987_000097.wav|cmlpt_2961|pt|guia. igmol-a nessa delicia perturba- dora, ó homens mortaes e fracos, porque no seu sorriso divino enb perdeu dão e nos salva a nós, o flirt é talvez o desabrochar da per- feição !.
+D:/dataset/CMLTTS/train/audio/2961/3118/2961_3118_002079.wav|cmlpt_2961|pt|pois bem, disse eu, essa riqueza servirá para dar-me a única satisfação que ainda posso ter neste mundo. Mostrar a esse homem que não me soube compreender, que mulher o amava, e que alma perdeu.
+D:/dataset/CMLTTS/train/audio/2961/13488/2961_13488_001406-0001.wav|cmlpt_2961|pt|Então eu, com a delicadeza nativa de um homem do nosso século, puz na palma da mão aquelle casal de mortificados;
+D:/dataset/CMLTTS/train/audio/2961/4629/2961_4629_000820-0002.wav|cmlpt_2961|pt|E tudo riu-se, e como Lúcia, agora, O sol, alegre e rubro, também ria!
+D:/dataset/CMLTTS/train/audio/2961/14431/2961_14431_000074-0001.wav|cmlpt_2961|pt|Numeroso povo de Segóvia se ajuntara já no Cêrro, pasmando para o maravilhoso horror--o morto que fôra morto!
+D:/dataset/CMLTTS/train/audio/2961/3118/2961_3118_000073-0003.wav|cmlpt_2961|pt|Aurélia fitou em seu pretendente um olhar que desmentia o sorriso em flor de seus lábios.
+D:/dataset/CMLTTS/train/audio/2961/8363/2961_8363_000459-0003.wav|cmlpt_2961|pt|Não!  pensava eu.
+D:/dataset/CMLTTS/train/audio/2961/3118/2961_3118_000555-0005.wav|cmlpt_2961|pt|Oh!  ela tem o instinto da perversidade.
+D:/dataset/CMLTTS/train/audio/4367/4572/4367_4572_000055.wav|cmlpt_4367|pt|Um anjo dorme aqui: na aurora apenas, Disse adeus ao brilhar das açucenas Sem ter da vida alevantado o véu.
+D:/dataset/CMLTTS/train/audio/2961/4629/2961_4629_000285.wav|cmlpt_2961|pt|Caíam sobre os meus centros nervosos, Como os pingos ardentes de cem velas, O uivo desenganado das cadelas E o gemido dos homens bexigosos. Pensava!
