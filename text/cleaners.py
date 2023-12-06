@@ -165,3 +165,20 @@ def chinese_cleaners(text):
     phonemes = collapse_whitespace(phonemes)
     return phonemes
 
+
+def portuguese_cleaners(text):
+    """pipeline for portuguese text. There is no need to expand abbreviation and
+    numbers, phonemizer already does that. espeak language information see: https://espeak.sourceforge.net/languages.html"""
+    text = lowercase(text)
+    text = replace_symbols(text, lang="pt")
+    text = remove_aux_symbols(text)
+    phonemes = phonemize(
+        text,
+        language="pt",
+        backend="espeak",
+        strip=True,
+        preserve_punctuation=True,
+        with_stress=True,
+    )
+    phonemes = collapse_whitespace(phonemes)
+    return phonemes

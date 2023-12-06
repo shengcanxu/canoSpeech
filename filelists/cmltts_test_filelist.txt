@@ -1,0 +1,16 @@
+D:/dataset/CMLTTS\train/audio/2961/13488/2961_13488_001195.wav|cmlpt_2961|pt|As calças, de brim pardo, tinham duas fortes joelheiras, em quanto as bainhas eram roidas pelo tacão de um botim sem misericordia nem graxa.
+D:/dataset/CMLTTS\train/audio/2961/8380/2961_8380_000321.wav|cmlpt_2961|pt|Guiomar erigiu o busto e olhou direitamente para a madrinha, com taes signaes de espanto no rosto, que esta não poude deixar de lhe perguntar: --Que tens?
+D:/dataset/CMLTTS\train/audio/10107/12563/10107_12563_000483.wav|cmlpt_10107|pt|era poeta de improviso, não escrevia os versos, os outros é que os ouviam e transladavam ao papel, dando-lhe cópias, muitas das quais perdia.
+D:/dataset/CMLTTS\train/audio/2961/13488/2961_13488_000546-0002.wav|cmlpt_2961|pt|Eu agradeci-lh'o com os olhos humidos.
+D:/dataset/CMLTTS\train/audio/9351/9280/9351_9280_001194-0002.wav|cmlpt_9351|pt|E evocava exemplos, o Partido Progressista, Olinda, Nabuco, Zacarias, que foram eles senão conservadores que compreenderam os tempos novos
+D:/dataset/CMLTTS\train/audio/2961/3702/2961_3702_000143-0003.wav|cmlpt_2961|pt|Até que súbito, meu castíssimo Barreto!
+D:/dataset/CMLTTS\train/audio/12249/12879/12249_12879_001492-0003.wav|cmlpt_12249|pt|Pois então a gente não é senhora de estar um domingo em casa a seu gosto e com os amigos que entender?
+D:/dataset/CMLTTS\train/audio/9351/9018/9351_9018_000989-0001.wav|cmlpt_9351|pt|Que lhe dizia eu?
+D:/dataset/CMLTTS\train/audio/10107/12563/10107_12563_001137.wav|cmlpt_10107|pt|Era um homenzinho seco e baixo, cara lisa, cabelo raro e branco, tenaz um tanto impertinente, creio que desligado de partidos.
+D:/dataset/CMLTTS\train/audio/2961/3118/2961_3118_001036-0002.wav|cmlpt_2961|pt|Ainda mais, sei que a tutela é gratuita, mas assim não deve ser quando os órfãos têm de sobra com que recompensar o trabalho que dão.
+D:/dataset/CMLTTS\train/audio/2961/3765/2961_3765_000052-0004.wav|cmlpt_2961|pt|Mas um dia a miséria, a fome, o frio, Foram pedir um pouso nos teus lares
+D:/dataset/CMLTTS\train/audio/2961/3680/2961_3680_000396-0001.wav|cmlpt_2961|pt|D'esta maneira, foi êle preso do amor da senhora Aonia;
+D:/dataset/CMLTTS\train/audio/12249/12765/12249_12765_000730-0001.wav|cmlpt_12249|pt|Não faça agora como os médicos, que só aparecem com as moléstias!
+D:/dataset/CMLTTS\train/audio/2961/7642/2961_7642_000122-0002.wav|cmlpt_2961|pt|- Se entendes que mereço alguma cousa, pelo que tenho feito por ti, desde que morreu tua mãe, já educando-te, já vestindo-te, já dando-te égua para passeares, já cuidando da tua alma, então traze-me desses santos lugares uma santa relíquia uma relíquia
+D:/dataset/CMLTTS\train/audio/4367/3648/4367_3648_000025-0004.wav|cmlpt_4367|pt|— Não posso agora.
+D:/dataset/CMLTTS\train/audio/2961/3765/2961_3765_000235-0001.wav|cmlpt_2961|pt|Banhem-se em luz os prostíbulos, E das lascas dos patíbulos Erga-se a estátua aos heróis!

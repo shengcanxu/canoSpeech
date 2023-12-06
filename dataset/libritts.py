@@ -32,7 +32,7 @@ def resample_files(input_dir, output_sr, output_dir=None, file_ext="wav", n_jobs
         input_dir = output_dir
 
     print("Resampling the audio files...")
-    audio_files = glob.glob(os.path.join(input_dir, f"**/*.{file_ext}"), recursive=True)
+    audio_files = glob(os.path.join(input_dir, f"**/*.{file_ext}"), recursive=True)
     print(f"Found {len(audio_files)} files...")
     audio_files = list(zip(audio_files, len(audio_files) * [output_sr], [file_ext] * len(audio_files)))
     with Pool(processes=n_jobs) as p:

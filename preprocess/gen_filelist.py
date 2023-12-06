@@ -6,8 +6,10 @@ from config.config import VitsConfig
 from dataset.VCTK import load_vctk_metas as load_vctk_metas
 from dataset.baker import load_baker_metas
 from dataset.basic_dataset import split_dataset_metas
+from dataset.cmltts import load_cmlpt_metas
 from dataset.libritts import load_libritts_metas
 from dataset.ljspeech import load_ljspeech_metas
+from text import symbols
 
 """
 generate train and test filelist. 
@@ -24,6 +26,8 @@ def load_file_metas(config):
         items = load_baker_metas(root_path=config.path)
     if dataset_name.lower() == "libritts":
         items = load_libritts_metas(root_path=config.path)
+    if dataset_name.lower() == "cmltts":
+        items = load_cmlpt_metas(root_path=config.path)
     return items
 
 def gen_filelist(config_path:str):
@@ -37,47 +41,33 @@ def gen_filelist(config_path:str):
     train_filelist = "../filelists/%s_train_filelist.txt" % dataset_config.dataset_name
     test_filelist = "../filelists/%s_test_filelist.txt" % dataset_config.dataset_name
 
-    # # load dataset metas
-    # print("load and split metas....")
-    # data_items = load_file_metas(dataset_config)
-    # # split train and eval dataset
-    # test_datas, train_datas = split_dataset_metas(
-    #     items=data_items,
-    #     eval_split_max_size=config.eval_split_max_size,
-    #     eval_split_size=config.eval_split_size
-    # )
-    #
-    # print("generate filelist....")
-    # if not os.path.exists(train_filelist):
-    #     with open(train_filelist, "w", encoding="utf-8") as f:
-    #         f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["text"].strip() + "\n" for x in train_datas])
-    # if not os.path.exists(test_filelist):
-    #     with open(test_filelist, "w", encoding="utf-8") as f:
-    #         f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["text"].strip() + "\n" for x in test_datas])
+    print("generate filelist....")
+    _gen_filelist(train_filelist, test_filelist, config)
 
-    # if language == "en":
     print("generate english cleaned filelist....")
     _gen_filelist_cleaned(train_filelist, test_filelist, text_config.text_cleaners, lang=language)
-    # elif language == "zh":
-    #     print("generate chinese cleaned filelist....")
-    #     _gen_filelist_cleaned_cn(train_filelist, train_datas, test_filelist, test_datas)
 
-# # create cleaned filelist from original filelist
-# def _gen_filelist_cleaned_cn(train_filelist:str, train_datas:list, test_filelist:str, test_datas:list):
-#     train_filelist_cleaned = train_filelist + ".cleaned"
-#     if not os.path.exists(train_filelist_cleaned):
-#         with open(train_filelist_cleaned, "w", encoding="utf-8") as f:
-#             f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["pinyin"].strip() + "\n" for x in train_datas])
-#     test_filelist_cleaned = test_filelist + ".cleaned"
-#     if not os.path.exists(test_filelist_cleaned):
-#         with open(test_filelist_cleaned, "w", encoding="utf-8") as f:
-#             f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["pinyin"].strip() + "\n" for x in test_datas])
 
+def _gen_filelist(train_filelist:str, test_filelist:str, config):
+    if not os.path.exists(train_filelist) and not os.path.exists(test_filelist):
+        # load dataset metas
+        print("load and split metas....")
+        data_items = load_file_metas(config.dataset_config)
+        # split train and eval dataset
+        test_datas, train_datas = split_dataset_metas(
+            items=data_items,
+            eval_split_max_size=config.eval_split_max_size,
+            eval_split_size=config.eval_split_size
+        )
+
+        with open(train_filelist, "w", encoding="utf-8") as f:
+            f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["text"].strip() + "\n" for x in train_datas])
+        with open(test_filelist, "w", encoding="utf-8") as f:
+            f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["text"].strip() + "\n" for x in test_datas])
 
 def do_clean_text(args):
     ptext, text_cleaners, lang = args
     original_text = ptext[3]
-    print(original_text)
     cleaned_text = text._clean_text(original_text, text_cleaners)
     return cleaned_text
 
@@ -104,15 +94,35 @@ def _gen_filelist_cleaned(train_filelist:str, test_filelist:str, text_cleaners, 
             clean_args = list(zip(texts, [text_cleaners] * len(texts), [lang] * len(texts)))
             with Pool(processes=10) as p:
                 cleaned_texts = p.map(do_clean_text, clean_args)
-                # cleaned_texts = do_clean_text(clean_args[0])
 
                 with open(new_filelist, "a", encoding="utf-8") as fw:
                     for ptext, cleaned_text in zip(texts, cleaned_texts):
                         fw.writelines(ptext[0] + "|" + ptext[1] + "|" + ptext[2] + "|" + cleaned_text + "\n")
 
+
+# test and check if all texts are in the range of symbols used for training.
+def check_symbol_coverage(config_path):
+    config = VitsConfig()
+    config.load_json(config_path)
+    train_filelist = config.dataset_config.meta_file_train
+    test_filelist = config.dataset_config.meta_file_val
+    for path in [train_filelist, test_filelist]:
+        lines = []
+        with open(path, "r", encoding="utf8") as fp:
+            lines = fp.readlines()
+        for line in lines:
+            text = line.split("|")[3]
+            text = text.strip()
+            for t in text:
+                if t not in symbols:
+                    print("error on " + text + "  in " + t)
+    print("done!")
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="../config/vits_baker.json")
+    parser.add_argument("--config", type=str, default="../config/vits_cmltts.json")
     args = parser.parse_args()
 
-    gen_filelist(args.config)
+    # gen_filelist(args.config)
+
+    check_symbol_coverage(args.config)

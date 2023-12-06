@@ -104,41 +104,41 @@ def main(args):
         # Load audio at the correct sample rate
         wav, sr = load_audio(path)
 
-        spec = wav_to_spec(wav.unsqueeze(0), config.audio.fft_size, config.audio.hop_length, config.audio.win_length)
+        # spec = wav_to_spec(wav.unsqueeze(0), config.audio.fft_size, config.audio.hop_length, config.audio.win_length)
 
         # _, duration = gen_duration_using_vits(vits, vits_config, text, spec)
 
         # Infer pitch and periodicity
-        pitch, periodicity = penn.from_audio(
-            audio=wav,
-            sample_rate=config.audio.sample_rate,
-            hopsize=config.audio.hop_length / config.audio.sample_rate,
-            fmin=config.audio.pitch_fmin,
-            fmax=config.audio.pitch_fmax,
-            checkpoint=args.pitch_checkpoint,
-            batch_size=256,
-            interp_unvoiced_at=0.065,
-            gpu=0
-        )
-        pitch = pitch.cpu().squeeze().numpy()
-        # periodicity = periodicity.cpu().squeeze().numpy()
-
-        # align pitch and spectrogram length
-        refined_pitch = torch.ones([spec.shape[2]]) * pitch[0]
-        if spec.shape[2] > pitch.shape[0]:
-            print(f"pitch is {spec.shape[2]-pitch.shape[0]} shorter than spectrogram")
-            left = int((spec.shape[2] - pitch.shape[0]) / 2)
-            right = pitch.shape[0] + left
-            refined_pitch[left:right] = torch.FloatTensor(pitch)
-
-        elif spec.shape[2] < pitch.shape[0]:
-            print(f"pitch is {pitch.shape[0]-spec.shape[2]} longer than spectrogram")
-            left = int((pitch.shape[0] - spec.shape[2]) / 2)
-            right = spec.shape[2] + left
-            refined_pitch = torch.FloatTensor(pitch[left:right])
-
-        else:
-            refined_pitch = pitch
+        # pitch, periodicity = penn.from_audio(
+        #     audio=wav,
+        #     sample_rate=config.audio.sample_rate,
+        #     hopsize=config.audio.hop_length / config.audio.sample_rate,
+        #     fmin=config.audio.pitch_fmin,
+        #     fmax=config.audio.pitch_fmax,
+        #     checkpoint=args.pitch_checkpoint,
+        #     batch_size=256,
+        #     interp_unvoiced_at=0.065,
+        #     gpu=0
+        # )
+        # pitch = pitch.cpu().squeeze().numpy()
+        # # periodicity = periodicity.cpu().squeeze().numpy()
+        #
+        # # align pitch and spectrogram length
+        # refined_pitch = torch.ones([spec.shape[2]]) * pitch[0]
+        # if spec.shape[2] > pitch.shape[0]:
+        #     print(f"pitch is {spec.shape[2]-pitch.shape[0]} shorter than spectrogram")
+        #     left = int((spec.shape[2] - pitch.shape[0]) / 2)
+        #     right = pitch.shape[0] + left
+        #     refined_pitch[left:right] = torch.FloatTensor(pitch)
+        #
+        # elif spec.shape[2] < pitch.shape[0]:
+        #     print(f"pitch is {pitch.shape[0]-spec.shape[2]} longer than spectrogram")
+        #     left = int((pitch.shape[0] - spec.shape[2]) / 2)
+        #     right = spec.shape[2] + left
+        #     refined_pitch = torch.FloatTensor(pitch[left:right])
+        #
+        # else:
+        #     refined_pitch = pitch
 
         # speaker embedding
         speaker_embed = speaker_encoder.compute_embedding_from_waveform(wav)
@@ -147,7 +147,7 @@ def main(args):
 
         obj = {
             "text": text,
-            "pitch": refined_pitch,
+            # "pitch": refined_pitch,
             # "duration": duration,
             "speaker": speaker_embed
         }
@@ -177,7 +177,7 @@ def gen_text_pitch(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="../config/vits_vctk.json")
+    parser.add_argument("--config", type=str, default="../config/vits_cmltts.json")
     parser.add_argument("--speaker_model", type=str, default="../speaker/speaker_encoder_model.pth.tar")
     parser.add_argument("--speaker_config", type=str, default="../speaker/speaker_encoder_config.json")
     parser.add_argument("--pitch_checkpoint", type=str, default="D:/dataset/VCTK/fcnf0++.pt")
