@@ -1,6 +1,7 @@
 import argparse
 import os
 import pickle
+import platform
 import random
 import time
 from typing import Dict, Tuple
@@ -98,10 +99,12 @@ class VitsTrain(VitsTrain_Base):
         text = "Who else do you want to talk to? You can go with me today to the meeting."
 
         # speaker_id = random.randint(0, 9)
-        # path1 = "D:/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
-        # path2 = "D:/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
-        path1 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
-        path2 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
+        if platform.system() == "Windows":
+            path1 = "D:/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
+            path2 = "D:/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
+        else:
+            path1 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
+            path2 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
         path = path1 if random.randint(1,10) >= 5 else path2
         fp = open(path, "rb")
         pickleObj = pickle.load(fp)

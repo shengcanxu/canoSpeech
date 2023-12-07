@@ -13,12 +13,14 @@ from coqpit import Coqpit
 from dataset.basic_dataset import get_metas_from_filelist
 from dataset.sampler import DistributedBucketSampler
 from recipes.vits.vits_train_base import VitsTrain_Base
+from speaker.speaker_encoder import SpeakerEncoder
 from text import text_to_tokens, _intersperse
 from torch import nn
 from trainer import Trainer, TrainerArgs
+from util.mel_processing import load_audio, wav_to_spec
 
 
-class YourttsTrain(VitsTrain_Base):
+class VitsTrain(VitsTrain_Base):
     """
     VITS and YourTTS model training model.
     """
@@ -35,12 +37,7 @@ class YourttsTrain(VitsTrain_Base):
             shuffle=True
         )
 
-    def on_epoch_start(self, trainer):
-        if self.model_config.use_speaker_encoder_as_loss:
-            # freeze SpeakerEncoder layer
-            for param in self.generator.speaker_encoder.encoder.parameters():
-                param.requires_grad = False
-
+    @torch.no_grad()
     def inference(self, text:str, speaker_id:int=None, speaker_embed=None):
         tokens = text_to_tokens(text, cleaner_names=self.config.text.text_cleaners)
         if self.config.text.add_blank:
@@ -60,6 +57,23 @@ class YourttsTrain(VitsTrain_Base):
             noise_scale=0.8,
             length_scale=1,
         )
+        return wav
+
+    @torch.no_grad()
+    def inference_voice_conversion(self, reference_wav, ref_speaker_id=None, ref_speaker_embed=None, speaker_id=None, speaker_embed=None):
+        y = wav_to_spec(
+            reference_wav,
+            self.config.audio.fft_size,
+            self.config.audio.hop_length,
+            self.config.audio.win_length,
+            center=False,
+        ).cuda()
+        y_lengths = torch.tensor([y.size(-1)]).cuda()
+        source_speaker = ref_speaker_id if ref_speaker_id is not None else ref_speaker_embed
+        target_speaker = speaker_id if speaker_id is not None else speaker_embed
+        source_speaker = source_speaker.cuda()
+        target_speaker = target_speaker.cuda()
+        wav, _, _ = self.generator.voice_conversion(y, y_lengths, source_speaker, target_speaker)
         return wav
 
     @torch.no_grad()
@@ -84,6 +98,7 @@ class YourttsTrain(VitsTrain_Base):
         print("doing test run...")
         text = "Who else do you want to talk to? You can go with me today to the meeting."
 
+        # speaker_id = random.randint(0, 9)
         if platform.system() == "Windows":
             path1 = "D:/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
             path2 = "D:/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
@@ -99,12 +114,48 @@ class YourttsTrain(VitsTrain_Base):
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 
-# need to change lr to a low number(e.g.: 1e-8), and change scheduler_after_epoch to false
-def find_lr(trainer:Trainer, config:Coqpit, steps=1000):
-    losses = trainer.find_lr_fit(steps = steps)
-    with open(f"{config.output_path}/lr.txt", "w") as fp:
-        for loss in losses:
-            fp.write(",".join([str(ll) for ll in loss]) + "\n")
+def test(model, filepath:str):
+    # speaker embedding
+    wav, sr = load_audio(filepath)
+    speaker_encoder = SpeakerEncoder(
+        config_path=os.path.dirname(__file__) + "/../../speaker/speaker_encoder_config.json",
+        model_path=os.path.dirname(__file__) + "/../../speaker/speaker_encoder_model.pth.tar",
+        use_cuda=True
+    )
+    speaker_embed = speaker_encoder.compute_embedding_from_waveform(wav)
+    speaker_embed = speaker_embed.squeeze(0)
+    speaker_embed = speaker_embed.cpu().float().numpy()
+
+    text = "I am a student but I don't want to do any homework."
+    wav = model.inference(text, speaker_embed=speaker_embed)
+    wav = wav[0, 0].cpu().float().numpy()
+    sf.write(f"{filepath}.test.wav", wav, 22050)
+
+def test_voice_conversion(model, ref_wav_filepath:str):
+    wav, sr = load_audio(ref_wav_filepath)
+    speaker_encoder = SpeakerEncoder(
+        config_path= os.path.dirname(__file__) + "/../../speaker/speaker_encoder_config.json",
+        model_path= os.path.dirname(__file__) + "/../../speaker/speaker_encoder_model.pth.tar",
+        use_cuda=True
+    )
+    source_speaker = speaker_encoder.compute_embedding_from_waveform(wav)
+
+    path1 = "D:/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
+    # path2 = "D:/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
+    # path1 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
+    # path2 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
+    # path = path1 if random.randint(1, 10) >= 5 else path2
+    path = path1
+    fp = open(path, "rb")
+    pickleObj = pickle.load(fp)
+    target_speaker = pickleObj["speaker"]
+    target_speaker = torch.from_numpy(target_speaker).unsqueeze(0)
+
+    out_wav = model.inference_voice_conversion(
+        reference_wav = wav, ref_speaker_embed = source_speaker, speaker_embed = target_speaker
+    )
+    out_wav = out_wav[0, 0].cpu().float().numpy()
+    sf.write(f"{ref_wav_filepath}.out.wav", out_wav, 22050)
 
 def main(config_path:str):
     config = VitsConfig()
@@ -115,7 +166,7 @@ def main(config_path:str):
     test_samples = get_metas_from_filelist(data_config.meta_file_val)
 
     # init the model
-    train_model = YourttsTrain(config=config)
+    train_model = VitsTrain(config=config)
 
     # init the trainer and train
     trainer = Trainer(
@@ -126,13 +177,11 @@ def main(config_path:str):
         train_samples=train_samples,
         eval_samples=test_samples,
     )
-    # trainer.fit()
-
-    find_lr(trainer, config, 20)
+    trainer.fit()
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="yourtts vctk train", formatter_class=argparse.RawTextHelpFormatter, )
-    parser.add_argument("--config_path", type=str, default="./config/yourtts_vctk.json", required=False)
+    parser = argparse.ArgumentParser(description="vits vctk train", formatter_class=argparse.RawTextHelpFormatter, )
+    parser.add_argument("--config_path", type=str, default="./config/vae_vctk.json", required=False)
     args = parser.parse_args()
 
     main(args.config_path)

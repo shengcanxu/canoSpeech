@@ -1,5 +1,4 @@
 import re
-import MeCab
 import pykakasi
 from num2words import num2words
 

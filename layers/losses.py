@@ -10,6 +10,7 @@ from torch.nn import functional as F
 class VitsGeneratorLoss(nn.Module):
     def __init__(self, config: Coqpit):
         super().__init__()
+        self.model_config = config.model
         self.kl_loss_alpha = config.loss.kl_loss_alpha
         self.gen_loss_alpha = config.loss.gen_loss_alpha
         self.feat_loss_alpha = config.loss.feat_loss_alpha
@@ -87,6 +88,7 @@ class VitsGeneratorLoss(nn.Module):
         syn_speaker_emb=None,
     ):
         loss = 0.0
+        return_dict = {}
         z_mask = sequence_mask(z_len).float()
         # compute losses
         loss_feat = (
@@ -94,25 +96,28 @@ class VitsGeneratorLoss(nn.Module):
         )
         loss_gen = self.generator_loss(scores_fake=scores_disc_fake)[0] * self.gen_loss_alpha
         loss_mel = torch.nn.functional.l1_loss(mel_slice, mel_slice_hat) * self.mel_loss_alpha
-        loss_kl = (
-            self.kl_loss(z_p=z_p, logs_q=logs_q, m_p=m_p, logs_p=logs_p, z_mask=z_mask.unsqueeze(1))
-            * self.kl_loss_alpha
-        )
-        loss_duration = torch.sum(loss_duration.float()) * self.dur_loss_alpha
+        loss = loss_feat + loss_mel + loss_gen
 
-        loss = loss_kl + loss_feat + loss_mel + loss_gen + loss_duration
+        # pass losses to the dict
+        return_dict["loss_gen"] = loss_gen
+        return_dict["loss_feat"] = loss_feat
+        return_dict["loss_mel"] = loss_mel
 
-        return_dict = {}
-        if use_speaker_encoder_as_loss:
+        if not self.model_config.train_only_vae:
+            loss_kl = (
+                self.kl_loss(z_p=z_p, logs_q=logs_q, m_p=m_p, logs_p=logs_p, z_mask=z_mask.unsqueeze(1))
+                * self.kl_loss_alpha
+            )
+            loss_duration = torch.sum(loss_duration.float()) * self.dur_loss_alpha
+            loss = loss + loss_kl + loss_duration
+            return_dict["loss_kl"] = loss_kl
+            return_dict["loss_duration"] = loss_duration
+
+        if self.model_config.use_speaker_encoder_as_loss:
             loss_se = self.cosine_similarity_loss(gt_speaker_emb, syn_speaker_emb) * self.spk_encoder_loss_alpha
             loss = loss + loss_se
             return_dict["loss_spk_encoder"] = loss_se
-        # pass losses to the dict
-        return_dict["loss_gen"] = loss_gen
-        return_dict["loss_kl"] = loss_kl
-        return_dict["loss_feat"] = loss_feat
-        return_dict["loss_mel"] = loss_mel
-        return_dict["loss_duration"] = loss_duration
+
         return_dict["loss"] = loss
         return return_dict
 
