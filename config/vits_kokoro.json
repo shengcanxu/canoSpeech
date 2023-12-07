@@ -104,7 +104,7 @@
         "use_sdp": true,
 
         "text_encoder": {
-            "num_chars": 188,
+            "num_chars": 189,
             "hidden_channels_ffn": 768,
             "num_heads": 2,
             "num_layers": 10,
