@@ -1,0 +1,16 @@
+D:/dataset/kokoro\wavs\inakakyoshi-by-katai-tayama-04214.wav|kokoro|en|ロハ台から起き上がる気分になるまでには、
+D:/dataset/kokoro\wavs\nowaki-by-soseki-natsume-01935.wav|kokoro|en|僕も一人坊っちですよ。一人坊っちは崇高なものです
+D:/dataset/kokoro\wavs\kokoro-by-soseki-natsume-05751.wav|kokoro|en|その話を聞いて胸がふさがるような苦しさを覚えました。章おわり
+D:/dataset/kokoro\wavs\umareizuru-nayami-by-takeo-arishima-00441.wav|kokoro|en|いらいらしく見えたのがはっきりわかるようだ。
+D:/dataset/kokoro\wavs\kokoro-by-soseki-natsume-02510.wav|kokoro|en|母はその時の私の言葉を信じていた。その時の私は
+D:/dataset/kokoro\wavs\eijitsu-syohin-by-soseki-natsume-00866.wav|kokoro|en|さんたんたるものです、きたない所でしてね、
+D:/dataset/kokoro\wavs\kokoro-by-soseki-natsume-00032.wav|kokoro|en|帰ってもよいという境遇にいた私は、当分元の宿にとまる覚悟をした。
+D:/dataset/kokoro\wavs\inakakyoshi-by-katai-tayama-02216.wav|kokoro|en|久しく会わなかったほっとの小学校の女教員に
+D:/dataset/kokoro\wavs\kokoro-by-soseki-natsume-04245.wav|kokoro|en|彼は段々センチメンタルになって来たのです。時
+D:/dataset/kokoro\wavs\inakakyoshi-by-katai-tayama-03186.wav|kokoro|en|一つ社会をふうびするようなことをやろうじゃありませんか。
+D:/dataset/kokoro\wavs\inakakyoshi-by-katai-tayama-05338.wav|kokoro|en|「野の菊はわらわの愛する花、師の君よ、師の君よ、
+D:/dataset/kokoro\wavs\inakakyoshi-by-katai-tayama-00642.wav|kokoro|en|金持ちのむすこと見て、その小遣いを見込んで、
+D:/dataset/kokoro\wavs\kouyahijiri-by-kyoka-izumi-00520.wav|kokoro|en|口をあんぐりやったうわくちびるで巻込めよう、
+D:/dataset/kokoro\wavs\kokoro-by-soseki-natsume-02394.wav|kokoro|en|「気の毒だね」といって、庭の方を向いた。
+D:/dataset/kokoro\wavs\inakakyoshi-by-katai-tayama-00931.wav|kokoro|en|「私の前に勤めていた方はどういう方でした
+D:/dataset/kokoro\wavs\kokoro-by-soseki-natsume-04255.wav|kokoro|en|Ｋの場合も同じなのですが、彼のあせり方はまた普通に比べると

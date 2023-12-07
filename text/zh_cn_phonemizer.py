@@ -435,7 +435,7 @@ def _chinese_pinyin_to_phoneme(pinyin: str) -> str:
     phoneme = PINYIN_DICT.get(segment, [""])[0]
     return phoneme + tone
 
-def chinese_text_to_phonemes(text: str, seperator: str = "|") -> str:
+def chinese_text_to_phonemes(text: str) -> str:
     tokenized_text = jieba.cut(text, HMM=False)
     tokenized_text = " ".join(tokenized_text)
     pinyined_text: List[str] = _chinese_character_to_pinyin(tokenized_text)
@@ -449,4 +449,8 @@ def chinese_text_to_phonemes(text: str, seperator: str = "|") -> str:
         else:  # is ponctuation or other
             results += list(token)
 
-    return seperator.join(results)
+    return ''.join(results)
+
+if __name__ == "__main__":
+    text = chinese_text_to_phonemes("我们都是中国人，我爱家乡")
+    print(text)

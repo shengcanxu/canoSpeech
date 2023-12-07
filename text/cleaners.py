@@ -1,5 +1,8 @@
 """ from https://github.com/keithito/tacotron """
+import unicodedata
+
 from anyascii import anyascii
+from text.ja_jp_phonemizer import japanese_text_to_phonemes
 from text.zh_cn_phonemizer import chinese_text_to_phonemes
 
 """
@@ -98,7 +101,7 @@ def replace_symbols(text, lang="en"):
     elif lang == "ca":
         text = re.sub("&+", " i ", text)
         text = re.sub("'+", "", text)
-    elif lang == "zh":
+    elif lang == "zh" or lang == "ja":
         text = re.sub("；+", ",", text)
         text = re.sub("：+", ",", text)
         text = re.sub("，+", ",", text)
@@ -106,11 +109,12 @@ def replace_symbols(text, lang="en"):
         text = re.sub("！+", "!", text)
         text = re.sub("。+", ".", text)
         text = re.sub("、+", ",", text)
+        text = re.sub("・+", ",", text)
     return text
 
 
 def remove_aux_symbols(text):
-    text = re.sub(r"[\<\>\(\)\[\]\"《》（）【】＂”“…]+", "", text)
+    text = re.sub(r"[\<\>\(\)\[\]\"《》（）【】［］「」『』―＂”“…]+", "", text)
     return text
 
 
@@ -157,14 +161,23 @@ def english_cleaners2(text):
 
 def chinese_cleaners(text):
     """pipeline for Chinese text"""
-    text = lowercase(text)
     text = replace_symbols(text, lang='zh')
     text = remove_aux_symbols(text)
 
-    phonemes = chinese_text_to_phonemes(text, seperator='')
+    phonemes = chinese_text_to_phonemes(text)
     phonemes = collapse_whitespace(phonemes)
     return phonemes
 
+
+def japanese_cleaners(text):
+    """pipeline for Japanese text"""
+    text = unicodedata.normalize("NFKC", text)
+    text = replace_symbols(text, lang='ja')
+    text = remove_aux_symbols(text)
+
+    phonemes = japanese_text_to_phonemes(text, sep=" ", phase_sep=" sp ")
+    phonemes = collapse_whitespace(phonemes)
+    return phonemes
 
 def portuguese_cleaners(text):
     """pipeline for portuguese text. There is no need to expand abbreviation and
@@ -182,3 +195,10 @@ def portuguese_cleaners(text):
     )
     phonemes = collapse_whitespace(phonemes)
     return phonemes
+
+
+if __name__ == "__main__":
+    # phonemes = japanese_cleaners("Ｋは到底だめだといって、応じませんでした。このごうじょうなところが")
+    # print(phonemes)
+    phonemes = japanese_text_to_phonemes("うそじゃない。苦しんだのはヤソやこうしばかりで、吾々文学者は")
+    print(phonemes)

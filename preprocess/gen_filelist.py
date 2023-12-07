@@ -7,6 +7,7 @@ from dataset.VCTK import load_vctk_metas as load_vctk_metas
 from dataset.baker import load_baker_metas
 from dataset.basic_dataset import split_dataset_metas
 from dataset.cmltts import load_cmlpt_metas
+from dataset.kokoro import load_kokoro_metas
 from dataset.libritts import load_libritts_metas
 from dataset.ljspeech import load_ljspeech_metas
 from text import symbols
@@ -20,14 +21,16 @@ def load_file_metas(config):
     items = []
     if dataset_name.lower() == "vctk":
         items = load_vctk_metas(root_path=config.path, ignored_speakers=config.ignored_speakers)
-    if dataset_name.lower() == "ljspeech":
+    elif dataset_name.lower() == "ljspeech":
         items = load_ljspeech_metas(root_path=config.path)
-    if dataset_name.lower() == "baker":
+    elif dataset_name.lower() == "baker":
         items = load_baker_metas(root_path=config.path)
-    if dataset_name.lower() == "libritts":
+    elif dataset_name.lower() == "libritts":
         items = load_libritts_metas(root_path=config.path)
-    if dataset_name.lower() == "cmlpt":
+    elif dataset_name.lower() == "cmlpt":
         items = load_cmlpt_metas(root_path=config.path)
+    elif dataset_name.lower() == "kokoro":
+        items = load_kokoro_metas(root_path=config.path)
     return items
 
 def gen_filelist(config_path:str):
@@ -122,9 +125,8 @@ def check_symbol_coverage(config_path):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="../config/vits_cmlpt.json")
+    parser.add_argument("--config", type=str, default="../config/vits_kokoro.json")
     args = parser.parse_args()
 
     # gen_filelist(args.config)
-
     check_symbol_coverage(args.config)
