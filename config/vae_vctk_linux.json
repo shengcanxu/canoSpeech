@@ -103,6 +103,7 @@
         "use_gt_duration": true,
         "use_sdp": true,
         "train_only_vae": true,
+        "freeze_vae": false,
 
         "text_encoder": {
             "num_chars": 189,

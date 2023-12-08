@@ -37,6 +37,16 @@ class VitsTrain(VitsTrain_Base):
             shuffle=True
         )
 
+    def on_epoch_start(self, trainer):
+        """Freeze layers at the beginning of an epoch"""
+        if self.model_config.freeze_vae:
+            for param in self.discriminator.parameters():
+                param.requires_grad = False
+            for param in self.generator.audio_encoder.parameters():
+                param.requires_grad = False
+            for param in self.generator.waveform_decoder.parameters():
+                param.requires_grad = False
+
     @torch.no_grad()
     def inference(self, text:str, speaker_id:int=None, speaker_embed=None):
         tokens = text_to_tokens(text, cleaner_names=self.config.text.text_cleaners)
