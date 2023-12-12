@@ -177,12 +177,12 @@ def main(config_path:str):
         train_samples=train_samples,
         eval_samples=test_samples,
     )
-    # trainer.fit()
+    trainer.fit()
 
     # test(train_model, "/home/cano/output/test/test.wav")
     # test(train_model, "/home/cano/output/test/test2.wav")
     # test(train_model, "/home/cano/output/test/test3.wav")
-    test_voice_conversion(train_model, "D:\\project\\canoSpeech\\output\\test2.wav")
+    # test_voice_conversion(train_model, "D:\\project\\canoSpeech\\output\\test2.wav")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="vits vctk train", formatter_class=argparse.RawTextHelpFormatter, )

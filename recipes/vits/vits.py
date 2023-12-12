@@ -176,39 +176,36 @@ class VitsModel(nn.Module):
             pad_short=True,
         )
 
-        if not self.model_config.train_only_vae:
-            # flow layers
-            z_p = self.flow(z, y_mask, g=g)
+        # flow layers
+        z_p = self.flow(z, y_mask, g=g)
 
-            x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=None)
+        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=None)
 
-            # monotonic align and duration predictor
-            attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
-            # expand text token_size to audio token_size
-            m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
-            logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])
+        # monotonic align and duration predictor
+        attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
+        # expand text token_size to audio token_size
+        m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
+        logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])
 
-            if self.use_sdp:
-                loss_duration = self.duration_predictor(
-                    x=x.detach(),
-                    x_mask=x_mask,
-                    dr=attn_durations,
-                    g=g.detach() if g is not None else g,
-                    lang_emb=None,
-                )
-                loss_duration = loss_duration / torch.sum(x_mask)
-            else:
-                attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
-                log_durations = self.duration_predictor(
-                    x=x.detach(),
-                    x_mask=x_mask,
-                    g=g.detach() if g is not None else g,
-                    lang_emb=None,
-                )
-                loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
-                # loss_duration = torch.sum((torch.exp(log_durations) - attn_durations) ** 2, [1, 2]) / torch.sum(x_mask)
+        if self.use_sdp:
+            loss_duration = self.duration_predictor(
+                x=x.detach(),
+                x_mask=x_mask,
+                dr=attn_durations,
+                g=g.detach() if g is not None else g,
+                lang_emb=None,
+            )
+            loss_duration = loss_duration / torch.sum(x_mask)
         else:
-            loss_duration, m_p, logs_p, z_p = torch.FloatTensor([0]), torch.FloatTensor([0]), torch.FloatTensor([0]), torch.FloatTensor([0])
+            attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
+            log_durations = self.duration_predictor(
+                x=x.detach(),
+                x_mask=x_mask,
+                g=g.detach() if g is not None else g,
+                lang_emb=None,
+            )
+            loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
+            # loss_duration = torch.sum((torch.exp(log_durations) - attn_durations) ** 2, [1, 2]) / torch.sum(x_mask)
 
         if self.model_config.use_speaker_encoder_as_loss and self.speaker_encoder.encoder is not None:
             # concate generated and GT waveforms

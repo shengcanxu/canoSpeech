@@ -91,29 +91,27 @@ class VitsGeneratorLoss(nn.Module):
         return_dict = {}
         z_mask = sequence_mask(z_len).float()
 
-        if not self.model_config.freeze_vae:
-            # compute losses
-            loss_feat = (
-                self.feature_loss(feats_real=feats_disc_real, feats_generated=feats_disc_fake) * self.feat_loss_alpha
-            )
-            loss_gen = self.generator_loss(scores_fake=scores_disc_fake)[0] * self.gen_loss_alpha
-            loss_mel = torch.nn.functional.l1_loss(mel_slice, mel_slice_hat) * self.mel_loss_alpha
-            loss = loss_feat + loss_mel + loss_gen
+        # compute losses
+        loss_feat = (
+            self.feature_loss(feats_real=feats_disc_real, feats_generated=feats_disc_fake) * self.feat_loss_alpha
+        )
+        loss_gen = self.generator_loss(scores_fake=scores_disc_fake)[0] * self.gen_loss_alpha
+        loss_mel = torch.nn.functional.l1_loss(mel_slice, mel_slice_hat) * self.mel_loss_alpha
+        loss = loss_feat + loss_mel + loss_gen
 
-            # pass losses to the dict
-            return_dict["loss_gen"] = loss_gen
-            return_dict["loss_feat"] = loss_feat
-            return_dict["loss_mel"] = loss_mel
+        # pass losses to the dict
+        return_dict["loss_gen"] = loss_gen
+        return_dict["loss_feat"] = loss_feat
+        return_dict["loss_mel"] = loss_mel
 
-        if not self.model_config.train_only_vae:
-            loss_kl = (
-                self.kl_loss(z_p=z_p, logs_q=logs_q, m_p=m_p, logs_p=logs_p, z_mask=z_mask.unsqueeze(1))
-                * self.kl_loss_alpha
-            )
-            loss_duration = torch.sum(loss_duration.float()) * self.dur_loss_alpha
-            loss = loss + loss_kl + loss_duration
-            return_dict["loss_kl"] = loss_kl
-            return_dict["loss_duration"] = loss_duration
+        loss_kl = (
+            self.kl_loss(z_p=z_p, logs_q=logs_q, m_p=m_p, logs_p=logs_p, z_mask=z_mask.unsqueeze(1))
+            * self.kl_loss_alpha
+        )
+        loss_duration = torch.sum(loss_duration.float()) * self.dur_loss_alpha
+        loss = loss + loss_kl + loss_duration
+        return_dict["loss_kl"] = loss_kl
+        return_dict["loss_duration"] = loss_duration
 
         if self.model_config.use_speaker_encoder_as_loss:
             loss_se = self.cosine_similarity_loss(gt_speaker_emb, syn_speaker_emb) * self.spk_encoder_loss_alpha

@@ -54,56 +54,48 @@ class VitsTrain_Base(TrainerModelWithDataset):
             # cache tensors for the generator pass
             self.model_outputs_cache = outputs
 
-            if self.model_config.freeze_vae:  # freeze the VAE layer, no need to do discriminator training.
-                return outputs, None
-            else:
-                # compute scores and features
-                scores_disc_real, _, scores_disc_fake, _ = self.discriminator(
-                    x=outputs["waveform_seg"],
-                    x_hat=outputs["y_hat"].detach(),
-                )
+            # compute scores and features
+            scores_disc_real, _, scores_disc_fake, _ = self.discriminator(
+                x=outputs["waveform_seg"],
+                x_hat=outputs["y_hat"].detach(),
+            )
 
-                # compute loss
-                with autocast(enabled=False):
-                    loss_dict = criterion[0](
-                        scores_disc_real=scores_disc_real,
-                        scores_disc_fake=scores_disc_fake,
-                    )
-                return outputs, loss_dict
+            # compute loss
+            with autocast(enabled=False):
+                loss_dict = criterion[0](
+                    scores_disc_real=scores_disc_real,
+                    scores_disc_fake=scores_disc_fake,
+                )
+            return outputs, loss_dict
 
         if optimizer_idx == 1:
             mel = batch["mel"]
 
-            if not self.model_config.freeze_vae:
-                # compute melspec segment
-                with autocast(enabled=False):
-                    mel_slice = segment(
-                        x=mel.float(),
-                        segment_indices=self.model_outputs_cache["slice_ids"],
-                        segment_size=self.model_config.spec_segment_size,
-                        pad_short=True
-                    )
-                    mel_slice_hat = wav_to_mel(
-                        y=self.model_outputs_cache["y_hat"].float(),
-                        n_fft=self.config.audio.fft_size,
-                        sample_rate=self.config.audio.sample_rate,
-                        num_mels=self.config.audio.num_mels,
-                        hop_length=self.config.audio.hop_length,
-                        win_length=self.config.audio.win_length,
-                        fmin=self.config.audio.mel_fmin,
-                        fmax=self.config.audio.mel_fmax,
-                        center=False,
-                    )
-
-                # compute discriminator scores and features
-                _, feats_disc_real, scores_disc_fake, feats_disc_fake = self.discriminator(
-                    x=self.model_outputs_cache["waveform_seg"],
-                    x_hat=self.model_outputs_cache["y_hat"]
+            # compute melspec segment
+            with autocast(enabled=False):
+                mel_slice = segment(
+                    x=mel.float(),
+                    segment_indices=self.model_outputs_cache["slice_ids"],
+                    segment_size=self.model_config.spec_segment_size,
+                    pad_short=True
+                )
+                mel_slice_hat = wav_to_mel(
+                    y=self.model_outputs_cache["y_hat"].float(),
+                    n_fft=self.config.audio.fft_size,
+                    sample_rate=self.config.audio.sample_rate,
+                    num_mels=self.config.audio.num_mels,
+                    hop_length=self.config.audio.hop_length,
+                    win_length=self.config.audio.win_length,
+                    fmin=self.config.audio.mel_fmin,
+                    fmax=self.config.audio.mel_fmax,
+                    center=False,
                 )
 
-            else:  # freeze VAE layers
-                mel_slice_hat, mel_slice = torch.FloatTensor([0]), torch.FloatTensor([0])
-                feats_disc_real, scores_disc_fake, feats_disc_fake = torch.FloatTensor([0]), torch.FloatTensor([0]), torch.FloatTensor([0])
+            # compute discriminator scores and features
+            _, feats_disc_real, scores_disc_fake, feats_disc_fake = self.discriminator(
+                x=self.model_outputs_cache["waveform_seg"],
+                x_hat=self.model_outputs_cache["y_hat"]
+            )
 
             # compute losses
             with autocast(enabled=False):  # use float32 for the criterion

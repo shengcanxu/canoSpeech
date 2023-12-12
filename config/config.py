@@ -128,8 +128,6 @@ class BaseModelConfig(Coqpit):
     use_speaker_embeds:bool = False
 
     use_speaker_encoder_as_loss:bool = False
-    train_only_vae:bool = False
-    freeze_vae:bool = False
 
 @dataclass
 class VitsModelConfig(BaseModelConfig):

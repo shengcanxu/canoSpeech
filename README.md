@@ -44,6 +44,14 @@ speaker enbedding encoder configs:
     model checkpoint: https://github.com/coqui-ai/TTS/releases/download/speaker_encoder_model/model_se.pth.tar
     configs: https://github.com/coqui-ai/TTS/releases/download/speaker_encoder_model/config_se.json 
 
+# phonemizer & symbols
+1. about symbols of Chinese and Japanese, see detail in https://github.com/yl4579/StyleTTS/issues/10 
+
+# emotion extractor
+1. extract emotion from wav file using wav2vec2 model:  https://github.com/audeering/w2v2-how-to/blob/main/notebook.ipynb
+2. 
+
+
 #- projects
 1. https://github.com/yangdongchao/AcademiCodec 
 2. https://github.com/CODEJIN/NaturalSpeech2 
