@@ -128,5 +128,5 @@ if __name__ == "__main__":
     parser.add_argument("--config", type=str, default="../config/vits_kokoro.json")
     args = parser.parse_args()
 
-    # gen_filelist(args.config)
-    check_symbol_coverage(args.config)
+    gen_filelist(args.config)
+    # check_symbol_coverage(args.config)

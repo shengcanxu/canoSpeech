@@ -175,7 +175,7 @@ def japanese_cleaners(text):
     text = replace_symbols(text, lang='ja')
     text = remove_aux_symbols(text)
 
-    phonemes = japanese_text_to_phonemes(text, sep=" ", phase_sep=" sp ")
+    phonemes = japanese_text_to_phonemes(text)
     phonemes = collapse_whitespace(phonemes)
     return phonemes
 
@@ -200,5 +200,10 @@ def portuguese_cleaners(text):
 if __name__ == "__main__":
     # phonemes = japanese_cleaners("Ｋは到底だめだといって、応じませんでした。このごうじょうなところが")
     # print(phonemes)
-    phonemes = japanese_text_to_phonemes("うそじゃない。苦しんだのはヤソやこうしばかりで、吾々文学者は")
+    # phonemes = japanese_cleaners("うそじゃない。苦しんだのはヤソやこうしばかりで、吾々文学者は")
+    # print(phonemes)
+
+    # phonemes = japanese_cleaners("……」「おとっさんにもいま少しかせいでもらわなくっちゃ――」清三は父に向かって言った。")
+    # print(phonemes)
+    phonemes = japanese_cleaners("おんなは優しゅうたすけ起して、（おお、よくしたねえ")
     print(phonemes)
