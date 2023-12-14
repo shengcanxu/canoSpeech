@@ -32,7 +32,7 @@ def text_to_tokens(text, cleaner_names=["english_cleaners2"]):
     return tokens
 
 
-def cleaned_text_to_tokens(cleaned_text, lang="en"):
+def cleaned_text_to_tokens(cleaned_text):
     """Converts a string of text to a tokens of IDs corresponding to the symbols in the text.
     Args:
       text: string to convert to a tokens

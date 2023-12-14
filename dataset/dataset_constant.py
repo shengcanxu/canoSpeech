@@ -1,3 +1,33 @@
+def get_speaker_id(speaker_name, dataset_name:str):
+    dataset_map_names = [
+        "vctk",
+        "libritts",
+        "cmlpt",
+        "baker",
+        "kokoro",
+        "ljspeech"
+    ]
+    dataset_maps = [
+        VCTK_speaker_id_mapping,
+        LibriTTS_speaker_id_mapping,
+        CMLPT_speaker_id_mapping,
+        BAKER_speaker_id_mapping,
+        KOKORO_speaker_id_mapping,
+        LJS_speaker_id_mapping
+    ]
+
+    names = dataset_name.split("__")
+    speaker_index = 0
+    for name in names:
+        for dsname, dsmap in zip(dataset_map_names, dataset_maps):
+            if name == dsname:
+                idx = dsmap.get(speaker_name, 0)
+                if idx == 0:
+                    speaker_index += len(dsmap)
+                    break
+                else:
+                    return speaker_index + idx
+
 VCTK_gender_dict = {
     'P225': 'Female',
     'P226': 'Male',
@@ -468,7 +498,6 @@ LibriTTS_speaker_id_mapping = {
     'libritts_8975': 243
 }
 
-
 CMLPT_speaker_id_mapping = {
     'cmlpt_10107': 1,
     'cmlpt_10199': 2,
@@ -501,3 +530,22 @@ CMLPT_speaker_id_mapping = {
     'cmlpt_9351': 29,
     'cmlpt_9485': 30
 }
+
+BAKER_speaker_id_mapping = {
+    'baker': 1
+}
+
+KOKORO_speaker_id_mapping = {
+    'kokoro': 1
+}
+
+LJS_speaker_id_mapping = {
+    'ljspeech': 1
+}
+
+if __name__ == "__main__":
+    id = get_speaker_id("VCTK_p230", "vctk")
+    print(id)
+
+    id = get_speaker_id("VCTK_p230", "kokoro__cmlpt__vctk")
+    print(id)

@@ -37,45 +37,6 @@ class VitsTrain(VitsTrain_Base):
         )
 
     @torch.no_grad()
-    def inference(self, text:str, speaker_id:int=None, speaker_embed=None):
-        tokens = text_to_tokens(text, cleaner_names=self.config.text.text_cleaners)
-        if self.config.text.add_blank:
-            tokens = _intersperse(tokens, 0)
-        tokens = torch.LongTensor(tokens).unsqueeze(dim=0).cuda()
-        x_lengths = torch.LongTensor([tokens.size(1)]).cuda()
-
-        speaker_ids = torch.LongTensor([speaker_id]).cuda() if speaker_id is not None else None
-        speaker_embed = torch.FloatTensor(speaker_embed).unsqueeze(0).cuda() if speaker_embed is not None else None
-
-        self.generator.eval()
-        wav, _, _, _ = self.generator.infer(
-            tokens,
-            x_lengths,
-            speaker_ids=speaker_ids,
-            speaker_embeds=speaker_embed,
-            noise_scale=0.8,
-            length_scale=1,
-        )
-        return wav
-
-    @torch.no_grad()
-    def inference_voice_conversion(self, reference_wav, ref_speaker_id=None, ref_speaker_embed=None, speaker_id=None, speaker_embed=None):
-        y = wav_to_spec(
-            reference_wav,
-            self.config.audio.fft_size,
-            self.config.audio.hop_length,
-            self.config.audio.win_length,
-            center=False,
-        ).cuda()
-        y_lengths = torch.tensor([y.size(-1)]).cuda()
-        source_speaker = ref_speaker_id if ref_speaker_id is not None else ref_speaker_embed
-        target_speaker = speaker_id if speaker_id is not None else speaker_embed
-        source_speaker = source_speaker.cuda()
-        target_speaker = target_speaker.cuda()
-        wav, _, _ = self.generator.voice_conversion(y, y_lengths, source_speaker, target_speaker)
-        return wav
-
-    @torch.no_grad()
     def eval_step(self, batch: dict, criterion: nn.Module, optimizer_idx: int):
         output, loss_dict = self.train_step(batch, criterion, optimizer_idx)
         if optimizer_idx == 0:

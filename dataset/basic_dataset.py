@@ -1,10 +1,12 @@
 import os
 import random
+from typing import Union
+
 import numpy as np
 from collections import Counter
 import pickle
 
-from dataset.dataset_constant import VCTK_speaker_id_mapping, LibriTTS_speaker_id_mapping, CMLPT_speaker_id_mapping
+from dataset.dataset_constant import VCTK_speaker_id_mapping, LibriTTS_speaker_id_mapping, CMLPT_speaker_id_mapping, get_speaker_id
 from text import cleaned_text_to_tokens, _clean_text, _intersperse
 import torch
 from torch.utils.data import Dataset
@@ -55,18 +57,22 @@ def split_dataset_metas(items, eval_split_max_size=None, eval_split_size=0.01):
     return items[:eval_split_size], items[eval_split_size:]
 
 
-def get_metas_from_filelist(filelist:str):
+def get_metas_from_filelist(filelists: Union[str, list]):
     """get meta from filelist, filelist is generated from gen_filelist.py"""
+    if type(filelists) == str:
+        filelists = [filelists]
+
     metas = []
-    with open(filelist, encoding="utf-8") as f:
-        for line in f:
-            items = line.strip().split("|")
-            metas.append({
-                "text": items[3],
-                "language": items[2],
-                "speaker": items[1],
-                "audio": items[0],
-            })
+    for filelist in filelists:
+        with open(filelist, encoding="utf-8") as f:
+            for line in f:
+                items = line.strip().split("|")
+                metas.append({
+                    "text": items[3],
+                    "language": items[2],
+                    "speaker": items[1],
+                    "audio": items[0],
+                })
     return metas
 
 class TextAudioDataset(Dataset):
@@ -79,7 +85,6 @@ class TextAudioDataset(Dataset):
         self.use_cache = getattr(config.dataset_config, "use_cache", False)
         self.use_speaker_ids = config.model.use_speaker_ids
         self.add_preprocess_data = getattr(config.dataset_config, "add_preprocess_data", True)
-        self.language = config.dataset_config.language or "en"
 
         self.hop_length = config.audio.hop_length
         self.win_length = config.audio.win_length
@@ -96,6 +101,14 @@ class TextAudioDataset(Dataset):
         self.add_blank = config.text.add_blank
         self.min_text_len = getattr(config.text, "min_text_len", 1)
         self.max_text_len = getattr(config.text, "max_text_len", 190)
+
+        # generate language ids
+        lang_names = set()
+        for sample in self.samples:
+            lang_names.add(sample["language"])
+        lang_names = list(lang_names)
+        lang_names.sort()
+        self.language_id_map = { name: idx for idx, name in enumerate(lang_names) }
 
         random.seed(1234)
         random.shuffle(self.samples)  # shuffle samples
@@ -175,30 +188,21 @@ class TextAudioDataset(Dataset):
             "spec": spec.squeeze(),
             "mel": mel.squeeze(),
             "filename": sample["audio"],
-            "speaker_id": self._get_speaker_id(sample["speaker"], self.dataset_name),
+            "speaker_id": get_speaker_id(sample["speaker"], self.dataset_name),
             "speaker_embed": speaker,
             "pitch": pitch,
-            "duration": duration
+            "duration": duration,
+            "language_id": self.language_id_map.get(sample["language"], 0)
         }
-
-    def _get_speaker_id(self, speaker_name, dataset_name:str):
-        if dataset_name == "vctk":
-            return VCTK_speaker_id_mapping.get(speaker_name, 1)
-        elif dataset_name == "libritts":
-            return LibriTTS_speaker_id_mapping.get(speaker_name, 1)
-        elif dataset_name == "cmlpt":
-            return CMLPT_speaker_id_mapping.get(speaker_name, 1)
-        else:
-            return 0
 
     def _get_text(self, text):
         """format text and add blank"""
         if self.cleaned_text:
             cleaned_text = text
-            tokens = cleaned_text_to_tokens(cleaned_text, lang=self.language)
+            tokens = cleaned_text_to_tokens(cleaned_text)
         else:
             cleaned_text = _clean_text(text, self.text_cleaners)
-            tokens = cleaned_text_to_tokens(cleaned_text, lang=self.language)
+            tokens = cleaned_text_to_tokens(cleaned_text)
         if self.add_blank:
             tokens = _intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens)
@@ -232,6 +236,8 @@ class TextAudioDataset(Dataset):
 
         speaker_ids = torch.LongTensor(len(batch))
         speaker_ids = speaker_ids.zero_()
+        language_ids = torch.LongTensor(len(batch))
+        language_ids = language_ids.zero_()
 
         pitch_padded = torch.LongTensor(len(batch))
         speaker_embed_padded = torch.LongTensor(len(batch))
@@ -267,6 +273,7 @@ class TextAudioDataset(Dataset):
             mel_lens[i] = mel.size(1)
 
             speaker_ids[i] = item["speaker_id"]
+            language_ids[i] = item["language_id"]
             if self.add_preprocess_data:
                 pitch = item["pitch"]
                 pitch_padded[i, :pitch.size(0)] = torch.FloatTensor(pitch)
@@ -284,6 +291,7 @@ class TextAudioDataset(Dataset):
             "mel_lens": mel_lens,  # [B]
             "speaker_ids": speaker_ids,  # [B]
             "speaker_embeds": speaker_embed_padded,  # [B, T_speaker]
+            "language_ids": language_ids,  # [B]
             "pitch": pitch_padded,  # [B, T_pitch]
             "filenames": filenames,  # [B]
             "raw_texts": raw_texts  # [B]

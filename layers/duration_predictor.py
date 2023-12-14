@@ -71,6 +71,7 @@ class VitsDurationPredictor(nn.Module):
             - x: :math:`[B, C, T]`
             - x_mask: :math:`[B, 1, T]`
             - g: :math:`[B, C, 1]`
+            - lang_emb: [B, lang_channel, 1]
         """
         if g is not None:
             x = x + self.cond(g)
@@ -169,6 +170,7 @@ class StochasticDurationPredictor(nn.Module):
             - x_mask: :math:`[B, 1, T]`
             - dr: :math:`[B, 1, T]`
             - g: :math:`[B, C]`
+            - lang_emb: [B, lang_channel, 1]
         """
         # condition encoder text
         x = self.pre(x)

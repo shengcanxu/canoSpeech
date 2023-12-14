@@ -30,11 +30,15 @@ class VitsModel(nn.Module):
         self.spec_segment_size = self.model_config.spec_segment_size
 
         self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
-        self.num_speakers = self.model_config.num_speakers
-        if self.num_speakers > 0:
-            self.speaker_embedding = nn.Embedding(self.num_speakers, self.embedded_speaker_dim)
+        if self.model_config.use_speaker_ids:
+            self.speaker_embedding = nn.Embedding(self.model_config.num_speakers, self.embedded_speaker_dim)
         else:
             self.speaker_embedding = None
+        self.embedded_language_dim = 0
+        if self.model_config.use_language_ids:
+            self.embedded_language_dim = self.model_config.language_embedding_channels
+            self.language_embedding = nn.Embedding(self.model_config.num_languages, self.embedded_language_dim)
+
         if self.model_config.use_speaker_encoder_as_loss:
             self.speaker_encoder = SpeakerEncoder(
                 config_path=os.path.dirname(__file__) + "/../../speaker/speaker_encoder_config.json",
@@ -45,8 +49,6 @@ class VitsModel(nn.Module):
                 orig_freq=self.config.audio.sample_rate,
                 new_freq=self.speaker_encoder.encoder.audio_config["sample_rate"],
             )
-
-        self.embedded_language_dim = 0
 
         self.text_encoder = TextEncoder(
             n_vocab=self.model_config.text_encoder.num_chars,
@@ -161,6 +163,11 @@ class VitsModel(nn.Module):
         elif self.model_config.use_speaker_ids and speaker_ids is not None:
             g = self.speaker_embedding(speaker_ids).unsqueeze(-1)
 
+        # language embedding
+        lang_embed = None
+        if self.model_config.use_language_ids:
+            lang_embed = self.language_embedding(language_ids).unsqueeze(-1)  # [B, lang_channel, 1]
+
         # audio encoder, encode audio to embedding layer z's dimension
         z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=g)
 
@@ -179,7 +186,7 @@ class VitsModel(nn.Module):
         # flow layers
         z_p = self.flow(z, y_mask, g=g)
 
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=None)
+        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embed)
 
         # monotonic align and duration predictor
         attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
@@ -193,7 +200,7 @@ class VitsModel(nn.Module):
                 x_mask=x_mask,
                 dr=attn_durations,
                 g=g.detach() if g is not None else g,
-                lang_emb=None,
+                lang_emb=lang_embed,
             )
             loss_duration = loss_duration / torch.sum(x_mask)
         else:
@@ -202,7 +209,7 @@ class VitsModel(nn.Module):
                 x=x.detach(),
                 x_mask=x_mask,
                 g=g.detach() if g is not None else g,
-                lang_emb=None,
+                lang_emb=lang_embed,
             )
             loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
             # loss_duration = torch.sum((torch.exp(log_durations) - attn_durations) ** 2, [1, 2]) / torch.sum(x_mask)
@@ -243,6 +250,7 @@ class VitsModel(nn.Module):
         x_lengths,  # [B]
         speaker_embeds=None,  # [T]
         speaker_ids=None,  # [B]
+        language_ids=None,  # [B]
         noise_scale=1.0,
         length_scale=1.0,
         max_len=None
@@ -256,7 +264,12 @@ class VitsModel(nn.Module):
         elif self.speaker_embedding is not None and speaker_ids is not None:
             g = self.speaker_embedding(speaker_ids).unsqueeze(-1)
 
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=None)
+        # language embedding
+        lang_embed = None
+        if self.model_config.use_language_ids:
+            lang_embed = self.language_embedding(language_ids).unsqueeze(-1)  # [B, lang_channel, 1]
+
+        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embed)
 
         if self.use_sdp:
             logw = self.duration_predictor(
@@ -271,7 +284,7 @@ class VitsModel(nn.Module):
                 x=x,
                 x_mask=x_mask,
                 g=g if g is not None else g,
-                lang_emb=None
+                lang_emb=lang_embed
             )
         w = torch.exp(logw) * x_mask * length_scale
 
@@ -313,7 +326,7 @@ class VitsModel(nn.Module):
             source_speaker (Tensor): Reference speaker ID. Tensor of shape [B, T]
             target_speaker (Tensor): Target speaker ID. Tensor of shape [B, T]
         """
-        assert self.num_speakers > 0, "num_speakers have to be larger than 0."
+        assert self.model_config.num_speakers > 0, "num_speakers have to be larger than 0."
         # speaker embedding
         if self.model_config.use_speaker_ids:
             g_src = self.emb_g(torch.from_numpy((np.array(source_speaker))).unsqueeze(0)).unsqueeze(-1)

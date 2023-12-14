@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field, asdict
-from typing import List
+from typing import List, Union
 
 from coqpit import Coqpit, check_argument
 from trainer import TrainerConfig
@@ -32,8 +32,8 @@ class TTSDatasetConfig(Coqpit):
     dataset_name: str = ""
     path: str = ""
     use_cache:bool = False
-    meta_file_train: str = ""
-    meta_file_val: str = ""
+    meta_file_train: Union[str, list] = ""
+    meta_file_val: Union[str, list] = ""
     ignored_speakers: List[str] = None
     language: str = "en"
 
@@ -119,9 +119,9 @@ class BaseModelConfig(Coqpit):
     spec_segment_size:int = 32
 
     use_sdp: bool = True
+    num_languages: int = 0
     language_embedding_channels: int = 4
-    use_language_embedding:bool = False
-    language_ids_file:str = None
+    use_language_ids:bool = False
     num_speakers:int = 0
     speaker_embedding_channels:int = 512
     use_speaker_ids:bool = False

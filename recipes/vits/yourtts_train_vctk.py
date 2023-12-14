@@ -41,27 +41,6 @@ class YourttsTrain(VitsTrain_Base):
             for param in self.generator.speaker_encoder.encoder.parameters():
                 param.requires_grad = False
 
-    def inference(self, text:str, speaker_id:int=None, speaker_embed=None):
-        tokens = text_to_tokens(text, cleaner_names=self.config.text.text_cleaners)
-        if self.config.text.add_blank:
-            tokens = _intersperse(tokens, 0)
-        tokens = torch.LongTensor(tokens).unsqueeze(dim=0).cuda()
-        x_lengths = torch.LongTensor([tokens.size(1)]).cuda()
-
-        speaker_ids = torch.LongTensor([speaker_id]).cuda() if speaker_id is not None else None
-        speaker_embed = torch.FloatTensor(speaker_embed).unsqueeze(0).cuda() if speaker_embed is not None else None
-
-        self.generator.eval()
-        wav, _, _, _ = self.generator.infer(
-            tokens,
-            x_lengths,
-            speaker_ids=speaker_ids,
-            speaker_embeds=speaker_embed,
-            noise_scale=0.8,
-            length_scale=1,
-        )
-        return wav
-
     @torch.no_grad()
     def eval_step(self, batch: dict, criterion: nn.Module, optimizer_idx: int):
         output, loss_dict = self.train_step(batch, criterion, optimizer_idx)

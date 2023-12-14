@@ -116,7 +116,7 @@ class NaturalSpeechModel(nn.Module):
         if self.model_config.language_ids_file is not None:
             self.language_manager = LanguageManager(language_ids_file_path=config.language_ids_file)
 
-        if self.model_config.use_language_embedding and self.language_manager:
+        if self.model_config.use_language_ids and self.language_manager:
             print(" > initialization of language-embedding layers.")
             self.num_languages = self.language_manager.num_languages
             self.embedded_language_dim = self.model_config.language_embedding_channels
@@ -166,7 +166,7 @@ class NaturalSpeechModel(nn.Module):
 
         # language embedding
         lang_embedding = None
-        if self.model_config.use_language_embedding and lid is not None:
+        if self.model_config.use_language_ids and lid is not None:
             lang_embedding = self.language_embedding(lid).unsqueeze(-1)
 
         x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embedding)
@@ -269,7 +269,7 @@ class NaturalSpeechModel(nn.Module):
 
         # language embedding
         lang_embedding = None
-        if self.model_config.use_language_embedding and lid is not None:
+        if self.model_config.use_language_ids and lid is not None:
             lang_embedding = self.language_embedding(lid).unsqueeze(-1)
 
         # infer with only one example

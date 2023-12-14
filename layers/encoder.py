@@ -62,11 +62,12 @@ class TextEncoder(nn.Module):
         Shapes:
             - x: :math:`[B, T]`
             - x_length: :math:`[B]`
+            lang_emb: [B, lang_channel, 1]
         """
         assert x.shape[0] == x_lengths.shape[0]
         x = self.emb(x) * math.sqrt(self.hidden_channels)  # [b, t, h]
 
-        # concat the lang emb in embedding chars
+        # concat the lang emb in embedding chars, equals to add language string to the end of text
         if lang_emb is not None:
             x = torch.cat((x, lang_emb.transpose(2, 1).expand(x.size(0), x.size(1), -1)), dim=-1)
 

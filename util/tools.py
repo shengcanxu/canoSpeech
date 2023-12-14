@@ -1,3 +1,6 @@
+import os
+from glob import glob
+
 import numpy as np
 import librosa
 import librosa.display
@@ -15,7 +18,14 @@ def display_melspectrogram(filepath:str, name = 'Mel spectrogram'):
     plt.tight_layout()
     plt.show()
 
+def remove_backup_dataset_pt_file(path:str):
+    files = glob(f"{path}/**/*.wav.pt", recursive=True)
+    for file in files:
+        os.remove(file)
+        print(f"remove file: {file}")
 
 if __name__ == '__main__':
-    filepath = 'D:\\dataset\\VCTK\\wav48_silence_trimmed\\p233\\p233_001_mic2.flac.wav'
-    display_melspectrogram(filepath, "test")
+    # filepath = 'D:\\dataset\\VCTK\\wav48_silence_trimmed\\p233\\p233_001_mic2.flac.wav'
+    # display_melspectrogram(filepath, "test")
+
+    remove_backup_dataset_pt_file('D:\\dataset\\VCTK\\wav48_silence_trimmed')

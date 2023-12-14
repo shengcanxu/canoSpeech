@@ -40,7 +40,7 @@ class VitsTrain(VitsTrain_Base):
 
         print("doing test run...")
         text = "Who else do you want to talk to? You can go with me today to the meeting."
-        wav = self.inference(text, None)
+        wav = self.inference(text, 1, 1)
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 
@@ -69,7 +69,7 @@ def main(config_path:str):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="vits vctk train", formatter_class=argparse.RawTextHelpFormatter, )
-    parser.add_argument("--config_path", type=str, default="./config/vits_ljspeech.json", required=False)
+    parser.add_argument("--config_path", type=str, default="./config/vits_multilang.json", required=False)
     args = parser.parse_args()
 
     main(args.config_path)
