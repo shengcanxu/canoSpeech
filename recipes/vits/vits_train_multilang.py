@@ -1,5 +1,6 @@
 import argparse
 import os
+import random
 import time
 from typing import Dict, Tuple
 
@@ -23,13 +24,15 @@ class VitsTrain(VitsTrain_Base):
     def eval_step(self, batch: dict, criterion: nn.Module, optimizer_idx: int):
         output, loss_dict = self.train_step(batch, criterion, optimizer_idx)
         if optimizer_idx == 0:
-            spec = batch["spec"][[0]]
-            spec_len = batch["spec_lens"][[0]]
-            speaker_id = batch["speaker_ids"][[0]]
+            num = batch["spec"].size(0)
+            idx = random.randint(0, num-1)
+            spec = batch["spec"][[idx]]
+            spec_len = batch["spec_lens"][[idx]]
+            speaker_id = batch["speaker_ids"][[idx]]
             wav = self.generator.generate_z_wav(spec, spec_len, speaker_id)
 
             wav = wav[0, 0].cpu().float().numpy()
-            filename = os.path.basename(batch["filenames"][0])
+            filename = os.path.basename(batch["filenames"][idx])
             sf.write(f"{self.config.output_path}/{int(time.time())}_{filename}", wav, 22050)
 
         return output, loss_dict
@@ -39,8 +42,12 @@ class VitsTrain(VitsTrain_Base):
         output_path = assets["output_path"]
 
         print("doing test run...")
-        text = "Who else do you want to talk to? You can go with me today to the meeting."
-        wav = self.inference(text, 1, 1)
+        text1 = "Who else do you want to talk to? You can go with me today to the meeting."
+        text2 = "我们都是中国人，我爱中国"
+        if random.randint(0, 10) >= 5:
+            wav = self.inference(text1, 1, 1)
+        else:
+            wav = self.inference(text2, 0, 1)
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 
