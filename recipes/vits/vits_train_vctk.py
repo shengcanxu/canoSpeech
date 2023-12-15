@@ -149,4 +149,9 @@ if __name__ == "__main__":
     parser.add_argument("--config_path", type=str, default="./config/vits_vctk.json", required=False)
     args = parser.parse_args()
 
-    main(args.config_path)
+    # main(args.config_path)
+
+    if platform.system() == "Windows":
+        main("./config/vits_vctk.json")
+    else:
+        main("./config/vits_vctk_linux.json")

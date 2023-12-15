@@ -1,5 +1,6 @@
 import argparse
 import os
+import platform
 import time
 from typing import Dict, Tuple
 
@@ -71,4 +72,9 @@ if __name__ == "__main__":
     parser.add_argument("--config_path", type=str, default="./config/vits_ljspeech.json", required=False)
     args = parser.parse_args()
 
-    main(args.config_path)
+    # main(args.config_path)
+
+    if platform.system() == "Windows":
+        main("./config/vits_ljspeech.json")
+    else:
+        main("./config/vits_ljspeech_linux.json")
