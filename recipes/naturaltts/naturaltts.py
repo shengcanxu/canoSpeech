@@ -35,12 +35,12 @@ class NaturalTTSModel(nn.Module):
         # self.language_manager = language_manager
 
         # init multi-speaker, speaker_embedding is used when the speaker_embed is not provided
-        self.num_speakers = self.model_config.num_speakers
-        self.spec_segment_size = self.model_config.spec_segment_size
-        self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
-        if self.num_speakers > 0:
-            self.speaker_embedding = nn.Embedding(self.num_speakers, self.embedded_speaker_dim)
-        self.use_gt_duration = self.model_config.use_gt_duration
+        # self.num_speakers = self.model_config.num_speakers
+        # self.spec_segment_size = self.model_config.spec_segment_size
+        # self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
+        # if self.model_config.use_speaker_ids:
+        #     self.speaker_embedding = nn.Embedding(self.num_speakers, self.embedded_speaker_dim)
+        # self.use_gt_duration = self.model_config.use_gt_duration
 
         self.init_multilingual(config)
 
@@ -130,14 +130,14 @@ class NaturalTTSModel(nn.Module):
         # if self.model_config.language_ids_file is not None:
         #     self.language_manager = LanguageManager(language_ids_file_path=config.language_ids_file)
 
-        if self.model_config.use_language_ids and self.language_manager:
-            print(" > initialization of language-embedding layers.")
-            self.num_languages = self.language_manager.num_languages
-            self.embedded_language_dim = self.model_config.language_embedding_channels
-            self.language_embedding = nn.Embedding(self.num_languages, self.embedded_language_dim)
-            torch.nn.init.xavier_uniform_(self.language_embedding.weight)
-        else:
-            self.embedded_language_dim = 0
+        # if self.model_config.use_language_ids and self.language_manager:
+        #     print(" > initialization of language-embedding layers.")
+        #     self.num_languages = self.language_manager.num_languages
+        #     self.embedded_language_dim = self.model_config.language_embedding_channels
+        #     self.language_embedding = nn.Embedding(self.num_languages, self.embedded_language_dim)
+        #     torch.nn.init.xavier_uniform_(self.language_embedding.weight)
+        # else:
+        #     self.embedded_language_dim = 0
 
     def match_mel_token(self, z_p, m_p, logs_p, x_mask, y_mask):
         """

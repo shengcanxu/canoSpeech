@@ -52,7 +52,7 @@ class VitsTrain(VitsTrain_Base):
         print("doing test run...")
         text = "私たちは全員中国人で、故郷が大好きです。"
 
-        wav = self.inference(text)
+        wav = self.inference(text, speaker_name="kokoro", language="ja")
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 
@@ -78,6 +78,8 @@ def main(config_path:str):
         eval_samples=test_samples,
     )
     trainer.fit()
+
+    # train_model.test_run({"output_path": "/home/cano/output"})
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="vits kokoro train", formatter_class=argparse.RawTextHelpFormatter, )

@@ -52,10 +52,10 @@ class VitsTrain(VitsTrain_Base):
     def test_run(self, assets) -> Tuple[Dict, Dict]:
         output_path = assets["output_path"]
         print("doing test run...")
-        text = "Who else do you want to talk to? You can go with me today to the meeting."
+        text = "Sou estudante, mas não quero fazer lição de casa."
 
         speaker_name = random.choice(["libritts_118", "libritts_226", "libritts_32", "libritts_460", "libritts_831"])
-        wav = self.inference(text, speaker_name=speaker_name)
+        wav = self.inference(text, speaker_name=speaker_name, language="en")
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 

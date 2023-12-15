@@ -28,4 +28,7 @@ if __name__ == '__main__':
     # filepath = 'D:\\dataset\\VCTK\\wav48_silence_trimmed\\p233\\p233_001_mic2.flac.wav'
     # display_melspectrogram(filepath, "test")
 
+    remove_backup_dataset_pt_file('D:\\dataset\\kokoro\\wavs')
+    remove_backup_dataset_pt_file('D:\\dataset\\CMLTTS\\train\\audio')
     remove_backup_dataset_pt_file('D:\\dataset\\VCTK\\wav48_silence_trimmed')
+    remove_backup_dataset_pt_file('D:\\dataset\\baker')

@@ -52,7 +52,7 @@ class VitsTrain(VitsTrain_Base):
         print("doing test run...")
         text = "我们都是中国人，我爱家乡！"
 
-        wav = self.inference(text)
+        wav = self.inference(text, speaker_name="baker", language="zh")
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 

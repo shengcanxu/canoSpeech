@@ -99,10 +99,8 @@ class BaseModelConfig(Coqpit):
     spec_segment_size:int = 32
 
     use_sdp: bool = True
-    num_languages: int = 0
     language_embedding_channels: int = 4
     use_language_ids:bool = False
-    num_speakers:int = 0
     speaker_embedding_channels:int = 512
     use_speaker_ids:bool = False
     use_speaker_embeds:bool = False

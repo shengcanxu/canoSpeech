@@ -31,7 +31,7 @@ class LanguageManagerBackup(object):
             self.set_language_ids_from_config(config)
 
     @property
-    def num_languages(self) -> int:
+    def language_count(self) -> int:
         return len(list(self.name_to_id.keys()))
 
     @property

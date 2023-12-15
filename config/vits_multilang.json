@@ -6,11 +6,11 @@
     "dataset_config": {
         "datasets": [
             {
-                "dataset_name": "ljspeech",
-                "meta_file_train": "D:/project/canoSpeech/filelists/baker_train_filelist.txt.cleaned",
-                "meta_file_val": "D:/project/canoSpeech/filelists/baker_test_filelist.txt.cleaned",
-                "path":"D:\\dataset\\VCTK",
-                "language":"en"
+                "dataset_name": "vctk",
+                "meta_file_train": "D:/project/canoSpeech/filelists/vctk_train_filelist.txt.cleaned",
+                "meta_file_val": "D:/project/canoSpeech/filelists/vctk_test_filelist.txt.cleaned",
+                "path": "D:\\dataset\\VCTK",
+                "language": "en"
             },
             {
                 "dataset_name": "baker",
@@ -18,6 +18,20 @@
                 "meta_file_val": "D:/project/canoSpeech/filelists/baker_test_filelist.txt.cleaned",
                 "path":"D:\\dataset\\VCTK",
                 "language":"zh"
+            },
+            {
+                "dataset_name": "cmlpt",
+                "meta_file_train": "D:/project/canoSpeech/filelists/cmlpt_train_filelist.txt.cleaned",
+                "meta_file_val": "D:/project/canoSpeech/filelists/cmlpt_test_filelist.txt.cleaned",
+                "path": "D:/dataset/CMLTTS",
+                "language": "pt"
+            },
+            {
+                "dataset_name": "kokoro",
+                "meta_file_train": "D:/project/canoSpeech/filelists/kokoro_train_filelist.txt.cleaned",
+                "meta_file_val": "D:/project/canoSpeech/filelists/kokoro_test_filelist.txt.cleaned",
+                "path": "D:/dataset/kokoro",
+                "language": "ja"
             }
         ],
         "num_loader_workers": 4,
@@ -105,10 +119,8 @@
         "out_channels":513,
         "spec_segment_size": 32,
 
-        "num_languages": 2,
         "language_embedding_channels": 4,
         "use_language_embedding": true,
-        "num_speakers": 3,
         "speaker_embedding_channels": 512,
         "use_speaker_ids": true,
         "use_speaker_embeds": false,

@@ -44,10 +44,19 @@ class VitsTrain(VitsTrain_Base):
         print("doing test run...")
         text1 = "Who else do you want to talk to? You can go with me today to the meeting."
         text2 = "我们都是中国人，我爱中国"
-        if random.randint(0, 10) >= 5:
-            wav = self.inference(text1, speaker_name="ljspeech", language="en")
-        else:
+        text3 = "Sou estudante, mas não quero fazer lição de casa."
+        text4 = "私たちは全員中国人で、故郷が大好きです。"
+        lang = random.choice(["en", "zh", "pt", "ja"])
+        if lang == "en":
+            speaker_name = random.choice(["VCTK_p240", "VCTK_p260", "VCTK_p270", "VCTK_p311", "VCTK_p336"])
+            wav = self.inference(text1, speaker_name=speaker_name, language="en")
+        elif lang == "zh":
             wav = self.inference(text2, speaker_name="baker", language="zh")
+        elif lang == "pt":
+            speaker_name = random.choice(["cmlpt_2961", "cmlpt_5705", "cmlpt_6700", "cmlpt_10670", "cmlpt_5025"])
+            wav = self.inference(text3, speaker_name=speaker_name, language="pt")
+        elif lang == "ja":
+            wav = self.inference(text4, speaker_name="kokoro", language="ja")
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 
@@ -73,6 +82,8 @@ def main(config_path:str):
         eval_samples=test_samples,
     )
     trainer.fit()
+
+    # train_model.test_run({"output_path": "/home/cano/output"})
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="vits vctk train", formatter_class=argparse.RawTextHelpFormatter, )

@@ -32,11 +32,11 @@ class NaturalSpeechModel(nn.Module):
         # self.language_manager = language_manager
 
         # init multi-speaker, speaker_embedding is used when the speaker_embed is not provided
-        self.num_speakers = self.model_config.num_speakers
-        self.spec_segment_size = self.model_config.spec_segment_size
-        self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
-        if self.num_speakers > 0:
-            self.speaker_embedding = nn.Embedding(self.num_speakers, self.embedded_speaker_dim)
+        # self.num_speakers = self.model_config.num_speakers
+        # self.spec_segment_size = self.model_config.spec_segment_size
+        # self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
+        # if self.num_speakers > 0:
+        #     self.speaker_embedding = nn.Embedding(self.num_speakers, self.embedded_speaker_dim)
 
         self.init_multilingual(config)
 
@@ -115,14 +115,14 @@ class NaturalSpeechModel(nn.Module):
         # if self.model_config.language_ids_file is not None:
         #     self.language_manager = LanguageManager(language_ids_file_path=config.language_ids_file)
 
-        if self.model_config.use_language_ids and self.language_manager:
-            print(" > initialization of language-embedding layers.")
-            self.num_languages = self.language_manager.num_languages
-            self.embedded_language_dim = self.model_config.language_embedding_channels
-            self.language_embedding = nn.Embedding(self.num_languages, self.embedded_language_dim)
-            torch.nn.init.xavier_uniform_(self.language_embedding.weight)
-        else:
-            self.embedded_language_dim = 0
+        # if self.model_config.use_language_ids and self.language_manager:
+        #     print(" > initialization of language-embedding layers.")
+        #     self.num_languages = self.language_manager.num_languages
+        #     self.embedded_language_dim = self.model_config.language_embedding_channels
+        #     self.language_embedding = nn.Embedding(self.num_languages, self.embedded_language_dim)
+        #     torch.nn.init.xavier_uniform_(self.language_embedding.weight)
+        # else:
+        #     self.embedded_language_dim = 0
 
     @staticmethod
     def _set_cond_input(speaker_embeds, speaker_ids, language_ids):

@@ -68,7 +68,7 @@ class VitsTrain(VitsTrain_Base):
         pickleObj = pickle.load(fp)
         speaker_embed = pickleObj["speaker"]
 
-        wav = self.inference(text, speaker_embed=speaker_embed)
+        wav = self.inference(text, speaker_embed=speaker_embed, language="pt")
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 
@@ -85,7 +85,7 @@ def test(model, filepath:str):
     speaker_embed = speaker_embed.cpu().float().numpy()
 
     text = "I am a student but I don't want to do any homework."
-    wav = model.inference(text, speaker_embed=speaker_embed)
+    wav = model.inference(text, speaker_embed=speaker_embed, language="pt")
     wav = wav[0, 0].cpu().float().numpy()
     sf.write(f"{filepath}.test.wav", wav, 22050)
 

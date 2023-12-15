@@ -24,7 +24,7 @@ class VitsTrain_Base(TrainerModelWithDataset):
         self.config = config
         self.model_config = config.model
 
-        self.generator = VitsModel(config=config)
+        self.generator = VitsModel(config=config, speaker_manager=self.speaker_manager, language_manager=self.language_manager)
         self.discriminator = VitsDiscriminator(
             periods=self.model_config.discriminator.periods_multi_period,
             use_spectral_norm=self.model_config.discriminator.use_spectral_norm,

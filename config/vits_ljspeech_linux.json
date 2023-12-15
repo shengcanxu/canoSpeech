@@ -98,9 +98,7 @@
 
         "language_embedding_channels": 4,
         "use_language_embedding": false,
-        "language_ids_file": null,
         "speaker_embedding_channels": 0,
-        "num_speakers": 0,
         "use_speaker_embedding": false,
         "use_speaker_encoder_as_loss": false,
         "use_gt_duration": true,

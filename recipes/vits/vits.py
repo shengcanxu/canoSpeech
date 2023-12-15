@@ -4,6 +4,8 @@ from typing import Dict
 import numpy as np
 import torch
 import torchaudio
+from language.language_manager import LanguageManager
+from speaker.speaker_manager import SpeakerManager
 from torch.nn import functional as F
 from torch import nn
 from config.config import VitsConfig
@@ -18,23 +20,25 @@ from util.helper import sequence_mask, segment, rand_segments
 
 # VITS model and yourTTS model 
 class VitsModel(nn.Module):
-    def __init__(self, config:VitsConfig):
+    def __init__(self, config:VitsConfig, speaker_manager:SpeakerManager, language_manager:LanguageManager):
         super().__init__()
         self.config = config
         self.model_config = config.model
+        self.speaker_manager = speaker_manager
+        self.language_manager = language_manager
 
         self.use_sdp = self.model_config.use_sdp
         self.spec_segment_size = self.model_config.spec_segment_size
 
         self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
         if self.model_config.use_speaker_ids:
-            self.speaker_embedding = nn.Embedding(self.model_config.num_speakers, self.embedded_speaker_dim)
+            self.speaker_embedding = nn.Embedding(self.speaker_manager.speaker_count(), self.embedded_speaker_dim)
         else:
             self.speaker_embedding = None
         self.embedded_language_dim = 0
         if self.model_config.use_language_ids:
             self.embedded_language_dim = self.model_config.language_embedding_channels
-            self.language_embedding = nn.Embedding(self.model_config.num_languages, self.embedded_language_dim)
+            self.language_embedding = nn.Embedding(self.language_manager.language_count(), self.embedded_language_dim)
 
         if self.model_config.use_speaker_encoder_as_loss:
             self.speaker_encoder = SpeakerEncoder(
@@ -323,7 +327,7 @@ class VitsModel(nn.Module):
             source_speaker (Tensor): Reference speaker ID. Tensor of shape [B, T]
             target_speaker (Tensor): Target speaker ID. Tensor of shape [B, T]
         """
-        assert self.model_config.num_speakers > 0, "num_speakers have to be larger than 0."
+
         # speaker embedding
         if self.model_config.use_speaker_ids:
             g_src = self.emb_g(torch.from_numpy((np.array(source_speaker))).unsqueeze(0)).unsqueeze(-1)
