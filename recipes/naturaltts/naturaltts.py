@@ -1,21 +1,15 @@
 import math
 import os
 import time
+from typing import Dict, List, Tuple
+
 import soundfile as sf
 import torch
-from coqpit import Coqpit
-from typing import Dict, List, Union, Tuple
-from util.gpu_mem_track import MemTracker, modelsize
-from torch import nn
-from torch.cuda.amp import autocast
-from trainer import get_optimizer, get_scheduler
-from torch.nn import functional as F
 from config.config import NaturalTTSConfig
-from language.languages import LanguageManager
+from coqpit import Coqpit
 from layers.discriminator import VitsDiscriminator
-from layers.duration_predictor import VitsDurationPredictor
 from layers.encoder import TextEncoder, AudioEncoder
-from layers.flow import ResidualCouplingBlocks, AttentionFlow
+from layers.flow import AttentionFlow
 from layers.generator import HifiganGenerator
 from layers.learnable_upsampling import LearnableUpsampling
 from layers.losses import NaturalSpeechDiscriminatorLoss, NaturalSpeechGeneratorLoss
@@ -24,17 +18,21 @@ from layers.variance_predictor import DurationPredictor, PitchPredictor
 from monotonic_align.maximum_path import maximum_path
 from recipes.trainer_model import TrainerModelWithDataset
 from text import text_to_tokens
+from torch import nn
+from torch.cuda.amp import autocast
+from torch.nn import functional as F
+from trainer import get_optimizer
 from util.helper import segment, rand_segments
 from util.mel_processing import wav_to_mel
 
 
 class NaturalTTSModel(nn.Module):
-    def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None):
+    def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None):
         super().__init__()
         self.config = config
         self.model_config = config.model
         self.speaker_embed = speaker_embed
-        self.language_manager = language_manager
+        # self.language_manager = language_manager
 
         # init multi-speaker, speaker_embedding is used when the speaker_embed is not provided
         self.num_speakers = self.model_config.num_speakers
@@ -129,8 +127,8 @@ class NaturalTTSModel(nn.Module):
         Args:
             config (Coqpit): Model configuration.
         """
-        if self.model_config.language_ids_file is not None:
-            self.language_manager = LanguageManager(language_ids_file_path=config.language_ids_file)
+        # if self.model_config.language_ids_file is not None:
+        #     self.language_manager = LanguageManager(language_ids_file_path=config.language_ids_file)
 
         if self.model_config.use_language_ids and self.language_manager:
             print(" > initialization of language-embedding layers.")
@@ -398,7 +396,7 @@ class NaturalTTSTrain(TrainerModelWithDataset):
     """
     Natural Speech model training model.
     """
-    def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None):
+    def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None):
         super().__init__(config)
         self.config = config
         self.model_config = config.model
@@ -407,7 +405,7 @@ class NaturalTTSTrain(TrainerModelWithDataset):
         self.generator = NaturalTTSModel(
             config=config,
             speaker_embed=speaker_embed,
-            language_manager=language_manager,
+            # language_manager=language_manager,
         )
 
         self.discriminator = VitsDiscriminator(

@@ -1,3 +1,5 @@
+from language.language_manager import LanguageManager
+from speaker.speaker_manager import SpeakerManager
 from trainer.torch import DistributedSampler
 import platform
 import torch.distributed as dist
@@ -14,6 +16,8 @@ class TrainerModelWithDataset(TrainerModel):
     def __init__(self, config: Coqpit) -> None:
         super().__init__()
         self.config = config
+        self.speaker_manager = SpeakerManager(config.dataset_config)
+        self.language_manager = LanguageManager(config.dataset_config)
 
     def get_sampler(self, config: Coqpit, dataset, num_gpus=1, rank=0):
         if num_gpus == 1:
@@ -22,7 +26,7 @@ class TrainerModelWithDataset(TrainerModel):
             return DistributedSampler(dataset, shuffle=True, rank=rank, num_replicas=num_gpus)
 
     def get_dataset(self, config: Coqpit, samples):
-        return TextAudioDataset(samples, config)
+        return TextAudioDataset(samples, config, self.speaker_manager, self.language_manager)
 
     def get_data_loader(
         self,

@@ -1,4 +1,4 @@
-
+from coqpit import Coqpit
 
 VCTK_speaker_names = [
     'VCTK_p225',
@@ -404,7 +404,7 @@ LJS_speaker_names = {
 }
 
 class SpeakerManager():
-    def __init__(self, dataset_config):
+    def __init__(self, dataset_config:Coqpit):
         datasets = dataset_config.datasets
         dataset_speakers = {
             "vctk": VCTK_speaker_names,
@@ -428,17 +428,5 @@ class SpeakerManager():
     def get_speaker_id(self, name):
         return self.speaker_ids_map.get(name, 0)
 
-    def speaker_num(self):
+    def speaker_count(self):
         return len(self.speaker_ids_map) + 1
-
-
-if __name__ == "__main__":
-    speaker_manager = SpeakerManager("kokoro__cmlpt__vctk")
-    id = speaker_manager.get_speaker_id("VCTK_p230")
-    print(id)
-
-    id = speaker_manager.get_speaker_id("cmlpt_4778")
-    print(id)
-
-    print(speaker_manager.speaker_num())
-    print(speaker_manager.speaker_ids_map)

@@ -1,5 +1,6 @@
 import argparse
 import os
+import platform
 import random
 import time
 from typing import Dict, Tuple
@@ -44,9 +45,9 @@ class VitsTrain(VitsTrain_Base):
         text1 = "Who else do you want to talk to? You can go with me today to the meeting."
         text2 = "我们都是中国人，我爱中国"
         if random.randint(0, 10) >= 5:
-            wav = self.inference(text1, 1, 0)
+            wav = self.inference(text1, speaker_name="ljspeech", language="en")
         else:
-            wav = self.inference(text2, 2, 1)
+            wav = self.inference(text2, speaker_name="baker", language="zh")
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 
@@ -78,4 +79,9 @@ if __name__ == "__main__":
     parser.add_argument("--config_path", type=str, default="./config/vits_multilang.json", required=False)
     args = parser.parse_args()
 
-    main(args.config_path)
+    # main(args.config_path)
+
+    if platform.system() == "Windows":
+        main("./config/vits_multilang.json")
+    else:
+        main("./config/vits_multilang_linux.json")

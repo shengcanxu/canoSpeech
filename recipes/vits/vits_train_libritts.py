@@ -53,8 +53,8 @@ class VitsTrain(VitsTrain_Base):
         print("doing test run...")
         text = "Who else do you want to talk to? You can go with me today to the meeting."
 
-        speaker_id = random.randint(0, 9)
-        wav = self.inference(text, speaker_id=speaker_id)
+        speaker_name = random.choice(["libritts_118", "libritts_226", "libritts_32", "libritts_460", "libritts_831"])
+        wav = self.inference(text, speaker_name=speaker_name)
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 

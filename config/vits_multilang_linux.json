@@ -14,7 +14,7 @@
             },
             {
                 "dataset_name":"baker",
-                "meta_file_train": "/home/cano/canoSpeech/filelists/baker_train_filelist.txt.cleaned"
+                "meta_file_train": "/home/cano/canoSpeech/filelists/baker_train_filelist.txt.cleaned",
                 "meta_file_val": "/home/cano/canoSpeech/filelists/baker_test_filelist.txt.cleaned",
                 "path":"D:\\dataset\\VCTK",
                 "language":"zh"

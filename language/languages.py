@@ -7,7 +7,7 @@ import torch
 from coqpit import Coqpit
 
 # class LanguageManager(BaseIDManager):
-class LanguageManager(object):
+class LanguageManagerBackup(object):
     """Manage the languages for multi-lingual 🐸TTS models. Load a datafile and parse the information
     in a way that can be queried by language.
     Args:
@@ -77,16 +77,16 @@ class LanguageManager(object):
         self._save_json(file_path, self.name_to_id)
 
     @staticmethod
-    def init_from_config(config: Coqpit) -> "LanguageManager":
+    def init_from_config(config: Coqpit):
         """Initialize the language manager from a Coqpit config.
         Args:
             config (Coqpit): Coqpit config.
         """
         language_manager = None
-        if check_config_and_model_args(config, "use_language_ids", True):
-            if config.get("language_ids_file", None):
-                language_manager = LanguageManager(language_ids_file_path=config.language_ids_file)
-            language_manager = LanguageManager(config=config)
+        # if check_config_and_model_args(config, "use_language_ids", True):
+        #     if config.get("language_ids_file", None):
+        #         language_manager = LanguageManager(language_ids_file_path=config.language_ids_file)
+        #     language_manager = LanguageManager(config=config)
         return language_manager
 
 

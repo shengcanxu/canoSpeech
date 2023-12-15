@@ -9,7 +9,6 @@ from torch.cuda.amp import autocast
 from trainer import get_optimizer, get_scheduler
 from torch.nn import functional as F
 from config.config import NaturalSpeechConfig
-from language.languages import LanguageManager
 from layers.discriminator import VitsDiscriminator
 from layers.duration_predictor import VitsDurationPredictor
 from layers.encoder import TextEncoder, AudioEncoder
@@ -25,12 +24,12 @@ from util.mel_processing import wav_to_mel
 
 
 class NaturalSpeechModel(nn.Module):
-    def __init__(self, config:NaturalSpeechConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None ):
+    def __init__(self, config:NaturalSpeechConfig, speaker_embed: torch.Tensor = None):
         super().__init__()
         self.config = config
         self.model_config = config.model
         self.speaker_embed = speaker_embed
-        self.language_manager = language_manager
+        # self.language_manager = language_manager
 
         # init multi-speaker, speaker_embedding is used when the speaker_embed is not provided
         self.num_speakers = self.model_config.num_speakers
@@ -113,8 +112,8 @@ class NaturalSpeechModel(nn.Module):
         Args:
             config (Coqpit): Model configuration.
         """
-        if self.model_config.language_ids_file is not None:
-            self.language_manager = LanguageManager(language_ids_file_path=config.language_ids_file)
+        # if self.model_config.language_ids_file is not None:
+        #     self.language_manager = LanguageManager(language_ids_file_path=config.language_ids_file)
 
         if self.model_config.use_language_ids and self.language_manager:
             print(" > initialization of language-embedding layers.")
@@ -307,7 +306,7 @@ class NaturalSpeechTrain(TrainerModelWithDataset):
     """
     Natural Speech model training model.
     """
-    def __init__(self, config:NaturalSpeechConfig, speaker_embed: torch.Tensor = None, language_manager: LanguageManager = None, ):
+    def __init__(self, config:NaturalSpeechConfig, speaker_embed: torch.Tensor = None):
         super().__init__(config)
         self.config = config
         self.model_config = config.model
@@ -315,7 +314,7 @@ class NaturalSpeechTrain(TrainerModelWithDataset):
         self.generator = NaturalSpeechModel(
             config=config,
             speaker_embed=speaker_embed,
-            language_manager=language_manager
+            # language_manager=language_manager
         )
         self.discriminator = VitsDiscriminator(
             periods=self.model_config.discriminator.periods_multi_period,

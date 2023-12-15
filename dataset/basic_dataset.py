@@ -6,6 +6,8 @@ import numpy as np
 from collections import Counter
 import pickle
 
+from coqpit import coqpit
+from language.language_manager import LanguageManager
 from speaker.speaker_manager import SpeakerManager
 from text import cleaned_text_to_tokens, get_clean_text, _intersperse
 import torch
@@ -79,11 +81,11 @@ class TextAudioDataset(Dataset):
     """
     load audio, text and return dataset
     """
-    def __init__(self, samples, config):
+    def __init__(self, samples, config:coqpit, speaker_manager:SpeakerManager, language_manager:LanguageManager):
         self.samples = samples
-        self.use_cache = getattr(config.dataset_config, "use_cache", False)
+        self.use_cache = config.dataset_config.use_cache
+        self.add_preprocess_data = config.dataset_config.add_preprocess_data
         self.use_speaker_ids = config.model.use_speaker_ids
-        self.add_preprocess_data = getattr(config.dataset_config, "add_preprocess_data", True)
 
         self.hop_length = config.audio.hop_length
         self.win_length = config.audio.win_length
@@ -95,21 +97,14 @@ class TextAudioDataset(Dataset):
         self.max_audio_length = getattr(config.audio, "max_audio_length", 20.0)
         self.min_audio_length = getattr(config.audio, "min_audio_length", 1.0)
 
-        self.cleaned_text = getattr(config.text, "cleaned_text", False)
+        self.cleaned_text = config.text.cleaned_text
         self.text_cleaners = config.text.text_cleaners
         self.add_blank = config.text.add_blank
         self.min_text_len = getattr(config.text, "min_text_len", 1)
         self.max_text_len = getattr(config.text, "max_text_len", 190)
 
-        self.speaker_manager = SpeakerManager(config.dataset_config)
-
-        # generate language ids
-        lang_names = set()
-        for sample in self.samples:
-            lang_names.add(sample["language"])
-        lang_names = list(lang_names)
-        lang_names.sort()
-        self.language_id_map = { name: idx for idx, name in enumerate(lang_names) }
+        self.speaker_manager = speaker_manager
+        self.language_manager = language_manager
 
         random.seed(1234)
         random.shuffle(self.samples)  # shuffle samples
@@ -193,7 +188,7 @@ class TextAudioDataset(Dataset):
             "speaker_embed": speaker,
             "pitch": pitch,
             "duration": duration,
-            "language_id": self.language_id_map.get(sample["language"], 0)
+            "language_id": self.language_manager.get_language_id(sample["language"])
         }
 
     def _get_text_tokens(self, text:str, lang:str):

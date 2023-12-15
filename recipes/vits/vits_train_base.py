@@ -122,20 +122,32 @@ class VitsTrain_Base(TrainerModelWithDataset):
 
         raise ValueError(" [!] Unexpected `optimizer_idx`.")
 
-    def inference(self, text:str, speaker_id:int=None, language_id=None, lang="en"):
+    def inference(self, text:str, speaker_name:str=None, speaker_embed=None, language:str=None):
+        lang = "en" if language is None else language
         tokens = text_to_tokens(text, cleaner_name=self.config.text.text_cleaners.get(lang))
         if self.config.text.add_blank:
             tokens = _intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0).cuda()
         x_lengths = torch.LongTensor([tokens.size(1)]).cuda()
-        speaker_ids = torch.LongTensor([speaker_id]).cuda() if speaker_id is not None else None
-        language_ids = torch.LongTensor([language_id]).cuda() if language_id is not None else None
+
+        speaker_ids = None
+        if speaker_name is not None:
+            speaker_id = self.speaker_manager.get_speaker_id(speaker_name)
+            speaker_ids = torch.LongTensor([speaker_id]).cuda()
+        speaker_embeds = None
+        if speaker_embed is not None:
+            speaker_embeds = torch.FloatTensor([speaker_embed]).cuda()
+        language_ids = None
+        if language is not None:
+            language_id = self.language_manager.get_language_id(language)
+            language_ids = torch.LongTensor([language_id]).cuda()
 
         self.generator.eval()
         wav, _, _, _ = self.generator.infer(
             tokens,
             x_lengths,
             speaker_ids=speaker_ids,
+            speaker_embeds=speaker_embeds,
             language_ids = language_ids,
             noise_scale=0.667,
             length_scale=1,
@@ -180,9 +192,6 @@ class VitsTrain_Base(TrainerModelWithDataset):
             model=self.generator
         )
         return [discOptimizer, genOptimizer]
-
-    def get_dataset(self, config: Coqpit, samples):
-        return TextAudioDataset(samples, config)
 
     def forward(self, input: torch.Tensor) -> Dict:
         print("nothing to do! doing the real train code in train_step. ")
