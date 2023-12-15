@@ -6,8 +6,8 @@ import numpy as np
 from collections import Counter
 import pickle
 
-from dataset.dataset_constant import VCTK_speaker_id_mapping, LibriTTS_speaker_id_mapping, CMLPT_speaker_id_mapping, get_speaker_id
-from text import cleaned_text_to_tokens, _clean_text, _intersperse
+from speaker.speaker_manager import SpeakerManager
+from text import cleaned_text_to_tokens, get_clean_text, _intersperse
 import torch
 from torch.utils.data import Dataset
 import librosa
@@ -81,7 +81,6 @@ class TextAudioDataset(Dataset):
     """
     def __init__(self, samples, config):
         self.samples = samples
-        self.dataset_name = config.dataset_config.dataset_name
         self.use_cache = getattr(config.dataset_config, "use_cache", False)
         self.use_speaker_ids = config.model.use_speaker_ids
         self.add_preprocess_data = getattr(config.dataset_config, "add_preprocess_data", True)
@@ -101,6 +100,8 @@ class TextAudioDataset(Dataset):
         self.add_blank = config.text.add_blank
         self.min_text_len = getattr(config.text, "min_text_len", 1)
         self.max_text_len = getattr(config.text, "max_text_len", 190)
+
+        self.speaker_manager = SpeakerManager(config.dataset_config)
 
         # generate language ids
         lang_names = set()
@@ -159,7 +160,7 @@ class TextAudioDataset(Dataset):
                 os.remove(filepath)
 
     def get_audio_text_duration_f0(self, sample):
-        tokens, phoneme = self._get_text(sample["text"])
+        tokens, phoneme = self._get_text_tokens(sample["text"], sample["language"])
         wav, sr = load_audio(sample["audio"])
 
         spec, mel = None, None
@@ -188,20 +189,20 @@ class TextAudioDataset(Dataset):
             "spec": spec.squeeze(),
             "mel": mel.squeeze(),
             "filename": sample["audio"],
-            "speaker_id": get_speaker_id(sample["speaker"], self.dataset_name),
+            "speaker_id": self.speaker_manager.get_speaker_id(sample["speaker"]),
             "speaker_embed": speaker,
             "pitch": pitch,
             "duration": duration,
             "language_id": self.language_id_map.get(sample["language"], 0)
         }
 
-    def _get_text(self, text):
+    def _get_text_tokens(self, text:str, lang:str):
         """format text and add blank"""
         if self.cleaned_text:
             cleaned_text = text
-            tokens = cleaned_text_to_tokens(cleaned_text)
+            tokens = cleaned_text_to_tokens(text)
         else:
-            cleaned_text = _clean_text(text, self.text_cleaners)
+            cleaned_text = get_clean_text(text, self.text_cleaners.get(lang))
             tokens = cleaned_text_to_tokens(cleaned_text)
         if self.add_blank:
             tokens = _intersperse(tokens, 0)

@@ -23,11 +23,11 @@ def main():
     )
     config.load_json("./config/naturalspeech_vctk.json")
     # config.load_json("./config/naturalspeech_ljs.json")
-    data_config = config.dataset_config
+    datasets = config.dataset_config.datasets
     # print(config)
 
-    train_samples = get_metas_from_filelist(data_config.meta_file_train)
-    test_samples = get_metas_from_filelist(data_config.meta_file_val)
+    train_samples = get_metas_from_filelist([d.meta_file_train for d in datasets])
+    test_samples = get_metas_from_filelist([d.meta_file_val for d in datasets])
 
     # init the model
     train_model = NaturalSpeechTrain(config=config)

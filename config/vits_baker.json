@@ -4,12 +4,15 @@
     "output_path": "D:/project/canoSpeech/output",
 
     "dataset_config": {
-        "dataset_name":"baker",
-        "meta_file_train":"D:/project/canoSpeech/filelists/baker_train_filelist.txt.cleaned",
-        "meta_file_val":"D:/project/canoSpeech/filelists/baker_test_filelist.txt.cleaned",
-        "path":"D:/dataset/baker",
-        "language":"zh",
-        "ignored_speakers":[],
+        "datasets": [
+            {
+                "dataset_name": "baker",
+                "meta_file_train": "D:/project/canoSpeech/filelists/baker_train_filelist.txt.cleaned",
+                "meta_file_val": "D:/project/canoSpeech/filelists/baker_test_filelist.txt.cleaned",
+                "path": "D:/dataset/baker",
+                "language": "zh"
+            }
+        ],
         "num_loader_workers": 4,
         "num_eval_loader_workers": 4,
         "use_cache": true,
@@ -20,7 +23,7 @@
         "max_text_len": 190,
         "add_blank": false,
         "cleaned_text": true,
-        "text_cleaners":["chinese_cleaners"]
+        "text_cleaners":{"zh": "chinese_cleaners"}
     },
     "audio": {
         "mel_fmin": 0,

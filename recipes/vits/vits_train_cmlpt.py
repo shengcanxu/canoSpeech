@@ -13,7 +13,6 @@ from dataset.basic_dataset import get_metas_from_filelist
 from dataset.sampler import DistributedBucketSampler
 from recipes.vits.vits_train_base import VitsTrain_Base
 from speaker.speaker_encoder import SpeakerEncoder
-from text import text_to_tokens, _intersperse
 from torch import nn
 from trainer import Trainer, TrainerArgs
 from util.mel_processing import load_audio, wav_to_spec
@@ -118,10 +117,10 @@ def test_voice_conversion(model, ref_wav_filepath:str):
 def main(config_path:str):
     config = VitsConfig()
     config.load_json(config_path)
-    data_config = config.dataset_config
+    datasets = config.dataset_config.datasets
 
-    train_samples = get_metas_from_filelist(data_config.meta_file_train)
-    test_samples = get_metas_from_filelist(data_config.meta_file_val)
+    train_samples = get_metas_from_filelist([d.meta_file_train for d in datasets])
+    test_samples = get_metas_from_filelist([d.meta_file_val for d in datasets])
 
     # init the model
     train_model = VitsTrain(config=config)

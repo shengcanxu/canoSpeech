@@ -4,12 +4,15 @@
     "output_path": "D:/project/canoSpeech/output",
 
     "dataset_config": {
-        "dataset_name":"kokoro",
-        "meta_file_train":"D:/project/canoSpeech/filelists/kokoro_train_filelist.txt.cleaned",
-        "meta_file_val":"D:/project/canoSpeech/filelists/kokoro_test_filelist.txt.cleaned",
-        "path":"D:/dataset/kokoro",
-        "language":"ja",
-        "ignored_speakers":[],
+        "datasets": [
+            {
+                "dataset_name": "kokoro",
+                "meta_file_train": "D:/project/canoSpeech/filelists/kokoro_train_filelist.txt.cleaned",
+                "meta_file_val": "D:/project/canoSpeech/filelists/kokoro_test_filelist.txt.cleaned",
+                "path": "D:/dataset/kokoro",
+                "language": "ja"
+            }
+        ],
         "num_loader_workers": 4,
         "num_eval_loader_workers": 4,
         "use_cache": true,
@@ -20,7 +23,7 @@
         "max_text_len": 190,
         "add_blank": false,
         "cleaned_text": true,
-        "text_cleaners":["japanese_cleaners"]
+        "text_cleaners":{"ja": "japanese_cleaners"}
     },
     "audio": {
         "mel_fmin": 0,

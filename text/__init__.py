@@ -15,21 +15,16 @@ def _intersperse(lst, item):
     return result
 
 
-def text_to_tokens(text, cleaner_names=["english_cleaners2"]):
+def text_to_tokens(text, cleaner_name="english_cleaners2"):
     """Converts a string of text to a tokens of IDs corresponding to the symbols in the text.
     Args:
       text: string to convert to a tokens
-      cleaner_names: names of the cleaner functions to run the text through
+      cleaner_name: names of the cleaner functions to run the text through
     Returns:
       List of integers corresponding to the symbols in the text
     """
-    tokens = []
-
-    clean_text = _clean_text(text, cleaner_names)
-    for symbol in clean_text:
-        symbol_id = _symbol_to_id[symbol]
-        tokens += [symbol_id]
-    return tokens
+    clean_text = get_clean_text(text, cleaner_name)
+    return cleaned_text_to_tokens(clean_text)
 
 
 def cleaned_text_to_tokens(cleaned_text):
@@ -52,10 +47,9 @@ def tokens_to_text(sequence, lang="en"):
     return result
 
 
-def _clean_text(text, cleaner_names):
-    for name in cleaner_names:
-        cleaner = getattr(cleaners, name)
-        if not cleaner:
-            raise Exception("Unknown cleaner: %s" % name)
-        text = cleaner(text)
+def get_clean_text(text, cleaner_name):
+    cleaner = getattr(cleaners, cleaner_name)
+    if not cleaner:
+        raise Exception("Unknown cleaner: %s" % cleaner_name)
+    text = cleaner(text)
     return text

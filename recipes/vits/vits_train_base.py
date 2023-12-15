@@ -122,8 +122,8 @@ class VitsTrain_Base(TrainerModelWithDataset):
 
         raise ValueError(" [!] Unexpected `optimizer_idx`.")
 
-    def inference(self, text:str, speaker_id:int=None, language_id=None):
-        tokens = text_to_tokens(text, cleaner_names=self.config.text.text_cleaners)
+    def inference(self, text:str, speaker_id:int=None, language_id=None, lang="en"):
+        tokens = text_to_tokens(text, cleaner_name=self.config.text.text_cleaners.get(lang))
         if self.config.text.add_blank:
             tokens = _intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0).cuda()

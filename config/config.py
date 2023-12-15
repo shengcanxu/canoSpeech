@@ -4,39 +4,19 @@ from typing import List, Union
 from coqpit import Coqpit, check_argument
 from trainer import TrainerConfig
 
+@dataclass
+class DatasetInfoConfig(Coqpit):
+    dataset_name: str = ""
+    path: str = ""
+    meta_file_train: str = ""
+    meta_file_val: str = ""
+    language: str = "en"
 
 @dataclass
 class TTSDatasetConfig(Coqpit):
-    """Base config for TTS datasets.
-    Args:
-        formatter (str):
-            Formatter name that defines used formatter in ```TTS.tts.datasets.formatter```. Defaults to `""`.
-        dataset_name (str):
-            Unique name for the dataset. Defaults to `""`.
-        path (str):
-            Root path to the dataset files. Defaults to `""`.
-        meta_file_train (str):
-            Name of the dataset meta file. Or a list of speakers to be ignored at training for multi-speaker datasets.
-            Defaults to `""`.
-        ignored_speakers (List):
-            List of speakers IDs that are not used at the training. Default None.
-        language (str):
-            Language code of the dataset. If defined, it overrides `phoneme_language`. Defaults to `""`.
-        meta_file_val (str):
-            Name of the dataset meta file that defines the instances used at validation.
-        meta_file_attn_mask (str):
-            Path to the file that lists the attention mask files used with models that require attention masks to
-            train the duration predictor.
-    """
+    datasets:List[DatasetInfoConfig] = field(default_factory=lambda: [DatasetInfoConfig()])
 
-    dataset_name: str = ""
-    path: str = ""
-    use_cache:bool = False
-    meta_file_train: Union[str, list] = ""
-    meta_file_val: Union[str, list] = ""
-    ignored_speakers: List[str] = None
-    language: str = "en"
-
+    use_cache: bool = False
     num_loader_workers:int = 8
     num_eval_loader_workers:int = 8
     add_preprocess_data:bool = True
@@ -47,7 +27,7 @@ class TextConfig(Coqpit):
     max_text_len:int = 190
     add_blank:bool = True
     cleaned_text:bool = True
-    text_cleaners:List[str] = field(default_factory=lambda: ["english_cleaners2"])
+    text_cleaners:dict = field(default_factory=lambda: {"en": "english_cleaners2"})
 
 @dataclass
 class AudioConfig(Coqpit):

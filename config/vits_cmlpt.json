@@ -4,12 +4,15 @@
     "output_path": "D:/project/canoSpeech/output",
 
     "dataset_config": {
-        "dataset_name":"cmlpt",
-        "meta_file_train":"D:/project/canoSpeech/filelists/cmlpt_train_filelist.txt.cleaned",
-        "meta_file_val":"D:/project/canoSpeech/filelists/cmlpt_test_filelist.txt.cleaned",
-        "path":"D:/dataset/CMLTTS",
-        "language":"pt",
-        "ignored_speakers":[],
+        "datasets": [
+            {
+                "dataset_name": "cmlpt",
+                "meta_file_train": "D:/project/canoSpeech/filelists/cmlpt_train_filelist.txt.cleaned",
+                "meta_file_val": "D:/project/canoSpeech/filelists/cmlpt_test_filelist.txt.cleaned",
+                "path": "D:/dataset/CMLTTS",
+                "language": "pt"
+            }
+        ],
         "num_loader_workers": 4,
         "num_eval_loader_workers": 4,
         "use_cache": true,
@@ -20,7 +23,7 @@
         "max_text_len": 190,
         "add_blank": true,
         "cleaned_text": true,
-        "text_cleaners":["portuguese_cleaners"]
+        "text_cleaners":{"pt": "portuguese_cleaners"}
     },
     "audio": {
         "mel_fmin": 0,

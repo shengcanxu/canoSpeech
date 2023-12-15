@@ -9,7 +9,6 @@ import torch
 from config.config import VitsConfig
 from dataset.basic_dataset import get_metas_from_filelist
 from recipes.vits.vits_train_base import VitsTrain_Base
-from text import text_to_tokens, _intersperse
 from torch import nn
 from trainer import Trainer, TrainerArgs
 
@@ -45,9 +44,9 @@ class VitsTrain(VitsTrain_Base):
         text1 = "Who else do you want to talk to? You can go with me today to the meeting."
         text2 = "我们都是中国人，我爱中国"
         if random.randint(0, 10) >= 5:
-            wav = self.inference(text1, 1, 1)
+            wav = self.inference(text1, 1, 0)
         else:
-            wav = self.inference(text2, 0, 1)
+            wav = self.inference(text2, 2, 1)
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 
@@ -55,10 +54,10 @@ class VitsTrain(VitsTrain_Base):
 def main(config_path:str):
     config = VitsConfig()
     config.load_json(config_path)
-    data_config = config.dataset_config
+    datasets = config.dataset_config.datasets
 
-    train_samples = get_metas_from_filelist(data_config.meta_file_train)
-    test_samples = get_metas_from_filelist(data_config.meta_file_val)
+    train_samples = get_metas_from_filelist([d.meta_file_train for d in datasets])
+    test_samples = get_metas_from_filelist([d.meta_file_val for d in datasets])
 
     # init the model
     train_model = VitsTrain(config=config)

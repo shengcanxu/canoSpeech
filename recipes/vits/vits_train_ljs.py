@@ -8,7 +8,6 @@ import torch
 from config.config import VitsConfig
 from dataset.basic_dataset import get_metas_from_filelist
 from recipes.vits.vits_train_base import VitsTrain_Base
-from text import text_to_tokens, _intersperse
 from torch import nn
 from trainer import Trainer, TrainerArgs
 
@@ -48,10 +47,10 @@ class VitsTrain(VitsTrain_Base):
 def main(config_path:str):
     config = VitsConfig()
     config.load_json(config_path)
-    data_config = config.dataset_config
+    datasets = config.dataset_config.datasets
 
-    train_samples = get_metas_from_filelist(data_config.meta_file_train)
-    test_samples = get_metas_from_filelist(data_config.meta_file_val)
+    train_samples = get_metas_from_filelist([d.meta_file_train for d in datasets])
+    test_samples = get_metas_from_filelist([d.meta_file_val for d in datasets])
 
     # init the model
     train_model = VitsTrain(config=config)

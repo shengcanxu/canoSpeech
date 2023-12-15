@@ -17,38 +17,46 @@ generate train and test filelist.
 """
 
 def load_file_metas(config):
-    dataset_name = config.dataset_name
-    items = []
-    if dataset_name.lower() == "vctk":
-        items = load_vctk_metas(root_path=config.path, ignored_speakers=config.ignored_speakers)
-    elif dataset_name.lower() == "ljspeech":
-        items = load_ljspeech_metas(root_path=config.path)
-    elif dataset_name.lower() == "baker":
-        items = load_baker_metas(root_path=config.path)
-    elif dataset_name.lower() == "libritts":
-        items = load_libritts_metas(root_path=config.path)
-    elif dataset_name.lower() == "cmlpt":
-        items = load_cmlpt_metas(root_path=config.path)
-    elif dataset_name.lower() == "kokoro":
-        items = load_kokoro_metas(root_path=config.path)
-    return items
+    dataset_names = [dataset.dataset_name for dataset in config.datasets]
+    metas = []
+    for dataset_name in dataset_names:
+        if dataset_name.lower() == "vctk":
+            items = load_vctk_metas(root_path=config.path, ignored_speakers=config.ignored_speakers)
+            metas.extend(items)
+        elif dataset_name.lower() == "ljspeech":
+            items = load_ljspeech_metas(root_path=config.path)
+            metas.extend(items)
+        elif dataset_name.lower() == "baker":
+            items = load_baker_metas(root_path=config.path)
+            metas.extend(items)
+        elif dataset_name.lower() == "libritts":
+            items = load_libritts_metas(root_path=config.path)
+            metas.extend(items)
+        elif dataset_name.lower() == "cmlpt":
+            items = load_cmlpt_metas(root_path=config.path)
+            metas.extend(items)
+        elif dataset_name.lower() == "kokoro":
+            items = load_kokoro_metas(root_path=config.path)
+            metas.extend(items)
+    return metas
 
 def gen_filelist(config_path:str):
     config = VitsConfig()
     config.load_json(config_path)
-    dataset_config = config.dataset_config
+    datasets = config.dataset_config.datasets
     text_config = config.text
-    language = dataset_config.language
 
-    # save test and validate filelist
-    train_filelist = "../filelists/%s_train_filelist.txt" % dataset_config.dataset_name
-    test_filelist = "../filelists/%s_test_filelist.txt" % dataset_config.dataset_name
+    for dataset_config in datasets:
+        language = dataset_config.language
+        # save test and validate filelist
+        train_filelist = "../filelists/%s_train_filelist.txt" % dataset_config.dataset_name
+        test_filelist = "../filelists/%s_test_filelist.txt" % dataset_config.dataset_name
 
-    print("generate filelist....")
-    _gen_filelist(train_filelist, test_filelist, config)
+        print("generate filelist....")
+        _gen_filelist(train_filelist, test_filelist, config)
 
-    print("generate english cleaned filelist....")
-    _gen_filelist_cleaned(train_filelist, test_filelist, text_config.text_cleaners, lang=language)
+        print("generate english cleaned filelist....")
+        _gen_filelist_cleaned(train_filelist, test_filelist, text_config.text_cleaners, lang=language)
 
 
 def _gen_filelist(train_filelist:str, test_filelist:str, config):
@@ -69,14 +77,15 @@ def _gen_filelist(train_filelist:str, test_filelist:str, config):
             f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["text"].strip() + "\n" for x in test_datas])
 
 def do_clean_text(args):
-    ptext, text_cleaners, lang = args
+    ptext, text_cleaner, lang = args
     original_text = ptext[3]
-    cleaned_text = text._clean_text(original_text, text_cleaners)
+    cleaned_text = text.get_clean_text(original_text, text_cleaner)
     print(cleaned_text)
     return cleaned_text
 
 # clean text and save to filelist file
 def _gen_filelist_cleaned(train_filelist:str, test_filelist:str, text_cleaners, lang="en"):
+    text_cleaner = text_cleaners.get(lang)
     for filelist in [train_filelist, test_filelist]:
         print("Start clean:", filelist)
         ptexts = []
@@ -95,7 +104,7 @@ def _gen_filelist_cleaned(train_filelist:str, test_filelist:str, text_cleaners, 
             print(pos)
             texts = ptexts[pos:pos+1000]
             pos += 1000
-            clean_args = list(zip(texts, [text_cleaners] * len(texts), [lang] * len(texts)))
+            clean_args = list(zip(texts, [text_cleaner] * len(texts), [lang] * len(texts)))
             with Pool(processes=10) as p:
                 cleaned_texts = p.map(do_clean_text, clean_args)
                 # cleaned_texts = do_clean_text(clean_args[0])
@@ -128,5 +137,5 @@ if __name__ == "__main__":
     parser.add_argument("--config", type=str, default="../config/vits_kokoro.json")
     args = parser.parse_args()
 
-    # gen_filelist(args.config)
-    check_symbol_coverage(args.config)
+    gen_filelist(args.config)
+    # check_symbol_coverage(args.config)

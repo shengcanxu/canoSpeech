@@ -4,12 +4,15 @@
     "output_path": "/home/output",
 
     "dataset_config": {
-        "dataset_name":"vctk",
-        "meta_file_train":"/home/canoSpeech/filelists/vctk_train_filelist.txt.cleaned",
-        "meta_file_val":"/home/canoSpeech/filelists/vctk_test_filelist.txt.cleaned",
-        "path":"/home/dataset/VCTK",
-        "language":"en",
-        "ignored_speakers":[],
+        "datasets": [
+            {
+                "dataset_name": "vctk",
+                "meta_file_train": "/home/canoSpeech/filelists/vctk_train_filelist.txt.cleaned",
+                "meta_file_val": "/home/canoSpeech/filelists/vctk_test_filelist.txt.cleaned",
+                "path": "/home/dataset/VCTK",
+                "language": "en"
+            }
+        ],
         "num_loader_workers": 4,
         "num_eval_loader_workers": 4,
         "use_cache": false,
@@ -20,7 +23,7 @@
         "max_text_len": 190,
         "add_blank": true,
         "cleaned_text": true,
-        "text_cleaners":["english_cleaners2"]
+        "text_cleaners": {"en": "english_cleaners2"}
     },
     "audio": {
         "mel_fmin": 0,
@@ -63,14 +66,14 @@
     },
 
     "epochs": 1000,
-    "batch_size": 4,
-    "eval_batch_size": 4,
+    "batch_size": 32,
+    "eval_batch_size": 32,
 
-    "print_step": 5,
+    "print_step": 30,
     "plot_step": 100,
     "log_model_step": 1000,
-    "save_step": 5000,
-    "save_n_checkpoints": 5,
+    "save_step": 14000,
+    "save_n_checkpoints": 10,
     "save_checkpoints": true,
 
     "loss": {

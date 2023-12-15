@@ -4,12 +4,15 @@
     "output_path": "/home/cano/output",
 
     "dataset_config": {
-        "dataset_name":"libritts",
-        "meta_file_train":"/home/cano/canoSpeech/filelists/libritts_train_filelist.txt.cleaned",
-        "meta_file_val":"/home/cano/canoSpeech/filelists/libritts_test_filelist.txt.cleaned",
-        "path":"/home/cano/dataset/LibriTTS",
-        "language":"en",
-        "ignored_speakers":[],
+        "datasets": [
+            {
+                "dataset_name": "libritts",
+                "meta_file_train": "/home/cano/canoSpeech/filelists/libritts_train_filelist.txt.cleaned",
+                "meta_file_val": "/home/cano/canoSpeech/filelists/libritts_test_filelist.txt.cleaned",
+                "path": "/home/cano/dataset/LibriTTS",
+                "language": "en"
+            }
+        ],
         "num_loader_workers": 4,
         "num_eval_loader_workers": 4,
         "use_cache": true,
@@ -20,7 +23,7 @@
         "max_text_len": 190,
         "add_blank": true,
         "cleaned_text": true,
-        "text_cleaners":["english_cleaners2"]
+        "text_cleaners": {"en": "english_cleaners2"}
     },
     "audio": {
         "mel_fmin": 0,
