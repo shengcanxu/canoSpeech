@@ -46,7 +46,9 @@
         "cleaned_text": true,
         "text_cleaners": {
             "en": "english_cleaners2",
-            "zh": "chinese_cleaners"
+            "zh": "chinese_cleaners",
+            "pt": "portuguese_cleaners",
+            "ja": "japanese_cleaners"
         }
     },
     "audio": {

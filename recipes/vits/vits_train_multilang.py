@@ -8,7 +8,9 @@ from typing import Dict, Tuple
 import soundfile as sf
 import torch
 from config.config import VitsConfig
+from coqpit import Coqpit
 from dataset.basic_dataset import get_metas_from_filelist
+from dataset.sampler import DistributedBucketSampler
 from recipes.vits.vits_train_base import VitsTrain_Base
 from torch import nn
 from trainer import Trainer, TrainerArgs
@@ -19,6 +21,16 @@ class VitsTrain(VitsTrain_Base):
     """
     def __init__(self, config:VitsConfig ):
         super().__init__(config)
+
+    def get_sampler(self, config: Coqpit, dataset, num_gpus=1, rank=0):
+        return DistributedBucketSampler(
+            dataset=dataset,
+            batch_size=config.batch_size,
+            boundaries=[32,300,400,500,600,700,800,900,1000],
+            num_replicas=num_gpus,
+            rank=0,
+            shuffle=True
+        )
 
     @torch.no_grad()
     def eval_step(self, batch: dict, criterion: nn.Module, optimizer_idx: int):
