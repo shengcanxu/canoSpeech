@@ -61,9 +61,6 @@ class VitsGeneratorLoss(nn.Module):
         kl += 0.5 * ((z_p - m_p) ** 2) * torch.exp(-2.0 * logs_p)
         kl = torch.sum(kl * z_mask)
         l = kl / torch.sum(z_mask)
-
-        # don't know why kl_loss will be negative, maybe it's because the batch size is not big enough that makes the sample numbers not big enough to make it ocationaly be negative.
-        # l = torch.abs(l)
         return l
 
     @staticmethod
@@ -156,6 +153,7 @@ class VitsDiscriminatorLoss(nn.Module):
         return_dict["loss_disc_fake_all"] = sum(loss_disc_fake) / len(loss_disc_fake) * self.disc_loss_alpha
         return return_dict
 
+
 sdtw = SoftDTW(use_cuda=False, gamma=0.01, warp=134.4)
 class NaturalSpeechGeneratorLoss(nn.Module):
     def __init__(self, config: Coqpit):
@@ -177,7 +175,7 @@ class NaturalSpeechGeneratorLoss(nn.Module):
         """total loss range: [0, (8+6*5)*2=76]"""
         loss = 0
         for dr, dg in zip(feats_real, feats_generated):  # list of 6 items
-            for rl, gl in zip(dr, dg): # 8 items for scale disc, 6 items for those 5 period disc
+            for rl, gl in zip(dr, dg):  # 8 items for scale disc, 6 items for those 5 period disc
                 rl = rl.float().detach()
                 gl = gl.float()
                 loss += torch.mean(torch.abs(rl - gl))  # range [0, 1]
@@ -217,9 +215,6 @@ class NaturalSpeechGeneratorLoss(nn.Module):
         kl += 0.5 * ((z_p - m_p) ** 2) * torch.exp(-2.0 * logs_p)
         kl = torch.sum(kl * z_mask)
         l = kl / torch.sum(z_mask)
-
-        # don't know why kl_loss will be negative, maybe it's because the batch size is not big enough that makes the sample numbers not big enough to make it ocationaly be negative.
-        l = torch.abs(l)
         return l
 
     @staticmethod
@@ -259,11 +254,11 @@ class NaturalSpeechGeneratorLoss(nn.Module):
             kls += kl
         return kls
 
-        kl = logs_p[:, :, :, None] - logs_q[:, :, None, :] - 0.5  # p, q
-        kl += (0.5 * ((z_p[:, :, None, :] - m_p[:, :, :, None]) ** 2) * torch.exp(-2.0 * logs_p[:, :, :, None]))
-
-        kl = kl.sum(dim=1)
-        return kl
+        # kl = logs_p[:, :, :, None] - logs_q[:, :, None, :] - 0.5  # p, q
+        # kl += (0.5 * ((z_p[:, :, None, :] - m_p[:, :, :, None]) ** 2) * torch.exp(-2.0 * logs_p[:, :, :, None]))
+        #
+        # kl = kl.sum(dim=1)
+        # return kl
 
     @staticmethod
     def cosine_similarity_loss(gt_spk_emb, syn_spk_emb):
@@ -277,8 +272,8 @@ class NaturalSpeechGeneratorLoss(nn.Module):
         scores_disc_fake_e2e,
         feats_disc_real,
         feats_disc_fake,
-        duration_loss,
-        pitch_loss,
+        loss_duration,
+        loss_pitch,
         z_p,
         m_p,
         logs_p,
@@ -290,8 +285,8 @@ class NaturalSpeechGeneratorLoss(nn.Module):
     ):
         loss_gen, losses_gen = self.generator_loss(scores_disc_fake)  # range [0, 6]
         loss_gen = loss_gen * self.gen_loss_alpha
-        # loss_gen_e2e, losses_gen_e2e = self.generator_loss(scores_disc_fake_e2e)  # range [0, 6]
-        # loss_gen_e2e = loss_gen_e2e * self.gen_loss_e2e_alpha
+        loss_gen_e2e, losses_gen_e2e = self.generator_loss(scores_disc_fake_e2e)  # range [0, 6]
+        loss_gen_e2e = loss_gen_e2e * self.gen_loss_e2e_alpha
 
         # feature loss of discriminator, range: [0, (8+6*5)*2=76]
         loss_fm = self.feature_loss(feats_disc_real, feats_disc_fake) * self.feat_loss_alpha
@@ -299,41 +294,32 @@ class NaturalSpeechGeneratorLoss(nn.Module):
         loss_mel = F.l1_loss(mel_slice, mel_slice_hat) * self.mel_loss_alpha
 
         # # duration and pitch loss generated from text
-        # loss_dur = torch.sum(duration_loss.float()) * self.dur_loss_alpha
-        # loss_pitch = torch.sum(pitch_loss.float()) * self.pitch_loss_alpha
+        loss_dur = torch.sum(loss_duration.float()) * self.dur_loss_alpha
+        # loss_pitch = torch.sum(loss_pitch.float()) * self.pitch_loss_alpha
 
-        # # kl loss makes z generated from audio and z_q generated from text are in the same distribution
-        # if self.use_soft_dynamic_time_warping:
-        #     loss_kl = self.kl_loss_sdtw(z_p, logs_q, m_p, logs_p, p_mask, z_mask) * self.kl_loss_alpha
-        #     loss_kl_fwd = self.kl_loss_sdtw(z_q, logs_p, m_q, logs_q, z_mask, p_mask) * self.kl_loss_forward_alpha
-        # else:
-        #     loss_kl = self.kl_loss(z_p, logs_q, m_p, logs_p, z_mask) * self.kl_loss_alpha
-        #     loss_kl_fwd = self.kl_loss(z_q, logs_p, m_q, logs_q, p_mask) * self.kl_loss_forward_alpha
+        # kl loss makes z generated from audio and z_q generated from text are in the same distribution
+        if self.use_soft_dynamic_time_warping:
+            loss_kl = self.kl_loss_sdtw(z_p, logs_q, m_p, logs_p, p_mask, z_mask.squeeze(1)) * self.kl_loss_alpha
+            loss_kl_fwd = self.kl_loss_sdtw(z_q, logs_p, m_q, logs_q, z_mask.squeeze(1), p_mask) * self.kl_loss_forward_alpha
+        else:
+            loss_kl = self.kl_loss(z_p, logs_q, m_p, logs_p, z_mask) * self.kl_loss_alpha
+            loss_kl_fwd = self.kl_loss(z_q, logs_p, m_q, logs_q, p_mask.unsqueeze(1)) * self.kl_loss_forward_alpha
 
-        # # total loss = sum all losses
-        # loss = loss_gen + loss_gen_e2e + loss_fm + loss_mel + loss_dur + loss_pitch + loss_kl + loss_kl_fwd
-
-        # return_dict = {}
-        # # pass losses to the dict
-        # return_dict["loss_gen"] = loss_gen
-        # return_dict["loss_gen_e2e"] = loss_gen_e2e
-        # return_dict["loss_feature"] = loss_fm
-        # return_dict["loss_mel"] = loss_mel
-        # return_dict["loss_duration"] = loss_dur
-        # return_dict["loss_pitch"] = loss_pitch
-        # return_dict["loss_kl"] = loss_kl
-        # return_dict["loss_kl_forward"] = loss_kl_fwd
-        # return_dict["loss"] = loss
-        # return return_dict
+        # total loss = sum all losses
+        loss = loss_gen + loss_gen_e2e + loss_fm + loss_mel + loss_dur + loss_kl + loss_kl_fwd
 
         return_dict = {}
         # pass losses to the dict
         return_dict["loss_gen"] = loss_gen
+        return_dict["loss_gen_e2e"] = loss_gen_e2e
         return_dict["loss_feature"] = loss_fm
         return_dict["loss_mel"] = loss_mel
-        return_dict["loss"] = loss_gen + loss_fm + loss_mel
+        return_dict["loss_duration"] = loss_dur
+        # return_dict["loss_pitch"] = loss_pitch
+        return_dict["loss_kl"] = loss_kl
+        return_dict["loss_kl_forward"] = loss_kl_fwd
+        return_dict["loss"] = loss
         return return_dict
-
 
 class NaturalSpeechDiscriminatorLoss(nn.Module):
     """the same with VitsDiscriminatorLost"""

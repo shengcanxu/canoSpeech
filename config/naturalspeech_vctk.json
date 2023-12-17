@@ -1,27 +1,27 @@
 {
     "run_name": "CanoNaturalSpeech",
-    "run_description": "Cano Speech running on VCTK dataset",
+    "run_description": "Natural Speech running on VCTK dataset",
 
     "dataset_config": {
         "datasets": [
             {
                 "dataset_name": "vctk",
-                "meta_file_train": "D:/project/canoSpeech/filelists/vctk_train_filelist.txt",
-                "meta_file_val": "D:/project/canoSpeech/filelists/vctk_test_filelist.txt",
+                "meta_file_train": "D:/project/canoSpeech/filelists/vctk_train_filelist.txt.cleaned",
+                "meta_file_val": "D:/project/canoSpeech/filelists/vctk_test_filelist.txt.cleaned",
                 "path": "D:\\dataset\\VCTK",
                 "language": "en"
             }
         ],
         "num_loader_workers": 4,
         "num_eval_loader_workers": 4,
-        "use_cache": false,
+        "use_cache": true,
         "add_preprocess_data": true
     },
     "text": {
         "min_text_len": 1,
         "max_text_len": 190,
         "add_blank": true,
-        "cleaned_text": false,
+        "cleaned_text": true,
         "text_cleaners": {"en": "english_cleaners2"}
     },
     "audio": {
@@ -34,17 +34,21 @@
         "num_mels": 80,
         "pitch_fmax": 640.0,
         "pitch_fmin": 1.0,
-        "max_audio_length": 10.0
+        "max_audio_length": 10.0,
+        "min_audio_length": 1.0
     },
 
     "eval_split_max_size": 256,
     "eval_split_size": 0.1,
     "distributed_backend": "nccl",
     "distributed_url": "tcp://localhost:54321",
-    "mixed_precision": false,
-    "precision": "fp32",
+    "mixed_precision": true,
+    "precision": "fp16",
     "grad_clip": [0.0, 0.0],
     "use_grad_scaler": false,
+    "cudnn_enable": true,
+    "cudnn_deterministic": false,
+    "cudnn_benchmark": false,
 
     "scheduler_after_epoch": true,
     "lr": [2e-4, 2e-4],
@@ -63,13 +67,12 @@
     "epochs": 1000,
     "batch_size": 4,
     "eval_batch_size": 4,
-    "restore_path": "D:\\project\\canoSpeech\\output\\CanoSpeech-July-14-2023_10+41AM-b8d34d4",
 
     "print_step": 5,
     "plot_step": 100,
     "log_model_step": 1000,
     "save_step": 5000,
-    "save_n_checkpoints": 2,
+    "save_n_checkpoints": 5,
     "save_checkpoints": true,
 
     "loss": {
@@ -81,8 +84,9 @@
         "feat_loss_alpha": 1.0,
         "mel_loss_alpha": 45.0,
         "dur_loss_alpha": 1.0,
+        "pitch_loss_alpha": 1.0,
         "speaker_encoder_loss_alpha": 9.0,
-        "use_soft_dynamic_time_warping": false
+        "use_soft_dynamic_time_warping": true
     },
 
     "model": {
@@ -94,9 +98,11 @@
         "use_language_embedding": false,
         "speaker_embedding_channels": 512,
         "use_speaker_ids": false,
+        "use_speaker_embeds": true,
         "use_speaker_encoder_as_loss": false,
-        "use_memory_bank": true,
         "use_gt_duration": false,
+        "use_memory_bank": true,
+        "use_sdp": true,
 
         "text_encoder": {
             "num_chars": 178,
@@ -115,12 +121,14 @@
             "kernel_size": 5,
             "dilation_rate": 1,
             "num_flows": 4,
-            "num_layers_in_flow": 4
+            "num_layers_in_flow": 4,
+            "attention_heads": 2
         },
         "duration_predictor": {
             "kernel_size": 3,
-            "filter_channels": 256,
-            "use_stochastic_dp": true,
+            "n_stack": 10,
+            "n_stack_in_stack": 3,
+            "attention_num_head": 2,
             "dropout_p": 0.5
         },
         "learnable_upsampling": {

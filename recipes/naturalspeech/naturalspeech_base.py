@@ -1,30 +1,27 @@
 from typing import Dict, Tuple, List
-import torch
+from torch.cuda.amp import autocast
 from config.config import VitsConfig
-from coqpit import Coqpit
-from dataset.basic_dataset import TextAudioDataset
 from layers.discriminator import VitsDiscriminator
-from layers.losses import VitsDiscriminatorLoss, VitsGeneratorLoss
+from layers.losses import NaturalSpeechDiscriminatorLoss, NaturalSpeechGeneratorLoss
+from recipes.naturalspeech.naturalspeech import NaturalSpeechModel
 from recipes.trainer_model import TrainerModelWithDataset
-from recipes.vits.vits import VitsModel
 from text import text_to_tokens, _intersperse
 from torch import nn
-from torch.cuda.amp import autocast
-from trainer import get_optimizer
+from trainer import torch, get_optimizer
 from util.helper import segment
-from util.mel_processing import wav_to_mel, wav_to_spec
+from util.mel_processing import wav_to_mel
 
 
-class VitsTrainBase(TrainerModelWithDataset):
+class NaturalSpeechBase(TrainerModelWithDataset):
     """
-    VITS and YourTTS model training model.
+    Natural Speech model training model.
     """
     def __init__(self, config:VitsConfig):
         super().__init__(config)
         self.config = config
         self.model_config = config.model
 
-        self.generator = VitsModel(config=config, speaker_manager=self.speaker_manager, language_manager=self.language_manager)
+        self.generator = NaturalSpeechModel(config=config, speaker_manager=self.speaker_manager, language_manager=self.language_manager)
         self.discriminator = VitsDiscriminator(
             periods=self.model_config.discriminator.periods_multi_period,
             use_spectral_norm=self.model_config.discriminator.use_spectral_norm,
@@ -51,7 +48,9 @@ class VitsTrainBase(TrainerModelWithDataset):
                 waveform=waveform,
                 speaker_embeds=speaker_embeds,
                 speaker_ids=speaker_ids,
-                language_ids=language_ids
+                language_ids=language_ids,
+                duration=None,
+                use_gt_duration=self.model_config.use_gt_duration
             )
 
             # cache tensors for the generator pass
@@ -59,8 +58,12 @@ class VitsTrainBase(TrainerModelWithDataset):
 
             # compute scores and features
             scores_disc_real, _, scores_disc_fake, _ = self.discriminator(
-                x=outputs["waveform_seg"],
-                x_hat=outputs["y_hat"].detach(),
+                x=outputs["wav_seg"],
+                x_hat=outputs["y_hat"].detach()
+            )
+            scores_disc_real_e2e, _, scores_disc_fake_e2e, _ = self.discriminator(
+                x=outputs["wav_seg_e2e"],
+                x_hat=outputs["y_hat_e2e"].detach()
             )
 
             # compute loss
@@ -69,7 +72,13 @@ class VitsTrainBase(TrainerModelWithDataset):
                     scores_disc_real=scores_disc_real,
                     scores_disc_fake=scores_disc_fake,
                 )
-            return outputs, loss_dict
+                loss_dict_e2e = criterion[0](
+                    scores_disc_real=scores_disc_real_e2e,
+                    scores_disc_fake=scores_disc_fake_e2e,
+                )
+                loss_disc_all = loss_dict_e2e
+                loss_disc_all["loss"] = loss_dict["loss"] + loss_dict_e2e["loss"]
+            return outputs, loss_disc_all
 
         if optimizer_idx == 1:
             mel = batch["mel"]
@@ -78,7 +87,7 @@ class VitsTrainBase(TrainerModelWithDataset):
             with autocast(enabled=False):
                 mel_slice = segment(
                     x=mel.float(),
-                    segment_indices=self.model_outputs_cache["slice_ids"],
+                    segment_indices=self.model_outputs_cache["ids_slice"],
                     segment_size=self.model_config.spec_segment_size,
                     pad_short=True
                 )
@@ -95,28 +104,34 @@ class VitsTrainBase(TrainerModelWithDataset):
                 )
 
             # compute discriminator scores and features
-            _, feats_disc_real, scores_disc_fake, feats_disc_fake = self.discriminator(
-                x=self.model_outputs_cache["waveform_seg"],
+            scores_disc_real, feats_disc_real, scores_disc_fake, feats_disc_fake = self.discriminator(
+                x=self.model_outputs_cache["wav_seg"],
                 x_hat=self.model_outputs_cache["y_hat"]
+            )
+            scores_disc_real_e2e, _, scores_disc_fake_e2e, _ = self.discriminator(
+                x=self.model_outputs_cache["wav_seg_e2e"],
+                x_hat=self.model_outputs_cache["y_hat_e2e"]
             )
 
             # compute losses
             with autocast(enabled=False):  # use float32 for the criterion
                 loss_dict = criterion[1](
-                    mel_slice=mel_slice_hat.float(),
-                    mel_slice_hat=mel_slice.float(),
-                    z_p=self.model_outputs_cache["z_p"].float(),
-                    logs_q=self.model_outputs_cache["logs_q"].float(),
-                    m_p=self.model_outputs_cache["m_p"].float(),
-                    logs_p=self.model_outputs_cache["logs_p"].float(),
-                    z_len=spec_lens,
+                    mel_slice=mel_slice,
+                    mel_slice_hat=mel_slice_hat,
                     scores_disc_fake=scores_disc_fake,
-                    feats_disc_fake=feats_disc_fake,
+                    scores_disc_fake_e2e=scores_disc_fake_e2e,
                     feats_disc_real=feats_disc_real,
+                    feats_disc_fake=feats_disc_fake,
                     loss_duration=self.model_outputs_cache["loss_duration"],
-                    use_speaker_encoder_as_loss=self.model_config.use_speaker_encoder_as_loss,
-                    gt_speaker_emb=self.model_outputs_cache["gt_speaker_emb"],
-                    syn_speaker_emb=self.model_outputs_cache["syn_speaker_emb"],
+                    loss_pitch = None,
+                    z_p=self.model_outputs_cache["z_p"],
+                    m_p=self.model_outputs_cache["m_p"],
+                    logs_p=self.model_outputs_cache["logs_p"],
+                    z_q=self.model_outputs_cache["z_q"],
+                    m_q=self.model_outputs_cache["m_q"],
+                    logs_q=self.model_outputs_cache["logs_q"],
+                    p_mask=self.model_outputs_cache["p_mask"],
+                    z_mask=self.model_outputs_cache["y_mask"],
                 )
 
             return self.model_outputs_cache, loss_dict
@@ -150,32 +165,15 @@ class VitsTrainBase(TrainerModelWithDataset):
             x_lengths,
             speaker_ids=speaker_ids,
             speaker_embeds=speaker_embeds,
-            language_ids = language_ids,
+            language_ids=language_ids,
             noise_scale=0.667,
-            length_scale=1,
+            length_scale=1.0
         )
-        return wav
-
-    @torch.no_grad()
-    def inference_voice_conversion(self, reference_wav, ref_speaker_id=None, ref_speaker_embed=None, speaker_id=None, speaker_embed=None):
-        y = wav_to_spec(
-            reference_wav,
-            self.config.audio.fft_size,
-            self.config.audio.hop_length,
-            self.config.audio.win_length,
-            center=False,
-        ).cuda()
-        y_lengths = torch.tensor([y.size(-1)]).cuda()
-        source_speaker = ref_speaker_id if ref_speaker_id is not None else ref_speaker_embed
-        target_speaker = speaker_id if speaker_id is not None else speaker_embed
-        source_speaker = source_speaker.cuda()
-        target_speaker = target_speaker.cuda()
-        wav, _, _ = self.generator.voice_conversion(y, y_lengths, source_speaker, target_speaker)
         return wav
 
     def get_criterion(self):
         """Get criterions for each optimizer. The index in the output list matches the optimizer idx used in train_step()`"""
-        return [VitsDiscriminatorLoss(self.config), VitsGeneratorLoss(self.config)]
+        return [NaturalSpeechDiscriminatorLoss(self.config), NaturalSpeechGeneratorLoss(self.config)]
 
     def get_optimizer(self) -> List:
         """Initiate and return the GAN optimizers based on the config parameters."""
@@ -198,3 +196,4 @@ class VitsTrainBase(TrainerModelWithDataset):
     def forward(self, input: torch.Tensor) -> Dict:
         print("nothing to do! doing the real train code in train_step. ")
         return input
+

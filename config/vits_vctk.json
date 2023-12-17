@@ -132,22 +132,6 @@
             "attention_num_head": 2,
             "dropout_p": 0.5
         },
-        "pitch_predictor": {
-            "kernel_size": 3,
-            "n_stack": 10,
-            "n_stack_in_stack": 3,
-            "attention_num_head": 2,
-            "dropout_p": 0.5
-        },
-        "learnable_upsampling": {
-            "d_predictor": 192,
-            "kernel_size_lu": 3,
-            "dropout_lu": 0.0,
-            "conv_output_size": 8,
-            "dim_w": 4,
-            "dim_c": 2,
-            "max_seq_len": 1000
-        },
         "waveform_decoder": {
             "resblock_type": "1",
             "resblock_dilation_sizes": [

@@ -1,21 +1,22 @@
 import argparse
 import os
+import pickle
 import platform
+import random
 import time
-from typing import Dict, Tuple
+from typing import Tuple, Dict
 
 import soundfile as sf
 import torch
-from config.config import VitsConfig
 from coqpit import Coqpit
-from dataset.basic_dataset import get_metas_from_filelist
 from dataset.sampler import DistributedBucketSampler
-from recipes.vits.vits_train_base import VitsTrainBase
+from recipes.naturalspeech.naturalspeech_base import NaturalSpeechBase
 from torch import nn
 from trainer import Trainer, TrainerArgs
+from config.config import VitsConfig
+from dataset.basic_dataset import get_metas_from_filelist
 
-
-class VitsTrain(VitsTrainBase):
+class NaturalSpeechTrain(NaturalSpeechBase):
     """
     VITS and YourTTS model training model.
     """
@@ -38,7 +39,9 @@ class VitsTrain(VitsTrainBase):
         if optimizer_idx == 0:
             spec = batch["spec"][[0]]
             spec_len = batch["spec_lens"][[0]]
-            wav = self.generator.generate_z_wav(spec, spec_len)
+            speaker_id = batch["speaker_ids"][[0]]
+            speaker_embed = batch["speaker_embeds"][[0]]
+            wav = self.generator.generate_z_wav(spec, spec_len, speaker_id, speaker_embed)
 
             wav = wav[0, 0].cpu().float().numpy()
             filename = os.path.basename(batch["filenames"][0])
@@ -50,9 +53,21 @@ class VitsTrain(VitsTrainBase):
     def test_run(self, assets) -> Tuple[Dict, Dict]:
         output_path = assets["output_path"]
         print("doing test run...")
-        text = "我们都是中国人，我爱家乡！"
+        text = "Who else do you want to talk to? You can go with me today to the meeting."
 
-        wav = self.inference(text, speaker_name="baker", language="zh")
+        # speaker_id = random.randint(0, 9)
+        if platform.system() == "Windows":
+            path1 = "D:/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
+            path2 = "D:/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
+        else:
+            path1 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
+            path2 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
+        path = path1 if random.randint(1,10) >= 5 else path2
+        fp = open(path, "rb")
+        pickleObj = pickle.load(fp)
+        speaker_embed = pickleObj["speaker"]
+
+        wav = self.inference(text, speaker_embed=speaker_embed, language="en")
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 
@@ -66,7 +81,7 @@ def main(config_path:str):
     test_samples = get_metas_from_filelist([d.meta_file_val for d in datasets])
 
     # init the model
-    train_model = VitsTrain(config=config)
+    train_model = NaturalSpeechTrain(config=config)
 
     # init the trainer and train
     trainer = Trainer(
@@ -79,14 +94,21 @@ def main(config_path:str):
     )
     trainer.fit()
 
+    # test(train_model, "/home/cano/output/test/test.wav")
+    # test(train_model, "/home/cano/output/test/test2.wav")
+    # test(train_model, "/home/cano/output/test/test3.wav")
+    # train_model.test_run({"output_path": "/home/cano/output"})
+    # test_voice_conversion(train_model, "D:\\project\\canoSpeech\\output\\test2.wav")
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="vits baker train", formatter_class=argparse.RawTextHelpFormatter, )
-    parser.add_argument("--config_path", type=str, default="./config/vits_baker.json", required=False)
+    parser = argparse.ArgumentParser(description="natural speech vctk train", formatter_class=argparse.RawTextHelpFormatter, )
+    parser.add_argument("--config_path", type=str, default="./config/naturalspeech_vctk.json", required=False)
     args = parser.parse_args()
 
     # main(args.config_path)
 
     if platform.system() == "Windows":
-        main("./config/vits_baker.json")
+        main("./config/naturalspeech_vctk.json")
     else:
-        main("./config/vits_baker_linux.json")
+        main("./config/naturalspeech_vctk_linux.json")

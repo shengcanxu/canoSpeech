@@ -106,7 +106,7 @@ class LearnableUpsampling(nn.Module):
         upsampled_rep = self.proj_o(upsampled_rep)  # upsampled_rep:[B,specT,C*2]
 
         p_mask = ~mel_mask
-        return upsampled_rep, p_mask, mel_len, W, C
+        return upsampled_rep, p_mask, mel_len, W
 
     def get_mask_from_lengths(self, lengths, max_len=None):
         batch_size = lengths.shape[0]

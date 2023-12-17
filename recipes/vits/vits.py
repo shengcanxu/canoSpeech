@@ -178,9 +178,9 @@ class VitsModel(nn.Module):
         y_hat = self.waveform_decoder(z_slice, g=g)
 
         wav_seg = segment(
-            waveform,
-            slice_ids * self.config.audio.hop_length,
-            self.spec_segment_size * self.config.audio.hop_length,
+            x=waveform,
+            segment_indices=slice_ids * self.config.audio.hop_length,
+            segment_size=self.spec_segment_size * self.config.audio.hop_length,
             pad_short=True,
         )
 
@@ -206,14 +206,14 @@ class VitsModel(nn.Module):
             loss_duration = loss_duration / torch.sum(x_mask)
         else:
             attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
-            log_durations = self.duration_predictor(
+            predict_log_durations = self.duration_predictor(
                 x=x.detach(),
                 x_mask=x_mask,
                 g=g.detach() if g is not None else g,
                 lang_emb=lang_embed,
             )
-            loss_duration = torch.sum((log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
-            # loss_duration = torch.sum((torch.exp(log_durations) - attn_durations) ** 2, [1, 2]) / torch.sum(x_mask)
+            loss_duration = torch.sum((predict_log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
+            # loss_duration = torch.sum((torch.exp(predict_log_durations) - attn_durations) ** 2, [1, 2]) / torch.sum(x_mask)
 
         if self.model_config.use_speaker_encoder_as_loss and self.speaker_encoder.encoder is not None:
             # concate generated and GT waveforms

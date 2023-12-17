@@ -30,10 +30,10 @@ if __name__ == '__main__':
 
     # remove_backup_dataset_pt_file('D:\\dataset\\kokoro\\wavs')
     # remove_backup_dataset_pt_file('D:\\dataset\\CMLTTS\\train\\audio')
-    # remove_backup_dataset_pt_file('D:\\dataset\\VCTK\\wav48_silence_trimmed')
+    remove_backup_dataset_pt_file('D:\\dataset\\VCTK\\wav48_silence_trimmed')
     # remove_backup_dataset_pt_file('D:\\dataset\\baker')
 
-    remove_backup_dataset_pt_file('/home/cano/dataset/kokoro/wavs')
-    remove_backup_dataset_pt_file('/home/cano/dataset/CMLTTS/train/audio')
-    remove_backup_dataset_pt_file('/home/cano/dataset/VCTK/wav48_silence_trimmed')
-    remove_backup_dataset_pt_file('/home/cano/dataset/baker')
+    # remove_backup_dataset_pt_file('/home/cano/dataset/kokoro/wavs')
+    # remove_backup_dataset_pt_file('/home/cano/dataset/CMLTTS/train/audio')
+    # remove_backup_dataset_pt_file('/home/cano/dataset/VCTK/wav48_silence_trimmed')
+    # remove_backup_dataset_pt_file('/home/cano/dataset/baker')

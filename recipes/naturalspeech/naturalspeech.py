@@ -1,44 +1,39 @@
-import time
-
+import numpy as np
 import torch
-from coqpit import Coqpit
-from typing import Dict, List, Union, Tuple
-
-from torch import nn
-from torch.cuda.amp import autocast
-from trainer import get_optimizer, get_scheduler
-from torch.nn import functional as F
-from config.config import NaturalSpeechConfig
-from layers.discriminator import VitsDiscriminator
+from config.config import VitsConfig
+from language.language_manager import LanguageManager
 from layers.duration_predictor import VitsDurationPredictor
 from layers.encoder import TextEncoder, AudioEncoder
 from layers.flow import ResidualCouplingBlocks
 from layers.generator import HifiganGenerator
 from layers.learnable_upsampling import LearnableUpsampling
-from layers.losses import NaturalSpeechDiscriminatorLoss, NaturalSpeechGeneratorLoss
 from layers.quantizer import VAEMemoryBank
-from recipes.trainer_model import TrainerModelWithDataset
-from text import text_to_tokens
+from speaker.speaker_manager import SpeakerManager
+from torch import nn
+from torch.nn import functional as F
 from util.helper import segment, rand_segments
-from util.mel_processing import wav_to_mel
 
 
 class NaturalSpeechModel(nn.Module):
-    def __init__(self, config:NaturalSpeechConfig, speaker_embed: torch.Tensor = None):
+    def __init__(self, config:VitsConfig, speaker_manager:SpeakerManager, language_manager:LanguageManager):
         super().__init__()
         self.config = config
         self.model_config = config.model
-        self.speaker_embed = speaker_embed
-        # self.language_manager = language_manager
+        self.speaker_manager = speaker_manager
+        self.language_manager = language_manager
 
-        # init multi-speaker, speaker_embedding is used when the speaker_embed is not provided
-        # self.num_speakers = self.model_config.num_speakers
-        # self.spec_segment_size = self.model_config.spec_segment_size
-        # self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
-        # if self.num_speakers > 0:
-        #     self.speaker_embedding = nn.Embedding(self.num_speakers, self.embedded_speaker_dim)
+        self.use_sdp = self.model_config.use_sdp
+        self.spec_segment_size = self.model_config.spec_segment_size
 
-        self.init_multilingual(config)
+        self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
+        if self.model_config.use_speaker_ids:
+            self.speaker_embedding = nn.Embedding(self.speaker_manager.speaker_count(), self.embedded_speaker_dim)
+        else:
+            self.speaker_embedding = None
+        self.embedded_language_dim = 0
+        if self.model_config.use_language_ids:
+            self.embedded_language_dim = self.model_config.language_embedding_channels
+            self.language_embedding = nn.Embedding(self.language_manager.language_count(), self.embedded_language_dim)
 
         self.text_encoder = TextEncoder(
             n_vocab=self.model_config.text_encoder.num_chars,
@@ -107,143 +102,115 @@ class NaturalSpeechModel(nn.Module):
             n_attn_heads=self.model_config.memory_bank.n_attn_heads
         )
 
-    def init_multilingual(self, config: Coqpit):
-        """Initialize multilingual modules of a model.
-        Args:
-            config (Coqpit): Model configuration.
-        """
-        # if self.model_config.language_ids_file is not None:
-        #     self.language_manager = LanguageManager(language_ids_file_path=config.language_ids_file)
-
-        # if self.model_config.use_language_ids and self.language_manager:
-        #     print(" > initialization of language-embedding layers.")
-        #     self.num_languages = self.language_manager.num_languages
-        #     self.embedded_language_dim = self.model_config.language_embedding_channels
-        #     self.language_embedding = nn.Embedding(self.num_languages, self.embedded_language_dim)
-        #     torch.nn.init.xavier_uniform_(self.language_embedding.weight)
-        # else:
-        #     self.embedded_language_dim = 0
-
-    @staticmethod
-    def _set_cond_input(speaker_embeds, speaker_ids, language_ids):
-        """Set the speaker conditioning input based on the multi-speaker mode."""
-        sid, g, lid, durations = None, None, None, None
-        if speaker_ids is not None:
-            sid = speaker_ids
-            if sid.ndim == 0:
-                sid = sid.unsqueeze_(0)
-        if speaker_embeds is not None:
+    def forward(
+        self,
+        x: torch.tensor,  # [B,C]
+        x_lengths: torch.tensor,  # [B]
+        y: torch.tensor,  # [B,specT,specC]
+        y_lengths: torch.tensor,  # [B]
+        waveform: torch.tensor,
+        speaker_embeds = None,
+        speaker_ids = None,
+        language_ids = None,
+        duration=None,
+        use_gt_duration=True
+    ):
+        # speaker embedding
+        g = None  # [b, h, 1]
+        if self.model_config.use_speaker_embeds and speaker_embeds is not None:
             g = F.normalize(speaker_embeds).unsqueeze(-1)
             if g.ndim == 2:
                 g = g.unsqueeze_(0)
-
-        if language_ids is not None:
-            lid = language_ids
-            if lid.ndim == 0:
-                lid = lid.unsqueeze_(0)
-        return sid, g, lid
-
-    def forward(
-        self,
-        x,  # [B,C]
-        x_lengths,  # [B]
-        y,  # [B,specT,specC]
-        y_lengths,  # [B]
-        duration=None,
-        use_gt_duration=True,
-        speaker_embeds=None,
-        language_ids=None
-    ):
-        # _, g, lid = self._set_cond_input(speaker_embeds, None, language_ids)
-        if speaker_embeds is not None:
-            g = F.normalize(speaker_embeds).unsqueeze(-1)
-        else:
-            g = torch.zeros(x.size(0), self.embedded_speaker_dim, 1).to(x.device)
-        if g.ndim == 2:
-            g = g.unsqueeze_(0)
-        lid = None
+        elif self.model_config.use_speaker_ids and speaker_ids is not None:
+            g = self.speaker_embedding(speaker_ids).unsqueeze(-1)
 
         # language embedding
-        lang_embedding = None
-        if self.model_config.use_language_ids and lid is not None:
-            lang_embedding = self.language_embedding(lid).unsqueeze(-1)
+        lang_embed = None
+        if self.model_config.use_language_ids:
+            lang_embed = self.language_embedding(language_ids).unsqueeze(-1)  # [B, lang_channel, 1]
 
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embedding)
+        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embed)
 
-        # audio encoder, encode audio to embedding layer z's dimension,
-        # z:[B,C,spectrogramToken] m_q:[B,C,specT] logs_q:[B,C,specT] y_mask:[B,1,specT]
-        z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=g)
-
-        # z_p:[B,C,specT]
-        z_p = self.flow(z, y_mask, g=g)
-
+        # gt_log_duration = torch.log(duration.unsqueeze(1) + 1e-6) * x_mask
         # differentiable durator (duration predictor & loss)
-        logw = self.duration_predictor(x, x_mask, g=g)  # logw:[B,1,T]
-        w = torch.exp(logw) * x_mask  # w:[B,1,T]
+        predict_log_durations = self.duration_predictor(x, x_mask, g=g)  # predict_log_durations:[B,1,T]
+        # loss_duration = torch.sum((predict_log_durations - gt_log_duration) ** 2, [1, 2]) / torch.sum(x_mask)
+        loss_duration = torch.FloatTensor([0])
 
-        w_gt = duration.unsqueeze(1)
-        logw_gt = torch.log(w_gt + 1e-6) * x_mask
-        # for averaging
-        duration_loss = torch.sum((logw - logw_gt) ** 2, [1, 2]) / torch.sum(x_mask)
+        predict_durations = torch.exp(predict_log_durations) * x_mask  # w:[B,1,T]
         # use predicted duration
         if not use_gt_duration:
-            duration = w.squeeze(1)
+            duration = predict_durations.squeeze(1)
 
         # differentiable durator (learnable upsampling)
         upsampled_rep, p_mask, _, W = self.learnable_upsampling(
             duration=duration,
-            V=x.transpose(1, 2),
+            tokens=x.transpose(1, 2),
             src_len=x_lengths,
             src_mask=~(x_mask.squeeze(1).bool()),
-            tgt_len=y_lengths,
             max_src_len=x_lengths.max(),
         )
-        p_mask = ~p_mask
-
         m_p, logs_p = torch.split(upsampled_rep.transpose(1, 2), 192, dim=1)
-        z_slice, ids_slice = rand_segments(
-            z, y_lengths, self.spec_segment_size, let_short_samples=True, pad_short=True
-        )
 
+        # audio encoder, encode audio to embedding layer z's dimension,
+        z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=g)
+
+        z_slice, ids_slice = rand_segments(z, y_lengths, self.spec_segment_size, let_short_samples=True, pad_short=True)
         if self.model_config.use_memory_bank:
             z_slice = self.memory_bank(z_slice)
 
         y_hat = self.waveform_decoder(z_slice, g=g)
 
+        # backward flow layers
+        z_p = self.flow(z, y_mask, g=g)
+        # forward flow layers
         z_q = self.flow(
             x=m_p + torch.randn_like(m_p) * torch.exp(logs_p),
             x_mask=p_mask.unsqueeze(1),
             g=g,
             reverse=True,
         )
-        z_q_lengths = p_mask.flatten(1, -1).sum(dim=-1).long()
-        z_slice_q, ids_slice_q = rand_segments(
-            z_q, torch.minimum(z_q_lengths, y_lengths), self.spec_segment_size, let_short_samples=True, pad_short=True
-        )
 
+        z_q_lengths = p_mask.flatten(1, -1).sum(dim=-1).long()
+        z_slice_q, ids_slice_q = rand_segments( z_q, torch.minimum(z_q_lengths, y_lengths), self.spec_segment_size, let_short_samples=True, pad_short=True)
         if self.model_config.use_memory_bank:
             z_slice_q = self.memory_bank(z_slice_q)
 
         y_hat_e2e = self.waveform_decoder((z_slice_q), g=g)
 
+        wav_seg = segment(
+            x=waveform,
+            segment_indices=ids_slice * self.config.audio.hop_length,
+            segment_size=self.spec_segment_size * self.config.audio.hop_length,
+            pad_short=True
+        )
+        wav_seg_e2e = segment(
+            x=waveform,
+            segment_indices=ids_slice_q * self.config.audio.hop_length,
+            segment_size=self.spec_segment_size * self.config.audio.hop_length,
+            pad_short=True
+        )
+
         return {
             "y_hat": y_hat,  # the generated waveform
-            "duration_loss": duration_loss,
+            "y_hat_e2e": y_hat_e2e,
             "ids_slice": ids_slice,
+            "ids_slice_q": ids_slice_q,
             "x_mask": x_mask,
             "y_mask": y_mask,
+            "p_mask": p_mask,
             "z": z,
             "z_p": z_p,
             "m_p": m_p,
             "logs_p": logs_p,
+            "z_q": z_q,
             "m_q": m_q,
             "logs_q": logs_q,
-            "p_mask": p_mask,
-            "W": W,
-            "y_hat_e2e": y_hat_e2e,
-            "z_q": z_q,
-            "duration": duration,
-            "ids_slice_q": ids_slice_q
+            "wav_seg": wav_seg,
+            "wav_seg_e2e": wav_seg_e2e,
+            # "W": W,
+            # "duration": duration,
+            "loss_duration": loss_duration,
         }
 
     @torch.no_grad()
@@ -251,230 +218,91 @@ class NaturalSpeechModel(nn.Module):
         self,
         x,  # [B, T_seq]
         x_lengths=None,  # [B]
-        duration=None,
-        speaker_embeds=None,  # [B]
-        language_ids=None  # [B]
+        speaker_embeds=None,  # [T]
+        speaker_ids=None,  # [B]
+        language_ids=None,  # [B]
+        noise_scale=1.0,
+        length_scale=1.0,
+        max_len=None
     ):
         if x_lengths is None:
             x_lengths = torch.LongTensor([len(a) for a in x])
 
-        if speaker_embeds is not None:
+        # speaker embedding
+        g = None  # [b, h, 1]
+        if self.model_config.use_speaker_embeds and speaker_embeds is not None:
             g = F.normalize(speaker_embeds).unsqueeze(-1)
-        else:
-            g = torch.zeros(x.size(0), self.embedded_speaker_dim, 1).to(x.device)
-        if g.ndim == 2:
-            g = g.unsqueeze_(0)
-        lid = None
+            if g.ndim == 2:
+                g = g.unsqueeze_(0)
+        elif self.speaker_embedding is not None and speaker_ids is not None:
+            g = self.speaker_embedding(speaker_ids).unsqueeze(-1)
 
         # language embedding
-        lang_embedding = None
-        if self.model_config.use_language_ids and lid is not None:
-            lang_embedding = self.language_embedding(lid).unsqueeze(-1)
+        lang_embed = None
+        if self.model_config.use_language_ids:
+            lang_embed = self.language_embedding(language_ids).unsqueeze(-1)  # [B, lang_channel, 1]
 
         # infer with only one example
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embedding)
+        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embed)
 
-        logw = self.duration_predictor(x, x_mask, g=g)
-        w = torch.exp(logw) * x_mask * self.model_config.length_scale
-        if duration is not None:
-            w = duration.unsqueeze(1) * x_mask * self.model_config.length_scale
+        logw = self.duration_predictor(x, x_mask, g=g, lang_emb=lang_embed)
+        w = torch.exp(logw) * x_mask * length_scale
+        duration = w.squeeze(1)
 
         upsampled_rep, p_mask, _, W = self.learnable_upsampling(
-            duration=w.squeeze(1),
-            V=x.transpose(1, 2),
+            duration=duration,
+            tokens=x.transpose(1, 2),
             src_len=x_lengths,
             src_mask=~(x_mask.squeeze(1).bool()),
-            tgt_len=None,
             max_src_len=x_mask.shape[-1]
         )
-        p_mask = ~p_mask
         m_p, logs_p = torch.split(upsampled_rep.transpose(1, 2), 192, dim=1)
 
         y_mask = p_mask.unsqueeze(1)
-        z_p = m_p + torch.randn_like(m_p) * torch.exp(logs_p) * self.model_config.inference_noise_scale
+        z_p = m_p + torch.randn_like(m_p) * torch.exp(logs_p) * noise_scale
         z = self.flow(z_p, y_mask, g=g, reverse=True)
 
         if self.model_config.use_memory_bank:
             z = self.memory_bank(z)
 
-        z = (z * y_mask)[:, :, :self.model_config.max_inference_len]
-        y_hat = self.waveform_decoder(z, g=g)
-        return y_hat
-
-
-class NaturalSpeechTrain(TrainerModelWithDataset):
-    """
-    Natural Speech model training model.
-    """
-    def __init__(self, config:NaturalSpeechConfig, speaker_embed: torch.Tensor = None):
-        super().__init__(config)
-        self.config = config
-        self.model_config = config.model
-
-        self.generator = NaturalSpeechModel(
-            config=config,
-            speaker_embed=speaker_embed,
-            # language_manager=language_manager
-        )
-        self.discriminator = VitsDiscriminator(
-            periods=self.model_config.discriminator.periods_multi_period,
-            use_spectral_norm=self.model_config.discriminator.use_spectral_norm,
-        )
-
-    def train_step(self, batch: Dict, criterion: nn.Module, optimizer_idx: int) -> Tuple[Dict, Dict]:
-        spec_lens = batch["spec_lens"]
-        if optimizer_idx == 0:
-            tokens = batch["tokens"]
-            token_lens = batch["token_lens"]
-            spec = batch["spec"]
-            speaker_embeds = batch["speaker_embed"]
-            wav = batch["waveform"]
-            duration = batch["duration"]
-
-            # generator pass
-            outputs = self.generator(
-                x=tokens,
-                x_lengths=token_lens,
-                y=spec,
-                y_lengths=spec_lens,
-                duration=duration,
-                use_gt_duration=self.model_config.use_gt_duration,
-                speaker_embeds=speaker_embeds,
-                language_ids=None,
-
-            )
-
-            wav_slice1 = segment(
-                x=wav,
-                segment_indices=outputs["ids_slice"] * self.config.audio.hop_length,
-                segment_size=self.model_config.spec_segment_size * self.config.audio.hop_length,
-                pad_short=True
-            )
-            wav_slice2 = segment(
-                x=wav,
-                segment_indices=outputs["ids_slice_q"] * self.config.audio.hop_length,
-                segment_size=self.model_config.spec_segment_size * self.config.audio.hop_length,
-                pad_short=True
-            )
-
-            # cache tensors for the generator pass
-            self.model_outputs_cache = outputs
-            self.wav_slice1 = wav_slice1
-            self.wav_slice2 = wav_slice2
-
-            # compute scores and features
-            scores_disc_real, _, scores_disc_fake, _ = self.discriminator(
-                x=wav_slice1,
-                x_hat=outputs["y_hat"].detach()
-            )
-            scores_disc_real_e2e, _, scores_disc_fake_e2e, _ = self.discriminator(
-                x=wav_slice2,
-                x_hat=outputs["y_hat_e2e"].detach()
-            )
-
-            # compute loss
-            with autocast(enabled=False):
-                loss_dict = criterion[0](
-                    scores_disc_real=scores_disc_real,
-                    scores_disc_fake=scores_disc_fake,
-                )
-                loss_dict_e2e = criterion[0](
-                    scores_disc_real=scores_disc_real_e2e,
-                    scores_disc_fake=scores_disc_fake_e2e,
-                )
-                loss_disc_all = loss_dict["loss"] + loss_dict_e2e["loss"]
-                loss_dict_e2e["loss"] = loss_disc_all
-            return outputs, loss_dict_e2e
-
-        if optimizer_idx == 1:
-            mel = batch["mel"]
-
-            # compute melspec segment
-            with autocast(enabled=False):
-                mel_slice = segment(
-                    x=mel.float(),
-                    segment_indices=self.model_outputs_cache["ids_slice"],
-                    segment_size=self.model_config.spec_segment_size,
-                    pad_short=True
-                )
-                mel_slice_hat = wav_to_mel(
-                    y=self.model_outputs_cache["y_hat"].float(),
-                    n_fft=self.config.audio.fft_size,
-                    sample_rate=self.config.audio.sample_rate,
-                    num_mels=self.config.audio.num_mels,
-                    hop_length=self.config.audio.hop_length,
-                    win_length=self.config.audio.win_length,
-                    fmin=self.config.audio.mel_fmin,
-                    fmax=self.config.audio.mel_fmax,
-                    center=False,
-                )
-
-            # compute discriminator scores and features
-            scores_disc_real, feats_disc_real, scores_disc_fake, feats_disc_fake = self.discriminator(
-                x=self.wav_slice1,
-                x_hat=self.model_outputs_cache["y_hat"]
-            )
-            scores_disc_real_e2e, _, scores_disc_fake_e2e, _ = self.discriminator(
-                x=self.wav_slice2,
-                x_hat=self.model_outputs_cache["y_hat_e2e"]
-            )
-
-            # compute losses
-            with autocast(enabled=False):  # use float32 for the criterion
-                loss_dict = criterion[1](
-                    mel_slice=mel_slice,
-                    mel_slice_hat=mel_slice_hat,
-                    scores_disc_fake=scores_disc_fake,
-                    scores_disc_fake_e2e=scores_disc_fake_e2e,
-                    feats_disc_real=feats_disc_real,
-                    feats_disc_fake=feats_disc_fake,
-                    duration_loss=self.model_outputs_cache["duration_loss"],
-                    z_p=self.model_outputs_cache["z_p"],
-                    m_p=self.model_outputs_cache["m_p"],
-                    logs_p=self.model_outputs_cache["logs_p"],
-                    z_q=self.model_outputs_cache["z_q"],
-                    m_q=self.model_outputs_cache["m_q"],
-                    logs_q=self.model_outputs_cache["logs_q"],
-                    p_mask=self.model_outputs_cache["p_mask"],
-                    z_mask=self.model_outputs_cache["y_mask"],
-                )
-
-            return self.model_outputs_cache, loss_dict
-
-        raise ValueError(" [!] Unexpected `optimizer_idx`.")
+        z = (z * y_mask)[:, :, :max_len]
+        wav = self.waveform_decoder(z, g=g)
+        return wav, duration, y_mask, (z, z_p, m_p, logs_p)
 
     @torch.no_grad()
-    def eval_step(self, batch: dict, criterion: nn.Module, optimizer_idx: int):
-        return self.train_step(batch, criterion, optimizer_idx)
-
-    def get_criterion(self):
-        """Get criterions for each optimizer. The index in the output list matches the optimizer idx used in train_step()`"""
-        return [NaturalSpeechDiscriminatorLoss(self.config), NaturalSpeechGeneratorLoss(self.config)]
-
-    def get_optimizer(self) -> List:
-        """Initiate and return the GAN optimizers based on the config parameters."""
-        # select generator parameters
-        discOptimizer = get_optimizer(
-            optimizer_name=self.config.optimizer,
-            optimizer_params=self.config.optimizer_params,
-            lr=self.config.lr[0],
-            model=self.discriminator
-        )
-
-        genOptimizer = get_optimizer(
-            optimizer_name=self.config.optimizer,
-            optimizer_params=self.config.optimizer_params,
-            lr=self.config.lr[1],
-            model=self.generator
-        )
-        return [discOptimizer, genOptimizer]
-
-    def forward(self, input: torch.Tensor) -> Dict:
-        print("nothing to do! doing the real train code in train_step. ")
-        return input
-
-    def inference(self, text:str, speaker_id:int=None, language_id=None, lang="en"):
-        tokens = text_to_tokens(text, cleaner_name=self.config.text.text_cleaners.get(lang))
-        tokens = torch.LongTensor(tokens).unsqueeze(dim=0)
-        wav = self.generator.infer(tokens)
+    def generate_z_wav(self, spec, spec_len, speaker_id=None, speaker_embed=None):
+        g = None  # [b, h, 1]
+        if self.model_config.use_speaker_embeds and speaker_embed is not None:
+            g = F.normalize(speaker_embed).unsqueeze(-1)
+            if g.ndim == 2:
+                g = g.unsqueeze_(0)
+        elif self.speaker_embedding is not None and speaker_id is not None:
+            g = self.speaker_embedding(speaker_id).unsqueeze(-1)
+        z, _, _, _ = self.audio_encoder(spec, spec_len, g=g)
+        wav = self.waveform_decoder(z, g=g)
         return wav
+
+    def voice_conversion(self, y, y_lengths, source_speaker, target_speaker):
+        """Forward pass for voice conversion
+        Args:
+            y (Tensor): Reference spectrograms. Tensor of shape [B, T, C]
+            y_lengths (Tensor): Length of each reference spectrogram. Tensor of shape [B]
+            source_speaker (Tensor): Reference speaker ID. Tensor of shape [B, T]
+            target_speaker (Tensor): Target speaker ID. Tensor of shape [B, T]
+        """
+
+        # speaker embedding
+        if self.model_config.use_speaker_ids:
+            g_src = self.emb_g(torch.from_numpy((np.array(source_speaker))).unsqueeze(0)).unsqueeze(-1)
+            g_tgt = self.emb_g(torch.from_numpy((np.array(target_speaker))).unsqueeze(0)).unsqueeze(-1)
+        elif self.model_config.use_speaker_embeds:
+            g_src = F.normalize(source_speaker).unsqueeze(-1)
+            g_tgt = F.normalize(target_speaker).unsqueeze(-1)
+        else:
+            raise RuntimeError(" [!] Voice conversion is only supported on multi-speaker models.")
+
+        z, _, _, y_mask = self.audio_encoder(y, y_lengths, g=g_src)
+        z_p = self.flow(z, y_mask, g=g_src)
+        z_hat = self.flow(z_p, y_mask, g=g_tgt, reverse=True)
+        o_hat = self.waveform_decoder(z_hat * y_mask, g=g_tgt)
+        return o_hat, y_mask, (z, z_p, z_hat)

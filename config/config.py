@@ -93,6 +93,22 @@ class DiscriminatorConfig(Coqpit):
     use_spectral_norm:bool = False
 
 @dataclass
+class LearnableUpsampling(Coqpit):
+    d_predictor:int = 192,
+    kernel_size_lu:int = 3
+    dropout_lu:float = 0.0
+    conv_output_size:int = 8
+    dim_w:int = 4
+    dim_c:int = 2
+    max_seq_len:int = 1000  # max sequence length
+
+@dataclass
+class MemroyBank(Coqpit):
+    bank_size:int = 1000,
+    n_hidden_dims:int = 192,
+    n_attn_heads:int = 2
+
+@dataclass
 class BaseModelConfig(Coqpit):
     hidden_channels: int = 192
     out_channels:int = 513
@@ -108,13 +124,19 @@ class BaseModelConfig(Coqpit):
     use_speaker_encoder_as_loss:bool = False
 
 @dataclass
-class VitsModelConfig(BaseModelConfig):
+class ModelConfig(BaseModelConfig):
+    use_memory_bank: bool = True
+    use_gt_duration: bool = False  # use ground-true duration to generate the training data
+
     text_encoder: TextEncoderConfig = field(default_factory=lambda: TextEncoderConfig())
     audio_encoder: AudioEncoderConfig = field(default_factory=lambda: AudioEncoderConfig())
     flow:FlowConfig = field(default_factory=lambda:FlowConfig())
     duration_predictor:VitsDurationPredictorConfig = field(default_factory=lambda: VitsDurationPredictorConfig())
     waveform_decoder:WaveformDecoderConfig = field(default_factory=lambda: WaveformDecoderConfig())
     discriminator: DiscriminatorConfig = field(default_factory=lambda: DiscriminatorConfig())
+
+    learnable_upsampling: LearnableUpsampling = field(default_factory=lambda: LearnableUpsampling())
+    memory_bank: MemroyBank = field(default_factory=lambda: MemroyBank())
 
 @dataclass
 class LossConfig(Coqpit):
@@ -152,60 +174,8 @@ class VitsConfig(TrainerConfig):
     loss:LossConfig = field(default_factory=lambda: LossConfig())
 
     # model config
-    model: VitsModelConfig = field(default_factory=lambda: VitsModelConfig())
+    model: ModelConfig = field(default_factory=lambda: ModelConfig())
 
-
-################################ Natural Speech ##########################################
-
-@dataclass
-class LearnableUpsampling(Coqpit):
-    d_predictor:int = 192,
-    kernel_size_lu:int = 3
-    dropout_lu:float = 0.0
-    conv_output_size:int = 8
-    dim_w:int = 4
-    dim_c:int = 2
-    max_seq_len:int = 1000  # max sequence length
-
-@dataclass
-class MemroyBank(Coqpit):
-    bank_size:int = 1000,
-    n_hidden_dims:int = 192,
-    n_attn_heads:int = 2
-
-@dataclass
-class NaturalSpeechModelConfig(BaseModelConfig):
-    use_memory_bank:bool = True
-    use_gt_duration:bool = False  # use ground-true duration to generate the training data
-
-    text_encoder: TextEncoderConfig = field(default_factory=lambda: TextEncoderConfig())
-    audio_encoder: AudioEncoderConfig = field(default_factory=lambda: AudioEncoderConfig())
-    flow:FlowConfig = field(default_factory=lambda:FlowConfig())
-    duration_predictor:VitsDurationPredictorConfig = field(default_factory=lambda: VitsDurationPredictorConfig())
-    learnable_upsampling:LearnableUpsampling = field(default_factory=lambda: LearnableUpsampling())
-    waveform_decoder:WaveformDecoderConfig = field(default_factory=lambda: WaveformDecoderConfig())
-    memory_bank:MemroyBank = field(default_factory=lambda: MemroyBank())
-    discriminator: DiscriminatorConfig = field(default_factory=lambda: DiscriminatorConfig())
-
-@dataclass
-class NaturalSpeechConfig(TrainerConfig):
-    """
-    General training config, here you can change the batch size and others useful parameters
-    """
-    dataset_config: TTSDatasetConfig = field(default_factory=lambda: TTSDatasetConfig())
-    audio:AudioConfig = field(default_factory=lambda: AudioConfig())
-    text:TextConfig = field(default_factory=lambda: TextConfig())
-
-    # the max size of eval dataset
-    eval_split_max_size: int = 256
-    # the percentage of dataset to be eval dataset
-    eval_split_size: float = 0.01
-
-    #loss
-    loss:LossConfig = field(default_factory=lambda: LossConfig())
-
-    # model config
-    model: NaturalSpeechModelConfig = field(default_factory=lambda: NaturalSpeechModelConfig())
 
 ################################ Natural TTS ##########################################
 

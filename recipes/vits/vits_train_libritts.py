@@ -11,12 +11,12 @@ from config.config import VitsConfig
 from coqpit import Coqpit
 from dataset.basic_dataset import get_metas_from_filelist
 from dataset.sampler import DistributedBucketSampler
-from recipes.vits.vits_train_base import VitsTrain_Base
+from recipes.vits.vits_train_base import VitsTrainBase
 from torch import nn
 from trainer import Trainer, TrainerArgs
 
 
-class VitsTrain(VitsTrain_Base):
+class VitsTrain(VitsTrainBase):
     """
     VITS and YourTTS model training model.
     """
