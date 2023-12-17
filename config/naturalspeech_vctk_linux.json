@@ -1,15 +1,15 @@
 {
     "run_name": "CanoNaturalSpeech",
     "run_description": "Natural Speech running on VCTK dataset",
-    "output_path": "D:/project/canoSpeech/output",
+    "output_path": "/home/output",
 
     "dataset_config": {
         "datasets": [
             {
                 "dataset_name": "vctk",
-                "meta_file_train": "D:/project/canoSpeech/filelists/vctk_train_filelist.txt.cleaned",
-                "meta_file_val": "D:/project/canoSpeech/filelists/vctk_test_filelist.txt.cleaned",
-                "path": "D:\\dataset\\VCTK",
+                "meta_file_train": "/home/canoSpeech/filelists/vctk_train_filelist.txt.cleaned",
+                "meta_file_val": "/home/canoSpeech/filelists/vctk_test_filelist.txt.cleaned",
+                "path": "/home/dataset/VCTK",
                 "language": "en"
             }
         ],
