@@ -1,4 +1,4 @@
-{
+    {
     "run_name": "CanoNaturalSpeech",
     "run_description": "Cano Speech running on VCTK dataset",
     "output_path": "/home/output",

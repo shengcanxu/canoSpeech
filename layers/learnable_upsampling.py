@@ -46,7 +46,12 @@ class LearnableUpsampling(nn.Module):
         self.proj_o = LinearNorm(192, 192 * 2)
 
     def forward(self, duration, tokens, src_len, src_mask, max_src_len):
-
+        """
+        :type duration: [B, T]
+        :type tokens: [B, T, C]
+        :type src_len: [B]
+        :type src_mask: [B, T]
+        """
         batch_size = duration.shape[0]
         mel_len = torch.round(duration.sum(-1)).type(torch.LongTensor).to(tokens.device)
 

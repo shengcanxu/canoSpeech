@@ -233,7 +233,7 @@ class NaturalSpeechGeneratorLoss(nn.Module):
 
     @staticmethod
     def get_sdtw_kl_matrix(z_p, logs_q, m_p, logs_p):
-        """
+        """  使用sdtw来计算KL太过耗费内存了，所以可以通过
         returns kl matrix with shape [b, t_tp, t_tq]
         z_p, logs_q: [b, h, t_tq]
         m_p, logs_p: [b, h, t_tp]
@@ -246,6 +246,8 @@ class NaturalSpeechGeneratorLoss(nn.Module):
         t_tp, t_tq = m_p.size(-1), z_p.size(-1)
         b, h, t_tp = m_p.shape
 
+        # 这里会耗费大量的GPU内存，因为为了得到KL matrix，需要对于每一个channel，都需要计算一个[b, t_tp, t_tq]的矩阵，
+        # 并且这些矩阵为了后面的backward都需要保留中间结果，所以非常耗费GPU 内存
         kls = torch.zeros((b, t_tp, t_tq), dtype=z_p.dtype, device=z_p.device)
         for i in range(h):
             logs_p_, m_p_, logs_q_, z_p_ = (logs_p[:, i, :, None], m_p[:, i, :, None], logs_q[:, i, None, :], z_p[:, i, None, :],)
@@ -254,11 +256,12 @@ class NaturalSpeechGeneratorLoss(nn.Module):
             kls += kl
         return kls
 
+        # # 下面的方案直接用4维的数组运算，耗费的资源更加大
         # kl = logs_p[:, :, :, None] - logs_q[:, :, None, :] - 0.5  # p, q
         # kl += (0.5 * ((z_p[:, :, None, :] - m_p[:, :, :, None]) ** 2) * torch.exp(-2.0 * logs_p[:, :, :, None]))
         #
         # kl = kl.sum(dim=1)
-        # return kl
+        return kl
 
     @staticmethod
     def cosine_similarity_loss(gt_spk_emb, syn_spk_emb):
@@ -273,6 +276,7 @@ class NaturalSpeechGeneratorLoss(nn.Module):
         feats_disc_real,
         feats_disc_fake,
         loss_duration,
+        loss_duration_len,
         loss_pitch,
         z_p,
         m_p,
@@ -295,6 +299,7 @@ class NaturalSpeechGeneratorLoss(nn.Module):
 
         # # duration and pitch loss generated from text
         loss_dur = torch.sum(loss_duration.float()) * self.dur_loss_alpha
+        loss_dur_len = loss_duration_len.float()
         # loss_pitch = torch.sum(loss_pitch.float()) * self.pitch_loss_alpha
 
         # kl loss makes z generated from audio and z_q generated from text are in the same distribution
@@ -306,7 +311,7 @@ class NaturalSpeechGeneratorLoss(nn.Module):
             loss_kl_fwd = self.kl_loss(z_q, logs_p, m_q, logs_q, p_mask.unsqueeze(1)) * self.kl_loss_forward_alpha
 
         # total loss = sum all losses
-        loss = loss_gen + loss_gen_e2e + loss_fm + loss_mel + loss_dur + loss_kl + loss_kl_fwd
+        loss = loss_gen + loss_gen_e2e + loss_fm + loss_mel + loss_dur + loss_dur_len + loss_kl + loss_kl_fwd
 
         return_dict = {}
         # pass losses to the dict
@@ -315,6 +320,7 @@ class NaturalSpeechGeneratorLoss(nn.Module):
         return_dict["loss_feature"] = loss_fm
         return_dict["loss_mel"] = loss_mel
         return_dict["loss_duration"] = loss_dur
+        return_dict["loss_dur_len"] = loss_dur_len
         # return_dict["loss_pitch"] = loss_pitch
         return_dict["loss_kl"] = loss_kl
         return_dict["loss_kl_forward"] = loss_kl_fwd
@@ -359,3 +365,12 @@ class NaturalSpeechDiscriminatorLoss(nn.Module):
         return_dict["loss_disc_fake_all"] = sum(loss_disc_fake) / len(loss_disc_fake) * self.disc_loss_alpha
         return return_dict
 
+
+if __name__ == "__main__":
+    kl = torch.rand(4, 100, 100)
+    kl[:, 50:, :] = 1e4
+    kl[:, :, 50:] = 1e4
+    kl[:, 50:, 50:] = 0
+
+    print(kl)
+    print(sdtw(kl).mean() / 50)

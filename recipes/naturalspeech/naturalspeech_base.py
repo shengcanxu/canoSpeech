@@ -123,6 +123,7 @@ class NaturalSpeechBase(TrainerModelWithDataset):
                     feats_disc_real=feats_disc_real,
                     feats_disc_fake=feats_disc_fake,
                     loss_duration=self.model_outputs_cache["loss_duration"],
+                    loss_duration_len=self.model_outputs_cache["loss_duration_len"],
                     loss_pitch = None,
                     z_p=self.model_outputs_cache["z_p"],
                     m_p=self.model_outputs_cache["m_p"],

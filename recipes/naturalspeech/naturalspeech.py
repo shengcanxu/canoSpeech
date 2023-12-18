@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 import torch
 from config.config import VitsConfig
@@ -8,6 +10,7 @@ from layers.flow import ResidualCouplingBlocks
 from layers.generator import HifiganGenerator
 from layers.learnable_upsampling import LearnableUpsampling
 from layers.quantizer import VAEMemoryBank
+from monotonic_align.maximum_path import maximum_path
 from speaker.speaker_manager import SpeakerManager
 from torch import nn
 from torch.nn import functional as F
@@ -102,6 +105,38 @@ class NaturalSpeechModel(nn.Module):
             n_attn_heads=self.model_config.memory_bank.n_attn_heads
         )
 
+    def align_duration(self, durations:torch.Tensor, target:torch.Tensor):
+        """  align and extend the duration to the target duration length
+        duration: [B,T]
+        target: [B]
+        """
+        B = target.size(0)
+        lengths = durations.sum(1)
+        loss_duration_len = F.l1_loss(lengths, target)
+
+        durations = durations * (target / lengths).unsqueeze(-1)
+        durations = durations.cumsum(dim=1).round()
+        durations = durations.diff(dim=1, prepend=torch.zeros([B,1]).to(durations.device))
+        return durations, loss_duration_len
+
+    def monotonic_align(self, z_p, m_p, logs_p, x, x_mask, y_mask):
+        # find the alignment path
+        attn_mask = torch.unsqueeze(x_mask, -1) * torch.unsqueeze(y_mask, 2)
+        with torch.no_grad():
+            # code here does: using "Probability density function", by applying z_p to Probability density function
+            # to get the probability
+            o_scale = torch.exp(-2 * logs_p)  # 1/p**2, p is the Variance
+            logp1 = torch.sum(-0.5 * math.log(2 * math.pi) - logs_p, [1]).unsqueeze(-1)  # [b, t, 1] log( 1/sqrt(2*pi*p**2) )
+            logp2 = torch.einsum("klm, kln -> kmn", [o_scale, -0.5 * (z_p**2)])  # log( -x**2/(2*p**2) ), x will be z_p here
+            logp3 = torch.einsum("klm, kln -> kmn", [m_p * o_scale, z_p])  # log( 2xu/2p**2 ), u is the mean here
+            logp4 = torch.sum(-0.5 * (m_p**2) * o_scale, [1]).unsqueeze(-1)  # [b, t, 1]  log( u**2/(2*p**2) )
+            logp = logp2 + logp3 + logp1 + logp4  # log("Probability density")
+            attn = maximum_path(logp, attn_mask.squeeze(1)).unsqueeze(1).detach()  # [b, 1, t, t']
+
+        # duration predictor
+        attn_durations = attn.sum(3)
+        return attn_durations, attn
+
     def forward(
         self,
         x: torch.tensor,  # [B,C]
@@ -129,29 +164,6 @@ class NaturalSpeechModel(nn.Module):
         if self.model_config.use_language_ids:
             lang_embed = self.language_embedding(language_ids).unsqueeze(-1)  # [B, lang_channel, 1]
 
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embed)
-
-        # gt_log_duration = torch.log(duration.unsqueeze(1) + 1e-6) * x_mask
-        # differentiable durator (duration predictor & loss)
-        predict_log_durations = self.duration_predictor(x, x_mask, g=g)  # predict_log_durations:[B,1,T]
-        # loss_duration = torch.sum((predict_log_durations - gt_log_duration) ** 2, [1, 2]) / torch.sum(x_mask)
-        loss_duration = torch.FloatTensor([0])
-
-        predict_durations = torch.exp(predict_log_durations) * x_mask  # w:[B,1,T]
-        # use predicted duration
-        if not use_gt_duration:
-            duration = predict_durations.squeeze(1)
-
-        # differentiable durator (learnable upsampling)
-        upsampled_rep, p_mask, _, W = self.learnable_upsampling(
-            duration=duration,
-            tokens=x.transpose(1, 2),
-            src_len=x_lengths,
-            src_mask=~(x_mask.squeeze(1).bool()),
-            max_src_len=x_lengths.max(),
-        )
-        m_p, logs_p = torch.split(upsampled_rep.transpose(1, 2), 192, dim=1)
-
         # audio encoder, encode audio to embedding layer z's dimension,
         z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=g)
 
@@ -163,6 +175,30 @@ class NaturalSpeechModel(nn.Module):
 
         # backward flow layers
         z_p = self.flow(z, y_mask, g=g)
+
+        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embed)
+
+        # gt_log_duration = torch.log(duration.unsqueeze(1) + 1e-6) * x_mask
+        # differentiable durator (duration predictor & loss)
+        pred_log_dur = self.duration_predictor(x, x_mask, g=g)  # pred_log_dur:[B,1,T]
+        predict_durations = torch.exp(pred_log_dur) * x_mask  # w:[B,1,T]
+        aligned_duration, loss_duration_len = self.align_duration(predict_durations.squeeze(1), y_mask.sum([1, 2]))
+
+        # monotonic align and duration predictor
+        attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
+        attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
+        loss_duration = torch.sum((attn_log_durations - attn_durations) ** 2, [1, 2]) / torch.sum(x_mask)
+
+        # differentiable durator (learnable upsampling)
+        upsampled_rep, p_mask, _, W = self.learnable_upsampling(
+            duration=aligned_duration,
+            tokens=x.transpose(1, 2),
+            src_len=x_lengths,
+            src_mask=~(x_mask.squeeze(1).bool()),
+            max_src_len=x_lengths.max(),
+        )
+        m_p, logs_p = torch.split(upsampled_rep.transpose(1, 2), 192, dim=1)
+
         # forward flow layers
         z_q = self.flow(
             x=m_p + torch.randn_like(m_p) * torch.exp(logs_p),
@@ -208,8 +244,7 @@ class NaturalSpeechModel(nn.Module):
             "logs_q": logs_q,
             "wav_seg": wav_seg,
             "wav_seg_e2e": wav_seg_e2e,
-            # "W": W,
-            # "duration": duration,
+            "loss_duration_len": loss_duration_len,
             "loss_duration": loss_duration,
         }
 

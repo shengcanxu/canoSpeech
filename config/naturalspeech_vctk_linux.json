@@ -87,7 +87,7 @@
         "dur_loss_alpha": 1.0,
         "pitch_loss_alpha": 1.0,
         "speaker_encoder_loss_alpha": 9.0,
-        "use_soft_dynamic_time_warping": true
+        "use_soft_dynamic_time_warping": false
     },
 
     "model": {
