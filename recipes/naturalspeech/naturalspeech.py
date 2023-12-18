@@ -182,12 +182,13 @@ class NaturalSpeechModel(nn.Module):
         # differentiable durator (duration predictor & loss)
         pred_log_dur = self.duration_predictor(x, x_mask, g=g)  # pred_log_dur:[B,1,T]
         predict_durations = torch.exp(pred_log_dur) * x_mask  # w:[B,1,T]
-        aligned_duration, loss_duration_len = self.align_duration(predict_durations.squeeze(1), y_mask.sum([1, 2]))
+        aligned_duration, loss_duration_len = self.align_duration(predict_durations.squeeze(1), y_mask.sum([1, 2]))  # aligned_duration: [B,T]
 
         # monotonic align and duration predictor
         attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
         attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
-        loss_duration = torch.sum((attn_log_durations - attn_durations) ** 2, [1, 2]) / torch.sum(x_mask)
+        aligned_log_duration = torch.log(aligned_duration.unsqueeze(1) + 1e-6) * x_mask
+        loss_duration = torch.sum((attn_log_durations - aligned_log_duration) ** 2, [1, 2]) / torch.sum(x_mask)
 
         # differentiable durator (learnable upsampling)
         upsampled_rep, p_mask, _, W = self.learnable_upsampling(
