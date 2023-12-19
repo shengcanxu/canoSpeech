@@ -94,7 +94,7 @@ class DiscriminatorConfig(Coqpit):
 
 @dataclass
 class LearnableUpsampling(Coqpit):
-    d_predictor:int = 192,
+    d_predictor:int = 192
     kernel_size_lu:int = 3
     dropout_lu:float = 0.0
     conv_output_size:int = 8
@@ -104,8 +104,8 @@ class LearnableUpsampling(Coqpit):
 
 @dataclass
 class MemroyBank(Coqpit):
-    bank_size:int = 1000,
-    n_hidden_dims:int = 192,
+    bank_size:int = 1000
+    n_hidden_dims:int = 192
     n_attn_heads:int = 2
 
 @dataclass

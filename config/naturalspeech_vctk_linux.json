@@ -66,14 +66,14 @@
     },
 
     "epochs": 1000,
-    "batch_size": 4,
-    "eval_batch_size": 4,
+    "batch_size": 32,
+    "eval_batch_size": 32,
 
-    "print_step": 5,
+    "print_step": 30,
     "plot_step": 100,
     "log_model_step": 1000,
-    "save_step": 5000,
-    "save_n_checkpoints": 5,
+    "save_step": 14000,
+    "save_n_checkpoints": 10,
     "save_checkpoints": true,
 
     "loss": {

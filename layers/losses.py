@@ -299,7 +299,7 @@ class NaturalSpeechGeneratorLoss(nn.Module):
 
         # # duration and pitch loss generated from text
         loss_dur = torch.sum(loss_duration.float()) * self.dur_loss_alpha
-        loss_dur_len = loss_duration_len.float()
+        loss_dur_len = torch.log(loss_duration_len.float() + 1e-6)
         # loss_pitch = torch.sum(loss_pitch.float()) * self.pitch_loss_alpha
 
         # kl loss makes z generated from audio and z_q generated from text are in the same distribution
