@@ -1,6 +1,7 @@
 {
     "run_name": "CanoVitsJSpeech",
     "run_description": "Cano Speech running on LJSpeech dataset",
+    "restore_path": "D:\\project\\canoSpeech\\output\\CanoVitsJSpeech-December-19-2023_02+52PM-d5627f5\\best_model.pth",
     "output_path": "D:\\project\\canoSpeech\\output",
 
     "dataset_config": {
