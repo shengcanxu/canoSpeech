@@ -102,7 +102,6 @@
         "use_speaker_embedding": false,
         "use_speaker_encoder_as_loss": false,
         "use_gt_duration": true,
-        "use_memory_bank": true,
 
         "text_encoder": {
             "num_chars": 178,
