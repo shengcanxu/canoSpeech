@@ -5,6 +5,7 @@ import numpy as np
 import torch
 import torchaudio
 from language.language_manager import LanguageManager
+from layers.quantizer import VAEMemoryBank
 from speaker.speaker_manager import SpeakerManager
 from torch.nn import functional as F
 from torch import nn
@@ -114,6 +115,11 @@ class VitsModel(nn.Module):
             conv_post_weight_norm=True,
             conv_post_bias=False,
         )
+        self.memory_bank = VAEMemoryBank(
+            bank_size=self.model_config.memory_bank.bank_size,
+            n_hidden_dims=self.model_config.memory_bank.n_hidden_dims,
+            n_attn_heads=self.model_config.memory_bank.n_attn_heads
+        )
 
     def monotonic_align(self, z_p, m_p, logs_p, x, x_mask, y_mask):
         # find the alignment path
@@ -174,6 +180,9 @@ class VitsModel(nn.Module):
 
         # select a random feature segment for the waveform decoder
         z_slice, slice_ids = rand_segments(z, y_lengths, self.spec_segment_size, let_short_samples=True, pad_short=True)
+
+        if self.model_config.use_memory_bank:
+            z_slice = self.memory_bank(z_slice)
 
         y_hat = self.waveform_decoder(z_slice, g=g)
 
