@@ -44,7 +44,6 @@ class VitsTrain(VitsTrainBase):
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 
-
 def main(config_path:str):
     config = VitsConfig()
     config.load_json(config_path)

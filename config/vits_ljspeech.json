@@ -70,7 +70,7 @@
     "batch_size": 4,
     "eval_batch_size": 4,
 
-    "print_step": 30,
+    "print_step": 5,
     "plot_step": 100,
     "log_model_step": 1000,
     "save_step": 2000,

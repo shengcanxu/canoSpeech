@@ -170,10 +170,10 @@ class VitsModel(nn.Module):
             lang_embed = self.language_embedding(language_ids).unsqueeze(-1)  # [B, lang_channel, 1]
 
         # audio encoder, encode audio to embedding layer z's dimension
-        z, m_q, logs_q, y_mask = self.audio_encoder(y, y_lengths, g=g)
+        z_q_audio, m_q_audio, logs_q_audio, y_mask = self.audio_encoder(y, y_lengths, g=g)
 
         # select a random feature segment for the waveform decoder
-        z_slice, slice_ids = rand_segments(z, y_lengths, self.spec_segment_size, let_short_samples=True, pad_short=True)
+        z_slice, slice_ids = rand_segments(z_q_audio, y_lengths, self.spec_segment_size, let_short_samples=True, pad_short=True)
 
         y_hat = self.waveform_decoder(z_slice, g=g)
 
@@ -185,19 +185,19 @@ class VitsModel(nn.Module):
         )
 
         # flow layers
-        z_p = self.flow(z, y_mask, g=g)
+        z_q_dur = self.flow(z_q_audio, y_mask, g=g)
 
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embed)
+        h_text, m_p_text, logs_p_text, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embed)
 
         # monotonic align and duration predictor
-        attn_durations, attn = self.monotonic_align(z_p, m_p, logs_p, x, x_mask, y_mask)
+        attn_durations, attn = self.monotonic_align(z_q_dur, m_p_text, logs_p_text, x, x_mask, y_mask)
         # expand text token_size to audio token_size
-        m_p = torch.einsum("klmn, kjm -> kjn", [attn, m_p])
-        logs_p = torch.einsum("klmn, kjm -> kjn", [attn, logs_p])
+        m_p_dur = torch.einsum("klmn, kjm -> kjn", [attn, m_p_text])
+        logs_p_dur = torch.einsum("klmn, kjm -> kjn", [attn, logs_p_text])
 
         if self.use_sdp:
             loss_duration = self.duration_predictor(
-                x=x.detach(),
+                x=h_text.detach(),
                 x_mask=x_mask,
                 dr=attn_durations,
                 g=g.detach() if g is not None else g,
@@ -207,7 +207,7 @@ class VitsModel(nn.Module):
         else:
             attn_log_durations = torch.log(attn_durations + 1e-6) * x_mask
             predict_log_durations = self.duration_predictor(
-                x=x.detach(),
+                x=h_text.detach(),
                 x_mask=x_mask,
                 g=g.detach() if g is not None else g,
                 lang_emb=lang_embed,
@@ -231,12 +231,12 @@ class VitsModel(nn.Module):
 
         return {
             "y_hat": y_hat,  # [B, 1, T_wav]
-            "m_p": m_p,  # [B, C, T_dec]
-            "logs_p": logs_p,  # [B, C, T_dec]
-            "z": z,  # [B, C, T_dec]
-            "z_p": z_p,  # [B, C, T_dec]
-            "m_q": m_q,  # [B, C, T_dec]
-            "logs_q": logs_q,  # [B, C, T_dec]
+            "m_p_dur": m_p_dur,  # [B, C, T_dec]
+            "logs_p_dur": logs_p_dur,  # [B, C, T_dec]
+            "z_q_audio": z_q_audio,  # [B, C, T_dec]
+            "z_q_dur": z_q_dur,  # [B, C, T_dec]
+            "m_q_audio": m_q_audio,  # [B, C, T_dec]
+            "logs_q_audio": logs_q_audio,  # [B, C, T_dec]
             "waveform_seg": wav_seg,  # [B, 1, spec_seg_size * hop_length]
             "slice_ids": slice_ids,
             "loss_duration": loss_duration,
@@ -270,11 +270,11 @@ class VitsModel(nn.Module):
         if self.model_config.use_language_ids:
             lang_embed = self.language_embedding(language_ids).unsqueeze(-1)  # [B, lang_channel, 1]
 
-        x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embed)
+        h_text, m_p_text, logs_p_text, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embed)
 
         if self.use_sdp:
             logw = self.duration_predictor(
-                x=x,
+                x=h_text,
                 x_mask=x_mask,
                 g=g if g is not None else g,
                 reverse=True,
@@ -296,15 +296,15 @@ class VitsModel(nn.Module):
         attn_mask = x_mask * y_mask.transpose(1, 2)  # [B, 1, T_enc] * [B, T_dec, 1]
         attn = generate_path(w_ceil.squeeze(1), attn_mask.squeeze(1).transpose(1, 2))
 
-        m_p = torch.matmul(attn.transpose(1, 2), m_p.transpose(1, 2)).transpose(1, 2)
-        logs_p = torch.matmul(attn.transpose(1, 2), logs_p.transpose(1, 2)).transpose(1, 2)
+        m_p_dur = torch.matmul(attn.transpose(1, 2), m_p_text.transpose(1, 2)).transpose(1, 2)
+        logs_p_dur = torch.matmul(attn.transpose(1, 2), logs_p_text.transpose(1, 2)).transpose(1, 2)
 
-        z_p = m_p + torch.randn_like(m_p) * torch.exp(logs_p) * noise_scale
-        z = self.flow(z_p, y_mask, g=g, reverse=True)
+        z_p_dur = m_p_dur + torch.randn_like(m_p_dur) * torch.exp(logs_p_dur) * noise_scale
+        z_p_audio = self.flow(z_p_dur, y_mask, g=g, reverse=True)
 
-        z = (z * y_mask)[:, :, : max_len]
-        wav = self.waveform_decoder(z, g=g)
-        return wav, attn, y_mask, (z, z_p, m_p, logs_p)
+        z_p_audio = (z_p_audio * y_mask)[:, :, : max_len]
+        wav = self.waveform_decoder(z_p_audio, g=g)
+        return wav, attn, y_mask, (z_p_audio, z_p_dur, m_p_dur, logs_p_dur)
 
     @torch.no_grad()
     def generate_z_wav(self, spec, spec_len, speaker_id=None, speaker_embed=None):
@@ -338,8 +338,8 @@ class VitsModel(nn.Module):
         else:
             raise RuntimeError(" [!] Voice conversion is only supported on multi-speaker models.")
 
-        z, _, _, y_mask = self.audio_encoder(y, y_lengths, g=g_src)
-        z_p = self.flow(z, y_mask, g=g_src)
-        z_hat = self.flow(z_p, y_mask, g=g_tgt, reverse=True)
-        o_hat = self.waveform_decoder(z_hat * y_mask, g=g_tgt)
-        return o_hat, y_mask, (z, z_p, z_hat)
+        z_q_audio, _, _, y_mask = self.audio_encoder(y, y_lengths, g=g_src)
+        z_q_dur = self.flow(z_q_audio, y_mask, g=g_src)
+        z_p_audio = self.flow(z_q_dur, y_mask, g=g_tgt, reverse=True)
+        o_hat = self.waveform_decoder(z_p_audio * y_mask, g=g_tgt)
+        return o_hat, y_mask, (z_q_audio, z_q_dur, z_p_audio)

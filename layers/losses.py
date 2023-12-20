@@ -71,11 +71,11 @@ class VitsGeneratorLoss(nn.Module):
         self,
         mel_slice,  # [B, 1, T]
         mel_slice_hat,  # [B, 1, T]
-        z_p,  # [B, C, T]
-        logs_q,  # [B, C, T]
-        m_p,  # [B, C, T]
-        logs_p,  # [B, C, T]
-        z_len,  # [B]
+        z_q_dur,  # [B, C, T]
+        logs_q_audio,  # [B, C, T]
+        m_p_dur,  # [B, C, T]
+        logs_p_dur,  # [B, C, T]
+        spec_lens,  # [B]
         scores_disc_fake,  # [B, C]
         feats_disc_fake,  # [B, C, T', P]
         feats_disc_real,  # [B, C, T', P]
@@ -86,7 +86,7 @@ class VitsGeneratorLoss(nn.Module):
     ):
         loss = 0.0
         return_dict = {}
-        z_mask = sequence_mask(z_len).float()
+        z_mask = sequence_mask(spec_lens).float()
 
         # compute losses
         loss_feat = (
@@ -102,7 +102,7 @@ class VitsGeneratorLoss(nn.Module):
         return_dict["loss_mel"] = loss_mel
 
         loss_kl = (
-            self.kl_loss(z_p=z_p, logs_q=logs_q, m_p=m_p, logs_p=logs_p, z_mask=z_mask.unsqueeze(1))
+            self.kl_loss(z_p=z_q_dur, logs_q=logs_q_audio, m_p=m_p_dur, logs_p=logs_p_dur, z_mask=z_mask.unsqueeze(1))
             * self.kl_loss_alpha
         )
         loss_duration = torch.sum(loss_duration.float()) * self.dur_loss_alpha
