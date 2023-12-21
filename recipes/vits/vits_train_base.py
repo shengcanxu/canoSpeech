@@ -23,12 +23,32 @@ class VitsTrainBase(TrainerModelWithDataset):
         super().__init__(config)
         self.config = config
         self.model_config = config.model
+        self.model_freezed = False
 
         self.generator = VitsModel(config=config, speaker_manager=self.speaker_manager, language_manager=self.language_manager)
         self.discriminator = VitsDiscriminator(
             periods=self.model_config.discriminator.periods_multi_period,
             use_spectral_norm=self.model_config.discriminator.use_spectral_norm,
         )
+
+    def _freeze_layers(self):
+        for param in self.generator.text_encoder.parameters():
+            param.requires_grad = False
+        for param in self.generator.audio_encoder.parameters():
+            param.requires_grad = False
+        for param in self.generator.flow.parameters():
+            param.requires_grad = False
+        for param in self.generator.duration_predictor.parameters():
+            param.requires_grad = False
+        for param in self.generator.waveform_decoder.parameters():
+            param.requires_grad = False
+        for param in self.discriminator.parameters():
+            param.requires_grad = False
+        self.model_freezed = True
+
+    def on_init_end(self, trainer) -> None:
+        print("freeze the layers...")
+        self._freeze_layers()
 
     def train_step(self, batch: Dict, criterion: nn.Module, optimizer_idx: int) -> Tuple[Dict, Dict]:
         spec_lens = batch["spec_lens"]
@@ -40,6 +60,10 @@ class VitsTrainBase(TrainerModelWithDataset):
             speaker_ids = batch["speaker_ids"]
             speaker_embeds = batch["speaker_embeds"]
             language_ids = batch["language_ids"]
+
+            idx = torch.LongTensor([1]).cuda()
+            g = self.generator.speaker_embedding(idx)
+            print(g)
 
             # generator pass
             self.generator.train()
@@ -69,7 +93,10 @@ class VitsTrainBase(TrainerModelWithDataset):
                     scores_disc_real=scores_disc_real,
                     scores_disc_fake=scores_disc_fake,
                 )
-            return outputs, loss_dict
+            if self.model_freezed:
+                return outputs, None
+            else:
+                return outputs, loss_dict
 
         if optimizer_idx == 1:
             mel = batch["mel"]
