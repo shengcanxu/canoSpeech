@@ -6,6 +6,7 @@ import torch
 import torchaudio
 from language.language_manager import LanguageManager
 from speaker.speaker_manager import SpeakerManager
+from text.symbol_manager import SymbolManager
 from torch.nn import functional as F
 from torch import nn
 from config.config import VitsConfig
@@ -20,12 +21,13 @@ from util.helper import sequence_mask, segment, rand_segments
 
 # VITS model and yourTTS model 
 class VitsModel(nn.Module):
-    def __init__(self, config:VitsConfig, speaker_manager:SpeakerManager, language_manager:LanguageManager):
+    def __init__(self, config:VitsConfig, speaker_manager:SpeakerManager, language_manager:LanguageManager, symbol_manager:SymbolManager):
         super().__init__()
         self.config = config
         self.model_config = config.model
         self.speaker_manager = speaker_manager
         self.language_manager = language_manager
+        self.symbol_manager = symbol_manager
 
         self.use_sdp = self.model_config.use_sdp
         self.spec_segment_size = self.model_config.spec_segment_size
@@ -52,7 +54,7 @@ class VitsModel(nn.Module):
             )
 
         self.text_encoder = TextEncoder(
-            n_vocab=self.model_config.text_encoder.num_chars,
+            n_vocab=self.symbol_manager.symbol_count(),
             out_channels=self.model_config.hidden_channels,
             hidden_channels=self.model_config.hidden_channels,
             hidden_channels_ffn=self.model_config.text_encoder.hidden_channels_ffn,
@@ -315,8 +317,8 @@ class VitsModel(nn.Module):
                 g = g.unsqueeze_(0)
         elif self.speaker_embedding is not None and speaker_id is not None:
             g = self.speaker_embedding(speaker_id).unsqueeze(-1)
-        z, _, _, _ = self.audio_encoder(spec, spec_len, g=g)
-        wav = self.waveform_decoder(z, g=g)
+        z_q_audio, _, _, _ = self.audio_encoder(spec, spec_len, g=g)
+        wav = self.waveform_decoder(z_q_audio, g=g)
         return wav
 
     def voice_conversion(self, y, y_lengths, source_speaker, target_speaker):

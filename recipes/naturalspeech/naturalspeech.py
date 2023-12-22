@@ -12,18 +12,20 @@ from layers.learnable_upsampling import LearnableUpsampling
 from layers.quantizer import VAEMemoryBank
 from monotonic_align.maximum_path import maximum_path
 from speaker.speaker_manager import SpeakerManager
+from text.symbol_manager import SymbolManager
 from torch import nn
 from torch.nn import functional as F
 from util.helper import segment, rand_segments
 
 
 class NaturalSpeechModel(nn.Module):
-    def __init__(self, config:VitsConfig, speaker_manager:SpeakerManager, language_manager:LanguageManager):
+    def __init__(self, config:VitsConfig, speaker_manager:SpeakerManager, language_manager:LanguageManager, symbol_manager:SymbolManager):
         super().__init__()
         self.config = config
         self.model_config = config.model
         self.speaker_manager = speaker_manager
         self.language_manager = language_manager
+        self.symbol_manager = symbol_manager
 
         self.use_sdp = self.model_config.use_sdp
         self.spec_segment_size = self.model_config.spec_segment_size
@@ -39,7 +41,7 @@ class NaturalSpeechModel(nn.Module):
             self.language_embedding = nn.Embedding(self.language_manager.language_count(), self.embedded_language_dim)
 
         self.text_encoder = TextEncoder(
-            n_vocab=self.model_config.text_encoder.num_chars,
+            n_vocab=self.symbol_manager.symbol_count(),
             out_channels=self.model_config.hidden_channels,
             hidden_channels=self.model_config.hidden_channels,
             hidden_channels_ffn=self.model_config.text_encoder.hidden_channels_ffn,

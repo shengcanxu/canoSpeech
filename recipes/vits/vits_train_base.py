@@ -7,7 +7,7 @@ from layers.discriminator import VitsDiscriminator
 from layers.losses import VitsDiscriminatorLoss, VitsGeneratorLoss
 from recipes.trainer_model import TrainerModelWithDataset
 from recipes.vits.vits import VitsModel
-from text import text_to_tokens, _intersperse
+from text import _intersperse
 from torch import nn
 from torch.cuda.amp import autocast
 from trainer import get_optimizer
@@ -25,7 +25,12 @@ class VitsTrainBase(TrainerModelWithDataset):
         self.model_config = config.model
         self.model_freezed = False
 
-        self.generator = VitsModel(config=config, speaker_manager=self.speaker_manager, language_manager=self.language_manager)
+        self.generator = VitsModel(
+            config=config,
+            speaker_manager=self.speaker_manager,
+            language_manager=self.language_manager,
+            symbol_manager=self.symbol_manager
+        )
         self.discriminator = VitsDiscriminator(
             periods=self.model_config.discriminator.periods_multi_period,
             use_spectral_norm=self.model_config.discriminator.use_spectral_norm,
@@ -46,9 +51,9 @@ class VitsTrainBase(TrainerModelWithDataset):
             param.requires_grad = False
         self.model_freezed = True
 
-    def on_init_end(self, trainer) -> None:
-        print("freeze the layers...")
-        self._freeze_layers()
+    # def on_init_end(self, trainer) -> None:
+    #     print("freeze the layers...")
+    #     self._freeze_layers()
 
     def train_step(self, batch: Dict, criterion: nn.Module, optimizer_idx: int) -> Tuple[Dict, Dict]:
         spec_lens = batch["spec_lens"]
@@ -60,10 +65,6 @@ class VitsTrainBase(TrainerModelWithDataset):
             speaker_ids = batch["speaker_ids"]
             speaker_embeds = batch["speaker_embeds"]
             language_ids = batch["language_ids"]
-
-            idx = torch.LongTensor([1]).cuda()
-            g = self.generator.speaker_embedding(idx)
-            print(g)
 
             # generator pass
             self.generator.train()
@@ -153,7 +154,7 @@ class VitsTrainBase(TrainerModelWithDataset):
     @torch.no_grad()
     def inference(self, text:str, speaker_name:str=None, speaker_embed=None, language:str=None):
         lang = "en" if language is None else language
-        tokens = text_to_tokens(text, cleaner_name=self.config.text.text_cleaners.get(lang))
+        tokens = self.symbol_manager.text_to_tokens(text, cleaner_name=self.config.text.text_cleaners.get(lang), lang=lang)
         if self.config.text.add_blank:
             tokens = _intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0).cuda()

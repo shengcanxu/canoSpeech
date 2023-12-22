@@ -7,6 +7,7 @@ import soundfile as sf
 import torch
 from config.config import NaturalTTSConfig
 from coqpit import Coqpit
+from language.language_manager import LanguageManager
 from layers.discriminator import VitsDiscriminator
 from layers.encoder import TextEncoder, AudioEncoder
 from layers.flow import AttentionFlow
@@ -17,7 +18,8 @@ from layers.quantizer import ResidualVectorQuantization
 from layers.variance_predictor import DurationPredictor, PitchPredictor
 from monotonic_align.maximum_path import maximum_path
 from recipes.trainer_model import TrainerModelWithDataset
-from text import text_to_tokens
+from speaker.speaker_manager import SpeakerManager
+from text.symbol_manager import SymbolManager
 from torch import nn
 from torch.cuda.amp import autocast
 from torch.nn import functional as F
@@ -27,12 +29,13 @@ from util.mel_processing import wav_to_mel
 
 
 class NaturalTTSModel(nn.Module):
-    def __init__(self, config:NaturalTTSConfig, speaker_embed: torch.Tensor = None):
+    def __init__(self, config:NaturalTTSConfig, speaker_manager:SpeakerManager, language_manager:LanguageManager, symbol_manager:SymbolManager):
         super().__init__()
         self.config = config
         self.model_config = config.model
-        self.speaker_embed = speaker_embed
-        # self.language_manager = language_manager
+        self.speaker_manager = speaker_manager
+        self.language_manager = language_manager
+        self.symbol_manager = symbol_manager
 
         # init multi-speaker, speaker_embedding is used when the speaker_embed is not provided
         # self.num_speakers = self.model_config.num_speakers
@@ -45,7 +48,7 @@ class NaturalTTSModel(nn.Module):
         self.init_multilingual(config)
 
         self.text_encoder = TextEncoder(
-            n_vocab=self.model_config.text_encoder.num_chars,
+            n_vocab=self.symbol_manager.symbol_count(),
             out_channels=self.model_config.hidden_channels,
             hidden_channels=self.model_config.hidden_channels,
             hidden_channels_ffn=self.model_config.text_encoder.hidden_channels_ffn,
@@ -606,8 +609,9 @@ class NaturalTTSTrain(TrainerModelWithDataset):
         print("nothing to do! doing the real train code in train_step. ")
         return input
 
-    def inference(self, text:str, speaker_id:int=None, language_id=None, lang="en"):
-        tokens = text_to_tokens(text, cleaner_name=self.config.text.text_cleaners.get(lang))
+    def inference(self, text:str, speaker_id:int=None, language_id=None, language="en"):
+        lang = "en" if language is None else language
+        tokens = self.symbol_manager.text_to_tokens(text, cleaner_name=self.config.text.text_cleaners.get(lang), lang=lang)
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0)
         wav = self.generator.infer(tokens)
         return wav

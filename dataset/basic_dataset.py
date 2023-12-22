@@ -9,8 +9,9 @@ import pickle
 from coqpit import coqpit
 from language.language_manager import LanguageManager
 from speaker.speaker_manager import SpeakerManager
-from text import cleaned_text_to_tokens, get_clean_text, _intersperse
+from text import get_clean_text, _intersperse
 import torch
+from text.symbol_manager import SymbolManager
 from torch.utils.data import Dataset
 import librosa
 from util.mel_processing import wav_to_mel, wav_to_spec, spec_to_mel, load_audio
@@ -81,7 +82,7 @@ class TextAudioDataset(Dataset):
     """
     load audio, text and return dataset
     """
-    def __init__(self, samples, config:coqpit, speaker_manager:SpeakerManager, language_manager:LanguageManager):
+    def __init__(self, samples, config:coqpit, speaker_manager:SpeakerManager, language_manager:LanguageManager, symbol_manager:SymbolManager):
         self.samples = samples
         self.use_cache = config.dataset_config.use_cache
         self.add_preprocess_data = config.dataset_config.add_preprocess_data
@@ -105,6 +106,7 @@ class TextAudioDataset(Dataset):
 
         self.speaker_manager = speaker_manager
         self.language_manager = language_manager
+        self.symbol_manager = symbol_manager
 
         random.seed(1234)
         random.shuffle(self.samples)  # shuffle samples
@@ -195,10 +197,10 @@ class TextAudioDataset(Dataset):
         """format text and add blank"""
         if self.cleaned_text:
             cleaned_text = text
-            tokens = cleaned_text_to_tokens(text)
+            tokens = self.symbol_manager.cleaned_text_to_tokens(text, lang)
         else:
             cleaned_text = get_clean_text(text, self.text_cleaners.get(lang))
-            tokens = cleaned_text_to_tokens(cleaned_text)
+            tokens = self.symbol_manager.cleaned_text_to_tokens(cleaned_text, lang)
         if self.add_blank:
             tokens = _intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens)

@@ -5,7 +5,7 @@ from layers.discriminator import VitsDiscriminator
 from layers.losses import NaturalSpeechDiscriminatorLoss, NaturalSpeechGeneratorLoss
 from recipes.naturalspeech.naturalspeech import NaturalSpeechModel
 from recipes.trainer_model import TrainerModelWithDataset
-from text import text_to_tokens, _intersperse
+from text import _intersperse
 from torch import nn
 from trainer import torch, get_optimizer
 from util.helper import segment
@@ -142,7 +142,7 @@ class NaturalSpeechBase(TrainerModelWithDataset):
     @torch.no_grad()
     def inference(self, text:str, speaker_name:str=None, speaker_embed=None, language:str=None):
         lang = "en" if language is None else language
-        tokens = text_to_tokens(text, cleaner_name=self.config.text.text_cleaners.get(lang))
+        tokens = self.symbol_manager.text_to_tokens(text, cleaner_name=self.config.text.text_cleaners.get(lang), lang=lang)
         if self.config.text.add_blank:
             tokens = _intersperse(tokens, 0)
         tokens = torch.LongTensor(tokens).unsqueeze(dim=0).cuda()
