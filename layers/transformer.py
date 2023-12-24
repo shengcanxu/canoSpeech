@@ -354,6 +354,7 @@ class RelativePositionTransformer(nn.Module):
         rel_attn_window_size: int = None,
         input_length: int = None,
         layer_norm_type: str = "1",
+        gin_channels: int = 0
     ):
         super().__init__()
         self.hidden_channels = hidden_channels
@@ -369,6 +370,12 @@ class RelativePositionTransformer(nn.Module):
         self.norm_layers_1 = nn.ModuleList()
         self.ffn_layers = nn.ModuleList()
         self.norm_layers_2 = nn.ModuleList()
+
+        self.gin_channels = gin_channels
+        self.cond_layer_idx = self.num_layers
+        if self.gin_channels != 0:
+            self.spk_emb_linear = nn.Linear(self.gin_channels, self.hidden_channels)
+            self.cond_layer_idx = 2
 
         for idx in range(self.num_layers):
             self.attn_layers.append(
@@ -408,7 +415,7 @@ class RelativePositionTransformer(nn.Module):
             else:
                 raise ValueError(" [!] Unknown layer norm type")
 
-    def forward(self, x, x_mask):
+    def forward(self, x, x_mask, g=None):
         """
         Shapes:
             - x: :math:`[B, C, T]`
@@ -417,6 +424,12 @@ class RelativePositionTransformer(nn.Module):
         attn_mask = x_mask.unsqueeze(2) * x_mask.unsqueeze(-1)
         for i in range(self.num_layers):
             x = x * x_mask
+            # vits2: add speaker embedding in text encoder
+            if i == self.cond_layer_idx and g is not None:
+                g = self.spk_emb_linear(g.transpose(1, 2)).transpose(1, 2)
+                x = x + g
+                x = x * x_mask
+
             y = self.attn_layers[i](x, x, attn_mask)
             y = self.dropout(y)
             x = self.norm_layers_1[i](x + y)

@@ -31,6 +31,8 @@ class VitsModel(nn.Module):
 
         self.use_sdp = self.model_config.use_sdp
         self.spec_segment_size = self.model_config.spec_segment_size
+        self.mas_noise_scale = self.model_config.mas_noise_scale or 0.0
+        self.mas_noise_scale_decay = self.model_config.mas_noise_scale_decay or 0.0
 
         self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
         if self.model_config.use_speaker_ids:
@@ -63,6 +65,7 @@ class VitsModel(nn.Module):
             kernel_size=self.model_config.text_encoder.kernel_size,
             dropout_p=self.model_config.text_encoder.dropout_p,
             language_emb_dim=self.embedded_language_dim,
+            speaker_emb_dim=self.embedded_speaker_dim if self.model_config.text_encoder.use_speaker_embed else 0,
         )
         self.audio_encoder = AudioEncoder(
             in_channels=self.model_config.out_channels,
@@ -81,6 +84,7 @@ class VitsModel(nn.Module):
             num_flows=self.model_config.flow.num_flows,
             num_layers=self.model_config.flow.num_layers_in_flow,
             cond_channels=self.embedded_speaker_dim,
+            use_transformer_flow=self.model_config.flow.use_transformer_flow,
         )
         if self.use_sdp:
             self.duration_predictor = StochasticDurationPredictor(
@@ -117,7 +121,7 @@ class VitsModel(nn.Module):
             conv_post_bias=False,
         )
 
-    def monotonic_align(self, z_p, m_p, logs_p, x, x_mask, y_mask):
+    def monotonic_align(self, z_p, m_p, logs_p, x, x_mask, y_mask, mas_noise_scale=0.01):
         # find the alignment path
         attn_mask = torch.unsqueeze(x_mask, -1) * torch.unsqueeze(y_mask, 2)
         with torch.no_grad():
@@ -129,6 +133,12 @@ class VitsModel(nn.Module):
             logp3 = torch.einsum("klm, kln -> kmn", [m_p * o_scale, z_p])  # log( 2xu/2p**2 ), u is the mean here
             logp4 = torch.sum(-0.5 * (m_p**2) * o_scale, [1]).unsqueeze(-1)  # [b, t, 1]  log( u**2/(2*p**2) )
             logp = logp2 + logp3 + logp1 + logp4  # log("Probability density")
+
+            # vits2.0: add noice in Monotonic Align Search
+            if mas_noise_scale > 0.0:
+                epsilon = torch.std(logp) * torch.randn_like(logp) * mas_noise_scale
+                logp = logp + epsilon
+
             attn = maximum_path(logp, attn_mask.squeeze(1)).unsqueeze(1).detach()  # [b, 1, t, t']
 
         # duration predictor
@@ -192,7 +202,9 @@ class VitsModel(nn.Module):
         h_text, m_p_text, logs_p_text, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embed)
 
         # monotonic align and duration predictor
-        attn_durations, attn = self.monotonic_align(z_q_dur, m_p_text, logs_p_text, x, x_mask, y_mask)
+        attn_durations, attn = self.monotonic_align(z_q_dur, m_p_text, logs_p_text, x, x_mask, y_mask, mas_noise_scale=self.mas_noise_scale)
+        self.mas_noise_scale = max(self.mas_noise_scale - self.mas_noise_scale_decay, 0.0)
+
         # expand text token_size to audio token_size
         m_p_dur = torch.einsum("klmn, kjm -> kjn", [attn, m_p_text])
         logs_p_dur = torch.einsum("klmn, kjm -> kjn", [attn, logs_p_text])
@@ -281,6 +293,7 @@ class VitsModel(nn.Module):
                 g=g if g is not None else g,
                 reverse=True,
                 noise_scale=noise_scale,
+                lang_emb=lang_embed
             )
         else:
             logw = self.duration_predictor(

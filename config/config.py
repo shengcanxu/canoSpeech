@@ -51,6 +51,7 @@ class TextEncoderConfig(Coqpit):
     num_layers:int = 10
     kernel_size:int = 3
     dropout_p:float = 0.1
+    use_speaker_embed:bool = False  # add speaker embedding in vits2
 
 @dataclass
 class AudioEncoderConfig(Coqpit):
@@ -65,6 +66,7 @@ class FlowConfig(Coqpit):
     num_flows:int = 4
     num_layers_in_flow:int = 4
     attention_heads:int = 2
+    use_transformer_flow:bool = True
 
 @dataclass
 class VitsDurationPredictorConfig(Coqpit):
@@ -126,6 +128,9 @@ class BaseModelConfig(Coqpit):
 class ModelConfig(BaseModelConfig):
     use_memory_bank: bool = True
     use_gt_duration: bool = False  # use ground-true duration to generate the training data
+
+    mas_noise_scale: float = 0.0
+    mas_noise_scale_decay: float = 0.0
 
     text_encoder: TextEncoderConfig = field(default_factory=lambda: TextEncoderConfig())
     audio_encoder: AudioEncoderConfig = field(default_factory=lambda: AudioEncoderConfig())

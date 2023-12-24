@@ -2,7 +2,7 @@ import math
 import torch
 from torch import nn
 
-from layers.transformer import RelativePositionMultiHeadAttention
+from layers.transformer import RelativePositionMultiHeadAttention, RelativePositionTransformer
 from layers.wavenet import WaveNet
 
 
@@ -198,11 +198,28 @@ class ResidualCouplingBlock(nn.Module):
         dropout_p=0,
         cond_channels=0,
         mean_only=False,
+        use_transformer_flow=False,
     ):
         assert channels % 2 == 0, "channels should be divisible by 2"
         super().__init__()
         self.half_channels = channels // 2
         self.mean_only = mean_only
+
+        #vits2: transformer in each flow block
+        self.pre_transformer = None
+        if use_transformer_flow:
+            self.pre_transformer = RelativePositionTransformer(
+                in_channels=self.half_channels,
+                out_channels=self.half_channels,
+                hidden_channels=self.half_channels,
+                hidden_channels_ffn=self.half_channels,
+                num_heads=2,
+                num_layers=1,
+                kernel_size=3,
+                dropout_p=0.1,
+                rel_attn_window_size=None,
+            )
+
         # input layer
         self.pre = nn.Conv1d(self.half_channels, hidden_channels, 1)
         # coupling layers
@@ -231,7 +248,14 @@ class ResidualCouplingBlock(nn.Module):
             - g: :math:`[B, C, 1]`
         """
         x0, x1 = torch.split(x, [self.half_channels] * 2, 1)
-        h = self.pre(x0) * x_mask
+
+        #vits2: transformer in each flow
+        x0_pre = x0
+        if self.pre_transformer is not None:
+            x0_pre = self.pre_transformer(x0 * x_mask, x_mask)
+            x0_pre = x0_pre + x0  # residual connection
+
+        h = self.pre(x0_pre) * x_mask
         h = self.enc(h, x_mask, g=g)
         stats = self.post(h) * x_mask
         if not self.mean_only:
@@ -261,6 +285,7 @@ class ResidualCouplingBlocks(nn.Module):
         num_layers: int,
         num_flows=4,
         cond_channels=0,
+        use_transformer_flow=False
     ):
         """Redisual Coupling blocks for VITS flow layers.
         Args:
@@ -292,6 +317,7 @@ class ResidualCouplingBlocks(nn.Module):
                     num_layers,
                     cond_channels=cond_channels,
                     mean_only=True,
+                    use_transformer_flow=use_transformer_flow
                 )
             )
 

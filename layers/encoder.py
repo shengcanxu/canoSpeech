@@ -19,6 +19,7 @@ class TextEncoder(nn.Module):
         kernel_size: int,
         dropout_p: float,
         language_emb_dim: int = None,
+        speaker_emb_dim: int = 0
     ):
         """Text Encoder for VITS model.
         Args:
@@ -53,11 +54,12 @@ class TextEncoder(nn.Module):
             dropout_p=dropout_p,
             layer_norm_type="2",
             rel_attn_window_size=4,
+            gin_channels=speaker_emb_dim,
         )
 
         self.proj = nn.Conv1d(hidden_channels, out_channels * 2, 1)
 
-    def forward(self, x, x_lengths, lang_emb=None):
+    def forward(self, x:torch.Tensor, x_lengths:torch.Tensor, g=None, lang_emb=None):
         """
         Shapes:
             - x: :math:`[B, T]`
