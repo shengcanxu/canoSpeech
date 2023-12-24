@@ -1,7 +1,6 @@
 {
     "run_name": "CanoVitsVCTK",
     "run_description": "Cano Speech running on VCTK dataset",
-    "restore_path": "D:\\project\\canoSpeech\\output\\online\\best_model_176015.pth",
     "output_path": "D:/project/canoSpeech/output",
 
     "dataset_config": {
@@ -96,8 +95,11 @@
         "out_channels":513,
         "spec_segment_size": 32,
 
+        "mas_noise_scale": 0.01,
+        "mas_noise_scale_decay": 2.0e-06,
+
         "language_embedding_channels": 4,
-        "use_language_embedding": false,
+        "use_language_ids": false,
         "speaker_embedding_channels": 512,
         "use_speaker_ids": false,
         "use_speaker_embeds": true,
@@ -110,7 +112,8 @@
             "num_heads": 2,
             "num_layers": 10,
             "kernel_size": 3,
-            "dropout_p": 0.1
+            "dropout_p": 0.1,
+            "use_speaker_embed": true
         },
         "audio_encoder": {
             "kernel_size": 5,
@@ -122,7 +125,8 @@
             "dilation_rate": 1,
             "num_flows": 4,
             "num_layers_in_flow": 4,
-            "attention_heads": 2
+            "attention_heads": 2,
+            "use_transformer_flow": true
         },
         "duration_predictor": {
             "kernel_size": 3,

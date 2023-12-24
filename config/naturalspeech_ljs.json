@@ -91,7 +91,7 @@
         "spec_segment_size": 32,
 
         "language_embedding_channels": 4,
-        "use_language_embedding": false,
+        "use_language_ids": false,
         "speaker_embedding_channels": 512,
         "use_speaker_ids": false,
         "use_speaker_encoder_as_loss": false,
