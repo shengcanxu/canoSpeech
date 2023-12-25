@@ -64,6 +64,24 @@ class VitsGeneratorLoss(nn.Module):
         return l
 
     @staticmethod
+    def kl_loss_normal(m_q: torch.Tensor, logs_q: torch.Tensor, m_p: torch.Tensor, logs_p: torch.Tensor, z_mask: torch.Tensor):
+        """
+        z_p, logs_q: [b, h, t_t]
+        m_p, logs_p: [b, h, t_t]
+        """
+        m_q = m_q.float()
+        logs_q = logs_q.float()
+        m_p = m_p.float()
+        logs_p = logs_p.float()
+        z_mask = z_mask.float()
+
+        kl = logs_p - logs_q - 0.5
+        kl += 0.5 * (torch.exp(2.0 * logs_q) + (m_q - m_p) ** 2) * torch.exp(-2.0 * logs_p)
+        kl = torch.sum(kl * z_mask)
+        l = kl / torch.sum(z_mask)
+        return l
+
+    @staticmethod
     def cosine_similarity_loss(gt_spk_emb, syn_spk_emb):
         return -torch.nn.functional.cosine_similarity(gt_spk_emb, syn_spk_emb).mean()
 
@@ -72,9 +90,13 @@ class VitsGeneratorLoss(nn.Module):
         mel_slice,  # [B, 1, T]
         mel_slice_hat,  # [B, 1, T]
         z_q_dur,  # [B, C, T]
-        logs_q_audio,  # [B, C, T]
+        logs_q_dur,  # [B, C, T]
         m_p_dur,  # [B, C, T]
         logs_p_dur,  # [B, C, T]
+        m_q_audio,  # [B, C, T]
+        logs_q_audio,  # [B, C, T]
+        m_p_audio,  # [B, C, T]
+        logs_p_audio,  # [B, C, T]
         spec_lens,  # [B]
         scores_disc_fake,  # [B, C]
         feats_disc_fake,  # [B, C, T', P]
@@ -102,12 +124,17 @@ class VitsGeneratorLoss(nn.Module):
         return_dict["loss_mel"] = loss_mel
 
         loss_kl = (
-            self.kl_loss(z_p=z_q_dur, logs_q=logs_q_audio, m_p=m_p_dur, logs_p=logs_p_dur, z_mask=z_mask.unsqueeze(1))
+            self.kl_loss(z_p=z_q_dur, logs_q=logs_q_dur, m_p=m_p_dur, logs_p=logs_p_dur, z_mask=z_mask.unsqueeze(1))
+            * self.kl_loss_alpha
+        )
+        loss_kl_audio = (
+            self.kl_loss_normal(m_p=m_p_audio, logs_p=logs_p_audio, m_q=m_q_audio, logs_q=logs_q_audio, z_mask=z_mask.unsqueeze(1))
             * self.kl_loss_alpha
         )
         loss_duration = torch.sum(loss_duration.float()) * self.dur_loss_alpha
-        loss = loss + loss_kl + loss_duration
+        loss = loss + loss_kl + loss_kl_audio + loss_duration
         return_dict["loss_kl"] = loss_kl
+        return_dict["loss_kl_audio"] = loss_kl_audio
         return_dict["loss_duration"] = loss_duration
 
         if self.model_config.use_speaker_encoder_as_loss:

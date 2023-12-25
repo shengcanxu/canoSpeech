@@ -239,7 +239,7 @@ class ResidualCouplingBlock(nn.Module):
         self.post.weight.data.zero_()
         self.post.bias.data.zero_()
 
-    def forward(self, x, x_mask, g=None, reverse=False):
+    def forward(self, x, m, logs, x_mask, g=None, reverse=False):
         """Note:
             Set `reverse` to True for inference.
         Shapes:
@@ -248,6 +248,8 @@ class ResidualCouplingBlock(nn.Module):
             - g: :math:`[B, C, 1]`
         """
         x0, x1 = torch.split(x, [self.half_channels] * 2, 1)
+        m0, m1 = torch.split(m, [self.half_channels] * 2, 1)
+        logs0, logs1 = torch.split(logs, [self.half_channels] * 2, 1)
 
         #vits2: transformer in each flow
         x0_pre = x0
@@ -266,13 +268,22 @@ class ResidualCouplingBlock(nn.Module):
 
         if not reverse:
             x1 = m + x1 * torch.exp(log_scale) * x_mask
+            m1 = m + m1 * torch.exp(log_scale) * x_mask
+            logs1 = logs1 + log_scale
+
             x = torch.cat([x0, x1], 1)
-            logdet = torch.sum(log_scale, [1, 2])
-            return x, logdet
+            m = torch.cat([m0, m1], 1)
+            logs = torch.cat([logs0, logs1], 1)
+            return x, m, logs
         else:
             x1 = (x1 - m) * torch.exp(-log_scale) * x_mask
+            m1 = (m1 - m) * torch.exp(-log_scale) * x_mask
+            logs1 = logs1 - log_scale
+
             x = torch.cat([x0, x1], 1)
-            return x
+            m = torch.cat([m0, m1], 1)
+            logs = torch.cat([logs0, logs1], 1)
+            return x, m, logs
 
 
 class ResidualCouplingBlocks(nn.Module):
@@ -321,7 +332,7 @@ class ResidualCouplingBlocks(nn.Module):
                 )
             )
 
-    def forward(self, x, x_mask, g=None, reverse=False):
+    def forward(self, x, m, logs, x_mask, g=None, reverse=False):
         """
         Note:
             Set `reverse` to True for inference.
@@ -332,10 +343,14 @@ class ResidualCouplingBlocks(nn.Module):
         """
         if not reverse:
             for flow in self.flows:
-                x, _ = flow(x, x_mask, g=g, reverse=reverse)
+                x, m, logs = flow(x, m, logs, x_mask, g=g, reverse=reverse)
                 x = torch.flip(x, [1])
+                m = torch.flip(m, [1])
+                logs = torch.flip(logs, [1])
         else:
             for flow in reversed(self.flows):
                 x = torch.flip(x, [1])
-                x = flow(x, x_mask, g=g, reverse=reverse)
-        return x
+                m = torch.flip(m, [1])
+                logs = torch.flip(logs, [1])
+                x, m, logs = flow(x, m, logs, x_mask, g=g, reverse=reverse)
+        return x, m, logs
