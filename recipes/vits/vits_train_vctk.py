@@ -58,7 +58,7 @@ class VitsTrain(VitsTrainBase):
         print("doing test run...")
         text = "Who else do you want to talk to? You can go with me today to the meeting."
 
-        # speaker_id = random.randint(0, 9)
+        speaker_name = random.choice(["VCTK_p233", "VCTK_p246", "VCTK_p263", "VCTK_p293"])
         if platform.system() == "Windows":
             path1 = "D:/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
             path2 = "D:/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
@@ -70,7 +70,7 @@ class VitsTrain(VitsTrainBase):
         pickleObj = pickle.load(fp)
         speaker_embed = pickleObj["speaker"]
 
-        wav = self.inference(text, speaker_embed=speaker_embed, language="en")
+        wav = self.inference(text, speaker_name=speaker_name, language="en")
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 

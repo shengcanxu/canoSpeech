@@ -282,7 +282,7 @@ class VitsModel(nn.Module):
             g = F.normalize(speaker_embeds).unsqueeze(-1)
             if g.ndim == 2:
                 g = g.unsqueeze_(0)
-        elif self.speaker_embedding is not None and speaker_ids is not None:
+        elif self.model_config.use_speaker_ids and speaker_ids is not None:
             g = self.speaker_embedding(speaker_ids).unsqueeze(-1)
 
         # language embedding
