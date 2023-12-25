@@ -66,7 +66,7 @@ class VitsGeneratorLoss(nn.Module):
     @staticmethod
     def kl_loss_normal(m_q: torch.Tensor, logs_q: torch.Tensor, m_p: torch.Tensor, logs_p: torch.Tensor, z_mask: torch.Tensor):
         """
-        z_p, logs_q: [b, h, t_t]
+        m_q, logs_q: [b, h, t_t]
         m_p, logs_p: [b, h, t_t]
         """
         m_q = m_q.float()
@@ -127,8 +127,8 @@ class VitsGeneratorLoss(nn.Module):
             self.kl_loss(z_p=z_q_dur, logs_q=logs_q_dur, m_p=m_p_dur, logs_p=logs_p_dur, z_mask=z_mask.unsqueeze(1))
             * self.kl_loss_alpha
         )
-        loss_kl_audio = (
-            self.kl_loss_normal(m_p=m_p_audio, logs_p=logs_p_audio, m_q=m_q_audio, logs_q=logs_q_audio, z_mask=z_mask.unsqueeze(1))
+        loss_kl_audio = (  # the order matters. KL's order can't be switched
+            self.kl_loss_normal(m_q=m_p_audio, logs_q=logs_p_audio, m_p=m_q_audio, logs_p=logs_q_audio, z_mask=z_mask.unsqueeze(1))
             * self.kl_loss_alpha
         )
         loss_duration = torch.sum(loss_duration.float()) * self.dur_loss_alpha
