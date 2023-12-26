@@ -196,8 +196,8 @@ class VitsModel(nn.Module):
             pad_short=True,
         )
 
-        # flow from audio to text
-        z_q_dur, m_q_dur, logs_q_dur = self.flow(z_q_audio, m_q_audio, logs_q_audio, y_mask, g=g)
+        # flow layers
+        z_q_dur = self.flow(z_q_audio, y_mask, g=g)
 
         h_text, m_p_text, logs_p_text, x_mask = self.text_encoder(x, x_lengths, g=g, lang_emb=lang_embed)
 
@@ -211,7 +211,7 @@ class VitsModel(nn.Module):
         z_p_dur = m_p_dur + torch.randn_like(m_p_dur) * torch.exp(logs_p_dur) * y_mask
 
         # flow from text to audio
-        z_p_audio, m_p_audio, logs_p_audio = self.flow(z_p_dur, z_p_dur, logs_p_dur, y_mask, g=g, reverse=True)
+        z_p_audio = self.flow(z_p_dur, y_mask, g=g, reverse=True)
 
         if self.use_sdp:
             loss_duration = self.duration_predictor(
@@ -249,14 +249,12 @@ class VitsModel(nn.Module):
 
         return {
             "y_hat": y_hat,  # [B, 1, T_wav]
-            "z_q_dur": z_q_dur,  # [B, C, T_dec]
-            "logs_q_dur": logs_q_dur,  # [B, C, T_dec]
+            "z_p_audio": z_p_audio,  # [B, C, T_dec]
             "m_p_dur": m_p_dur,  # [B, C, T_dec]
             "logs_p_dur": logs_p_dur,  # [B, C, T_dec]
+            "z_q_dur": z_q_dur,  # [B, C, T_dec]
             "m_q_audio": m_q_audio,  # [B, C, T_dec]
             "logs_q_audio": logs_q_audio,  # [B, C, T_dec]
-            "m_p_audio": m_p_audio,  # [B, C, T_dec]
-            "logs_p_audio": logs_p_audio,  # [B, C, T_dec]
             "waveform_seg": wav_seg,  # [B, 1, spec_seg_size * hop_length]
             "slice_ids": slice_ids,
             "loss_duration": loss_duration,
@@ -321,7 +319,7 @@ class VitsModel(nn.Module):
         logs_p_dur = torch.matmul(attn.transpose(1, 2), logs_p_text.transpose(1, 2)).transpose(1, 2)
 
         z_p_dur = m_p_dur + torch.randn_like(m_p_dur) * torch.exp(logs_p_dur) * noise_scale
-        z_p_audio, _, _ = self.flow(z_p_dur, m_p_dur, logs_p_dur, y_mask, g=g, reverse=True)
+        z_p_audio = self.flow(z_p_dur, y_mask, g=g, reverse=True)
 
         z_p_audio = (z_p_audio * y_mask)[:, :, : max_len]
         wav = self.waveform_decoder(z_p_audio, g=g)
