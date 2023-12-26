@@ -76,6 +76,6 @@ speaker enbedding encoder configs:
 # findings
 1. learning rate非常重要. vits用大learning rate失败, 但是用 2e-4 成功. 可以用fastai里面的find_lr方法获得最佳lr
 2. 在刚开始学习的时候，很容易产生loss=NaN，甚至简单的weight_norm(Conv1d(in_channels, upsample_initial_channel, 7, 1, padding=3)) 都可能让结果变成NaN
-   
+3. 尝试多次训练forward KL and backword KL，都失败了，naturalspeech论文上的内容应该是有问题的。从原理上说应该也不需要两个KL
 
 

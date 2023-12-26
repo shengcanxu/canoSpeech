@@ -71,9 +71,8 @@ class VitsGeneratorLoss(nn.Module):
         self,
         mel_slice,  # [B, 1, T]
         mel_slice_hat,  # [B, 1, T]
-        z_p_audio,  # [B, C, T]
         m_p_dur,  # [B, C, T]
-        logs_p_dur,  #
+        logs_p_dur,  # [B, C, T]
         z_q_dur,  # [B, C, T]
         m_q_audio,  # [B, C, T]
         logs_q_audio,  # [B, C, T]
@@ -107,18 +106,9 @@ class VitsGeneratorLoss(nn.Module):
             self.kl_loss(z_p=z_q_dur, logs_q=logs_q_audio, m_p=m_p_dur, logs_p=logs_p_dur, z_mask=z_mask.unsqueeze(1))
             * self.kl_loss_alpha
         )
-        # loss_kl_audio = (  # the order matters. KL's order can't be switched
-        #     self.kl_loss_normal(m_q=m_p_audio, logs_q=logs_p_audio, m_p=m_q_audio, logs_p=logs_q_audio, z_mask=z_mask.unsqueeze(1))
-        #     * self.kl_loss_alpha
-        # )
-        loss_kl_audio = (
-            self.kl_loss(z_p=z_p_audio, logs_q=logs_p_dur, m_p=m_q_audio, logs_p=logs_q_audio, z_mask=z_mask.unsqueeze(1))
-            * self.kl_loss_alpha
-        )
         loss_duration = torch.sum(loss_duration.float()) * self.dur_loss_alpha
-        loss = loss + loss_kl + loss_kl_audio + loss_duration
+        loss = loss + loss_kl + loss_duration
         return_dict["loss_kl"] = loss_kl
-        return_dict["loss_kl_audio"] = loss_kl_audio
         return_dict["loss_duration"] = loss_duration
 
         if self.model_config.use_speaker_encoder_as_loss:

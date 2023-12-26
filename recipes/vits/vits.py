@@ -210,9 +210,6 @@ class VitsModel(nn.Module):
         logs_p_dur = torch.einsum("klmn, kjm -> kjn", [attn, logs_p_text])
         z_p_dur = m_p_dur + torch.randn_like(m_p_dur) * torch.exp(logs_p_dur) * y_mask
 
-        # flow from text to audio
-        z_p_audio = self.flow(z_p_dur, y_mask, g=g, reverse=True)
-
         if self.use_sdp:
             loss_duration = self.duration_predictor(
                 x=h_text.detach(),
@@ -249,7 +246,6 @@ class VitsModel(nn.Module):
 
         return {
             "y_hat": y_hat,  # [B, 1, T_wav]
-            "z_p_audio": z_p_audio,  # [B, C, T_dec]
             "m_p_dur": m_p_dur,  # [B, C, T_dec]
             "logs_p_dur": logs_p_dur,  # [B, C, T_dec]
             "z_q_dur": z_q_dur,  # [B, C, T_dec]
@@ -346,7 +342,6 @@ class VitsModel(nn.Module):
             source_speaker (Tensor): Reference speaker ID. Tensor of shape [B, T]
             target_speaker (Tensor): Target speaker ID. Tensor of shape [B, T]
         """
-
         # speaker embedding
         if self.model_config.use_speaker_ids:
             g_src = self.emb_g(torch.from_numpy((np.array(source_speaker))).unsqueeze(0)).unsqueeze(-1)

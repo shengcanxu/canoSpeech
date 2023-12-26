@@ -133,7 +133,6 @@ class VitsTrainBase(TrainerModelWithDataset):
                 loss_dict = criterion[1](
                     mel_slice=mel_slice_hat.float(),
                     mel_slice_hat=mel_slice.float(),
-                    z_p_audio=self.model_outputs_cache["z_p_audio"].float(),
                     m_p_dur=self.model_outputs_cache["m_p_dur"].float(),
                     logs_p_dur=self.model_outputs_cache["logs_p_dur"].float(),
                     z_q_dur=self.model_outputs_cache["z_q_dur"].float(),
