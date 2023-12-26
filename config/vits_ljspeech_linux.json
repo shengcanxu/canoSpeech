@@ -86,7 +86,7 @@
         "mel_loss_alpha": 45.0,
         "dur_loss_alpha": 1.0,
         "pitch_loss_alpha": 1.0,
-        "speaker_encoder_loss_alpha": 9.0,
+        "speaker_encoder_loss_alpha": 10.0,
         "use_soft_dynamic_time_warping": false
     },
 
@@ -100,7 +100,7 @@
         "speaker_embedding_channels": 512,
         "use_speaker_ids": true,
         "use_speaker_embedding": false,
-        "use_speaker_encoder_as_loss": false,
+        "use_speaker_encoder_as_loss": true,
         "use_gt_duration": true,
 
         "text_encoder": {

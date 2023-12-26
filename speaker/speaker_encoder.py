@@ -32,6 +32,10 @@ class SpeakerEncoder(object):
         if self.use_cuda:
             self.encoder.cuda()
 
+        # freeze the speaker encoder
+        for param in self.encoder.parameters():
+            param.requires_grad = False
+
     def get_encoder_model(self, config: Coqpit):
         if config.model_params["model_name"].lower() == "lstm":
             model = LSTMSpeakerEncoder(
