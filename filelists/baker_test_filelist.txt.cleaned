@@ -1,16 +1,256 @@
-D:/dataset/baker/Wave/004558.wav|baker|zh|liɑŋ3dʒø3 dʑyn1 wei4 tou4lu4ɕiaʌ1ɕi1 lai2yɛn2 , dan4 fou3ʐœn4 ɕiaʌ1ɕi1 lai2dzɪ4 i1 xai1 .
-D:/dataset/baker/Wave/009697.wav|baker|zh|ʈʂuɑŋ1wai4 wan3fɵŋ1 ʈʂuei1fu2 , ʂu4ie4 io3 lø5 xuo2li4 , xua1la1la1 di4 ɕiɑŋ3 , ɕiɑŋ4 dzai4 su4ʂuo1dʒø5 ʂœn2mø5 .
-D:/dataset/baker/Wave/007854.wav|baker|zh|ta1 ʈʂɵŋ1dʒʏ1wei4 y2kuai4 dø5 dzaʌ3ʈʂœn2 .
-D:/dataset/baker/Wave/004976.wav|baker|zh|wo3xuei4 wan2 xœn3duo1 io2ɕi4 nø5 .
-D:/dataset/baker/Wave/004050.wav|baker|zh|dʑia3 dʑia4ʂʏ3dʒɵŋ4 dzɪ4ti3 guɑŋ1xua2 , mei2io3 aʌ1tu1gan3 .
-D:/dataset/baker/Wave/008672.wav|baker|zh|ʂa1xø2ʂʏ4 da1liɛn2 tsun1 ɕiɑŋ4mu4 ɕiɛn4ʈʂɑŋ3 .
-D:/dataset/baker/Wave/000589.wav|baker|zh|in1 wu2fa3ʐœn3ʂou4 bɨŋ4toŋ4 dʒø2mo2 ɕyɛn3dzø2 tiaʌ4lou2 lø5 .
-D:/dataset/baker/Wave/004824.wav|baker|zh|ia3diɛn3 ʈʂɵŋ1wɑŋ2 dø5 xan2guo2 ɕiaʌ3dzɪ5 lio3ʈʂɵŋ2min3 io3wɑŋ4 ʈʂuɑŋ4dzaʌ4 li4ʂʏ3 ma5 ?
-D:/dataset/baker/Wave/005310.wav|baker|zh|tɕiɛn2 wan3 , lio2xua2tɕɨŋ1 dø5 dʒʏ2er5 dʒʏ2ny3 mœn5 lin2ʂʏ2 da1 tɕi3 lø5 lɨŋ2tɑŋ2 .
-D:/dataset/baker/Wave/008495.wav|baker|zh|dʒɵŋ3tiaʌ2 goŋ1lu4 duo1ʈʂu4 sun3xuei3 iɛn2dʒoŋ4 , ɕiɛn3ɕiɑŋ4xuan2ʂɵŋ1 .
-D:/dataset/baker/Wave/007412.wav|baker|zh|tɕi2 ia4 li4 dø5 iɑŋ3fu4 dzai4 wai4di4 da3goŋ1 , iɑŋ3mu3 dzai4dʑia1 tsaʌ1ʈʂʏ2dʑia1wu4 .
-D:/dataset/baker/Wave/009096.wav|baker|zh|xuei4xou4 , ly4sø4 li4wei3 biaʌ3ʂʏ4 , ɕiɑŋ1ɕin4 dzoŋ3toŋ3 xø2xu1luo2dʑi2 dø5 ʂuo1fa3 .
-D:/dataset/baker/Wave/001125.wav|baker|zh|duei4y2 mei2ie2er3 er2iɛn2 , ba1lei2tø4 tɕye4ʂʏ2 wu4io3suo3dʒʏ2 .
-D:/dataset/baker/Wave/002897.wav|baker|zh|ʐɑŋ4 yɛn2bœn3 wei1bo2 dø5 dzɪ1dʑin1 dʒuo1dʑin1dʑiɛn4dʒou3 .
-D:/dataset/baker/Wave/001817.wav|baker|zh|da4 ʈʂu3 wɑŋ3 i3dʑi2 ɕin1 œn1ʂʏ1 lun4tan2 ʂɑŋ4 , duei4tsɪ3 dʑiɛn4i4 dø5 pɨŋ2lun4 bu4duan4 .
-D:/dataset/baker/Wave/009689.wav|baker|zh|dʒø4 ie3 ʂʏ4 dzuo4wei2 wɑŋ3luo4 ɕie3ʂou3 dzuei4 toŋ4ku3 dø5 ʂʏ4 .
+D:/dataset/baker/Wave/004558.wav|baker|zh|lˈiɑŋ3ʈʂˈɤ3 tɕˈyn1 wˈeɪ4 tʰˈoʊ4lˈu4ɕˈjaʊ1ɕˈi1 lˈaɪ2ɥˈɛn2 , tˈan4 fˈoʊ3ɹˈən4 ɕˈjaʊ1ɕˈi1 lˈaɪ2tsˈɹ4 ˈi1 xˈaɪ1 .
+D:/dataset/baker/Wave/009697.wav|baker|zh|ʈʂʰˈwɑŋ1wˈaɪ4 wˈan3fˈəŋ1 ʈʂʰˈweɪ1fˈu2 , ʂˈu4jˈɛ4 jˈoʊ3 lˈɤ5 xˈwɔ2lˈi4 , xˈwa1lˈa1lˈa1 tˈi4 ɕˈiɑŋ3 , ɕˈiɑŋ4 tsˈaɪ4 sˈu4ʂˈwɔ1ʈʂˈɤ5 ʂˈən2mˈɤ5 .
+D:/dataset/baker/Wave/007854.wav|baker|zh|tʰˈa1 ʈʂʰˈəŋ1ʈʂˈʐ1wˈeɪ4 ˈy2kʰˈwaɪ4 tˈɤ5 tsˈaʊ3ʈʂʰˈən2 .
+D:/dataset/baker/Wave/004976.wav|baker|zh|wˈɔ3xˈweɪ4 wˈan2 xˈən3tˈwɔ1 jˈoʊ2ɕˈi4 nˈɤ5 .
+D:/dataset/baker/Wave/004050.wav|baker|zh|tɕˈja3 tɕˈja4ʂˈʐ3ʈʂˈəŋ4 tsˈɹ4tʰˈi3 kˈwɑŋ1xˈwa2 , mˈeɪ2jˈoʊ3 ˈaʊ1tʰˈu1kˈan3 .
+D:/dataset/baker/Wave/008672.wav|baker|zh|ʂˈa1xˈɤ2ʂˈʐ4 tˈa1lˈjɛn2 tsʰˈwən1 ɕˈiɑŋ4mˈu4 ɕˈjɛn4ʈʂʰˈɑŋ3 .
+D:/dataset/baker/Wave/000589.wav|baker|zh|ˈin1 ˈu2fˈa3ɹˈən3ʂˈoʊ4 pˈiŋ4tʰˈʊŋ4 ʈʂˈɤ2mˈwɔ2 ɕˈyɛn3tsˈɤ2 tʰˈjaʊ4lˈoʊ2 lˈɤ5 .
+D:/dataset/baker/Wave/004824.wav|baker|zh|jˈa3tˈjɛn3 ʈʂʰˈəŋ1wˈɑŋ2 tˈɤ5 xˈan2kˈwɔ2 ɕˈjaʊ3tsˈɹ5 lˈjoʊ3ʈʂʰˈəŋ2mˈin3 jˈoʊ3wˈɑŋ4 ʈʂʰˈwɑŋ4tsˈaʊ4 lˈi4ʂˈʐ3 mˈa5 ?
+D:/dataset/baker/Wave/005310.wav|baker|zh|tɕʰˈjɛn2 wˈan3 , lˈjoʊ2xˈwa2tɕʰˈiŋ1 tˈɤ5 ʈʂˈʐ2ˈɚ5 ʈʂˈʐ23 mˈən5 lˈin2ʂˈʐ2 tˈa1 tɕʰˈi3 lˈɤ5 lˈiŋ2tʰˈɑŋ2 .
+D:/dataset/baker/Wave/008495.wav|baker|zh|ʈʂˈəŋ3tʰˈjaʊ2 kˈʊŋ1lˈu4 tˈwɔ1ʈʂʰˈu4 sˈwən3xˈweɪ3 jˈɛn2ʈʂˈʊŋ4 , ɕˈjɛn3ɕˈiɑŋ4xˈwan2ʂˈəŋ1 .
+D:/dataset/baker/Wave/007412.wav|baker|zh|tɕʰˈi2 jˈa4 lˈi4 tˈɤ5 jˈɑŋ3fˈu4 tsˈaɪ4 wˈaɪ4tˈi4 tˈa3kˈʊŋ1 , jˈɑŋ3mˈu3 tsˈaɪ4tɕˈja1 tsʰˈaʊ1ʈʂʰˈʐ2tɕˈja1ˈu4 .
+D:/dataset/baker/Wave/009096.wav|baker|zh|xˈweɪ4xˈoʊ4 , 4sˈɤ4 lˈi4wˈeɪ3 pˈjaʊ3ʂˈʐ4 , ɕˈiɑŋ1ɕˈin4 tsˈʊŋ3tʰˈʊŋ3 xˈɤ2xˈu1lˈwɔ2tɕˈi2 tˈɤ5 ʂˈwɔ1fˈa3 .
+D:/dataset/baker/Wave/001125.wav|baker|zh|tˈweɪ4ˈy2 mˈeɪ2jˈɛ2ˈɚ3 ˈɚ2jˈɛn2 , pˈa1lˈeɪ2tʰˈɤ4 tɕʰˈyɛ4ʂˈʐ2 ˈu4jˈoʊ3sˈwɔ3ʈʂˈʐ2 .
+D:/dataset/baker/Wave/002897.wav|baker|zh|ɹˈɑŋ4 ɥˈɛn2pˈən3 wˈeɪ1pˈwɔ2 tˈɤ5 tsˈɹ1tɕˈin1 ʈʂˈwɔ1tɕˈin1tɕˈjɛn4ʈʂˈoʊ3 .
+D:/dataset/baker/Wave/001817.wav|baker|zh|tˈa4 ʈʂʰˈu3 wˈɑŋ3 ˈi3tɕˈi2 ɕˈin1 ˈən1ʂˈʐ1 lˈwən4tʰˈan2 ʂˈɑŋ4 , tˈweɪ4tsʰˈɹ3 tɕˈjɛn4ˈi4 tˈɤ5 pʰˈiŋ2lˈwən4 pˈu4tˈwan4 .
+D:/dataset/baker/Wave/009689.wav|baker|zh|ʈʂˈɤ4 jˈɛ3 ʂˈʐ4 tsˈwɔ4wˈeɪ2 wˈɑŋ3lˈwɔ4 ɕˈjɛ3ʂˈoʊ3 tsˈweɪ4 tʰˈʊŋ4kʰˈu3 tˈɤ5 ʂˈʐ4 .
+D:/dataset/baker/Wave/001138.wav|baker|zh|pˈən3 xˈwan4 lˈaʊ3xˈɤ2ʂˈɑŋ4 sˈweɪ1 ˈi3 pˈaɪ3sˈweɪ4 jˈoʊ3 ˈu3 , tˈan4 ʂˈən1tʰˈi3 ˈiŋ4lˈɑŋ3 , ʂˈəŋ1xˈwɔ2 wˈan2tɕʰˈyɛn2 tsˈɹ4lˈi3 .
+D:/dataset/baker/Wave/002037.wav|baker|zh|tʰˈa1 ˈu2sˈɹ1 tˈɤ5 pʰˈin3kˈɤ2 lˈiŋ4ɹˈən2 tɕˈiŋ4jˈɑŋ3 .
+D:/dataset/baker/Wave/001396.wav|baker|zh|tʰˈoʊ2tʰˈaɪ1 ʂˈʐ4 ˈi1mˈən2 ɕˈyɛ2wˈən4 ˈa5 .
+D:/dataset/baker/Wave/001366.wav|baker|zh|ʈʂˈʐ2fˈa3 tˈweɪ4ɥˈɛn2 jˈɑŋ2 lˈin2 ʈʂʰˈwan1 kʰˈan4tˈaʊ4 , ʈʂˈɤ4lˈiɑŋ4 wˈɔ4ˈɚ3wˈɔ4 kˈaʊ1sˈu4 tsʰˈʊŋ2 pʰˈwɔ1tˈiŋ3 ʂˈʐ3 tˈaʊ4 pʰˈwɔ1tˈi3 .
+D:/dataset/baker/Wave/001815.wav|baker|zh|ˈjʊŋ1 tˈwən3 mˈən5 tˈɤ5 ˈi1wˈeɪ4 ʈʂˈweɪ1pʰˈəŋ3 , ʂˈʐ3 tʰˈa1 kˈəŋ4tɕˈja1 wˈɑŋ4xˈu1sˈwɔ3ˈi3 , ɥˈɛ4fˈa1 tɕˈjaʊ1xˈəŋ4 lˈɤ5 .
+D:/dataset/baker/Wave/000685.wav|baker|zh|tˈɑŋ1 tɕˈi4ʈʂˈɤ3 ˈan4 ɕˈja4 mˈjaʊ3pˈjaʊ3 xˈoʊ4 , kˈʊŋ1 ʈʂˈaʊ4 ʈʂʰˈwən1 kʰˈaɪ1ʂˈʐ3 jˈɛn2ʈʂˈɤ5 ɹˈwan3tʰˈi1 ɕˈiɑŋ4ɕˈja4 pʰˈa2 .
+D:/dataset/baker/Wave/009061.wav|baker|zh|tsˈwɔ2ɹˈʐ4 , pˈeɪ3tɕˈiŋ1 ˈaʊ4ɥˈn4xˈweɪ4 kʰˈaɪ1mˈu4ʂˈʐ4 tˈaʊ3jˈɛn3 ʈʂˈʐ1ˈi1 tˈɤ5 wˈɑŋ2 ʈʂʰˈaʊ2 kˈɤ1 tʰˈoʊ4lˈu4 lˈɤ5 ʈʂˈɤ4 ˈi1 ɕˈjaʊ1ɕˈi1 .
+D:/dataset/baker/Wave/009929.wav|baker|zh|tsˈweɪ4ʈʂˈʊŋ1 , ʈʂˈʊŋ1kˈwɔ2nˈan2tsˈɹ5pʰˈiŋ1pʰˈɑŋ1tɕʰˈjoʊ2tˈweɪ4 xˈwɔ4tˈɤ2 tsʰˈɹ3 tɕˈiɑŋ3ɕˈiɑŋ4 .
+D:/dataset/baker/Wave/002167.wav|baker|zh|ʂˈɑŋ4pˈan1tsˈu2 ɕˈjaʊ3 kˈəŋ3 tɕˈjoʊ4ʂˈʐ4 tɕʰˈi2ʈʂˈʊŋ1 ˈi1wˈeɪ4 .
+D:/dataset/baker/Wave/003543.wav|baker|zh|pˈɑŋ3fˈeɪ3 ɕˈjɛn4tɕˈjɛ1tˈwan4 mˈeɪ2jˈoʊ3 sˈwɔ3jˈaʊ4 ʂˈu2tɕˈin1 .
+D:/dataset/baker/Wave/005489.wav|baker|zh|ʈʂʰˈən2 tɕˈja1 xˈwan2 tˈweɪ4tsʰˈɹ3 ˈi1kˈaɪ4 mˈeɪ2jˈoʊ3 xˈweɪ2tˈa2 , ʈʂˈʐ3 nˈiŋ2 wˈaɪ1 lˈjɛn3 kʰˈan4ʈʂˈɤ5 4ʂˈʐ1 , ɕˈiɑŋ4 4ʂˈʐ1 tɕʰˈjoʊ2tɕˈjoʊ4 .
+D:/dataset/baker/Wave/006594.wav|baker|zh|tsʰˈɹ3xˈoʊ4 , tsˈaɪ4 lˈaʊ3ɕˈiɑŋ1 lˈjoʊ2 jˈoʊ3ˈy2 tˈɤ5 sˈʊŋ3ˈjʊŋ3 ɕˈja4 , tɕʰˈi2 ʂˈʐ2 kˈwɑŋ1 ʈʂˈan1ɹˈan3ʂˈɑŋ4 lˈɤ5 tˈu2pʰˈin3 .
+D:/dataset/baker/Wave/005662.wav|baker|zh|pˈu4kˈwɔ4 kˈʊŋ1sˈɹ1 pˈjaʊ3ʂˈʐ4 , tɕˈi2ʂˈʐ3 kˈaʊ1ˈy2 lˈjoʊ4 , tɕʰˈi3jˈɛ4 jˈɛ3 ˈu2kʰˈɤ3nˈaɪ4xˈɤ2 .
+D:/dataset/baker/Wave/005068.wav|baker|zh|ɕˈjaʊ3 tʰˈu4tsˈaɪ3tsˈɹ5 , nˈi3 jˈaʊ4ʂˈʐ4 kˈan3 wˈɑŋ3 ɕˈja4pˈjɛn1 lˈa1ʂˈʐ3 , nˈi3 tɕˈjoʊ4 sˈɹ3tˈiŋ4lˈɤ5 !
+D:/dataset/baker/Wave/005745.wav|baker|zh|ʂˈʐ4xˈoʊ4 , tʰˈa1 ʂˈʐ2fˈən1 xˈoʊ4xˈweɪ3 , pˈu4kˈaɪ1 tsˈʊŋ3 tɕʰˈi1fˈu4 ʈʂˈɤ4kˈɤ4 ˈaɪ3ɕˈjaʊ3 jˈoʊ4 lˈaʊ3ʂˈʐ2 tˈɤ5 tʰˈʊŋ2ʂˈʐ4 .
+D:/dataset/baker/Wave/004126.wav|baker|zh|ʂˈən4ʈʂˈʐ4 tɕˈyn1ʈʂˈəŋ4fˈu3 tsˈɹ4ɥˈɛn4 tɕˈjaʊ1tɕʰˈyɛn2 ˈy2 mˈin2ɕˈyɛn3 ʈʂˈəŋ4fˈu3 , jˈɛ3 ʂˈʐ4 ʈʂˈɤ4ʈʂˈʊŋ3 ɕˈin4nˈjɛn4 tˈɤ5 ʈʂʰˈan3ˈu4 .
+D:/dataset/baker/Wave/000183.wav|baker|zh|ʈʂˈu1lˈeɪ4 ɕˈja4lˈwɔ4 tɕʰˈiŋ2 sˈa3 kʰˈʊŋ1ʈʂʰˈwɑŋ2 .
+D:/dataset/baker/Wave/005064.wav|baker|zh|tsˈaɪ4 pˈa3 lˈaʊ3ʈʂˈɑŋ1 pˈaʊ4tˈa3 ˈi1tˈwən4 xˈoʊ4 , sˈan1 ɹˈən2 xˈaɪ2 pˈu4 tɕˈjɛ3xˈən4 jˈoʊ4 ʈʂʰˈwaɪ4 lˈɤ5 lˈaʊ3ʈʂˈɑŋ1 tˈɤ5 ʈʂʰˈɤ1 tɕˈi3tɕˈjaʊ3 .
+D:/dataset/baker/Wave/002320.wav|baker|zh|tɕˈja3pʰˈiŋ2ˈaʊ1 kʰˈan4tˈaʊ4 xˈwa4 xˈən3 kˈaʊ1ɕˈiŋ4 .
+D:/dataset/baker/Wave/002862.wav|baker|zh|mˈi3ˈɚ3nˈa4 tɕˈiɑŋ1 ʈʂˈɤ4ʈʂˈʊŋ3 tʰˈoʊ2tsˈɹ1 fˈɑŋ1fˈa3 ʈʂʰˈəŋ1wˈeɪ2 wˈan3tɕʰˈi1 tʰˈoʊ2tsˈɹ1 .
+D:/dataset/baker/Wave/002130.wav|baker|zh|jˈɛ3 xˈweɪ4 tʰˈi2kˈʊŋ1 ʂˈəŋ1tsˈɹ5 pʰˈjɛn1fˈɑŋ1 kˈeɪ3 ɕˈjaʊ3lˈiɑŋ3kʰˈoʊ3 .
+D:/dataset/baker/Wave/005024.wav|baker|zh|tɕʰˈi3nˈəŋ2 tsˈwɔ4ʂˈʐ4 ˈa1 pˈjɛn3 jˈoʊ3 ɹˈən4xˈɤ2 pʰˈjɛn4mˈjɛn4 kˈaɪ3pˈjɛn4ɕˈjɛn4ʈʂˈwɑŋ4 tˈɤ5 ɕˈiŋ2wˈeɪ2 ?
+D:/dataset/baker/Wave/001868.wav|baker|zh|ˈo2 , xˈaʊ3ɕˈiɑŋ4 ʂˈʐ4 tˈaɪ4wˈɑŋ4ʂˈu1 xˈwɔ4 lˈjoʊ3jˈa4tsˈɹ5 ɕˈjɛ3 tˈɤ5 , ɕˈjɛ3 tˈɤ2 tsˈən3mˈɤ5jˈɑŋ4 ?
+D:/dataset/baker/Wave/002304.wav|baker|zh|ʈʂˈɤ4 tʰˈjaʊ2 ɕˈjɛn4 tsˈweɪ4ʈʂˈʊŋ1 pˈeɪ4 fˈoʊ3 tˈjaʊ4 .
+D:/dataset/baker/Wave/007228.wav|baker|zh|tˈweɪ4tsʰˈɹ3 tʰˈa1 ɕˈjaʊ4nˈa4 , pʰˈin2 tˈjɛn3 xˈaʊ3 , pˈu4 ʈʂˈɑŋ3 ʈʂʰˈʊŋ2ˈɚ2 .
+D:/dataset/baker/Wave/003802.wav|baker|zh|kʰˈɤ3nˈəŋ2 tʰˈiŋ1 ʂˈɑŋ3tɕʰˈy4 jˈoʊ3tˈjɛn3 ʂˈa3 .
+D:/dataset/baker/Wave/001977.wav|baker|zh|ʈʂˈaʊ4 ɹˈweɪ3 ɹˈweɪ3 tsʰˈəŋ2 ʂˈʐ4 ʈʂˈʊŋ1kˈwɔ23pʰˈaɪ2 tˈɤ5 xˈɤ2ɕˈin1 tɕʰˈjoʊ2ɥˈɛn2 , kʰˈɤ3ɕˈi1 ˈin1wˈeɪ4 ʂˈɑŋ1pˈiŋ4 ˈɚ2 ɥˈɛn3lˈi2 sˈaɪ4ʈʂʰˈɑŋ3 .
+D:/dataset/baker/Wave/002806.wav|baker|zh|xˈeɪ1kˈoʊ3 lˈjɛ3ʈʂˈɤ5 tˈa4 tsˈweɪ3 , lˈu4 ɹˈən2 tɕˈjɛn4 lˈɤ5 fˈən1fˈən1 tˈwɔ3pˈi4 .
+D:/dataset/baker/Wave/004701.wav|baker|zh|ˈu2pˈwɔ2ɕˈjʊŋ2 ˈi1ˈi1 tˈwan1ɕˈiɑŋ2 kˈwɔ2mˈin2ʈʂˈəŋ4fˈu3 ʂˈʐ2tɕʰˈi1 tˈɤ5 lˈaʊ3ʈʂˈaʊ4pʰˈjɛn1 .
+D:/dataset/baker/Wave/000388.wav|baker|zh|kˈʊŋ1ɥˈɛn2 tɕˈjoʊ3pˈaɪ3 tɕʰˈi1ʂˈʐ2ˈu3nˈjɛn2 , sˈʊŋ4ʈʂʰˈaʊ2 tsʰˈaʊ2 pˈin1 pʰˈwɔ4 tɕˈin1lˈiŋ2 , nˈan2tʰˈɑŋ2 kˈweɪ1 sˈʊŋ4 .
+D:/dataset/baker/Wave/004714.wav|baker|zh|jˈoʊ3ʂˈʐ2xˈoʊ4 , ˈi2kˈɤ4 wˈeɪ1jˈɛn2sˈʊŋ3tʰˈiŋ1 tˈɤ5 tɕˈja3 ɕˈin4ɕˈi1 tɕˈjoʊ4 nˈəŋ2 ɹˈɑŋ4 kˈwan1ɥˈɛn2 ʂˈən1pˈaɪ4mˈiŋ2lˈjɛ4 .
+D:/dataset/baker/Wave/007834.wav|baker|zh|tˈi4ˈɚ4tʰˈjɛn1 tsˈaʊ3ʂˈɑŋ4 ˈjʊŋ3 tɕʰˈi2 ʈʂʰˈwan1 ʂˈɑŋ4 lˈɤ5 tɕˈjaʊ1 ˈu3ʂˈʐ2kʰˈwaɪ4 tɕʰˈjɛn2 ɕˈyɛ2ɕˈjaʊ4 fˈa1 tˈɤ5 ɕˈjaʊ4fˈu2 .
+D:/dataset/baker/Wave/009626.wav|baker|zh|mˈeɪ2jˈoʊ3 ɹˈən2 fˈa1lˈaʊ2sˈaʊ1 , ˈɚ2ʂˈʐ4 mˈaʊ3 tsˈu2 tɕˈin4 , ʈʂˈwɔ2ʂˈoʊ3 ʈʂˈəŋ3kˈaɪ3 .
+D:/dataset/baker/Wave/007980.wav|baker|zh|tɕˈiŋ3fˈɑŋ1 ʈʂʰˈəŋ1 , ʂˈəŋ4ɕˈja4 kʰˈu4ɹˈɤ4 nˈan2nˈaɪ4 , xˈən3tˈwɔ1 ɹˈən2 tˈaʊ4 tɕˈiɑŋ1xˈɤ2 jˈoʊ2ˈjʊŋ3 tɕˈjɛ3ʂˈu3 .
+D:/dataset/baker/Wave/009691.wav|baker|zh|tˈan1ɕˈin1 ʈʂˈɑŋ1 mˈoʊ3 pˈaʊ4tɕˈiŋ3 , lˈiɑŋ3 ɹˈən2 ˈjʊŋ4 ʈʂˈən3tɕˈin1 ˈu3ʈʂˈu4 lˈɤ5 ʈʂˈɑŋ1 mˈoʊ3 tˈɤ5 tsˈweɪ3 , ʈʂˈʐ2ʈʂˈʐ4 tʰˈa1 pˈu4tsˈaɪ4 tˈʊŋ4tʰˈan2 .
+D:/dataset/baker/Wave/008229.wav|baker|zh|ˈi3tɕˈyn1 tsˈʊŋ3tsʰˈan1mˈoʊ2ʈʂˈɑŋ3 xˈa1 lˈu3tsʰˈɹ2 tɕˈiɑŋ1tɕˈyn1 lˈiŋ2ʈʂʰˈən2 ʈʂˈaʊ4kʰˈaɪ1 tɕˈin3tɕˈi2xˈweɪ4ˈi4 tʰˈaʊ3lˈwən4 tˈweɪ4tsʰˈɤ4 .
+D:/dataset/baker/Wave/005591.wav|baker|zh|wˈɔ3 tˈɤ5 pˈaʊ3pˈaʊ3 ʈʂʰˈu1ʂˈəŋ1 lˈa5 , nˈin2mˈən5 tˈɤ5 pˈeɪ4fˈən4 jˈoʊ4 tʰˈi2kˈaʊ1 lˈɤ5 .
+D:/dataset/baker/Wave/001092.wav|baker|zh|ɕˈyɛ1 ɥˈɛ4 ˈɤ2 ɕˈi3xˈwan1 ɕˈjaʊ4 , ɕˈi3xˈwan1 jˈa2ʈʂʰˈʐ3 tʰˈjɛn1tʰˈjɛn1 ʂˈaɪ4tʰˈaɪ4jˈɑŋ2 tˈɤ5 kˈan3tɕˈyɛ2 .
+D:/dataset/baker/Wave/007615.wav|baker|zh|ʈʂˈʐ3jˈaʊ4 tˈa4tɕˈja1 kʰˈən3 tɕˈiɑŋ3 , tʰˈa1 tɕˈjoʊ4 kʰˈən3 tʰˈiŋ1 .
+D:/dataset/baker/Wave/007142.wav|baker|zh|sˈwɔ3ˈi3 , tsˈweɪ4tˈa4 tˈɤ5 ɕˈyɛ2wˈən4 ʂˈʐ4 tɕʰˈjɛn1ɕˈyn4 .
+D:/dataset/baker/Wave/004638.wav|baker|zh|tˈɑŋ1tɕˈy2 ʂˈɑŋ4 ɥˈɛ4 ʈʂˈʐ3kʰˈʊŋ4 lˈu2 tsʰˈən2 kʰˈɤ1 lˈan4ˈjʊŋ4ʈʂˈʐ2tɕʰˈyɛn2 xˈɤ2 tɕʰˈin1ʈʂˈan4 kˈwɔ2tɕˈja1 tsʰˈaɪ2ʈʂʰˈan3 .
+D:/dataset/baker/Wave/009387.wav|baker|zh|pˈa4pˈa4 tˈwan1ɕˈiɑŋ2 ˈi1xˈweɪ4 ʂˈwɔ1 , wˈɔ3 fˈa1ʂˈʐ4 , ʈʂˈɤ4 ʂˈʐ4 wˈɔ3 tɕˈjɛn4 kˈwɔ4 tˈɤ5 tsˈweɪ4 ʂˈwaɪ4 tˈɤ5 kˈwɑŋ1tʰˈoʊ2 .
+D:/dataset/baker/Wave/003731.wav|baker|zh|nˈan2lˈaɪ2pˈeɪ3wˈɑŋ3 , jˈoʊ2ɹˈən2ɹˈu2ʈʂˈʐ1 .
+D:/dataset/baker/Wave/000305.wav|baker|zh|ɕˈjɛn4 ˈin1 ʈʂˈʐ2ɕˈiŋ2 ɕˈiŋ2mˈan3 ˈy3ˈi3 ʂˈʐ4fˈɑŋ4 .
+D:/dataset/baker/Wave/009688.wav|baker|zh|xˈaɪ3tˈəŋ1 tˈweɪ4 tsˈoʊ1tɕˈja1xˈwa2 tˈɤ5 lˈaɪ2fˈɑŋ3 pˈjaʊ3ʂˈʐ4 xˈwan1ˈiŋ2 .
+D:/dataset/baker/Wave/005979.wav|baker|zh|nˈan2kˈwaɪ4 tʰˈa1mˈən5 xˈweɪ4 ʈʂʰˈəŋ2wˈeɪ2 ɹˈʐ4pˈən3 ɹˈən2 tsˈweɪ4 ɕˈjɛn4mˈu4 tˈɤ5 fˈu1tɕʰˈi1 ˈoʊ3ɕˈiɑŋ4 .
+D:/dataset/baker/Wave/000865.wav|baker|zh|ˈin4nˈi2tˈweɪ4 tˈɤ5 sˈɑŋ1 tʰˈwɔ1 sˈa4 xˈɤ2 lˈa1 ʈʂˈa1kʰˈɤ4 pʰˈəŋ3 tsˈoʊ3 nˈan2ʂˈwɑŋ1 kˈwan4tɕˈyn1pˈeɪ1 .
+D:/dataset/baker/Wave/005910.wav|baker|zh|pʰˈəŋ2 xˈʊŋ2 pˈa3 tʰˈu2pʰˈjɛn4 fˈu4ʈʂˈʐ4 kˈwɔ4lˈaɪ2 , tɕˈja1ʂˈɑŋ4 pˈjaʊ1tʰˈi2 ʈʂˈɤ4 pˈa3 sˈan3 xˈaʊ3 kˈwaɪ4 jˈoʊ1 , jˈoʊ4 fˈa1ʈʂʰˈu1 tɕʰˈy4 .
+D:/dataset/baker/Wave/003432.wav|baker|zh|ʈʂˈɤ4 ʂˈoʊ3 ʂˈʐ1 tˈɤ5 mˈiŋ2tsˈɹ4 tɕˈjaʊ4 mˈin3 nˈʊŋ2
+D:/dataset/baker/Wave/004790.wav|baker|zh|tʰˈoʊ2tˈiŋ3 jˈoʊ3 kˈən1 ʂˈəŋ2 lˈjɛn2 ʈʂˈɤ5 ʂˈu4 .
+D:/dataset/baker/Wave/002584.wav|baker|zh|tsʰˈɹ3xˈoʊ4 , tsʰˈaɪ2fˈəŋ2 tʰˈan1 sˈweɪ1 tɕˈi3tsʰˈɹ4 pˈan1tɕʰˈjɛn1 , tˈa2 tˈa2 tˈa2 tˈɤ5 fˈəŋ2ɹˈən4tɕˈi1 ʂˈəŋ1 tɕʰˈyɛ4 tsʰˈʊŋ2wˈeɪ4 tʰˈiŋ2 kˈwɔ4 .
+D:/dataset/baker/Wave/004407.wav|baker|zh|ʈʂˈʊŋ1ɕˈi1 lˈi3 lˈaɪ2 ʈʂʰˈu1 tɕʰˈyɛn2lˈwɔ3 ɕˈjɛ3ʈʂˈən1 .
+D:/dataset/baker/Wave/007431.wav|baker|zh|fˈəŋ1ɕˈjɛn3 jˈɛ3 ʂˈʐ4 lˈɑŋ4mˈan4 tˈɤ5 ˈi1pˈu4fˈən4 mˈa5 ?
+D:/dataset/baker/Wave/000800.wav|baker|zh|tˈan4ʂˈʐ4 , xˈwa2 tɕʰˈjɑŋ2 ˈy4ˈy4kˈwa3xˈwan1 .
+D:/dataset/baker/Wave/000915.wav|baker|zh|tˈʊŋ1tɕˈiŋ1 ˈiŋ1xˈwa1 ɹˈan3 tɕˈiŋ3 tɕˈi2jˈɛ3 ʈʂʰˈu1 kʰˈaɪ1 .
+D:/dataset/baker/Wave/007260.wav|baker|zh|ɕˈy1jˈaʊ4 tˈa4ɥˈɛ1 lˈiɑŋ3 ɕˈjaʊ3ʂˈʐ2 .
+D:/dataset/baker/Wave/002774.wav|baker|zh|ˈɚ2tɕʰˈjɛ3 xˈaɪ2ʂˈʐ4 tˈi1jˈaʊ1 tˈɤ5 ˈo2 .
+D:/dataset/baker/Wave/007021.wav|baker|zh|jˈoʊ3 ʂˈən2mˈɤ5 ʈʂˈəŋ4tɕˈy4 nˈəŋ2kˈoʊ4 ʈʂˈəŋ4mˈiŋ2 lˈi3 wˈan4 tɕˈyn1 jˈoʊ3 fˈeɪ1fˈa3ʈʂˈan4jˈoʊ3 tˈɤ5 mˈu4tˈi4 nˈɤ5 ?
+D:/dataset/baker/Wave/009101.wav|baker|zh|tsˈaɪ4 wˈeɪ4lˈaɪ2 ˈu3tʰˈjɛn1 lˈi3 , tˈoʊ1 jˈoʊ3 tɕˈiɑŋ4ˈy3 , wˈaɪ4ʈʂʰˈu1 tɕˈi4tˈɤ5 tˈaɪ4 xˈaʊ3 ˈy3tɕˈy4 .
+D:/dataset/baker/Wave/000544.wav|baker|zh|kʰˈʊŋ3mˈiŋ2tˈəŋ1 ɕˈiɑŋ1ʈʂʰˈwan2 jˈoʊ2 ʈʂˈu1kˈɤ3kʰˈʊŋ3mˈiŋ2 fˈa1mˈiŋ2 .
+D:/dataset/baker/Wave/008838.wav|baker|zh|ʂˈʐ4fˈa1 tsˈaʊ3 ˈiŋ2 nˈan2 lˈi3 lˈjoʊ4xˈaʊ4lˈoʊ2 tɕʰˈi1 lˈiŋ2lˈjoʊ4 ʂˈʐ4 tˈɤ5 ˈi2kˈɤ4 ɕˈjaʊ3 wˈɔ4ʂˈʐ4 .
+D:/dataset/baker/Wave/002511.wav|baker|zh|ʂˈən1wˈa1 ɕˈi4ʈʂʰˈa2 , pˈa2ʈʂʰˈu1 lˈwɔ2pˈwɔ5 tˈaɪ4 ʈʂʰˈu1 nˈi2 .
+D:/dataset/baker/Wave/001690.wav|baker|zh|sˈweɪ2xˈoʊ4 , nˈjɛ4 tˈaʊ4ɕˈi3 tʰˈweɪ1kʰˈaɪ1 ʈʂʰˈwɑŋ1xˈu4 tʰˈjaʊ4 ɕˈja4lˈoʊ2 tʰˈaʊ2ʂˈəŋ1 .
+D:/dataset/baker/Wave/007480.wav|baker|zh|tɕˈi4ʈʂˈɤ3 tsˈoʊ3tɕˈin4 ˈi1tɕˈja1 tɕʰˈi4ʈʂʰˈɤ1 kˈaɪ3ʈʂˈwɑŋ1 tsˈwɔ1fˈɑŋ1 .
+D:/dataset/baker/Wave/004113.wav|baker|zh|ʈʂʰˈu1ɹˈu4 jˈoʊ3 ʈʂʰˈɤ1 tˈaɪ4pˈu4 , ʈʂʰˈɤ1ɕˈiŋ2 tsˈɹ4ɕˈyɛn3 , xˈaɪ2jˈoʊ3 pˈaʊ3mˈa3 ˈo2 !
+D:/dataset/baker/Wave/002516.wav|baker|zh|fˈeɪ1 ˈɚ2 ɥˈɛ1 tˈʊŋ3 mˈoʊ3 tˈi4ˈɚ4tʰˈjɛn1 tˈaʊ4 tɕʰˈi2 tsˈu1ʈʂˈu4 tˈɤ5 kˈʊŋ1ˈy4 ɥˈɛ1xˈweɪ4 , tˈʊŋ3 mˈoʊ3 ɕˈin1ɹˈan2tʰˈʊŋ2ˈi4 .
+D:/dataset/baker/Wave/007640.wav|baker|zh|jˈoʊ3ʂˈʐ2 tsˈaɪ4 ʂˈɑŋ1tɕʰˈyɛn1 tɕʰˈiŋ3 kˈɤ4 pˈɑŋ4pˈɑŋ4 tˈoʊ1 nˈan2 .
+D:/dataset/baker/Wave/002539.wav|baker|zh|ʈʂˈəŋ4fˈu3 jˈoʊ4 ʂˈɤ4lˈi4 ɹˈɤ4ɕˈjɛn4 ˈɚ4sˈan1 tɕˈjoʊ3tɕˈjoʊ3 ˈɚ4 jˈaʊ1 ˈu3tɕˈjoʊ3 kˈʊŋ1 ʈʂʰˈa2ɕˈyn2 .
+D:/dataset/baker/Wave/006346.wav|baker|zh|wˈɔ3 tɕˈin3kˈwan3 tsˈwɔ4 lˈɤ5 ˈi1ɕˈjɛ1 fˈu4tsˈɤ2 tˈɤ5 kˈʊŋ1tsˈwɔ4 , tˈan4 jˈɛ3 fˈan4 kˈwɔ4 tsʰˈwɔ4ˈu4 , tsˈaɪ1 kˈwɔ4 kˈən1tˈoʊ3 , pʰˈəŋ4 kˈwɔ4 tˈiŋ1tsˈɹ5 .
+D:/dataset/baker/Wave/002901.wav|baker|zh|mˈeɪ3ʂˈaʊ43 wˈeɪ4nˈin2fˈu2ˈu4 .
+D:/dataset/baker/Wave/008214.wav|baker|zh|tʰˈa1 tˈa3sˈwan4 nˈu3lˈi4 kˈʊŋ1tsˈwɔ4 tsˈan3tɕʰˈjɛn2 , sˈan1nˈjɛn2 xˈoʊ4 kʰˈaɪ1ʈʂˈɤ5ʈʂʰˈɤ1 tɕʰˈy4 tsˈɹ4tɕˈja4jˈoʊ2 .
+D:/dataset/baker/Wave/008724.wav|baker|zh|fˈu1 mˈjɛn4mˈwɔ2 lˈoʊ2 .
+D:/dataset/baker/Wave/003711.wav|baker|zh|tʰˈa1 jˈɛn4ˈu4 ˈi4ʂˈu4 mˈwɔ4lˈwɔ4 , tʰˈweɪ2fˈeɪ4 tˈɤ5 ɕˈjɛn4ɕˈiɑŋ4 .
+D:/dataset/baker/Wave/004793.wav|baker|zh|kˈəŋ4wˈeɪ2jˈɛn2ʈʂˈʊŋ4 xˈaɪ2 tsˈaɪ4ˈy2 tsˈan3 ɕˈiɑŋ4mˈu4 .
+D:/dataset/baker/Wave/007686.wav|baker|zh|tsˈwɔ4wˈeɪ2 ɕˈjaʊ3tɕˈjoʊ4tsˈɹ5 tˈɤ5 wˈɔ3 tɕʰˈy4 tɕʰˈyɛn4tɕˈja4 , kˈwɔ3ɹˈan2 jˈoʊ3ˈjʊŋ4 !
+D:/dataset/baker/Wave/000910.wav|baker|zh|tsˈaɪ4 tɕˈjɛ1tʰˈoʊ2 mˈaɪ4ˈi4 tˈɤ5 lˈi3 ˈy4 ɕˈyɛn1 tˈjɛ1tˈjɛ1 .
+D:/dataset/baker/Wave/007998.wav|baker|zh|wˈɔ3mˈən5 tˈɤ5 ʂˈəŋ1xˈwɔ2 ʈʂˈən1ʂˈʐ4 pˈi3 mˈi4 xˈaɪ2 tʰˈjɛn2 nˈa4 !
+D:/dataset/baker/Wave/001131.wav|baker|zh|ʂˈʐ4pˈu2ʂˈʐ4 ʂˈɑŋ4kˈɤ4ɥˈɛ4 tɕˈiŋ1ʈʂʰˈɑŋ2 ˈaʊ2jˈɛ4 jˈa5 .
+D:/dataset/baker/Wave/007372.wav|baker|zh|tʰˈiŋ1 ˈi1ɕˈjɛ1 ɕˈjaʊ4ɥˈɛn2 mˈin2jˈaʊ2 , pˈi3ɹˈu2 lˈaʊ3lˈɑŋ2 tˈɤ5 ɥˈɛ4kˈwɑŋ1 tɕʰˈiŋ1ʈʂʰˈəŋ2 , mˈeɪ3 ɹˈən2
+D:/dataset/baker/Wave/002637.wav|baker|zh|mˈu3tɕʰˈin1 wˈɑŋ2 ɕˈjaʊ3 xˈʊŋ2 ˈi1 ɹˈən2 lˈa1ʈʂʰˈɤ3 tʰˈa1 ʈʂˈɑŋ3tˈa4 .
+D:/dataset/baker/Wave/002297.wav|baker|zh|ˈi1ʈʂˈwɔ2tˈa3pˈan4 jˈɛ3 xˈən3 tɕˈjɛn3tˈan1 kˈan4lˈjɛn4 .
+D:/dataset/baker/Wave/008450.wav|baker|zh|kˈu3sˈweɪ3 tɕˈyɛn1ɕˈjɛn4 kˈwɔ4ʈʂʰˈəŋ2 ʈʂˈʊŋ1 tˈɤ5 fˈan4 xˈaʊ2tɕˈjɛ2 .
+D:/dataset/baker/Wave/004540.wav|baker|zh|ˈjʊŋ4 tʰˈa1mˈən5 ʂˈoʊ1tsʰˈɑŋ2ʈʂˈɤ3 tˈɤ5 xˈɑŋ2xˈwa4 , kˈaɪ1 tɕʰˈjɛn2pˈi4 tɕˈjaʊ4 mˈəŋ2 tɕˈiɑŋ1 ˈu3tɕʰˈjɛn1 .
+D:/dataset/baker/Wave/004930.wav|baker|zh|ˈɚ2 tɕˈy4 lˈiŋ4 ˈi1 ʈʂˈʐ1tɕʰˈiŋ2 ɹˈən2ʂˈʐ4 tʰˈoʊ4lˈu4 , 3ʂˈəŋ1 tˈɤ5 sˈɹ3wˈɑŋ2 ɕˈi4 ʈʂʰˈʐ1 tˈwɔ4tʰˈaɪ1jˈaʊ4 sˈwɔ3ʈʂˈʐ4 .
+D:/dataset/baker/Wave/001760.wav|baker|zh|ʈʂˈan1 tsʰˈɑŋ1ˈiŋ2 tˈɤ5 ʈʂˈʐ3 fˈɑŋ4 ˈi1tʰˈjɛn1 xˈweɪ4 ʈʂˈan1 mˈan3 tsʰˈɑŋ1ˈiŋ2 , ˈɚ4 xˈwɔ4 pʰˈəŋ2jˈoʊ3 ʂˈwɔ1 wˈeɪ4ʂˈən2mˈɤ5 tˈoʊ1 nˈa4mˈɤ5 ʂˈa3 , mˈeɪ2 kʰˈan4tˈaʊ4 tʰˈʊŋ2pˈan4 tˈoʊ1 sˈɹ3 lˈɤ5 mˈa5 ?
+D:/dataset/baker/Wave/005074.wav|baker|zh|jˈɑŋ2 pˈiŋ1 pˈeɪ4 tɕˈi1ʂˈɑŋ1 xˈoʊ4 , pˈeɪ4 tɕˈiŋ3ʈʂʰˈa2 fˈan3 nˈiŋ2 ʈʂˈɤ5 ʂˈwɑŋ1pˈi4 , tɕˈjoʊ1ʈʂˈu4 ˈi1lˈiŋ3 , jˈa1 ɕˈja4ʈʂʰˈɤ1 lˈaɪ2 .
+D:/dataset/baker/Wave/009971.wav|baker|zh|tˈa3sˈaʊ3 wˈan2 nˈi3 xˈweɪ4 xˈən3 jˈoʊ3 ʈʂʰˈəŋ2tɕˈjoʊ4kˈan3 tˈɤ5 , ʂˈʐ4ˈi1ʂˈʐ4 , nˈi3 tɕˈjoʊ4 ɕˈin4 lˈɤ5 .
+D:/dataset/baker/Wave/008618.wav|baker|zh|sˈan1 ʂˈʐ4 jˈaʊ4 tɕˈja1kʰˈwaɪ4 ʂˈəŋ1tʰˈaɪ4 xˈan2jˈɑŋ3 fˈa1ʈʂˈan3 tɕʰˈy1 tɕˈjɛn4ʂˈɤ4 .
+D:/dataset/baker/Wave/008971.wav|baker|zh|ˈɚ2 ˈan4ʈʂˈaʊ4 nˈʊŋ2tsʰˈwən1 fˈəŋ1sˈu2 wˈɑŋ3wˈɑŋ3 ʂˈʐ4 tɕˈjɛ2xˈwən1 ʂˈʐ2 nˈan2fˈɑŋ1 ʈʂʰˈu1 fˈɑŋ2tsˈɹ5 , 3fˈɑŋ1 ʈʂʰˈu1 tɕˈja4ʈʂˈwɑŋ1 .
+D:/dataset/baker/Wave/000010.wav|baker|zh|kʰˈɤ1 tʰˈɤ4 nˈi1 ʂˈən1ʈʂʰˈwan1 pˈaʊ4wˈən2 tˈa4ˈi1 .
+D:/dataset/baker/Wave/004711.wav|baker|zh|pˈjɛ2 wˈeɪ4 pˈu4kˈaɪ1 wˈeɪ4 tˈɤ5 ɹˈən2 , ʂˈɑŋ1 lˈɤ5 pˈu4kˈaɪ1 ʂˈɑŋ1 tˈɤ5 ɕˈin1 .
+D:/dataset/baker/Wave/007272.wav|baker|zh|tˈu3ʈʂʰˈɑŋ3 nˈeɪ4 tˈɤ5 ʈʂˈwan1jˈɛ4 ʈʂˈwɑŋ1pˈeɪ4 .
+D:/dataset/baker/Wave/001372.wav|baker|zh|kʰˈaʊ3ʂˈəŋ1 ʈʂʰˈɑŋ2 tɕʰˈy1tɕˈjɛ3 wˈən2jˈɛn2wˈən2 , jˈoʊ4 tsʰˈu1ɕˈin1tˈa4ˈi4 , xˈwən4ɕˈjaʊ2 ʂˈʐ4tɕˈjɛn4 tɕʰˈiŋ2tɕˈjɛ2 .
+D:/dataset/baker/Wave/006915.wav|baker|zh|wˈa3ˈɚ3 tʰˈan3ʈʂʰˈəŋ2 fˈeɪ1ʈʂʰˈɑŋ2 tɕʰˈi1tˈaɪ4 tˈa3 ɥˈn1 ʂˈoʊ4xˈaɪ4ɹˈən2 , pˈɑŋ3 tɕʰˈi3 tʰˈa1 tˈɤ5 ʂˈoʊ3tɕˈjaʊ3 tɕˈi2 sˈaɪ1 ʈʂˈɤ5 tɕʰˈi2 tsˈweɪ3pˈa1 .
+D:/dataset/baker/Wave/005233.wav|baker|zh|tˈan4 ˈy3tsʰˈɹ3tʰˈʊŋ2ʂˈʐ2 , sˈaʊ3 mˈa3lˈu4 tˈɤ5 kˈʊŋ1tsˈwɔ4 tɕˈiŋ4ɹˈan2 jˈɛ3 tsˈaʊ1 fˈəŋ1 tɕʰˈjɑŋ3 , tɕˈjoʊ4 pˈu4mˈjɛn3 ɹˈɑŋ4 ɹˈən2 tɕˈiŋ1ʈʂʰˈa4 .
+D:/dataset/baker/Wave/004002.wav|baker|zh|ˈo2 , ʈʂˈɤ4 ʈʂˈən1 pˈa3 wˈɔ3 wˈən4 ʈʂˈu4 lˈɤ5 , nˈi3 ɕˈi1wˈɑŋ4 wˈɔ3 ʂˈɑŋ4wˈɑŋ3 sˈoʊ1sˈwɔ3 tˈa2ˈan4 mˈa5 ?
+D:/dataset/baker/Wave/007964.wav|baker|zh|tʰˈa1 tʰˈi2ʈʂʰˈu1 ʈʂˈən3tˈwan4 tˈan1 pˈjaʊ3ʂˈʐ4 tsˈɹ4tɕˈi3 tˈɤ5 tsˈwɔ3 ɕˈi1 , jˈoʊ4ʂˈoʊ3 ʈʂˈoʊ3 tˈoʊ1 tsʰˈwɔ4ʂˈɑŋ1 .
+D:/dataset/baker/Wave/002895.wav|baker|zh|jˈoʊ2ˈy2 kˈwan3nˈeɪ4 pˈiŋ4wˈeɪ4 ʈʂʰˈən2lˈjɛ4 nˈi2tɕʰˈjoʊ1 , tsʰˈan1kˈwan1ʈʂˈɤ3 fˈən1fˈən1 tɕˈja1ˈi3 ɕˈyn2wˈən4 .
+D:/dataset/baker/Wave/003603.wav|baker|zh|mˈeɪ3kˈwɔ2 ʈʂˈu4 ˈaɪ1tɕˈi2 kʰˈaɪ1lˈwɔ2 tˈa4ʂˈʐ3kˈwan3 jˈɛ3 tsˈaʊ1 ɕˈi2tɕˈi1 , ɕˈiŋ1tʰˈjaʊ2tɕʰˈi2 pˈeɪ4 sˈɹ1ʈʂʰˈɤ3 .
+D:/dataset/baker/Wave/001094.wav|baker|zh|ˈan4 wˈɔ3 ʂˈɤ4ɕˈiɑŋ3 ʂˈʐ4 kˈweɪ1kˈweɪ1tɕˈy3tɕˈy3 pˈa2 wˈan2 lˈwɔ2pˈwɔ5 , tˈi4lˈi3 jˈɛ3 kˈan1kˈan1tɕˈiŋ4tɕˈiŋ4 tˈɤ5 .
+D:/dataset/baker/Wave/001389.wav|baker|zh|tˈan4 sˈweɪ2xˈoʊ4 xˈweɪ4 ˈy4 tɕˈjoʊ4tsʰˈɹ3 pʰˈi4jˈaʊ2 .
+D:/dataset/baker/Wave/008694.wav|baker|zh|wˈɔ3mˈən5 kʰˈɤ3 mˈeɪ2jˈoʊ3 tˈaɪ4mˈjɛn4tɕˈy4 jˈoʊ1 !
+D:/dataset/baker/Wave/000460.wav|baker|zh|tɕˈy4 ˈan1nˈi1 pˈaʊ3pˈeɪ4 tʰˈoʊ4lˈu4 , tˈa4fˈɑŋ1 sˈwɔ3 ɕˈyɛn3 pʰˈjɛn1mˈu4 tɕˈyɛ2ˈu2 tɕʰˈjɛn1tsˈɹ4wˈən2 .
+D:/dataset/baker/Wave/005632.wav|baker|zh|ˈi1xˈweɪ4 jˈoʊ4 ʂˈwɔ1 ˈi3 ˈy3 ɕˈy2 ɥˈn1 tˈwan4tɕˈyɛ2 lˈɤ5 fˈu43kˈwan1ɕˈi4 , jˈɛn3ɕˈja4 pˈu4ʈʂˈʐ1 3ˈɚ2 ɕˈja4lˈwɔ4 .
+D:/dataset/baker/Wave/004588.wav|baker|zh|tʰˈa1 kˈan3tɕˈyɛ2 jˈoʊ3ɕˈjɛ1 wˈeɪ1mˈjaʊ4 , tɕˈjoʊ4 kˈən1 tʰˈa1 tsˈaɪ4 wˈeɪ1 pˈwɔ2 ʂˈɑŋ4 jˈaʊ1xˈɤ1 ˈi2ʈʂʰˈwan1 pʰˈiŋ2kˈwɔ3 ˈi1jˈɑŋ4 .
+D:/dataset/baker/Wave/009274.wav|baker|zh|lˈəŋ3mˈwɔ4 , kˈwɔ4xˈɤ2ʈʂʰˈaɪ1tɕʰˈjaʊ2 , ɕˈin1 wˈən2 tsʰˈʊŋ2 xˈweɪ2ˈi4 lˈi3 ʈʂˈwaɪ1 ʈʂʰˈu1 ʈʂˈɤ4ɕˈjɛ1 tsˈɹ4jˈɛn3 .
+D:/dataset/baker/Wave/006689.wav|baker|zh|sˈan1 ʂˈʐ4 tɕˈja1tɕʰˈjɑŋ2 kʰˈwa4tɕˈiŋ4 tsˈɹ1tɕˈin1 lˈjoʊ2tˈʊŋ4 tɕˈjɛn1tsʰˈɤ4 kˈwan3lˈi3 .
+D:/dataset/baker/Wave/006455.wav|baker|zh|wˈɔ3 tsˈaɪ4 lˈɑŋ2fˈɑŋ1 tˈaɪ1 lˈɤ5 ˈi1nˈjɛn2 pˈan4 .
+D:/dataset/baker/Wave/005722.wav|baker|zh|mˈəŋ4mˈaɪ3 tsˈaɪ4 ˈin4tˈu4 tɕˈiŋ1tɕˈi4 fˈɑŋ1mˈjɛn4 ʈʂˈan4 tɕˈy3tsˈu2tɕʰˈiŋ1ʈʂˈʊŋ4 tˈɤ5 tˈi4wˈeɪ4 .
+D:/dataset/baker/Wave/005743.wav|baker|zh|ʈʂˈɤ4 tɕˈiɑŋ1 tɕˈja1sˈu4 xˈwan3tɕˈjɛ3 kˈaʊ1ʈʂˈʊŋ1 ɕˈyɛ2wˈeɪ4 tˈɤ5 tɕˈin3tɕʰˈyɛ1 nˈan2tʰˈi2 .
+D:/dataset/baker/Wave/001324.wav|baker|zh|sˈwən1 mˈoʊ3 ˈjʊŋ4 pˈu4tʰˈjaʊ2 tɕˈiɑŋ1 ɕˈjaʊ3 lˈan2 kʰˈwən3pˈɑŋ3 sˈaɪ1 tˈaʊ4 ʈʂʰˈwɑŋ2 ɕˈja4 .
+D:/dataset/baker/Wave/002854.wav|baker|zh|tˈan4ʂˈʐ4 , ʈʂˈən1pˈu4ʈʂˈʐ1tˈaʊ4 3ˈɚ2 tˈɤ5 kʰˈɑŋ4jˈa1 nˈəŋ2lˈi4 jˈoʊ3 tˈwɔ1 tˈa4 , ɹˈən2jˈɛn2kʰˈɤ3wˈeɪ4 ˈa5 !
+D:/dataset/baker/Wave/009658.wav|baker|zh|tʰˈa1mˈən5 pˈən3ɕˈjaʊ3lˈi4wˈeɪ1 , tsˈweɪ4 nˈan2 tɕˈiŋ1ʂˈoʊ4 ʂˈʐ4ʈʂʰˈɑŋ3 tˈɤ5 ʈʂˈən4tˈɑŋ4 .
+D:/dataset/baker/Wave/005413.wav|baker|zh|tˈan4 ʈʂˈɤ4 wˈeɪ4nˈəŋ2 tsˈu3ʈʂˈʐ3 pˈeɪ4 ʈʂʰˈaɪ1tɕˈjɛ3 .
+D:/dataset/baker/Wave/005759.wav|baker|zh|fˈan4wˈeɪ2 tˈʊŋ1ʈʂˈʐ4 kʰˈɑŋ1 ˈoʊ1 lˈu4 , nˈan2 ʈʂˈʐ4 kˈweɪ1xˈwa4 lˈu4 , ɕˈi1 ʈʂˈʐ4 ʈʂˈu1 mˈaʊ3 xˈɤ2 , pˈeɪ3 ʈʂˈʐ4 kʰˈɑŋ1 kˈʊŋ1 lˈu4 .
+D:/dataset/baker/Wave/006478.wav|baker|zh|wˈɔ3 pˈa4 ʈʂʰˈɑŋ2 ʂˈwɔ1 ʂˈʐ4 kˈoʊ3ʂˈʐ3 xˈu2 lˈɤ5 jˈɛn3tɕˈiŋ1 tsʰˈaɪ2 kʰˈan4 ʂˈɑŋ4 wˈɔ3 mˈa1 tˈɤ5 , nˈi3 jˈɛ3 ʂˈʐ4 mˈa5 ?
+D:/dataset/baker/Wave/001114.wav|baker|zh|lˈiɑŋ3mˈiŋ2 ɕˈiɑŋ1tɕʰˈin1 3 ʈʂʰˈa4tˈjɛn3 tɕˈjoʊ4 jˈɑŋ2ɹˈu4xˈu3kʰˈoʊ3 .
+D:/dataset/baker/Wave/009055.wav|baker|zh|pˈaɪ3mˈiŋ2 tɕˈiɑŋ1tɕˈyn1 ʈʂˈʐ2ʂˈu4 ˈi3 ʈʂʰˈəŋ2wˈeɪ2 ˈi4ˈu4 ʈʂˈʐ2ʂˈu4 xˈwɔ2tˈʊŋ4 tˈɤ5 tˈjɛn3fˈan4 .
+D:/dataset/baker/Wave/007192.wav|baker|zh|wˈɔ3 ʈʂˈɤ4mˈɤ5 kˈwan1ɕˈin1 nˈi3 nˈi3 xˈaɪ2 ʂˈwɔ1 wˈɔ3 fˈan2 .
+D:/dataset/baker/Wave/000045.wav|baker|zh|ʂˈa1ʈʂʰˈɑŋ3 tɕˈiŋ4 ɥˈn3mˈiŋ4 , ʈʂˈwɑŋ4ʈʂˈʐ4 jˈɛ3 ˈu2 wˈeɪ2 .
+D:/dataset/baker/Wave/008430.wav|baker|zh|xˈɤ1tsˈweɪ4 lˈɤ5 tˈɤ5 lˈi3 kʰˈan3 pˈeɪ4 tʰˈi1 ɕˈiŋ3 xˈoʊ4 , fˈan1ʂˈən1 ʈʂˈan4 tɕʰˈi3 ˈy3 ʈʂˈɤ4 mˈiŋ2 mˈin2tɕˈiŋ3 sˈɹ1ʈʂʰˈɤ3 tɕʰˈi3lˈaɪ2 .
+D:/dataset/baker/Wave/008806.wav|baker|zh|tɕˈi4ʈʂˈɤ3 pʰˈaʊ3 lˈaɪ2 tˈi4ˈi2kˈɤ4 wˈən4 tʰˈa1 , nˈi3mˈən5 tˈweɪ4 ʂˈu3tɕˈja4 tˈɤ5 ɕˈyn4lˈjɛn4 jˈoʊ3 ʂˈən2mˈɤ5 kʰˈan4fˈa3 ?
+D:/dataset/baker/Wave/006802.wav|baker|zh|ɕˈjoʊ4 ʈʂˈʐ4 ɹˈʐ4tɕʰˈjɛn2 ˈi1pʰˈjɛn1 kˈwan1ˈy2 tʰˈa1 tˈɤ5 pˈaʊ4tˈaʊ4 , ɹˈɤ3tɕʰˈi3 nˈeɪ4tˈi4 wˈɑŋ3mˈin2 pˈu4mˈan3 .
+D:/dataset/baker/Wave/001933.wav|baker|zh|ʈʂʰˈən2pˈiŋ1 ˈi1ɕˈja4tsˈɹ5 xˈwɔ3 lˈɤ5 , tˈa4 xˈoʊ3tɕʰˈi3lˈaɪ2 .
+D:/dataset/baker/Wave/006506.wav|baker|zh|ʈʂʰˈɤ1ʈʂˈan4 tˈɤ5 wˈən4ɕˈyn4 tˈjɛn4xˈwa4 wˈeɪ4 pˈa1 lˈjoʊ4 sˈɹ4sˈan1sˈan1 ˈɚ4sˈan1 ˈɚ4 .
+D:/dataset/baker/Wave/001332.wav|baker|zh|kˈɑŋ3fˈu3 ɕˈin1 jˈɛn4 ʈʂʰˈu1 sˈɹ4kʰˈwan3 ɹˈʐ4pˈən3 ˈiŋ1ˈɚ2 pʰˈeɪ4fˈɑŋ1 nˈaɪ3fˈən3 tˈjɛn3 xˈan2lˈiɑŋ4 tɕˈjaʊ4 tˈi1 .
+D:/dataset/baker/Wave/009076.wav|baker|zh|mˈaɪ3 pʰˈiŋ2 ˈin3lˈjaʊ4 , pʰˈiŋ2kˈaɪ4 ʂˈɑŋ4 ɕˈjɛ3 tˈɤ5 tsˈaɪ4 lˈaɪ2 ˈi1pʰˈiŋ2 .
+D:/dataset/baker/Wave/002435.wav|baker|zh|nˈa4 3xˈaɪ2 tˈɤ5 ʂˈwɑŋ1ʈʂʰˈwən2 wˈeɪ1 mˈin3ʈʂˈɤ5 , xˈʊŋ2ɹˈwən4 jˈoʊ3 kˈwɑŋ1 , fˈɑŋ3fˈu2 tsˈaɪ4 kˈoʊ1ˈin3 lˈwɔ2 tʰˈjɛn1 ʈʂʰˈəŋ2 tˈɤ5 tsˈweɪ3ʈʂʰˈwən2 .
+D:/dataset/baker/Wave/005126.wav|baker|zh|lˈiŋ4 ˈi2kˈɤ4 ɹˈɤ3jˈɛn3 tˈɤ5 mˈiŋ2ɕˈiŋ1 tˈɑŋ1 ʂˈu3 wˈəŋ1 xˈʊŋ2 .
+D:/dataset/baker/Wave/002088.wav|baker|zh|ɕˈjɛn4tsˈaɪ4 xˈaʊ3 lˈɤ5 , ˈi1tsʰˈɹ4 mˈaɪ3 kʰˈɤ3ˈi3 ˈjʊŋ4 ʂˈɑŋ4 ˈi1nˈjɛn2pˈan4tsˈaɪ3 tˈɤ5 lˈiɑŋ4 pˈeɪ5 .
+D:/dataset/baker/Wave/003985.wav|baker|zh|pˈeɪ4 ɹˈən2 ʈʂʰˈwɔ1 ʈʂˈɤ5 tɕˈi3lˈiɑŋ2kˈu3 , xˈwɔ2ʈʂˈɤ5 jˈɛ3 nˈan2ʂˈoʊ4 , pˈu2ʂˈʐ4 wˈɔ3 tsˈwan1nˈjoʊ2tɕˈjaʊ3tɕˈjɛn1 .
+D:/dataset/baker/Wave/006591.wav|baker|zh|tsʰˈɹ3ˈan4 tsˈaɪ4 tɕʰˈyɛn2 ɕˈja4mˈən2 ˈin3fˈa1 kˈɤ4fˈɑŋ1 kˈwan1ʈʂˈu4 .
+D:/dataset/baker/Wave/004580.wav|baker|zh|xˈaʊ3 tˈɤ5 jˈa5 ? jˈaʊ4 ˈi4tɕʰˈi3 mˈɤ5 ?
+D:/dataset/baker/Wave/006026.wav|baker|zh|tʰˈu3tˈi4ʈʂʰˈu1ɹˈɑŋ4 ˈiŋ1kˈaɪ1 kˈən1tɕˈy4 kʰˈaɪ1fˈa1ʂˈɑŋ1 tˈɤ5 tɕˈi4ʂˈu4 xˈɤ2 tsˈɹ1tɕˈin1 tʰˈjaʊ2tɕˈjɛn4 ʂˈaɪ1ɕˈyɛn3 kʰˈaɪ1fˈa1ʂˈɑŋ1 .
+D:/dataset/baker/Wave/009129.wav|baker|zh|ɕˈyɛ2tˈaʊ4 ʈʂʰˈəŋ2ʈʂʰˈu2 fˈa3 ʂˈʐ2 tɕˈjoʊ4 xˈweɪ4 pˈeɪ4 tɕˈjoʊ3tɕˈjoʊ3ʈʂʰˈəŋ2fˈa3 pˈjaʊ3 .
+D:/dataset/baker/Wave/000473.wav|baker|zh|wˈeɪ4 tɕʰˈiŋ4 nˈjɛn2 lˈi4 , kˈaɪ1 tsʰˈwən1wˈeɪ3 tɕʰˈiŋ3lˈaɪ2 tʰˈwɔ1ˈi1ˈu3nˈiɑŋ2 ʈʂˈu4ɕˈiŋ4 .
+D:/dataset/baker/Wave/002685.wav|baker|zh|ʈʂʰˈu1 ɹˈu4 tsʰˈɹ3 tˈaʊ4 tˈɤ5 tʰˈoʊ2tsˈɹ1ʈʂˈɤ3 tɕʰˈjɛ4mˈwɔ4 mˈɑŋ2mˈu4 kˈən1tɕˈin4 .
+D:/dataset/baker/Wave/004615.wav|baker|zh|ʂˈan1ʈʂˈʊŋ1 nˈa4 mˈi2mˈəŋ2 tˈɤ5 ɕˈjaʊ3tɕˈiŋ4 , ɕˈiɑŋ4 mˈi2tsˈoʊ3ʂˈən2tɕˈiŋ1 ˈi1jˈɑŋ4 wˈan1jˈɛn2 tɕˈin4 wˈəŋ3ˈy4 tˈɤ5 kˈwɔ3lˈin2 , ɕˈjaʊ1ʂˈʐ1 pˈu2tɕˈjɛn4 .
+D:/dataset/baker/Wave/006379.wav|baker|zh|nˈi3 tsʰˈaɪ1 ˈa5 nˈi3 tsʰˈaɪ1 ˈa5 nˈi3 tsʰˈaɪ1 ˈa5 , nˈi3 tsʰˈaɪ1 tˈweɪ4 lˈɤ5 wˈɔ3 tɕˈjoʊ4 kˈaʊ4sˈu4 nˈi3 .
+D:/dataset/baker/Wave/006858.wav|baker|zh|tsʰˈəŋ2 pˈeɪ4 fˈa3kˈwɔ2 mˈeɪ2tʰˈi3 kˈwan1ʈʂˈu4 tˈɤ5 lˈeɪ2nˈwɔ4 kˈʊŋ1jˈɛ4 tɕˈjɛn4tˈjɛ2ˈan4 xˈən3 kʰˈɤ3nˈəŋ2 ɕˈi4 ɹˈən2wˈeɪ2 nˈjɛ1tsˈaʊ4 .
+D:/dataset/baker/Wave/007833.wav|baker|zh|ˈi1 ʂˈʐ4 tɕˈi1ʈʂʰˈu3 jˈɑŋ3lˈaʊ3tɕˈin1 tʰˈaɪ4 tˈi1 .
+D:/dataset/baker/Wave/006954.wav|baker|zh|pˈeɪ3tɕˈiŋ1 kˈɤ4pˈjɛ2 tɕˈjɛn1tsʰˈɤ4tˈjɛn3 , ɕˈi1xˈʊŋ2ʂˈʐ4 , tɕʰˈjɛ2tsˈɹ5 , tʰˈu3tˈoʊ4 , jˈɑŋ2tsʰˈʊŋ1 ˈin1 ɕˈja4ɕˈyɛ3 ɥˈɛn2ˈin1 tˈwan4 xˈwɔ4 .
+D:/dataset/baker/Wave/005497.wav|baker|zh|xˈwɑŋ2ʂˈɑŋ4 ! nˈin2 xˈaɪ2 tɕˈi4tˈɤ5 tˈa4mˈiŋ2 xˈu2pʰˈan4 tˈɤ5 ɕˈja4 ˈy3 xˈɤ2 mˈa5 ?
+D:/dataset/baker/Wave/008370.wav|baker|zh|tɕˈi4ʈʂˈɤ3 kˈan3tˈaʊ4 jˈaʊ1 jˈaʊ1 tɕʰˈi1 ˈi1ɥˈɛn4 tɕˈi1ʈʂʰˈɑŋ3lˈu4 fˈən1ɥˈɛn4 tɕˈi2ʈʂˈən3 tɕʰˈjɑŋ3tɕˈjoʊ4ʂˈʐ4 .
+D:/dataset/baker/Wave/008237.wav|baker|zh|wˈɔ3mˈən5 tɕˈjoʊ4 tɕˈyɛn3tɕʰˈi3 pʰˈu1kˈaɪ4 , nˈa2 ʈʂˈɤ5 jˈa2ʂˈwa1 ʂˈən2mˈɤ5 tˈɤ5 tɕʰˈy4 ɕˈi3ʂˈu4 .
+D:/dataset/baker/Wave/003491.wav|baker|zh|wˈɔ3 tɕˈin3 lˈɤ5 tsˈweɪ4tˈa4 tˈɤ5 nˈu3lˈi4 , wˈeɪ4lˈɤ5 lˈjoʊ2 ˈi2kˈɤ4 ɥˈɛn2kˈʊŋ1 ˈaʊ2jˈɛ4 pʰˈeɪ2 tʰˈa1 lˈjaʊ2 .
+D:/dataset/baker/Wave/003620.wav|baker|zh|ʈʂʰˈən2ʂˈweɪ4 tˈɤ5 xˈan4ʈʂʰˈaʊ2 tsˈən3mˈɤ5 tɕˈjaʊ4 jˈɛ3 tɕˈjaʊ4 pˈu4 ɕˈiŋ3 .
+D:/dataset/baker/Wave/007012.wav|baker|zh|kʰˈɤ3 nˈi3mˈən5 ʈʂˈɤ4ɕˈjɛ1 mˈiŋ2mˈiŋ2 ʈʂˈʐ1tˈaʊ4 ʂˈʐ2tɕʰˈiŋ2 tˈɤ5 ɹˈən2 tsˈən3 kʰˈɤ3 ɹˈu2tsʰˈɹ3 xˈən3ɕˈin1 .
+D:/dataset/baker/Wave/000281.wav|baker|zh|ʈʂʰˈu1tɕʰˈy4 xˈoʊ4 ɕˈiɑŋ3tˈaʊ4 wˈaɪ4mˈjɛn4 tɕʰˈy4 ʈʂʰˈwɑŋ3 ˈi1 ʈʂʰˈwɑŋ3 .
+D:/dataset/baker/Wave/006202.wav|baker|zh|lˈa1mˈeɪ3 tsˈʊŋ3mˈjɛn4tɕˈi1 lˈiɑŋ3tɕʰˈjɛn1 lˈiŋ2 tɕʰˈi1ʂˈʐ2 wˈan4pʰˈiŋ2fˈɑŋ1kˈʊŋ1lˈi3 , ɹˈən2kʰˈoʊ3 lˈjoʊ4tˈjɛn3 lˈiŋ2 sˈan1ˈi4 .
+D:/dataset/baker/Wave/009172.wav|baker|zh|ˈy3tsʰˈɹ3tʰˈʊŋ2ʂˈʐ2 , ɕˈjaʊ1ʂˈoʊ4 xˈweɪ2nˈwan3 ʂˈʐ3 fˈɑŋ2 tɕʰˈi3 tˈɤ5 tsˈɹ1tɕˈin1 jˈa1lˈi4 tˈɤ2tˈaʊ4 tɕˈi2tˈa4 xˈwan3tɕˈjɛ3 .
+D:/dataset/baker/Wave/008680.wav|baker|zh|tsˈaɪ4 ˈi1tsʰˈɤ4 tʰˈjɛ3kˈweɪ3 ɕˈja4 tˈaʊ4 ʈʂˈa3 ʂˈɑŋ4 , ɹˈəŋ2 nˈəŋ2 kʰˈan4tɕˈjɛn4 ɕˈyɛ4tɕˈi4 .
+D:/dataset/baker/Wave/009798.wav|baker|zh|kˈan1 tˈjɛ1tˈjɛ1 ʈʂʰˈəŋ1tɕʰˈi3 ˈy3sˈan3 , mˈan4mˈan4 tsˈoʊ3 lˈɤ5 kˈwɔ4tɕʰˈy4 .
+D:/dataset/baker/Wave/002351.wav|baker|zh|tʰˈu2 wˈeɪ4 ˈi1tˈʊŋ4 fˈɑŋ2ˈu1 sˈwən3xˈweɪ3 jˈɛn2ʈʂˈʊŋ4 .
+D:/dataset/baker/Wave/006878.wav|baker|zh|ʈʂʰˈwən1lˈan2 kˈu3fˈən4 sˈɹ4ɥˈɛ4fˈən4 ʂˈʐ4fˈoʊ3 ʈʂˈən1tˈɤ5 tʰˈweɪ4ʂˈʐ4 ?
+D:/dataset/baker/Wave/006606.wav|baker|zh|ʂˈʐ1tʰˈi3 tɕˈiŋ1 ˈy3ˈi1 pˈaʊ1kˈwɔ3 , tˈjɛn4ɕˈjɛn4 kʰˈwən3ʈʂˈa1 , pˈeɪ4 pˈaʊ4 tˈaʊ4 lˈɤ5 xˈwɑŋ2 ɕˈy2 kˈən1 tˈɤ5 mˈwɔ2tʰˈwɔ1ʈʂʰˈɤ1 xˈoʊ4tsˈwɔ4 .
+D:/dataset/baker/Wave/004415.wav|baker|zh|kˈan3tɕˈyɛ2 tʰˈjɛn1tɕʰˈi4 xˈən3 ɹˈoʊ2xˈɤ2 .
+D:/dataset/baker/Wave/000582.wav|baker|zh|ʈʂˈɑŋ1 mˈin3 fˈu3mˈwɔ1 ʈʂˈɤ5 tʰˈa1 tˈɤ5 tʰˈoʊ2 , xˈan2ʈʂˈɤ5lˈeɪ4 tɕʰˈyɛn4wˈeɪ4 .
+D:/dataset/baker/Wave/006335.wav|baker|zh|mˈu4tɕʰˈjɛn2 , nˈjɛn1xˈwa1 sˈɹ4 tˈɤ5 ʂˈʐ3ˈjʊŋ4tɕʰˈyɛn2 kˈweɪ1ʂˈu3 ʈʂˈʊŋ1kˈwɔ2ɹˈən2mˈin2tˈa4ɕˈyɛ2 ˈin4ʂˈwa1ʈʂʰˈɑŋ3 .
+D:/dataset/baker/Wave/009069.wav|baker|zh|kˈʊŋ1nˈeɪ4 ʈʂˈəŋ3tɕˈjɛ2 lˈi4sˈwɔ3 , lˈɑŋ2ʈʂˈu4 mˈən2ʈʂʰˈwɑŋ1 jˈɛn2sˈɤ4 ɕˈjɛn1jˈɛn4 , tɕˈi3mˈiŋ2 tˈjɛn4kˈʊŋ1 ʈʂˈəŋ4tsˈaɪ4 wˈeɪ2ɕˈjoʊ1 ɕˈjɛn4lˈu4 .
+D:/dataset/baker/Wave/001123.wav|baker|zh|wˈɔ3 pˈaʊ1 lˈɤ5 ʈʂˈu2sˈwən1 lˈaʊ3 jˈa1tʰˈɑŋ1 , xˈən3 ɕˈiɑŋ1 tˈɤ5 .
+D:/dataset/baker/Wave/008877.wav|baker|zh|fˈan3tˈweɪ4ʈʂˈɤ3 ɹˈən4wˈeɪ2 , tʰˈi2tɕʰˈy3 pʰˈeɪ1tʰˈaɪ1 kˈan4ɕˈi4pˈaʊ1 ɕˈiɑŋ1tˈɑŋ1ˈy2 ˈɤ4ʂˈa1 ʂˈəŋ1mˈiŋ4 .
+D:/dataset/baker/Wave/008222.wav|baker|zh|tʰˈa1 ʂˈwɔ1 , fˈeɪ1tɕˈi1 tsˈaɪ4 tˈjɛn1pˈwɔ3 tˈi4ˈi1tsʰˈɹ4 ʂˈʐ1ʈʂˈʊŋ4 xˈoʊ4 , kˈwɑŋ3pˈwɔ1 tsʰˈaɪ2 ʂˈwɔ1 fˈeɪ1tɕˈi1 ˈy4tˈaʊ4 tɕʰˈjɑŋ2 tɕʰˈi4lˈjoʊ2 .
+D:/dataset/baker/Wave/009733.wav|baker|zh|ʈʂʰˈwan1 ʂˈɑŋ4 ɕˈi4ʈʂˈwɑŋ1 ʂˈʐ4 jˈɛn3ɥˈɛn2 , tʰˈwɔ1 ɕˈja4 ɕˈi4ʈʂˈwɑŋ1 ʂˈʐ4 nˈʊŋ2mˈin2 .
+D:/dataset/baker/Wave/009034.wav|baker|zh|jˈoʊ2ˈy2 xˈwɔ3ʈʂʰˈɑŋ3 ʂˈɑŋ4 fˈəŋ1lˈi4 pˈu4tˈwan4 tɕˈja1tˈa4 , jˈoʊ4 tɕˈja1sˈu4 lˈɤ5 kʰˈɤ3ɹˈan2ˈu4 ɹˈan2ʂˈaʊ1 .
+D:/dataset/baker/Wave/008373.wav|baker|zh|ʈʂˈʐ3ʂˈʐ4 , pʰˈaʊ3pˈu4 kʰˈɤ3ˈi3 tɕʰˈja1 mˈjaʊ3pˈjaʊ3 , ˈɚ2 ˈy2lˈɤ4tɕʰˈyɛn1 tɕʰˈyɛ4 mˈeɪ2jˈoʊ3 tˈiŋ4lˈwən4 .
+D:/dataset/baker/Wave/001350.wav|baker|zh|tsʰˈɹ3 kˈwan1tˈjɛn3 pˈeɪ4 ɕˈjoʊ1kˈaɪ3kˈaʊ3 tsʰˈaɪ3nˈa4 .
+D:/dataset/baker/Wave/008626.wav|baker|zh|jˈoʊ3ʈʂˈɤ5 tɕˈin1ʂˈu3 lˈan2kˈan1 tˈɤ5 tˈa4mˈən2 ɕˈy1jˈɛn3 ʈʂˈɤ5 .
+D:/dataset/baker/Wave/000256.wav|baker|zh|ˈu3 ʂˈʐ4 jˈɛ4mˈjɛn4 sˈan1 pʰˈən1 pˈu3 fˈeɪ2 .
+D:/dataset/baker/Wave/005133.wav|baker|zh|lˈaʊ3pʰˈwɔ2 xˈweɪ2tˈaʊ4 pˈiŋ4fˈɑŋ2 lˈi3 , ˈi1lˈjɛn3 ˈu2nˈaɪ4 .
+D:/dataset/baker/Wave/000821.wav|baker|zh|nˈa4mˈɤ5 ˈu2ˈi4ˈy2 ˈi3lˈwan3tɕˈi1ʂˈʐ2 .
+D:/dataset/baker/Wave/001878.wav|baker|zh|tʰˈa1 ˈi3wˈeɪ2 xˈaɪ2tsˈɹ5 ˈɤ4 lˈɤ5 , tɕˈjoʊ4 ʈʂʰˈʊŋ1 nˈaɪ3fˈən3 kˈeɪ3 tʰˈa1 xˈɤ1 , ɕˈjaʊ3 tˈʊŋ1 xˈɤ1wˈan2 xˈoʊ4 ɹˈəŋ2ɹˈan2 kʰˈu1nˈaʊ4 .
+D:/dataset/baker/Wave/001520.wav|baker|zh|ʈʂˈu1 xˈaʊ3 lˈʊŋ2 mˈwɔ1lˈɤ5mˈwɔ1 ʂˈweɪ3nˈjoʊ2 , ʂˈweɪ3nˈjoʊ2 kˈwaɪ1kˈwaɪ1 ʂˈweɪ4 lˈɤ5 ɕˈja4lˈaɪ2 .
+D:/dataset/baker/Wave/009617.wav|baker|zh|tɕʰˈi2ʈʂˈʊŋ1 pˈaʊ1kʰˈwɔ4 lˈaʊ3pʰˈaɪ2 ɹˈu3pʰˈin3 tɕʰˈi3jˈɛ4 xˈɑŋ2ʈʂˈoʊ1 mˈeɪ3lˈi4 tɕˈjɛn4 ɹˈu3jˈɛ4 jˈoʊ3ɕˈjɛn4kˈʊŋ1sˈɹ1 .
+D:/dataset/baker/Wave/005586.wav|baker|zh|tˈan1ɹˈən4 wˈəŋ4ˈan1ɕˈjɛn4 ʈʂˈɑŋ3 ʈʂˈʐ1tɕʰˈjɛn2 , ɕˈjɛ4ɕˈjaʊ3tˈʊŋ1 ʂˈʐ4 kˈweɪ4ʈʂˈoʊ1ʂˈəŋ33jˈoʊ2tɕˈy2 tsˈʊŋ1xˈɤ2 ɕˈjɛ2tʰˈjaʊ2 ʈʂʰˈu3ʈʂʰˈu4ʈʂˈɑŋ3 .
+D:/dataset/baker/Wave/008661.wav|baker|zh|nˈa4 tʰˈoʊ2 ˈi1tɕˈy4 pˈu4 ɕˈin4 sˈwan4lˈɤ5 pˈjɛn4 kˈwa4 lˈɤ5 .
+D:/dataset/baker/Wave/004655.wav|baker|zh|nˈi3 tˈweɪ4wˈaɪ4 ʈʂʰˈu1tsˈu1 tˈɤ5 ʂˈʐ4 tˈa1lˈjɛn2 tˈaʊ3 xˈɤ2 ɕˈjaʊ3 xˈaʊ4 tˈaʊ3 .
+D:/dataset/baker/Wave/000734.wav|baker|zh|lˈwɔ4pʰˈeɪ4tsˈɹ1 tsˈaɪ4tˈu4 tˈɑŋ1ɕˈyɛn3 mˈeɪ3 tʰˈwən2 tʰˈjɛn1 xˈoʊ4 .
+D:/dataset/baker/Wave/006582.wav|baker|zh|lˈiɑŋ3 ɹˈən2 kˈəŋ4tɕˈja1 tˈɑŋ1ʈʂˈʊŋ4 tsˈwɔ4ʈʂʰˈu1 lˈoʊ3pˈaʊ4 , tɕʰˈin1tsˈweɪ3 , nˈjɛ1 lˈjɛn3tˈan4 xˈɤ2 xˈu4 wˈeɪ4 ʂˈʐ2ˈu4 tˈəŋ3 tɕʰˈin1mˈi4 tˈʊŋ4tsˈwɔ4 .
+D:/dataset/baker/Wave/004910.wav|baker|zh|xˈu3 tʰˈweɪ3 mˈaɪ4ʈʂˈɤ5 tɕʰˈiŋ1ɥˈn2 pˈu4 , xˈu3 tʰˈoʊ2tˈiŋ3 ʈʂˈɤ5 xˈaʊ3 ʂˈʐ4tʰˈu2 .
+D:/dataset/baker/Wave/000499.wav|baker|zh|lˈwɔ3tʰˈi3 pʰˈan1jˈɛn2 ʂˈʐ4 tɕˈja1ʈʂˈoʊ1 ʂˈɤ4ˈiŋ3ʂˈʐ1 tɕˈjɛn1 pʰˈan1jˈɛn2 ˈaɪ4xˈaʊ4ʈʂˈɤ3 tˈi2ˈan1 tˈɤ5 ʈʂʰˈwɑŋ4ˈi4 .
+D:/dataset/baker/Wave/007205.wav|baker|zh|wˈɔ3 pʰˈi2tɕʰˈi4 ʈʂʰˈaʊ1tɕˈi2 xˈaʊ3 , pˈu2xˈweɪ4 tɕˈi2 tˈɤ5 .
+D:/dataset/baker/Wave/002635.wav|baker|zh|mˈa3 ɕˈjoʊ1 ʂˈʐ4 ʈʂˈɤ4kˈɤ4 lˈiŋ3ˈy4 tˈɤ5 tɕʰˈyɛn2wˈeɪ1 , tsʰˈəŋ2 tsˈaɪ4 tʰˈʊŋ1ɕˈin4 xˈɑŋ2jˈɛ4 mˈwɔ1pʰˈa2kˈwən3tˈa3 tˈwɔ1nˈjɛn2 .
+D:/dataset/baker/Wave/001604.wav|baker|zh|tɕʰˈjɛn2 ɕˈjaʊ4ʈʂˈɑŋ3 jˈoʊ4 xˈwan3xˈwan3 pˈaʊ4 ˈi2kˈɤ4 , pˈa3 tʰˈa1 tˈɤ5 lˈiŋ4wˈaɪ4 pˈan4pˈjɛn1tʰˈjɛn1 jˈɛ3 ʈʂʰˈaɪ1 lˈɤ5 .
+D:/dataset/baker/Wave/005536.wav|baker|zh|wˈɔ3 xˈaɪ2 pˈu2xˈweɪ4 tʰˈjaʊ4ˈu3 jˈɛ2 .
+D:/dataset/baker/Wave/009070.wav|baker|zh|tˈəŋ1ʂˈɑŋ4 mˈwɔ2tʰˈjɛn1lˈwən2 , jˈoʊ2kʰˈɤ4 mˈən5 nˈəŋ2 fˈu3kʰˈan4 tsˈɹ4jˈoʊ2 3ʂˈən2ɕˈiɑŋ4 , tʰˈjaʊ4wˈɑŋ4 mˈan4xˈa1tˈwən4 tʰˈjɛn1tɕˈi4ɕˈjɛn4 .
+D:/dataset/baker/Wave/002569.wav|baker|zh|tˈweɪ4ˈy2 kˈɤ2xˈʊŋ2lˈin2 tʰˈʊŋ4kʰˈwaɪ4 tˈɤ5 tˈa2fˈu4 , kˈwɔ1tʰˈaɪ2mˈiŋ2 ɹˈəŋ2 ɕˈin1tsʰˈwən2 ˈi24 .
+D:/dataset/baker/Wave/006232.wav|baker|zh|lˈaʊ3ʂˈʐ1 , ʈʂˈɤ4 mˈən2 kʰˈɤ4 wˈɔ3 mˈeɪ2 xˈaʊ3xˈaʊ3ɕˈyɛ2 , xˈən3 tˈweɪ4pˈu4tɕʰˈi3 nˈi3 .
+D:/dataset/baker/Wave/001478.wav|baker|zh|lˈin2ɕˈi1lˈeɪ3 ʂˈəŋ1 3 xˈoʊ4 tʰˈi3tʰˈaɪ4 pˈi3 xˈwaɪ2ɥˈn4 tɕʰˈjɛn2 xˈaɪ2 mˈjaʊ2tʰˈjaʊ2 ɕˈjɛn1ɕˈi4 .
+D:/dataset/baker/Wave/009065.wav|baker|zh|tɕʰˈi4tɕˈin1wˈeɪ2ʈʂˈʐ3 , tʰˈa1 ɹˈəŋ2ɹˈan2 pˈi3kˈəŋ1pˈu4ʈʂʰˈwɔ4 .
+D:/dataset/baker/Wave/009277.wav|baker|zh|ʈʂʰˈən2 xˈʊŋ2 ʈʂˈʐ3xˈaʊ3 tɕʰˈiŋ3 lˈɤ5 lˈiɑŋ3kˈɤ4 pˈɑŋ4pˈɑŋ4 , pˈa3 mˈu3tɕʰˈin1 tʰˈaɪ2xˈweɪ2 lˈɤ5 tɕˈja1 .
+D:/dataset/baker/Wave/005769.wav|baker|zh|tsˈu1lˈin4 fˈɑŋ2 ʈʂˈʐ3nˈəŋ2 ˈan1 lˈiɑŋ3ʈʂˈɑŋ1ʈʂʰˈwɑŋ2 .
+D:/dataset/baker/Wave/005034.wav|baker|zh|tˈi4sˈan1tʰˈjaʊ2 , tˈwən1 ʂˈweɪ4 ʂˈɤ4ʈʂˈʐ4 jˈoʊ1xˈweɪ4 ʂˈweɪ44 xˈɤ2 pʰˈu3tʰˈʊŋ1 ʂˈweɪ44 .
+D:/dataset/baker/Wave/000197.wav|baker|zh|tɕˈiŋ3fˈɑŋ1 kʰˈu3kʰˈu3 ʈʂˈweɪ1tsˈʊŋ1 wˈeɪ4 mˈoʊ3 .
+D:/dataset/baker/Wave/009631.wav|baker|zh|pˈu4lˈjaʊ4 ʈʂˈɤ4 ˈi1tɕˈy4 xˈwa4 ɹˈɤ3nˈaʊ3 lˈɤ5 lˈi3 ˈaʊ2 .
+D:/dataset/baker/Wave/008847.wav|baker|zh|ɕˈiɑŋ1ɕˈin4 tˈa4tɕˈja1 ˈi2tˈiŋ4 ʂˈoʊ4ˈi4fˈeɪ3tɕʰˈjɛn3 .
+D:/dataset/baker/Wave/000229.wav|baker|zh|ˈi1 kʰˈan4 , ˈi1tʰˈwan2 nˈʊŋ2jˈɛn1 ʈʂˈʐ2 wˈɑŋ3 tʰˈjɛn1kʰˈʊŋ1 tsʰˈwan1 .
+D:/dataset/baker/Wave/004498.wav|baker|zh|sˈweɪ2xˈoʊ4 , tɕˈi4ʈʂˈɤ3 ˈy3 ˈa1 xˈwa2 tɕˈi4ɕˈy4 ʂˈɑŋ4lˈu4 .
+D:/dataset/baker/Wave/002146.wav|baker|zh|tʰˈu2 wˈeɪ4 lˈi3 pˈwɔ2 ʂˈwɔ4 xˈɤ2 ɕˈjaʊ3 sˈa1 xˈɤ2ˈiŋ3 .
+D:/dataset/baker/Wave/002842.wav|baker|zh|kʰˈwaɪ4 tɕʰˈy4 ʈʂˈaʊ3 ʈʂˈɑŋ1 tˈjɛn4ɹˈɤ4tʰˈan3 !
+D:/dataset/baker/Wave/003623.wav|baker|zh|tɕʰˈi2ʈʂˈʊŋ1 , xˈwa1 tˈa4 ɹˈu2 wˈan3kʰˈoʊ3 , tɕˈiɑŋ4 xˈʊŋ2 tˈɤ5 xˈwa1pˈan4 , tɕˈin1sˈɤ4 tˈɤ5 xˈwa1ɹˈweɪ3 , ˈjʊŋ1ɹˈʊŋ2xˈwa2kˈweɪ4 .
+D:/dataset/baker/Wave/002082.wav|baker|zh|tʰˈa1 ɕˈiŋ3lˈaɪ2 xˈoʊ4 ɕˈjɛn1 ʈʂˈaʊ3 tɕʰˈiŋ2ʂˈʐ1 , tsˈaɪ4 ʈʂʰˈwan1 xˈaʊ3 ˈi1fˈu2 , xˈweɪ2ɕˈiɑŋ3 tsˈwɔ2jˈɛ4 tˈɤ5 mˈəŋ4 , kʰˈɤ3 mˈəŋ4tɕˈiŋ4 tɕʰˈyɛn2 ˈu2 .
+D:/dataset/baker/Wave/001015.wav|baker|zh|tsˈɑŋ1ˈu4 tˈɤ2ʂˈoʊ3 xˈoʊ4 , tʰˈa1 tɕˈiŋ4 tɕˈiɑŋ1 tɕʰˈi2 sˈaɪ1ɹˈu4 ɕˈjʊŋ1ʈʂˈaʊ4 jˈɛn3ɹˈən2ˈɚ3mˈu4 .
+D:/dataset/baker/Wave/002035.wav|baker|zh|jˈoʊ3 ˈi1tʰˈjɛn1 , jˈoʊ3ɹˈən2 tʰˈʊŋ1kˈwɔ4 tɕʰˈyn2 lˈi3 tˈɤ5 tˈwan3ɕˈin4 wˈən4 tʰˈa1 , jˈaʊ4 pˈu2jˈaʊ4 mˈaɪ3 ʈʂˈʐ1 fˈɑŋ3ʈʂˈən1tɕʰˈjɑŋ1 wˈan2wˈan2 .
+D:/dataset/baker/Wave/001846.wav|baker|zh|ʈʂˈɤ4 pˈu4 ˈin1wˈeɪ4 kˈʊŋ1ʂˈɑŋ1 mˈa5 ? ʂˈɑŋ4pˈan1 mˈɑŋ2 xˈu2lˈwan4 ʈʂʰˈʐ1 tsˈaʊ3fˈan4 , tɕˈja1pˈan1 ˈaʊ2jˈɛ4 , tɕˈjoʊ3tsˈwɔ4 pˈu4 ɥˈn4tˈʊŋ4
+D:/dataset/baker/Wave/003602.wav|baker|zh|jˈɛ3 jˈoʊ3 kʰˈɤ3nˈəŋ2 ʂˈʐ4 kˈəŋ1xˈwan4 tˈɤ5 kˈɑŋ1tɕˈja4 ʈʂˈʐ4lˈiɑŋ4 wˈeɪ4tˈa2pˈjaʊ1 .
+D:/dataset/baker/Wave/004696.wav|baker|zh|sˈweɪ2xˈoʊ4 , tɕˈi4ʈʂˈɤ3 lˈaɪ2tˈaʊ4 ʂˈaʊ2jˈaʊ4tɕˈy1 ʈʂˈan4 , kˈaɪ1ʈʂˈan4 tˈɤ5 kʰˈɤ4lˈjoʊ2 jˈɛ3 pˈu4 tˈwɔ1 .
+D:/dataset/baker/Wave/002717.wav|baker|zh|wˈɔ3 ʂˈʐ4 mˈəŋ2 mˈeɪ4 ʈʂˈʐ3 , nˈi3 ˈaɪ4 ɕˈin4pˈu4ɕˈin4 .
+D:/dataset/baker/Wave/009753.wav|baker|zh|kˈwɔ1tɕˈin1lˈʊŋ2 pʰˈiŋ2tɕˈja4 lˈu3 ˈjʊŋ3 , ʂˈʐ4jˈɛ4ɕˈin1 tsˈɤ2ɹˈən4kˈan3 tɕˈjaʊ4 tɕʰˈjɑŋ2 , tsˈu3ʈʂˈʐ1ɕˈjɛ2tʰˈjaʊ2 nˈəŋ2lˈi4 tɕʰˈjɑŋ2 .
+D:/dataset/baker/Wave/001837.wav|baker|zh|ɹˈu2ˈi4 tˈɤ5 wˈaɪ4pʰˈwɔ2 ʂˈwɔ1 , tʰˈa1 ʈʂʰˈan2 tˈɤ2 xˈwɑŋ1 tˈɤ5 ʂˈʐ2xˈoʊ4 , tɕˈjoʊ4 ˈjʊŋ4 ʂˈɤ2tʰˈoʊ5 tsˈaɪ4 ʂˈʐ2ˈu4 ʂˈɑŋ4 tʰˈjɛn3 lˈiɑŋ3ɕˈja4 .
+D:/dataset/baker/Wave/006542.wav|baker|zh|sˈweɪ4ɥˈɛ4 tɕˈyɛ2tˈweɪ4 pˈu2ʂˈʐ4 ʂˈa1ʈʂˈu1tˈaʊ1 , ˈɚ2ʂˈʐ4 ˈi1mˈiŋ2 jˈoʊ1ɕˈjoʊ4 tˈɤ5 sˈɹ4jˈɑŋ3ɥˈɛn2 !
+D:/dataset/baker/Wave/000125.wav|baker|zh|ˈi1tsʰˈəŋ2 kʰˈɤ3ˈi3 ʈʂˈʊŋ3 xˈwa1xˈwa1tsʰˈaʊ3tsʰˈaʊ3 .
+D:/dataset/baker/Wave/001438.wav|baker|zh|pˈa3 wˈɔ3 ʈʂˈɤ4kˈɤ4 ɥˈɛn4wˈɑŋ4 kˈaʊ4sˈu4 tsˈʊŋ3pˈjɛn1 .
+D:/dataset/baker/Wave/000329.wav|baker|zh|tʰˈa1 ʈʂʰˈwan1ʈʂˈɤ5 ʂˈweɪ4ˈi1 ʈʂʰˈʐ4tɕˈjaʊ3 wˈɑŋ3 wˈaɪ4 pʰˈaʊ3 .
+D:/dataset/baker/Wave/003769.wav|baker|zh|tɕʰˈjɛ4ˈɚ3ɕˈi1 tsʰˈʊŋ2ɕˈjaʊ3 ɕˈi3xˈwan1 pʰˈaɪ2tɕʰˈjoʊ2 , wˈan2pʰˈaɪ2 , pʰˈiŋ1pʰˈɑŋ1tɕʰˈjoʊ2 xˈaɪ2jˈoʊ3 tˈjɛn4ˈiŋ3 .
+D:/dataset/baker/Wave/008001.wav|baker|zh|ˈi2kˈɤ4 nˈan2ɹˈən2 tʰˈweɪ2ɹˈan2 tˈi4 tsˈwɔ4tsˈaɪ4 pʰˈɑŋ2pˈjɛn1 , mˈu4kˈwɑŋ1 tˈaɪ1ʈʂˈʐ4 .
+D:/dataset/baker/Wave/008123.wav|baker|zh|xˈaɪ2 ˈin1wˈeɪ4 mˈeɪ2 tɕʰˈjɛn2 , ʈʂˈʊŋ4 kˈu3 mˈiŋ2 ɕˈiɑŋ1 tsʰˈʊŋ2lˈaɪ2pˈu4 mˈaɪ3 wˈa4tsˈɹ5 jˈɛ3 pˈu4 ʈʂʰˈwan1 .
+D:/dataset/baker/Wave/004083.wav|baker|zh|tʰˈu1ɹˈan2 pˈeɪ4 tɕˈi4ʈʂˈɤ3 wˈeɪ2tˈu3 , xˈu4 ˈɚ2 ɕˈin1tɕʰˈjɛ4 tˈɤ5 tɕˈiɑŋ1wˈən2 ˈjʊŋ4 ʂˈoʊ3 tʰˈweɪ1sˈɑŋ3 tɕˈiŋ4tʰˈoʊ2 .
+D:/dataset/baker/Wave/003100.wav|baker|zh|ɹˈu2ɹˈwɔ4 jˈoʊ3ɹˈən2 fˈan3tɕʰˈi2tˈaʊ4ˈɚ2ɕˈiŋ2ʈʂˈʐ1 , tˈaʊ4 ʂˈʐ4 jˈoʊ3 tɕˈjaʊ4sˈwɔ1 fˈan4tsˈweɪ4 tˈɤ5 ɕˈjɛn2ˈi2 .
+D:/dataset/baker/Wave/008558.wav|baker|zh|ʂˈwɑŋ1ʂˈoʊ3 pˈeɪ4 ɕˈi4tʰˈjɛ3sˈɹ1 kʰˈwən3ʈʂˈa1 , lˈjɛn3sˈɤ4tʰˈjɛ3tɕʰˈiŋ1 , ʈʂʰˈu3ˈy2 xˈwən1mˈi2 ʈʂˈwɑŋ4tʰˈaɪ4 .
+D:/dataset/baker/Wave/003276.wav|baker|zh|wˈeɪ4 mˈin3 ʂˈəŋ1 pˈjaʊ3ʂˈʐ4 , pˈaʊ2 wˈɑŋ2 ˈan4 ˈin1 mˈa4 ˈin3fˈa1 , tsʰˈʊŋ2 ʂˈən1tsʰˈəŋ2tsʰˈɹ4 kʰˈan4 , ʂˈʐ4 lˈi4ˈi4 tʰˈwan2xˈwɔ3 tˈɤ5 nˈeɪ4xˈʊŋ4 .
+D:/dataset/baker/Wave/002473.wav|baker|zh|tsˈan2 pˈu4 ʂˈɑŋ4 mˈeɪ3ʂˈu4pˈan1 lˈɤ5 pˈa5 ?
+D:/dataset/baker/Wave/006634.wav|baker|zh|tɕˈjɛn3fˈɑŋ1 ɹˈən4wˈeɪ2 , jˈɑŋ2 ʈʂʰˈwən1 mˈeɪ4 ʂˈɤ4ɕˈjɛn2 tʰˈan1ˈu1tsˈweɪ4 xˈɤ2 nˈwɔ2ˈjʊŋ4kˈʊŋ1kʰˈwan3 tsˈweɪ4 .
+D:/dataset/baker/Wave/004219.wav|baker|zh|tɕˈiŋ1 tɕʰˈjɑŋ3tɕˈjoʊ4ˈu2ɕˈjaʊ4 , ɕˈjaʊ3jˈɑŋ2 tʰˈwɔ2 sˈɹ3wˈɑŋ2 .
+D:/dataset/baker/Wave/009043.wav|baker|zh|tsʰˈɤ4tɕˈiŋ3tɕˈi4ʂˈu4 , tˈweɪ4 ʂˈʐ2jˈoʊ2kʰˈan1tʰˈan4 tˈɤ5 ɕˈjaʊ44 xˈɤ2 ʈʂˈʐ4lˈiɑŋ4 ʈʂˈʐ4kˈwan1ʈʂˈʊŋ4jˈaʊ4 .
+D:/dataset/baker/Wave/002008.wav|baker|zh|tʰˈʊŋ2ɕˈyɛ2 jˈaʊ4 wˈɔ3 pˈɑŋ1 nˈi3 pʰˈeɪ2jˈɑŋ3 ʈʂˈəŋ4tɕʰˈyɛ4 sˈan1kˈwan1 mˈɤ5 .
+D:/dataset/baker/Wave/006462.wav|baker|zh|tʰˈa1 pˈa1 ˈɚ4nˈjɛn2ʂˈəŋ1 , xˈɤ2pˈeɪ3ɹˈən2 , tˈa4ɕˈyɛ2pˈən3kʰˈɤ1 pˈi4jˈɛ4ʂˈəŋ1 .
+D:/dataset/baker/Wave/006429.wav|baker|zh|sˈwɔ3ˈi3 jˈoʊ3ɕˈjɛ1 ɕˈjʊŋ2mˈaʊ1 tˈɤ5 ʈʂˈwa3tsˈɹ3 xˈən3 ʈʂˈɑŋ3 , ʂˈən1ʂˈɑŋ4 jˈɛ3 jˈoʊ3 ˈi1ɕˈjɛ1 ˈi4wˈeɪ4 .
+D:/dataset/baker/Wave/000703.wav|baker|zh|tʰˈa3lˈi3mˈu4 jˈoʊ2tʰˈjɛn2 tɕʰˈiŋ1nˈjɛn2 ɥˈɛn2kˈʊŋ1 fˈəŋ4ɕˈjɛn4 tˈa4mˈwɔ4 .
+D:/dataset/baker/Wave/001227.wav|baker|zh|tsʰˈaɪ3ʈʂˈaɪ1 ʂˈan1xˈɤ2tʰˈaʊ2 tˈɤ5 nˈʊŋ2mˈin2 ˈi2kˈɤ4 lˈjɛ4tɕʰˈjɛ4 tˈjɛ1ɕˈja4tɕʰˈy4 , tʰˈoʊ2 pʰˈəŋ4tˈaʊ4 ʂˈʐ2tʰˈoʊ5 tɕˈjoʊ4 kʰˈɤ3nˈəŋ2 ʂˈwaɪ1sˈɹ3 .
+D:/dataset/baker/Wave/006714.wav|baker|zh|fˈu2tɕˈjɛn4 jˈoʊ2tsʰˈɹ3 lˈa1 ɕˈiɑŋ3 jˈɛn2xˈaɪ3 xˈɤ2 tʰˈaɪ2wˈan1xˈaɪ3ɕˈja2 tˈa4fˈəŋ1 tɕˈiŋ3pˈaʊ4 .
+D:/dataset/baker/Wave/002367.wav|baker|zh|ʈʂˈɤ4 ʂˈʐ4 xˈoʊ4 fˈa3 jˈoʊ1ˈy2 ɕˈjɛn1 fˈa3 , tʰˈɤ4ʂˈu1 fˈa3 jˈoʊ1ˈy2 pʰˈu3tʰˈʊŋ1fˈa3 tˈɤ5 kˈwan1ɕˈi4 .
+D:/dataset/baker/Wave/001966.wav|baker|zh|tsʰˈwən2tsˈaɪ4 jˈɛn1 tɕˈiŋ3 ˈin3xˈwan4 tˈɤ5 kʰˈwɑŋ4tɕˈiŋ3 , pˈaʊ4ˈy3 tɕʰˈi1tɕˈjɛn1 ˈi14 jˈɛn2tɕˈin4 tɕˈiŋ3ɕˈja4 tsˈwɔ4jˈɛ4 .
+D:/dataset/baker/Wave/009042.wav|baker|zh|tɕˈjɛ2kˈwɔ3 ˈin1tsʰˈɹ3 mˈeɪ2 ʈʂʰˈoʊ3tɕˈjɛn4 tɕʰˈjɛn2mˈjɛn4 tˈɤ5 tˈjɛn4ɕˈjɛn4kˈan1 tsˈɹ5 , ˈi1tʰˈoʊ2 tsˈaɪ1 ʂˈɑŋ4 lˈɤ5 .
+D:/dataset/baker/Wave/008997.wav|baker|zh|ɹˈu2kˈwɔ3 ʂˈwaɪ4 ʂˈʐ4 ˈi1ʈʂˈʊŋ3 tsˈweɪ4 , nˈa4 tɕˈin1tʰˈjɛn1 ʈʂˈu3ɹˈən2 nˈi3 ˈi3tɕˈiŋ1 tsˈweɪ4ˈɤ4tʰˈaʊ1tʰˈjɛn1 lˈɤ5 .
+D:/dataset/baker/Wave/000568.wav|baker|zh|tsˈweɪ4 jˈɛn2ʈʂˈʊŋ4 ʂˈʐ2 , ɕˈjʊŋ1tɕʰˈjɛn2 xˈaɪ2jˈaʊ4 fˈɑŋ4 ˈi2kˈɤ4 pˈjɛn4pʰˈən2 ʂˈəŋ4 ˈoʊ3tʰˈu4ˈu4 .
+D:/dataset/baker/Wave/007797.wav|baker|zh|ˈɚ4 ʂˈʐ4 tsˈʊŋ3lˈiɑŋ4 kʰˈʊŋ4ʈʂˈʐ4 , pˈu4nˈəŋ2 ɕˈiɑŋ4 kˈwən3ɕˈyɛ3tɕʰˈjoʊ2 .
+D:/dataset/baker/Wave/007044.wav|baker|zh|wˈeɪ4mˈiŋ2lˈwən2 ʈʂˈʐ3ʈʂʰˈu1 tɕʰˈi2ʈʂˈʊŋ1 tˈɤ5 pʰˈiŋ2tsˈɤ4 tsʰˈwɔ4lˈwan4 .
+D:/dataset/baker/Wave/002270.wav|baker|zh|lˈwɔ2 xˈan2 ɹˈʐ4tɕʰˈjɛn2 tsˈaɪ4 fˈa3kˈwɔ2 tsʰˈan1tɕˈja1 kˈa1 nˈa4 tˈjɛn4ˈiŋ3tɕˈjɛ2 .
+D:/dataset/baker/Wave/007033.wav|baker|zh|kˈeɪ3 tʰˈwan2tˈweɪ4 nˈiŋ2tɕˈin3 fˈa1tʰˈjaʊ2 , ʂˈʐ4 tɕʰˈjaʊ2pˈu4sˈɹ1 fˈu4ˈy3 tsˈɹ4tɕˈi3 tˈɤ5 tsˈɤ2ɹˈən4 .

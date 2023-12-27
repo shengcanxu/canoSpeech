@@ -134,8 +134,8 @@ def check_symbol_coverage(config_path):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="../config/vits_kokoro.json")
+    parser.add_argument("--config", type=str, default="../config/vits_baker.json")
     args = parser.parse_args()
 
-    gen_filelist(args.config)
-    # check_symbol_coverage(args.config)
+    # gen_filelist(args.config)
+    check_symbol_coverage(args.config)
