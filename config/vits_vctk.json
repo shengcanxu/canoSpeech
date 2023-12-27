@@ -127,7 +127,8 @@
             "num_flows": 4,
             "num_layers_in_flow": 4,
             "attention_heads": 2,
-            "use_transformer_flow": true
+            "use_transformer_flow": true,
+            "use_SNAC": true
         },
         "duration_predictor": {
             "kernel_size": 3,

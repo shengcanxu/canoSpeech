@@ -193,7 +193,7 @@ class NaturalTTSModel(nn.Module):
         # )
         #
         # # z_p:[B,C,specT]
-        # z_p = self.flow(
+        # z_p, total_logdet = self.flow(
         #     x=z,
         #     x_mask=z_mask,
         #     g=None,

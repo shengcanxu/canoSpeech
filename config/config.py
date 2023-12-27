@@ -67,6 +67,7 @@ class FlowConfig(Coqpit):
     num_layers_in_flow:int = 4
     attention_heads:int = 2
     use_transformer_flow:bool = True
+    use_SNAC:bool = False
 
 @dataclass
 class VitsDurationPredictorConfig(Coqpit):

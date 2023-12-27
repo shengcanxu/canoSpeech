@@ -199,6 +199,7 @@ class ResidualCouplingBlock(nn.Module):
         cond_channels=0,
         mean_only=False,
         use_transformer_flow=False,
+        use_SNAC=False,
     ):
         assert channels % 2 == 0, "channels should be divisible by 2"
         super().__init__()
@@ -207,7 +208,7 @@ class ResidualCouplingBlock(nn.Module):
 
         #vits2: transformer in each flow block
         self.pre_transformer = None
-        if use_transformer_flow:
+        if use_transformer_flow and not use_SNAC:
             self.pre_transformer = RelativePositionTransformer(
                 in_channels=self.half_channels,
                 out_channels=self.half_channels,
@@ -219,6 +220,11 @@ class ResidualCouplingBlock(nn.Module):
                 dropout_p=0.1,
                 rel_attn_window_size=None,
             )
+
+        # SNAC layer to add speakering information
+        self.use_SNAC = use_SNAC
+        if self.use_SNAC:
+            self.sn_linear = nn.Conv1d(cond_channels, 2*self.half_channels, 1)
 
         # input layer
         self.pre = nn.Conv1d(self.half_channels, hidden_channels, 1)
@@ -247,6 +253,12 @@ class ResidualCouplingBlock(nn.Module):
             - x_mask: :math:`[B, 1, T]`
             - g: :math:`[B, C, 1]`
         """
+        if self.use_SNAC and g is not None:
+            return self.do_SNAC_forward(x, x_mask, g=g, reverse=reverse)
+        else:
+            return self.do_forward(x, x_mask, g=g, reverse=reverse)
+
+    def do_forward(self, x, x_mask, g=None, reverse=False):
         x0, x1 = torch.split(x, [self.half_channels] * 2, 1)
 
         #vits2: transformer in each flow
@@ -259,18 +271,49 @@ class ResidualCouplingBlock(nn.Module):
         h = self.enc(h, x_mask, g=g)
         stats = self.post(h) * x_mask
         if not self.mean_only:
-            m, log_scale = torch.split(stats, [self.half_channels] * 2, 1)
+            m, logs = torch.split(stats, [self.half_channels] * 2, 1)
         else:
             m = stats
-            log_scale = torch.zeros_like(m)
+            logs = torch.zeros_like(m)
 
         if not reverse:
-            x1 = m + x1 * torch.exp(log_scale) * x_mask
+            x1 = m + x1 * torch.exp(logs) * x_mask
             x = torch.cat([x0, x1], 1)
-            logdet = torch.sum(log_scale, [1, 2])
+            logdet = torch.sum(logs, [1, 2])
             return x, logdet
         else:
-            x1 = (x1 - m) * torch.exp(-log_scale) * x_mask
+            x1 = (x1 - m) * torch.exp(-logs) * x_mask
+            x = torch.cat([x0, x1], 1)
+            return x
+
+    def do_SNAC_forward(self, x, x_mask, g=None, reverse=False):
+        sn_variables = self.sn_linear(g)
+        sn_m, sn_v = sn_variables.chunk(2, dim=1)  # (B, half_chnnael, 1)
+        x0, x1 = torch.split(x, [self.half_channels] * 2, 1)
+
+        #* Pass x0 to SN before WN
+        h = (x0 - sn_m) * torch.exp(-sn_v) * x_mask
+        h = self.pre(h) * x_mask
+        #* Global conditioning is not used
+        h = self.enc(h, x_mask, g=None)
+        stats = self.post(h) * x_mask
+        if not self.mean_only:
+            m, logs = torch.split(stats, [self.half_channels] * 2, 1)
+        else:
+            m = stats
+            logs = torch.zeros_like(m)  #logs (s) are fixed to 0
+
+        if not reverse:
+            #* SN to x1 before affine xform
+            x1 = (x1 - sn_m) * torch.exp(-sn_v) * x_mask
+            x1 = m + x1 * torch.exp(logs) * x_mask
+            x = torch.cat([x0, x1], 1)
+            logdet = torch.sum(logs * x_mask, [1,2]) - torch.sum(sn_v.expand(-1,-1,logs.size(-1)) * x_mask, [1,2])
+            return x, logdet
+        else:
+            x1 = (x1 - m) * torch.exp(-logs) * x_mask
+            #* SDN before concat
+            x1 = (sn_m + x1 * torch.exp(sn_v)) * x_mask
             x = torch.cat([x0, x1], 1)
             return x
 
@@ -285,7 +328,8 @@ class ResidualCouplingBlocks(nn.Module):
         num_layers: int,
         num_flows=4,
         cond_channels=0,
-        use_transformer_flow=False
+        use_transformer_flow=False,
+        use_SNAC=False,
     ):
         """Redisual Coupling blocks for VITS flow layers.
         Args:
@@ -296,6 +340,8 @@ class ResidualCouplingBlocks(nn.Module):
             num_layers (int): Number of the WaveNet layers.
             num_flows (int, optional): Number of Residual Coupling blocks. Defaults to 4.
             cond_channels (int, optional): Number of channels of the conditioning tensor. Defaults to 0.
+            use_transformer_flow: add transformer in flow
+            use_SNAC: use SNAC in flow layer. transformer is not used
         """
         super().__init__()
         self.channels = channels
@@ -317,7 +363,8 @@ class ResidualCouplingBlocks(nn.Module):
                     num_layers,
                     cond_channels=cond_channels,
                     mean_only=True,
-                    use_transformer_flow=use_transformer_flow
+                    use_transformer_flow=use_transformer_flow,
+                    use_SNAC=use_SNAC
                 )
             )
 
@@ -330,12 +377,15 @@ class ResidualCouplingBlocks(nn.Module):
             - x_mask: :math:`[B, 1, T]`
             - g: :math:`[B, C, 1]`
         """
+        total_logdet = 0
         if not reverse:
             for flow in self.flows:
-                x, _ = flow(x, x_mask, g=g, reverse=reverse)
+                x, log_det = flow(x, x_mask, g=g, reverse=reverse)
                 x = torch.flip(x, [1])
+                total_logdet += log_det
+            return x, total_logdet
         else:
             for flow in reversed(self.flows):
                 x = torch.flip(x, [1])
                 x = flow(x, x_mask, g=g, reverse=reverse)
-        return x
+            return x

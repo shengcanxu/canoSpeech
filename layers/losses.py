@@ -41,10 +41,11 @@ class VitsGeneratorLoss(nn.Module):
         return loss, gen_losses
 
     @staticmethod
-    def kl_loss(z_p, logs_q, m_p, logs_p, z_mask):
+    def kl_loss(z_p, logs_q, m_p, logs_p, total_logdet, z_mask):
         """
         z_p, logs_q: [b, h, t_t]
         m_p, logs_p: [b, h, t_t]
+        total_logdet: [b] - total_logdet summed over each batch
         """
         z_p = z_p.float()
         logs_q = logs_q.float()
@@ -60,6 +61,9 @@ class VitsGeneratorLoss(nn.Module):
         kl = logs_p - logs_q - 0.5
         kl += 0.5 * ((z_p - m_p) ** 2) * torch.exp(-2.0 * logs_p)
         kl = torch.sum(kl * z_mask)
+
+        #* add total_logdet (Negative LL)
+        kl -= torch.sum(total_logdet)
         l = kl / torch.sum(z_mask)
         return l
 
@@ -81,6 +85,7 @@ class VitsGeneratorLoss(nn.Module):
         feats_disc_fake,  # [B, C, T', P]
         feats_disc_real,  # [B, C, T', P]
         loss_duration,
+        total_logdet=0,
         use_speaker_encoder_as_loss=False,
         gt_speaker_emb=None,
         syn_speaker_emb=None,
@@ -103,7 +108,7 @@ class VitsGeneratorLoss(nn.Module):
         return_dict["loss_mel"] = loss_mel
 
         loss_kl = (
-            self.kl_loss(z_p=z_q_dur, logs_q=logs_q_audio, m_p=m_p_dur, logs_p=logs_p_dur, z_mask=z_mask.unsqueeze(1))
+            self.kl_loss(z_p=z_q_dur, logs_q=logs_q_audio, m_p=m_p_dur, logs_p=logs_p_dur, total_logdet=total_logdet, z_mask=z_mask.unsqueeze(1))
             * self.kl_loss_alpha
         )
         loss_duration = torch.sum(loss_duration.float()) * self.dur_loss_alpha

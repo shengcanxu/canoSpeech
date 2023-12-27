@@ -176,7 +176,7 @@ class NaturalSpeechModel(nn.Module):
         y_hat = self.waveform_decoder(z_slice, g=g)
 
         # backward flow layers
-        z_p = self.flow(z, y_mask, g=g)
+        z_p, total_logdet = self.flow(z, y_mask, g=g)
 
         x, m_p, logs_p, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embed)
 
@@ -340,7 +340,7 @@ class NaturalSpeechModel(nn.Module):
             raise RuntimeError(" [!] Voice conversion is only supported on multi-speaker models.")
 
         z, _, _, y_mask = self.audio_encoder(y, y_lengths, g=g_src)
-        z_p = self.flow(z, y_mask, g=g_src)
+        z_p, _ = self.flow(z, y_mask, g=g_src)
         z_hat = self.flow(z_p, y_mask, g=g_tgt, reverse=True)
         o_hat = self.waveform_decoder(z_hat * y_mask, g=g_tgt)
         return o_hat, y_mask, (z, z_p, z_hat)

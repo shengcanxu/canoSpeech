@@ -30,6 +30,7 @@ class VitsModel(nn.Module):
         self.symbol_manager = symbol_manager
 
         self.use_sdp = self.model_config.use_sdp
+        self.use_SNAC = self.model_config.flow.use_SNAC
         self.spec_segment_size = self.model_config.spec_segment_size
         self.mas_noise_scale = self.model_config.mas_noise_scale or 0.0
         self.mas_noise_scale_decay = self.model_config.mas_noise_scale_decay or 0.0
@@ -90,6 +91,7 @@ class VitsModel(nn.Module):
             num_layers=self.model_config.flow.num_layers_in_flow,
             cond_channels=self.embedded_speaker_channels,
             use_transformer_flow=self.model_config.flow.use_transformer_flow,
+            use_SNAC=self.use_SNAC,
         )
         if self.use_sdp:
             self.duration_predictor = StochasticDurationPredictor(
@@ -190,12 +192,25 @@ class VitsModel(nn.Module):
             lang_embed = self.language_embedding(language_ids).unsqueeze(-1)  # [B, lang_channel, 1]
 
         # audio encoder, encode audio to embedding layer z's dimension
-        z_q_audio, m_q_audio, logs_q_audio, y_mask = self.audio_encoder(y, y_lengths, g=g)
+        z_q_audio, m_q_audio, logs_q_audio, y_mask = self.audio_encoder(
+            x=y,
+            x_lengths=y_lengths,
+            g=g if not self.use_SNAC else None
+        )
 
         # select a random feature segment for the waveform decoder
-        z_slice, slice_ids = rand_segments(z_q_audio, y_lengths, self.spec_segment_size, let_short_samples=True, pad_short=True)
+        z_slice, slice_ids = rand_segments(
+            x=z_q_audio,
+            x_lengths=y_lengths,
+            segment_size=self.spec_segment_size,
+            let_short_samples=True,
+            pad_short=True
+        )
 
-        y_hat = self.waveform_decoder(z_slice, g=g)
+        y_hat = self.waveform_decoder(
+            x=z_slice,
+            g=g if not self.use_SNAC else None
+        )
 
         wav_seg = segment(
             x=waveform,
@@ -205,9 +220,18 @@ class VitsModel(nn.Module):
         )
 
         # flow layers
-        z_q_dur = self.flow(z_q_audio, y_mask, g=g)
+        z_q_dur, total_logdet = self.flow(
+            x=z_q_audio,
+            x_mask=y_mask,
+            g=g
+        )
 
-        h_text, m_p_text, logs_p_text, x_mask = self.text_encoder(x, x_lengths, g=g, lang_emb=lang_embed)
+        h_text, m_p_text, logs_p_text, x_mask = self.text_encoder(
+            x=x,
+            x_lengths=x_lengths,
+            g=g if not self.use_SNAC else None,
+            lang_emb=lang_embed
+        )
 
         # monotonic align and duration predictor
         attn_durations, attn = self.monotonic_align(z_q_dur, m_p_text, logs_p_text, x, x_mask, y_mask, mas_noise_scale=self.mas_noise_scale)
@@ -224,7 +248,7 @@ class VitsModel(nn.Module):
                 x_mask=x_mask,
                 dr=attn_durations,
                 g=g.detach() if g is not None else g,
-                lang_emb=lang_embed,
+                lang_emb=lang_embed.detach() if lang_embed is not None else lang_embed,
             )
             loss_duration = loss_duration / torch.sum(x_mask)
         else:
@@ -233,7 +257,7 @@ class VitsModel(nn.Module):
                 x=h_text.detach(),
                 x_mask=x_mask,
                 g=g.detach() if g is not None else g,
-                lang_emb=lang_embed,
+                lang_emb=lang_embed.detach() if lang_embed is not None else lang_embed,
             )
             loss_duration = torch.sum((predict_log_durations - attn_log_durations) ** 2, [1, 2]) / torch.sum(x_mask)
             # loss_duration = torch.sum((torch.exp(predict_log_durations) - attn_durations) ** 2, [1, 2]) / torch.sum(x_mask)
@@ -262,6 +286,7 @@ class VitsModel(nn.Module):
             "waveform_seg": wav_seg,  # [B, 1, spec_seg_size * hop_length]
             "slice_ids": slice_ids,
             "loss_duration": loss_duration,
+            "total_logdet": total_logdet,
             "gt_speaker_emb": gt_speaker_emb,
             "syn_speaker_emb": syn_speaker_emb,
         }
@@ -295,13 +320,18 @@ class VitsModel(nn.Module):
         if self.model_config.use_language_ids:
             lang_embed = self.language_embedding(language_ids).unsqueeze(-1)  # [B, lang_channel, 1]
 
-        h_text, m_p_text, logs_p_text, x_mask = self.text_encoder(x, x_lengths, lang_emb=lang_embed)
+        h_text, m_p_text, logs_p_text, x_mask = self.text_encoder(
+            x=x,
+            x_lengths=x_lengths,
+            g=g if not self.use_SNAC else None,
+            lang_emb=lang_embed
+        )
 
         if self.use_sdp:
             logw = self.duration_predictor(
                 x=h_text,
                 x_mask=x_mask,
-                g=g if g is not None else g,
+                g=g,
                 reverse=True,
                 noise_scale=noise_scale,
                 lang_emb=lang_embed
@@ -310,7 +340,7 @@ class VitsModel(nn.Module):
             logw = self.duration_predictor(
                 x=x,
                 x_mask=x_mask,
-                g=g if g is not None else g,
+                g=g,
                 lang_emb=lang_embed
             )
         w = torch.exp(logw) * x_mask * length_scale
@@ -326,10 +356,18 @@ class VitsModel(nn.Module):
         logs_p_dur = torch.matmul(attn.transpose(1, 2), logs_p_text.transpose(1, 2)).transpose(1, 2)
 
         z_p_dur = m_p_dur + torch.randn_like(m_p_dur) * torch.exp(logs_p_dur) * noise_scale
-        z_p_audio = self.flow(z_p_dur, y_mask, g=g, reverse=True)
+        z_p_audio = self.flow(
+            x=z_p_dur,
+            x_mask=y_mask,
+            g=g,
+            reverse=True
+        )
 
         z_p_audio = (z_p_audio * y_mask)[:, :, : max_len]
-        wav = self.waveform_decoder(z_p_audio, g=g)
+        wav = self.waveform_decoder(
+            x=z_p_audio,
+            g=g if not self.use_SNAC else None
+        )
         return wav, attn, y_mask, (z_p_audio, z_p_dur, m_p_dur, logs_p_dur)
 
     @torch.no_grad()
@@ -367,7 +405,7 @@ class VitsModel(nn.Module):
             raise RuntimeError(" [!] Voice conversion is only supported on multi-speaker models.")
 
         z_q_audio, _, _, y_mask = self.audio_encoder(y, y_lengths, g=g_src)
-        z_q_dur = self.flow(z_q_audio, y_mask, g=g_src)
+        z_q_dur, _ = self.flow(z_q_audio, y_mask, g=g_src)
         z_p_audio = self.flow(z_q_dur, y_mask, g=g_tgt, reverse=True)
         o_hat = self.waveform_decoder(z_p_audio * y_mask, g=g_tgt)
         return o_hat, y_mask, (z_q_audio, z_q_dur, z_p_audio)
