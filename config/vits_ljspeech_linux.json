@@ -1,5 +1,5 @@
 {
-    "run_name": "NaturalTTSLJSpeech",
+    "run_name": "CanoVitsJSpeech",
     "run_description": "Cano Speech running on LJSpeech dataset",
     "output_path": "/home/output",
 
@@ -92,7 +92,7 @@
 
     "model": {
         "hidden_channels": 192,
-        "out_channels":513,
+        "spec_channels":513,
         "spec_segment_size": 32,
 
         "language_embedding_channels": 4,
@@ -100,7 +100,7 @@
         "speaker_embedding_channels": 512,
         "use_speaker_ids": true,
         "use_speaker_embedding": false,
-        "use_speaker_encoder_as_loss": true,
+        "use_speaker_encoder_as_loss": false,
         "use_gt_duration": true,
 
         "text_encoder": {

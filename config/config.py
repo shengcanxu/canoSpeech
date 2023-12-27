@@ -112,15 +112,16 @@ class MemroyBank(Coqpit):
 @dataclass
 class BaseModelConfig(Coqpit):
     hidden_channels: int = 192
-    out_channels:int = 513
+    spec_channels:int = 513
     spec_segment_size:int = 32
 
     use_sdp: bool = True
     language_embedding_channels: int = 4
     use_language_ids:bool = False
     speaker_embedding_channels:int = 512
-    use_speaker_ids:bool = False
-    use_speaker_embeds:bool = False
+    use_speaker_ids:bool = False  # use speaker id
+    use_speaker_embeds:bool = False  # use pre-trained speaker embedding
+    use_speaker_encoder:bool = False  # use speaker encoder to generate speaker embedding
 
     use_speaker_encoder_as_loss:bool = False
 

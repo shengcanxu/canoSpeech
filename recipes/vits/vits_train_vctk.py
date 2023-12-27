@@ -60,17 +60,27 @@ class VitsTrain(VitsTrainBase):
 
         speaker_name = random.choice(["VCTK_p233", "VCTK_p246", "VCTK_p263", "VCTK_p293"])
         if platform.system() == "Windows":
-            path1 = "D:/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
-            path2 = "D:/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
+            path1 = "D:/dataset/VCTK/wav48_silence_trimmed/p226/p226_214_mic1.flac.wav.pkl"
+            path2 = "D:/dataset/VCTK/wav48_silence_trimmed/p272/p272_378_mic1.flac.wav.pkl"
         else:
             path1 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
             path2 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
-        path = path1 if random.randint(1,10) >= 5 else path2
+        path = random.choice([path1, path2])
         fp = open(path, "rb")
         pickleObj = pickle.load(fp)
         speaker_embed = pickleObj["speaker"]
 
-        wav = self.inference(text, speaker_name=speaker_name, language="en")
+        path = path.replace(".pkl", ".pt")
+        obj = torch.load(path)
+        ref_spec = obj["spec"].unsqueeze(0).cuda()
+
+        wav = self.inference(
+            text,
+            speaker_name=speaker_name,
+            speaker_embed=speaker_embed,
+            ref_spec=ref_spec,
+            language="en"
+        )
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/test_{int(time.time())}.wav", wav, 22050)
 

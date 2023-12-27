@@ -92,17 +92,18 @@
 
     "model": {
         "hidden_channels": 192,
-        "out_channels":513,
+        "spec_channels":513,
         "spec_segment_size": 32,
 
-        "mas_noise_scale": 0.01,
+        "mas_noise_scale": 0,
         "mas_noise_scale_decay": 2.0e-06,
 
         "language_embedding_channels": 4,
         "use_language_ids": false,
         "speaker_embedding_channels": 512,
-        "use_speaker_ids": true,
+        "use_speaker_ids": false,
         "use_speaker_embeds": false,
+        "use_speaker_encoder": true,
         "use_speaker_encoder_as_loss": false,
         "use_gt_duration": true,
         "use_sdp": true,

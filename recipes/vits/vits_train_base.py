@@ -153,7 +153,7 @@ class VitsTrainBase(TrainerModelWithDataset):
         raise ValueError(" [!] Unexpected `optimizer_idx`.")
 
     @torch.no_grad()
-    def inference(self, text:str, speaker_name:str=None, speaker_embed=None, language:str=None):
+    def inference(self, text:str, speaker_name:str=None, speaker_embed=None, ref_spec=None, language:str=None):
         lang = "en" if language is None else language
         tokens = self.symbol_manager.text_to_tokens(text, cleaner_name=self.config.text.text_cleaners.get(lang), lang=lang)
         if self.config.text.add_blank:
@@ -166,10 +166,10 @@ class VitsTrainBase(TrainerModelWithDataset):
             speaker_id = self.speaker_manager.get_speaker_id(speaker_name)
             speaker_ids = torch.LongTensor([speaker_id]).cuda()
         speaker_embeds = None
-        if speaker_embed is not None:
+        if speaker_embed is not None and self.model_config.use_speaker_embeds:
             speaker_embeds = torch.FloatTensor([speaker_embed]).cuda()
         language_ids = None
-        if language is not None:
+        if language is not None and self.model_config.use_speaker_ids:
             language_id = self.language_manager.get_language_id(language)
             language_ids = torch.LongTensor([language_id]).cuda()
 
@@ -179,6 +179,7 @@ class VitsTrainBase(TrainerModelWithDataset):
             x_lengths,
             speaker_ids=speaker_ids,
             speaker_embeds=speaker_embeds,
+            ref_spec=ref_spec,
             language_ids = language_ids,
             noise_scale=0.667,
             length_scale=1,

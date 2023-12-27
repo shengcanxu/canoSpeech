@@ -40,9 +40,9 @@ class NaturalTTSModel(nn.Module):
         # init multi-speaker, speaker_embedding is used when the speaker_embed is not provided
         # self.num_speakers = self.model_config.num_speakers
         # self.spec_segment_size = self.model_config.spec_segment_size
-        # self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
+        # self.embedded_speaker_channels = self.model_config.speaker_embedding_channels
         # if self.model_config.use_speaker_ids:
-        #     self.speaker_embedding = nn.Embedding(self.num_speakers, self.embedded_speaker_dim)
+        #     self.speaker_embedding = nn.Embedding(self.num_speakers, self.embedded_speaker_channels)
         # self.use_gt_duration = self.model_config.use_gt_duration
 
         self.init_multilingual(config)
@@ -59,7 +59,7 @@ class NaturalTTSModel(nn.Module):
             language_emb_dim=self.embedded_language_dim,
         )
         self.audio_encoder = AudioEncoder(
-            in_channels=self.model_config.out_channels,
+            in_channels=self.model_config.spec_channels,
             out_channels=self.model_config.hidden_channels,
             hidden_channels=self.model_config.hidden_channels,
             kernel_size=self.model_config.audio_encoder.kernel_size,

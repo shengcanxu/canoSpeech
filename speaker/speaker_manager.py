@@ -430,3 +430,4 @@ class SpeakerManager():
 
     def speaker_count(self):
         return len(self.speaker_ids_map) + 1
+

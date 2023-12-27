@@ -52,7 +52,7 @@ class NaturalSpeechModel(nn.Module):
             language_emb_dim=self.embedded_language_dim,
         )
         self.audio_encoder = AudioEncoder(
-            in_channels=self.model_config.out_channels,
+            in_channels=self.model_config.spec_channels,
             out_channels=self.model_config.hidden_channels,
             hidden_channels=self.model_config.hidden_channels,
             kernel_size=self.model_config.audio_encoder.kernel_size,

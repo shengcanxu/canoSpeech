@@ -13,7 +13,7 @@ from config.config import VitsConfig
 from layers.duration_predictor import VitsDurationPredictor, generate_path, StochasticDurationPredictor
 from layers.flow import ResidualCouplingBlocks
 from layers.generator import HifiganGenerator
-from layers.encoder import TextEncoder, AudioEncoder
+from layers.encoder import TextEncoder, AudioEncoder, ReferenceEncoder
 from monotonic_align.maximum_path import maximum_path
 from speaker.speaker_encoder import SpeakerEncoder
 from util.helper import sequence_mask, segment, rand_segments
@@ -34,9 +34,9 @@ class VitsModel(nn.Module):
         self.mas_noise_scale = self.model_config.mas_noise_scale or 0.0
         self.mas_noise_scale_decay = self.model_config.mas_noise_scale_decay or 0.0
 
-        self.embedded_speaker_dim = self.model_config.speaker_embedding_channels
+        self.embedded_speaker_channels = self.model_config.speaker_embedding_channels
         if self.model_config.use_speaker_ids:
-            self.speaker_embedding = nn.Embedding(self.speaker_manager.speaker_count(), self.embedded_speaker_dim)
+            self.speaker_embedding = nn.Embedding(self.speaker_manager.speaker_count(), self.embedded_speaker_channels)
         else:
             self.speaker_embedding = None
         self.embedded_language_dim = 0
@@ -54,6 +54,11 @@ class VitsModel(nn.Module):
                 orig_freq=self.config.audio.sample_rate,
                 new_freq=self.speaker_encoder.encoder.audio_config["sample_rate"],
             )
+        elif self.model_config.use_speaker_encoder:
+            self.speaker_encoder = ReferenceEncoder(
+                spec_channels=self.model_config.spec_channels,
+                gin_channels=self.model_config.speaker_embedding_channels
+            )
 
         self.text_encoder = TextEncoder(
             n_vocab=self.symbol_manager.symbol_count(),
@@ -65,16 +70,16 @@ class VitsModel(nn.Module):
             kernel_size=self.model_config.text_encoder.kernel_size,
             dropout_p=self.model_config.text_encoder.dropout_p,
             language_emb_dim=self.embedded_language_dim,
-            speaker_emb_dim=self.embedded_speaker_dim if self.model_config.text_encoder.use_speaker_embed else 0,
+            speaker_emb_dim=self.embedded_speaker_channels if self.model_config.text_encoder.use_speaker_embed else 0,
         )
         self.audio_encoder = AudioEncoder(
-            in_channels=self.model_config.out_channels,
+            in_channels=self.model_config.spec_channels,
             out_channels=self.model_config.hidden_channels,
             hidden_channels=self.model_config.hidden_channels,
             kernel_size=self.model_config.audio_encoder.kernel_size,
             dilation_rate=self.model_config.audio_encoder.dilation_rate,
             num_layers=self.model_config.audio_encoder.num_layers,
-            cond_channels=self.embedded_speaker_dim,
+            cond_channels=self.embedded_speaker_channels,
         )
         self.flow = ResidualCouplingBlocks(
             channels=self.model_config.hidden_channels,
@@ -83,7 +88,7 @@ class VitsModel(nn.Module):
             dilation_rate=self.model_config.flow.dilation_rate,
             num_flows=self.model_config.flow.num_flows,
             num_layers=self.model_config.flow.num_layers_in_flow,
-            cond_channels=self.embedded_speaker_dim,
+            cond_channels=self.embedded_speaker_channels,
             use_transformer_flow=self.model_config.flow.use_transformer_flow,
         )
         if self.use_sdp:
@@ -93,7 +98,7 @@ class VitsModel(nn.Module):
                 kernel_size=self.model_config.duration_predictor.kernel_size,
                 dropout_p=self.model_config.duration_predictor.dropout_p,
                 num_flows=4,
-                cond_channels=self.embedded_speaker_dim,
+                cond_channels=self.embedded_speaker_channels,
                 language_emb_dim=self.embedded_language_dim,
             )
         else:
@@ -102,7 +107,7 @@ class VitsModel(nn.Module):
                 hidden_channels=256,
                 kernel_size=self.model_config.duration_predictor.kernel_size,
                 dropout_p=self.model_config.duration_predictor.dropout_p,
-                cond_channels=self.embedded_speaker_dim,
+                cond_channels=self.embedded_speaker_channels,
                 language_emb_dim=self.embedded_language_dim,
             )
         self.waveform_decoder = HifiganGenerator(
@@ -115,7 +120,7 @@ class VitsModel(nn.Module):
             upsample_initial_channel=self.model_config.waveform_decoder.upsample_initial_channel,
             upsample_factors=self.model_config.waveform_decoder.upsample_rates,
             inference_padding=0,
-            cond_channels=self.embedded_speaker_dim,
+            cond_channels=self.embedded_speaker_channels,
             conv_pre_weight_norm=True,
             conv_post_weight_norm=True,
             conv_post_bias=False,
@@ -165,6 +170,7 @@ class VitsModel(nn.Module):
             waveform (torch.tensor): Batch of ground truth waveforms per sample. [B, 1, T_wav]`
             speaker_embeds:[B, C, 1]: Batch of speaker embedding
             speaker_ids:`[B]: Batch of speaker ids. use_speaker_ids should be true
+            ref_spec: [B, C, T_spec]: used in speaker encoder to generate the speaker embedding
             language_ids:`[B]: Batch of language ids.
         """
         # speaker embedding
@@ -175,6 +181,8 @@ class VitsModel(nn.Module):
                 g = g.unsqueeze_(0)
         elif self.model_config.use_speaker_ids and speaker_ids is not None:
             g = self.speaker_embedding(speaker_ids).unsqueeze(-1)
+        elif self.model_config.use_speaker_encoder:
+            g = self.speaker_encoder(y).unsqueeze(-1)  # [b, h, 1]
 
         # language embedding
         lang_embed = None
@@ -265,6 +273,7 @@ class VitsModel(nn.Module):
         x_lengths,  # [B]
         speaker_embeds=None,  # [T]
         speaker_ids=None,  # [B]
+        ref_spec=None,  # [B, C, T_spec]
         language_ids=None,  # [B]
         noise_scale=1.0,
         length_scale=1.0,
@@ -278,6 +287,8 @@ class VitsModel(nn.Module):
                 g = g.unsqueeze_(0)
         elif self.model_config.use_speaker_ids and speaker_ids is not None:
             g = self.speaker_embedding(speaker_ids).unsqueeze(-1)
+        elif self.model_config.use_speaker_encoder and ref_spec is not None:
+            g = self.speaker_encoder(ref_spec).unsqueeze(-1)  # [b, h, 1]
 
         # language embedding
         lang_embed = None
@@ -330,6 +341,9 @@ class VitsModel(nn.Module):
                 g = g.unsqueeze_(0)
         elif self.model_config.use_speaker_ids and speaker_id is not None:
             g = self.speaker_embedding(speaker_id).unsqueeze(-1)
+        elif self.model_config.use_speaker_encoder and spec is not None:
+            g = self.speaker_encoder(spec).unsqueeze(-1)  # [b, h, 1]
+
         z_q_audio, _, _, _ = self.audio_encoder(spec, spec_len, g=g)
         wav = self.waveform_decoder(z_q_audio, g=g)
         return wav

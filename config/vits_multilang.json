@@ -118,7 +118,7 @@
 
     "model": {
         "hidden_channels": 192,
-        "out_channels":513,
+        "spec_channels":513,
         "spec_segment_size": 32,
 
         "language_embedding_channels": 4,
