@@ -79,7 +79,7 @@ from util.mel_processing import load_audio, wav_to_mel, wav_to_spec, spec_to_mel
 def main(args):
     config = VitsConfig()
     config.load_json(args.config)
-    dataset_config = config.dataset_config
+    dataset_config = config.dataset_config.datasets[0]
 
     # vits, vits_config = gen_vits_model()
 
@@ -177,7 +177,7 @@ def gen_text_pitch(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="../config/vits_cmlpt.json")
+    parser.add_argument("--config", type=str, default="../config/vits_aishell.json")
     parser.add_argument("--speaker_model", type=str, default="../speaker/speaker_encoder_model.pth.tar")
     parser.add_argument("--speaker_config", type=str, default="../speaker/speaker_encoder_config.json")
     parser.add_argument("--pitch_checkpoint", type=str, default="D:/dataset/VCTK/fcnf0++.pt")

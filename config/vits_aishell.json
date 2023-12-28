@@ -1,0 +1,163 @@
+{
+    "run_name": "CanoVitsAISHELL",
+    "run_description": "Cano Speech running on AISHELL dataset",
+    "output_path": "D:/project/canoSpeech/output",
+
+    "dataset_config": {
+        "datasets": [
+            {
+                "dataset_name": "aishell",
+                "meta_file_train": "D:/project/canoSpeech/filelists/aishell_train_filelist.txt.cleaned",
+                "meta_file_val": "D:/project/canoSpeech/filelists/aishell_test_filelist.txt.cleaned",
+                "path": "D:/dataset/AISHELL3",
+                "language": "zh"
+            }
+        ],
+        "num_loader_workers": 4,
+        "num_eval_loader_workers": 4,
+        "use_cache": true,
+        "add_preprocess_data": true
+    },
+    "text": {
+        "min_text_len": 1,
+        "max_text_len": 190,
+        "add_blank": true,
+        "cleaned_text": true,
+        "text_cleaners": {"zh": "chinese_cleaners"}
+    },
+    "audio": {
+        "mel_fmin": 0,
+        "mel_fmax": null,
+        "hop_length": 256,
+        "win_length": 1024,
+        "sample_rate": 22050,
+        "fft_size": 1024,
+        "num_mels": 80,
+        "pitch_fmax": 640.0,
+        "pitch_fmin": 1.0,
+        "max_audio_length": 10.0,
+        "min_audio_length": 1.0
+    },
+
+    "eval_split_max_size": 256,
+    "eval_split_size": 0.1,
+    "distributed_backend": "nccl",
+    "distributed_url": "tcp://localhost:54321",
+    "mixed_precision": true,
+    "precision": "fp16",
+    "grad_clip": [0.0, 0.0],
+    "use_grad_scaler": false,
+    "cudnn_enable": true,
+    "cudnn_deterministic": false,
+    "cudnn_benchmark": false,
+
+    "scheduler_after_epoch": true,
+    "lr": [2e-4, 2e-4],
+    "optimizer": "AdamW",
+    "optimizer_params": {
+        "betas": [0.8, 0.99 ],
+        "eps": 1e-09,
+        "weight_decay": 0.01
+    },
+    "lr_scheduler": "ExponentialLR",
+    "lr_scheduler_params": {
+        "gamma": 0.99875,
+        "last_epoch": -1
+    },
+
+    "epochs": 1000,
+    "batch_size": 4,
+    "eval_batch_size": 4,
+
+    "print_step": 5,
+    "plot_step": 100,
+    "log_model_step": 1000,
+    "save_step": 5000,
+    "save_n_checkpoints": 5,
+    "save_checkpoints": true,
+
+    "loss": {
+        "kl_loss_alpha": 1.0,
+        "kl_loss_forward_alpha": 1.0,
+        "disc_loss_alpha": 1.0,
+        "gen_loss_alpha": 1.0,
+        "gen_loss_e2e_alpha": 1.0,
+        "feat_loss_alpha": 1.0,
+        "mel_loss_alpha": 45.0,
+        "dur_loss_alpha": 1.0,
+        "pitch_loss_alpha": 1.0,
+        "speaker_encoder_loss_alpha": 9.0,
+        "use_soft_dynamic_time_warping": false
+    },
+
+    "model": {
+        "hidden_channels": 192,
+        "spec_channels":513,
+        "spec_segment_size": 32,
+
+        "mas_noise_scale": 0,
+        "mas_noise_scale_decay": 2.0e-06,
+
+        "language_embedding_channels": 4,
+        "use_language_ids": false,
+        "speaker_embedding_channels": 512,
+        "use_speaker_ids": false,
+        "use_speaker_embeds": false,
+        "use_speaker_encoder": true,
+        "use_speaker_encoder_as_loss": false,
+        "use_gt_duration": true,
+        "use_sdp": true,
+
+        "text_encoder": {
+            "hidden_channels_ffn": 768,
+            "num_heads": 2,
+            "num_layers": 10,
+            "kernel_size": 3,
+            "dropout_p": 0.1,
+            "use_speaker_embed": true
+        },
+        "audio_encoder": {
+            "kernel_size": 5,
+            "dilation_rate": 1,
+            "num_layers": 16
+        },
+        "flow": {
+            "kernel_size": 5,
+            "dilation_rate": 1,
+            "num_flows": 4,
+            "num_layers_in_flow": 4,
+            "attention_heads": 2,
+            "use_transformer_flow": true,
+            "use_SNAC": true
+        },
+        "duration_predictor": {
+            "kernel_size": 3,
+            "n_stack": 10,
+            "n_stack_in_stack": 3,
+            "attention_num_head": 2,
+            "dropout_p": 0.5
+        },
+        "waveform_decoder": {
+            "resblock_type": "1",
+            "resblock_dilation_sizes": [
+                [ 1, 3, 5 ],
+                [ 1, 3, 5 ],
+                [ 1, 3, 5 ]
+            ],
+            "resblock_kernel_sizes": [ 3, 7, 11 ],
+            "upsample_kernel_sizes": [ 16, 16, 4, 4 ],
+            "upsample_initial_channel": 512,
+            "upsample_rates": [ 8, 8, 2, 2 ]
+        },
+        "quantizer": {
+            "num_quantizers": 8,
+            "codebook_size": 1024,
+            "codebook_dimension": 192,
+            "codebook_loss_alpha": 1.0
+        },
+        "discriminator": {
+            "periods_multi_period": [2, 3, 5, 7, 11],
+            "use_spectral_norm": false
+        }
+    }
+}
