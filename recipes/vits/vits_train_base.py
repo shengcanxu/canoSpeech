@@ -187,23 +187,6 @@ class VitsTrainBase(TrainerModelWithDataset):
         )
         return wav
 
-    @torch.no_grad()
-    def inference_voice_conversion(self, reference_wav, ref_speaker_id=None, ref_speaker_embed=None, speaker_id=None, speaker_embed=None):
-        y = wav_to_spec(
-            reference_wav,
-            self.config.audio.fft_size,
-            self.config.audio.hop_length,
-            self.config.audio.win_length,
-            center=False,
-        ).cuda()
-        y_lengths = torch.tensor([y.size(-1)]).cuda()
-        source_speaker = ref_speaker_id if ref_speaker_id is not None else ref_speaker_embed
-        target_speaker = speaker_id if speaker_id is not None else speaker_embed
-        source_speaker = source_speaker.cuda()
-        target_speaker = target_speaker.cuda()
-        wav, _, _ = self.generator.voice_conversion(y, y_lengths, source_speaker, target_speaker)
-        return wav
-
     def get_criterion(self):
         """Get criterions for each optimizer. The index in the output list matches the optimizer idx used in train_step()`"""
         return [VitsDiscriminatorLoss(self.config), VitsGeneratorLoss(self.config)]

@@ -409,3 +409,16 @@ class VitsModel(nn.Module):
         z_p_audio = self.flow(z_q_dur, y_mask, g=g_tgt, reverse=True)
         o_hat = self.waveform_decoder(z_p_audio * y_mask, g=g_tgt)
         return o_hat, y_mask, (z_q_audio, z_q_dur, z_p_audio)
+
+    def voice_conversion_ref_wav(self, y, y_lengths, ref_spec):
+        if not self.model_config.use_speaker_encoder:
+            raise RuntimeError("voice_conversion_ref_wav only work in use_speaker_encoder mode")
+
+        g_src = self.speaker_encoder(y).unsqueeze(-1)  # [b, h, 1]
+        g_tgt = self.speaker_encoder(ref_spec).unsqueeze(-1)  # [b, h, 1]
+
+        z_q_audio, _, _, y_mask = self.audio_encoder(y, y_lengths, g=None)
+        z_q_dur, _ = self.flow(z_q_audio, y_mask, g=g_src)
+        z_p_audio = self.flow(z_q_dur, y_mask, g=g_tgt, reverse=True)
+        o_hat = self.waveform_decoder(z_p_audio * y_mask, g=None)
+        return o_hat, y_mask, (z_q_audio, z_q_dur, z_p_audio)

@@ -89,32 +89,6 @@ def test(model, filepath:str):
     wav = wav[0, 0].cpu().float().numpy()
     sf.write(f"{filepath}.test.wav", wav, 22050)
 
-def test_voice_conversion(model, ref_wav_filepath:str):
-    wav, sr = load_audio(ref_wav_filepath)
-    speaker_encoder = SpeakerEncoder(
-        config_path= os.path.dirname(__file__) + "/../../speaker/speaker_encoder_config.json",
-        model_path= os.path.dirname(__file__) + "/../../speaker/speaker_encoder_model.pth.tar",
-        use_cuda=True
-    )
-    source_speaker = speaker_encoder.compute_embedding_from_waveform(wav)
-
-    path1 = "D:/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
-    # path2 = "D:/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
-    # path1 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav.pkl"
-    # path2 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p273/p273_004_mic1.flac.wav.pkl"
-    # path = path1 if random.randint(1, 10) >= 5 else path2
-    path = path1
-    fp = open(path, "rb")
-    pickleObj = pickle.load(fp)
-    target_speaker = pickleObj["speaker"]
-    target_speaker = torch.from_numpy(target_speaker).unsqueeze(0)
-
-    out_wav = model.inference_voice_conversion(
-        reference_wav = wav, ref_speaker_embed = source_speaker, speaker_embed = target_speaker
-    )
-    out_wav = out_wav[0, 0].cpu().float().numpy()
-    sf.write(f"{ref_wav_filepath}.out.wav", out_wav, 22050)
-
 def main(config_path:str):
     config = VitsConfig()
     config.load_json(config_path)
