@@ -152,6 +152,18 @@ class VitsModel(nn.Module):
         attn_durations = attn.sum(3)
         return attn_durations, attn
 
+    def get_speaker_embedding(self, speaker_embeds, speaker_ids, ref_spec):
+        g = None  # [b, h, 1]
+        if self.model_config.use_speaker_embeds and speaker_embeds is not None:
+            g = F.normalize(speaker_embeds).unsqueeze(-1)
+            if g.ndim == 2:
+                g = g.unsqueeze_(0)
+        elif self.model_config.use_speaker_ids and speaker_ids is not None:
+            g = self.speaker_embedding(speaker_ids).unsqueeze(-1)
+        elif self.model_config.use_speaker_encoder and ref_spec is not None:
+            g = self.speaker_encoder(ref_spec).unsqueeze(-1)  # [b, h, 1]
+        return g
+
     def forward(
         self,
         x: torch.tensor,
@@ -176,15 +188,7 @@ class VitsModel(nn.Module):
             language_ids:`[B]: Batch of language ids.
         """
         # speaker embedding
-        g = None  # [b, h, 1]
-        if self.model_config.use_speaker_embeds and speaker_embeds is not None:
-            g = F.normalize(speaker_embeds).unsqueeze(-1)
-            if g.ndim == 2:
-                g = g.unsqueeze_(0)
-        elif self.model_config.use_speaker_ids and speaker_ids is not None:
-            g = self.speaker_embedding(speaker_ids).unsqueeze(-1)
-        elif self.model_config.use_speaker_encoder:
-            g = self.speaker_encoder(y).unsqueeze(-1)  # [b, h, 1]
+        g = self.get_speaker_embedding(speaker_embeds, speaker_ids, y)
 
         # language embedding
         lang_embed = None
@@ -291,6 +295,59 @@ class VitsModel(nn.Module):
             "syn_speaker_emb": syn_speaker_emb,
         }
 
+    def forward_vae(
+        self,
+        y: torch.tensor,
+        y_lengths: torch.tensor,
+        waveform: torch.tensor,
+        speaker_embeds = None,
+        speaker_ids = None,
+        language_ids = None
+    ) -> Dict:
+        # speaker embedding
+        g = self.get_speaker_embedding(speaker_embeds, speaker_ids, y)
+
+        # language embedding
+        lang_embed = None
+        if self.model_config.use_language_ids:
+            lang_embed = self.language_embedding(language_ids).unsqueeze(-1)  # [B, lang_channel, 1]
+
+        # audio encoder, encode audio to embedding layer z's dimension
+        z_q_audio, m_q_audio, logs_q_audio, y_mask = self.audio_encoder(
+            x=y,
+            x_lengths=y_lengths,
+            g=g if not self.use_SNAC else None
+        )
+
+        # select a random feature segment for the waveform decoder
+        z_slice, slice_ids = rand_segments(
+            x=z_q_audio,
+            x_lengths=y_lengths,
+            segment_size=self.spec_segment_size,
+            let_short_samples=True,
+            pad_short=True
+        )
+
+        y_hat = self.waveform_decoder(
+            x=z_slice,
+            g=g if not self.use_SNAC else None
+        )
+
+        wav_seg = segment(
+            x=waveform,
+            segment_indices=slice_ids * self.config.audio.hop_length,
+            segment_size=self.spec_segment_size * self.config.audio.hop_length,
+            pad_short=True,
+        )
+
+        return {
+            "y_hat": y_hat,  # [B, 1, T_wav]
+            "m_q_audio": m_q_audio,  # [B, C, T_dec]
+            "logs_q_audio": logs_q_audio,  # [B, C, T_dec]
+            "waveform_seg": wav_seg,  # [B, 1, spec_seg_size * hop_length]
+            "slice_ids": slice_ids,
+        }
+
     @torch.no_grad()
     def infer(
         self,
@@ -305,15 +362,7 @@ class VitsModel(nn.Module):
         max_len=None
     ):
         # speaker embedding
-        g = None  # [b, h, 1]
-        if self.model_config.use_speaker_embeds and speaker_embeds is not None:
-            g = F.normalize(speaker_embeds).unsqueeze(-1)
-            if g.ndim == 2:
-                g = g.unsqueeze_(0)
-        elif self.model_config.use_speaker_ids and speaker_ids is not None:
-            g = self.speaker_embedding(speaker_ids).unsqueeze(-1)
-        elif self.model_config.use_speaker_encoder and ref_spec is not None:
-            g = self.speaker_encoder(ref_spec).unsqueeze(-1)  # [b, h, 1]
+        g = self.get_speaker_embedding(speaker_embeds, speaker_ids, ref_spec)
 
         # language embedding
         lang_embed = None
@@ -372,15 +421,7 @@ class VitsModel(nn.Module):
 
     @torch.no_grad()
     def generate_z_wav(self, spec, spec_len, speaker_id=None, speaker_embed=None):
-        g = None  # [b, h, 1]
-        if self.model_config.use_speaker_embeds and speaker_embed is not None:
-            g = F.normalize(speaker_embed).unsqueeze(-1)
-            if g.ndim == 2:
-                g = g.unsqueeze_(0)
-        elif self.model_config.use_speaker_ids and speaker_id is not None:
-            g = self.speaker_embedding(speaker_id).unsqueeze(-1)
-        elif self.model_config.use_speaker_encoder and spec is not None:
-            g = self.speaker_encoder(spec).unsqueeze(-1)  # [b, h, 1]
+        g = self.get_speaker_embedding(speaker_embed, speaker_id, spec)
 
         z_q_audio, _, _, _ = self.audio_encoder(
             x=spec,
