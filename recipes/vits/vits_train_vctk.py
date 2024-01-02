@@ -170,7 +170,7 @@ def main(config_path:str):
         train_samples=train_samples,
         eval_samples=test_samples,
     )
-    # trainer.fit()
+    trainer.fit()
 
     # for i in range(1, 10):
     #     train_model.test_run({"output_path": "/home/cano/output"})
@@ -178,15 +178,15 @@ def main(config_path:str):
     # train_model.test_voice_conversion("D:\\project\\canoSpeech\\output\\test2.wav", output_path="/home/cano/output")
 
     # train_model.test_voice_conversion_ref_wav(
-    #     src_wav_path="/home/cano/dataset/LibriTTS/train-clean-100/1594/135914/1594_135914_000003_000001.wav",
-    #     ref_wav_path="/home/cano/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav",
+    #     src_wav_path="/home/cano/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav",
+    #     ref_wav_path="/home/cano/dataset/LibriTTS/train-clean-100/1594/135914/1594_135914_000003_000001.wav",
     #     output_path="/home/cano/output"
     # )
-    train_model.test_voice_conversion_ref_wav(
-        src_wav_path="D:/dataset/LibriTTS/train-clean-100/1594/135914/1594_135914_000003_000001.wav",
-        ref_wav_path="D:/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav",
-        output_path="D:/project/canoSpeech/output"
-    )
+    # train_model.test_voice_conversion_ref_wav(
+    #     src_wav_path="D:/dataset/VCTK/wav48_silence_trimmed/p253/p253_003_mic1.flac.wav",
+    #     ref_wav_path="D:/dataset/LibriTTS/train-clean-100/1594/135914/1594_135914_000003_000001.wav",
+    #     output_path="D:/project/canoSpeech/output"
+    # )
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="vits vctk train", formatter_class=argparse.RawTextHelpFormatter, )

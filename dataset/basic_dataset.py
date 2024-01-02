@@ -1,9 +1,6 @@
 import os
 import random
 from typing import Union
-
-import numpy as np
-from collections import Counter
 import pickle
 
 from coqpit import coqpit
@@ -13,51 +10,7 @@ from text import get_clean_text, _intersperse
 import torch
 from text.symbol_manager import SymbolManager
 from torch.utils.data import Dataset
-import librosa
 from util.mel_processing import wav_to_mel, wav_to_spec, spec_to_mel, load_audio
-
-
-def split_dataset_metas(items, eval_split_max_size=None, eval_split_size=0.01):
-    """Split a dataset into train and eval. Consider speaker distribution in multi-speaker training.
-    Args:
-        items (List[List]):
-            A list of samples. Each sample is a list of `[audio_path, text, speaker_id]`.
-        eval_split_max_size (int):
-            Number maximum of samples to be used for evaluation in proportion split. Defaults to None (Disabled).
-        eval_split_size (float):
-            If between 0.0 and 1.0 represents the proportion of the dataset to include in the evaluation set.
-            If > 1, represents the absolute number of evaluation samples. Defaults to 0.01 (1%).
-    :return:
-        eval_datas, train_datas
-    """
-    speakers = [item["speaker"] for item in items]
-    is_multi_speaker = len(set(speakers)) > 1
-    if eval_split_size > 1:
-        eval_split_size = int(eval_split_size)
-    else:
-        if eval_split_max_size:
-            eval_split_size = min(eval_split_max_size, int(len(items) * eval_split_size))
-        else:
-            eval_split_size = int(len(items) * eval_split_size)
-
-    assert ( eval_split_size > 0
-    ), " [!] You do not have enough samples for the evaluation set. You can work` around this setting the 'eval_split_size' parameter to a minimum of {}".format(1 / len(items) )
-
-    np.random.seed(0)
-    np.random.shuffle(items)
-    if is_multi_speaker:
-        items_eval = []
-        speakers = [item["speaker"] for item in items]
-        speaker_counter = Counter(speakers)
-        while len(items_eval) < eval_split_size:
-            item_idx = np.random.randint(0, len(items))
-            speaker_to_be_removed = items[item_idx]["speaker"]
-            if speaker_counter[speaker_to_be_removed] > 1:
-                items_eval.append(items[item_idx])
-                speaker_counter[speaker_to_be_removed] -= 1
-                del items[item_idx]
-        return items_eval, items
-    return items[:eval_split_size], items[eval_split_size:]
 
 
 def get_metas_from_filelist(filelists: Union[str, list]):

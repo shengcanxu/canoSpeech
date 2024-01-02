@@ -1,0 +1,16 @@
+/home/cano/dataset/AISHELL3/train/wav/SSB1100/SSB11000087.wav|aishell_1100|zh|霍布斯有回应了
+/home/cano/dataset/AISHELL3/train/wav/SSB0919/SSB09190076.wav|aishell_0919|zh|即便是在城市相对坚挺的一线城市
+/home/cano/dataset/AISHELL3/train/wav/SSB1575/SSB15750295.wav|aishell_1575|zh|整体风格比前一部明媚得多
+/home/cano/dataset/AISHELL3/train/wav/SSB1650/SSB16500025.wav|aishell_1650|zh|二零一五格拉斯哥世界体操锦标赛正式拉开帷幕
+/home/cano/dataset/AISHELL3/train/wav/SSB0535/SSB05350093.wav|aishell_0535|zh|因为这是我们每天生活的环境
+/home/cano/dataset/AISHELL3/train/wav/SSB1699/SSB16990390.wav|aishell_1699|zh|另一类是示范城市应用性试点
+/home/cano/dataset/AISHELL3/train/wav/SSB1096/SSB10960125.wav|aishell_1096|zh|瞿乃社出演的电视剧有什么
+/home/cano/dataset/AISHELL3/train/wav/SSB0122/SSB01220099.wav|aishell_0122|zh|为了中标得到一工程项目
+/home/cano/dataset/AISHELL3/train/wav/SSB0535/SSB05350387.wav|aishell_0535|zh|一辆货车与一辆中巴车发生碰撞
+/home/cano/dataset/AISHELL3/train/wav/SSB1161/SSB11610480.wav|aishell_1161|zh|最终拼得了铜牌再比如女子二百米蛙泳决赛
+/home/cano/dataset/AISHELL3/train/wav/SSB0315/SSB03150234.wav|aishell_0315|zh|浙江拆除最牛违建九层高楼建筑面积五千平方米
+/home/cano/dataset/AISHELL3/train/wav/SSB0720/SSB07200303.wav|aishell_0720|zh|如果能够通过买房为子女获得一个好的学位
+/home/cano/dataset/AISHELL3/train/wav/SSB0315/SSB03150404.wav|aishell_0315|zh|现在昆仑决健身团队将系统解读
+/home/cano/dataset/AISHELL3/train/wav/SSB0737/SSB07370382.wav|aishell_0737|zh|叶片绿色植物有什么
+/home/cano/dataset/AISHELL3/train/wav/SSB1624/SSB16240133.wav|aishell_1624|zh|星巴克咖啡购物公园店
+/home/cano/dataset/AISHELL3/train/wav/SSB0394/SSB03940182.wav|aishell_0394|zh|扭计师爷陈梦吉

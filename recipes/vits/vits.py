@@ -382,8 +382,15 @@ class VitsModel(nn.Module):
         elif self.model_config.use_speaker_encoder and spec is not None:
             g = self.speaker_encoder(spec).unsqueeze(-1)  # [b, h, 1]
 
-        z_q_audio, _, _, _ = self.audio_encoder(spec, spec_len, g=g)
-        wav = self.waveform_decoder(z_q_audio, g=g)
+        z_q_audio, _, _, _ = self.audio_encoder(
+            x=spec,
+            x_lengths=spec_len,
+            g=g if not self.use_SNAC else None
+        )
+        wav = self.waveform_decoder(
+            x=z_q_audio,
+            g=g if not self.use_SNAC else None
+        )
         return wav
 
     def voice_conversion(self, y, y_lengths, source_speaker, target_speaker):
@@ -411,6 +418,7 @@ class VitsModel(nn.Module):
         return o_hat, y_mask, (z_q_audio, z_q_dur, z_p_audio)
 
     def voice_conversion_ref_wav(self, y, y_lengths, ref_spec):
+        """ test voice convert using SNAC mode in flow"""
         if not self.model_config.use_speaker_encoder:
             raise RuntimeError("voice_conversion_ref_wav only work in use_speaker_encoder mode")
 

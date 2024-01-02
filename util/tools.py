@@ -7,6 +7,7 @@ import librosa.display
 import matplotlib.pyplot as plt
 
 def display_melspectrogram(filepath:str, name = 'Mel spectrogram'):
+    """display a mel spectrogram picture"""
     y, sr = librosa.load(filepath)
     S = librosa.feature.melspectrogram(y=y, sr=sr)
     S_db = librosa.power_to_db(S, ref=np.max)
@@ -19,6 +20,7 @@ def display_melspectrogram(filepath:str, name = 'Mel spectrogram'):
     plt.show()
 
 def remove_backup_dataset_pt_file(path:str):
+    """remove the .pt files in a path"""
     files = glob(f"{path}/**/*.wav.pt", recursive=True)
     for file in files:
         os.remove(file)
@@ -32,10 +34,11 @@ if __name__ == '__main__':
     # remove_backup_dataset_pt_file('D:\\dataset\\CMLTTS\\train\\audio')
     # remove_backup_dataset_pt_file('D:\\dataset\\VCTK\\wav48_silence_trimmed')
     # remove_backup_dataset_pt_file('D:\\dataset\\baker')
-    remove_backup_dataset_pt_file('D:\\dataset\\baker\\LJSpeech')
+    # remove_backup_dataset_pt_file('D:\\dataset\\baker\\LJSpeech')
 
     # remove_backup_dataset_pt_file('/home/cano/dataset/kokoro/wavs')
     # remove_backup_dataset_pt_file('/home/cano/dataset/CMLTTS/train/audio')
     # remove_backup_dataset_pt_file('/home/cano/dataset/VCTK/wav48_silence_trimmed')
     # remove_backup_dataset_pt_file('/home/cano/dataset/baker')
     remove_backup_dataset_pt_file('/home/cano/dataset/LJSpeech')
+

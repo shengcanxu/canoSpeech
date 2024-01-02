@@ -1,0 +1,16 @@
+/home/cano/dataset/AISHELL3/train/wav/SSB0299/SSB02990377.wav|aishell_0299|zh|我想约翰以为我爱约约翰或什么的
+/home/cano/dataset/AISHELL3/train/wav/SSB0009/SSB00090014.wav|aishell_0009|zh|纪晓岚书籍有什么
+/home/cano/dataset/AISHELL3/train/wav/SSB0578/SSB05780061.wav|aishell_0578|zh|威廉说威廉像平常一样喝得不省人事
+/home/cano/dataset/AISHELL3/train/wav/SSB0145/SSB01450304.wav|aishell_0145|zh|推举代表进入康佳集团公司董事局和监事会
+/home/cano/dataset/AISHELL3/train/wav/SSB0033/SSB00330014.wav|aishell_0033|zh|他们现在还造那种带铃铛的棺材吗
+/home/cano/dataset/AISHELL3/train/wav/SSB1341/SSB13410035.wav|aishell_1341|zh|为什么国家公园也不行呢
+/home/cano/dataset/AISHELL3/train/wav/SSB0426/SSB04260347.wav|aishell_0426|zh|公司现金缺口约八千万
+/home/cano/dataset/AISHELL3/train/wav/SSB0407/SSB04070326.wav|aishell_0407|zh|到目前为止没有
+/home/cano/dataset/AISHELL3/train/wav/SSB0012/SSB00120211.wav|aishell_0012|zh|不要再提到他
+/home/cano/dataset/AISHELL3/train/wav/SSB0629/SSB06290383.wav|aishell_0629|zh|白电行业将进入最惨烈的一年
+/home/cano/dataset/AISHELL3/train/wav/SSB0758/SSB07580394.wav|aishell_0758|zh|华尔街的各大分支分析师则是众说纷纭
+/home/cano/dataset/AISHELL3/train/wav/SSB1593/SSB15930460.wav|aishell_1593|zh|或许才是多数房企所面临的困境和挑战
+/home/cano/dataset/AISHELL3/train/wav/SSB0200/SSB02000299.wav|aishell_0200|zh|尽快将财政资金支持形成的
+/home/cano/dataset/AISHELL3/train/wav/SSB0149/SSB01490433.wav|aishell_0149|zh|樱花
+/home/cano/dataset/AISHELL3/train/wav/SSB0339/SSB03390158.wav|aishell_0339|zh|才恍然发现已到橘子洲了
+/home/cano/dataset/AISHELL3/train/wav/SSB0316/SSB03160317.wav|aishell_0316|zh|大学研究所有什么
