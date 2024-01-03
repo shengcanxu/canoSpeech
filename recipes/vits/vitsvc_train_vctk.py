@@ -1,6 +1,8 @@
 import argparse
 import os
+import pickle
 import platform
+import random
 import time
 from typing import Dict, Tuple, List
 
@@ -14,7 +16,7 @@ from coqpit import Coqpit
 from dataset.basic_dataset import get_metas_from_filelist
 from dataset.sampler import DistributedBucketSampler
 from layers.discriminator import VitsDiscriminator
-from layers.losses import VitsDiscriminatorLoss, VitsGeneratorLoss, VAEGeneratorLoss
+from layers.losses import VitsDiscriminatorLoss, VitsGeneratorLoss, VAEGeneratorLoss, VitsVCGeneratorLoss
 from recipes.trainer_model import TrainerModelWithDataset
 from recipes.vits.vits import VitsModel
 from trainer import Trainer, TrainerArgs
@@ -23,10 +25,7 @@ from util.helper import segment
 from util.mel_processing import wav_to_mel
 
 
-class VAETrain(TrainerModelWithDataset):
-    """
-    VITS and YourTTS model training model.
-    """
+class VitsVCTrain(TrainerModelWithDataset):
     def __init__(self, config:VitsConfig):
         super().__init__(config)
         self.config = config
@@ -70,90 +69,87 @@ class VAETrain(TrainerModelWithDataset):
 
         return output, loss_dict
 
+    def on_init_end(self, trainer) -> None:
+        print("freeze the layers...")
+        for param in self.generator.audio_encoder.parameters():
+            param.requires_grad = False
+        for param in self.generator.waveform_decoder.parameters():
+            param.requires_grad = False
+        for param in self.discriminator.parameters():
+            param.requires_grad = False
+        self.model_freezed = True
+
     def train_step(self, batch: Dict, criterion: nn.Module, optimizer_idx: int) -> Tuple[Dict, Dict]:
         spec_lens = batch["spec_lens"]
         if optimizer_idx == 0:
+            tokens = batch["tokens"]
+            token_lens = batch["token_lens"]
             spec = batch["spec"]
             waveform = batch["waveform"]
             speaker_ids = batch["speaker_ids"]
             speaker_embeds = batch["speaker_embeds"]
+            language_ids = batch["language_ids"]
 
             # generator pass
             self.generator.train()
-            outputs = self.generator.forward_vae(
+            outputs = self.generator.forward_SNAC_VC(
+                x=tokens,
+                x_lengths=token_lens,
                 y=spec,
                 y_lengths=spec_lens,
                 waveform=waveform,
                 speaker_embeds=speaker_embeds,
-                speaker_ids=speaker_ids
+                speaker_ids=speaker_ids,
+                language_ids=language_ids
             )
 
             # cache tensors for the generator pass
             self.model_outputs_cache = outputs
-
-            # compute scores and features
-            scores_disc_real, _, scores_disc_fake, _ = self.discriminator(
-                x=outputs["waveform_seg"],
-                x_hat=outputs["y_hat"].detach(),
-            )
-
-            # compute loss
-            with autocast(enabled=False):
-                loss_dict = criterion[0](
-                    scores_disc_real=scores_disc_real,
-                    scores_disc_fake=scores_disc_fake,
-                )
-            if self.model_freezed:
-                return outputs, None
-            else:
-                return outputs, loss_dict
+            return outputs, None
 
         if optimizer_idx == 1:
-            mel = batch["mel"]
-
-            # compute melspec segment
-            with autocast(enabled=False):
-                mel_slice = segment(
-                    x=mel.float(),
-                    segment_indices=self.model_outputs_cache["slice_ids"],
-                    segment_size=self.model_config.spec_segment_size,
-                    pad_short=True
-                )
-                mel_slice_hat = wav_to_mel(
-                    y=self.model_outputs_cache["y_hat"].float(),
-                    n_fft=self.config.audio.fft_size,
-                    sample_rate=self.config.audio.sample_rate,
-                    num_mels=self.config.audio.num_mels,
-                    hop_length=self.config.audio.hop_length,
-                    win_length=self.config.audio.win_length,
-                    fmin=self.config.audio.mel_fmin,
-                    fmax=self.config.audio.mel_fmax,
-                    center=False,
-                )
-
-            # compute discriminator scores and features
-            _, feats_disc_real, scores_disc_fake, feats_disc_fake = self.discriminator(
-                x=self.model_outputs_cache["waveform_seg"],
-                x_hat=self.model_outputs_cache["y_hat"]
-            )
-
             # compute losses
             with autocast(enabled=False):  # use float32 for the criterion
                 loss_dict = criterion[1](
-                    mel_slice=mel_slice_hat.float(),
-                    mel_slice_hat=mel_slice.float(),
-                    scores_disc_fake=scores_disc_fake,
-                    feats_disc_fake=feats_disc_fake,
-                    feats_disc_real=feats_disc_real,
+                    logs_p_dur=self.model_outputs_cache["logs_p_dur"].float(),
+                    m_q_audio=self.model_outputs_cache["m_q_audio"].float(),
+                    logs_q_audio=self.model_outputs_cache["logs_q_audio"].float(),
+                    z_p_audio=self.model_outputs_cache["z_p_audio"].float(),
+                    total_logdet=self.model_outputs_cache["total_logdet"].float(),
+                    z_mask=self.model_outputs_cache["z_mask"].float(),
                 )
 
             return self.model_outputs_cache, loss_dict
 
         raise ValueError(" [!] Unexpected `optimizer_idx`.")
 
+    @torch.no_grad()
+    def test_run(self, assets) -> Tuple[Dict, Dict]:
+        output_path = assets["output_path"]
+        print("doing test run...")
+        if platform.system() == "Windows":
+            path1 = "D:/dataset/VCTK/wav48_silence_trimmed/p226/p226_071_mic1.flac.wav.pt"
+            path2 = "D:/dataset/VCTK/wav48_silence_trimmed/p251/p251_336_mic1.flac.wav.pt"
+            path3 = "D:/dataset/VCTK/wav48_silence_trimmed/p255/p255_319_mic1.flac.wav.pt"
+        else:
+            path1 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p226/p226_071_mic1.flac.wav.pt"
+            path2 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p251/p251_336_mic1.flac.wav.pt"
+            path3 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p255/p255_319_mic1.flac.wav.pt"
+
+        obj = torch.load(random.choice([path1, path2]))
+        ref_spec = obj["spec"].unsqueeze(0).cuda()
+        obj = torch.load(path3)
+        y = obj["spec"].unsqueeze(0).cuda()
+        y_lengths = torch.tensor([y.size(-1)]).cuda()
+
+        wav, _, _ = self.generator.voice_conversion_ref_wav(y, y_lengths, ref_spec=ref_spec)
+
+        wav = wav[0, 0].cpu().float().numpy()
+        sf.write(f"{output_path}/vc_{int(time.time())}.wav", wav, 22050)
+
     def get_criterion(self):
         """Get criterions for each optimizer. The index in the output list matches the optimizer idx used in train_step()`"""
-        return [VitsDiscriminatorLoss(self.config), VAEGeneratorLoss(self.config)]
+        return [VitsDiscriminatorLoss(self.config), VitsVCGeneratorLoss(self.config)]
 
     def get_optimizer(self) -> List:
         """Initiate and return the GAN optimizers based on the config parameters."""
@@ -187,7 +183,7 @@ def main(config_path:str):
     test_samples = get_metas_from_filelist([d.meta_file_val for d in datasets])
 
     # init the model
-    train_model = VAETrain(config=config)
+    train_model = VitsVCTrain(config=config)
 
     # init the trainer and train
     trainer = Trainer(

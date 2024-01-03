@@ -48,7 +48,7 @@ def kl_loss(z_p, logs_q, m_p, logs_p, total_logdet, z_mask):
     kl += 0.5 * ((z_p - m_p) ** 2) * torch.exp(-2.0 * logs_p)
     kl = torch.sum(kl * z_mask)
 
-    #* add total_logdet (Negative LL)
+    #* add total_logdet (Negative LL), 因为是log_q(Z|x) - log_p(Z|C_text; A), total_logdet 属于log_p，所以需要前面加负号
     kl -= torch.sum(total_logdet)
     l = kl / torch.sum(z_mask)
     return l
@@ -162,6 +162,29 @@ class VAEGeneratorLoss(nn.Module):
         return_dict["loss_mel"] = loss_mel
 
         return_dict["loss"] = loss
+        return return_dict
+
+class VitsVCGeneratorLoss(nn.Module):
+    def __init__(self, config: Coqpit):
+        super().__init__()
+        self.model_config = config.model
+        self.kl_loss_alpha = config.loss.kl_loss_alpha
+
+    def forward(
+        self,
+        logs_p_dur,  # [B, C, T]
+        m_q_audio,  # [B, C, T]
+        logs_q_audio,  # [B, C, T]
+        z_p_audio,  # [B, C, T]
+        total_logdet,  # [B, C, T]
+        z_mask
+    ):
+        return_dict = {}
+        loss_kl = kl_loss(
+            z_p=z_p_audio, logs_q=logs_p_dur, m_p=m_q_audio, logs_p=logs_q_audio, total_logdet=total_logdet, z_mask=z_mask
+        ) * self.kl_loss_alpha
+        return_dict["loss_kl"] = loss_kl
+        return_dict["loss"] = loss_kl
         return return_dict
 
 class VitsDiscriminatorLoss(nn.Module):

@@ -284,15 +284,16 @@ class ResidualCouplingBlock(nn.Module):
         else:
             x1 = (x1 - m) * torch.exp(-logs) * x_mask
             x = torch.cat([x0, x1], 1)
-            return x
+            logdet = -torch.sum(logs, [1, 2])
+            return x, logdet
 
     def do_SNAC_forward(self, x, x_mask, g=None, reverse=False):
         sn_variables = self.sn_linear(g)
-        sn_m, sn_v = sn_variables.chunk(2, dim=1)  # (B, half_chnnael, 1)
+        sn_m, sn_logs = sn_variables.chunk(2, dim=1)  # (B, half_chnnael, 1)
         x0, x1 = torch.split(x, [self.half_channels] * 2, 1)
 
         #* Pass x0 to SN before WN
-        h = (x0 - sn_m) * torch.exp(-sn_v) * x_mask
+        h = (x0 - sn_m) * torch.exp(-sn_logs) * x_mask
         h = self.pre(h) * x_mask
         #* Global conditioning is not used
         h = self.enc(h, x_mask, g=None)
@@ -305,17 +306,18 @@ class ResidualCouplingBlock(nn.Module):
 
         if not reverse:
             #* SN to x1 before affine xform
-            x1 = (x1 - sn_m) * torch.exp(-sn_v) * x_mask
+            x1 = (x1 - sn_m) * torch.exp(-sn_logs) * x_mask
             x1 = m + x1 * torch.exp(logs) * x_mask
             x = torch.cat([x0, x1], 1)
-            logdet = torch.sum(logs * x_mask, [1,2]) - torch.sum(sn_v.expand(-1,-1,logs.size(-1)) * x_mask, [1,2])
+            logdet = torch.sum(logs * x_mask, [1,2]) - torch.sum(sn_logs.expand(-1,-1,logs.size(-1)) * x_mask, [1,2])
             return x, logdet
         else:
             x1 = (x1 - m) * torch.exp(-logs) * x_mask
             #* SDN before concat
-            x1 = (sn_m + x1 * torch.exp(sn_v)) * x_mask
+            x1 = (sn_m + x1 * torch.exp(sn_logs)) * x_mask
             x = torch.cat([x0, x1], 1)
-            return x
+            logdet = torch.sum(sn_logs.expand(-1, -1, logs.size(-1)) * x_mask, [1, 2]) - torch.sum(logs * x_mask, [1, 2])
+            return x, logdet
 
 
 class ResidualCouplingBlocks(nn.Module):
@@ -387,5 +389,6 @@ class ResidualCouplingBlocks(nn.Module):
         else:
             for flow in reversed(self.flows):
                 x = torch.flip(x, [1])
-                x = flow(x, x_mask, g=g, reverse=reverse)
-            return x
+                x, log_det = flow(x, x_mask, g=g, reverse=reverse)
+                total_logdet += log_det
+            return x, total_logdet
