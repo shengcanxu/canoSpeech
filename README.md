@@ -8,9 +8,6 @@ use wavenet and attention. As descripted in Figure 4 in NaturalSpeech2 paper, bu
         1. keep the flow architecture from VITS
         2. wrape the wavenet, add attention and FiLM to it, as description in Figure 4
 
-# get dataset and process
-1. VCTK: run download/VCTK.py
-
 # usefull script
 1. re-sample audio file: dataset/resample.py
 2. tokenize text and change to phonone: preprocess.py

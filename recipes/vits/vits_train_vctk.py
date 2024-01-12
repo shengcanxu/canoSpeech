@@ -145,7 +145,7 @@ class VitsTrain(VitsTrainBase):
             center=False
         ).cuda()
 
-        wav, _, _ = self.generator.voice_conversion_ref_wav(y, y_lengths, ref_spec=ref_spec)
+        wav, _, _ = self.generator.voice_conversion_SNAC(y, y_lengths, ref_spec=ref_spec)
 
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/vc_{int(time.time())}.wav", wav, 22050)
@@ -194,7 +194,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # main(args.config_path)
-
     if platform.system() == "Windows":
         main("./config/vits_vctk.json")
     else:

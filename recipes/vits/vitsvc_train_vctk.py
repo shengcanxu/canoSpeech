@@ -130,11 +130,11 @@ class VitsVCTrain(TrainerModelWithDataset):
         if platform.system() == "Windows":
             path1 = "D:/dataset/VCTK/wav48_silence_trimmed/p226/p226_071_mic1.flac.wav.pt"
             path2 = "D:/dataset/VCTK/wav48_silence_trimmed/p251/p251_336_mic1.flac.wav.pt"
-            path3 = "D:/dataset/VCTK/wav48_silence_trimmed/p255/p255_319_mic1.flac.wav.pt"
+            path3 = "D:/dataset/VCTK/wav48_silence_trimmed/p230/p230_002_mic1.flac.wav.pt"
         else:
             path1 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p226/p226_071_mic1.flac.wav.pt"
             path2 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p251/p251_336_mic1.flac.wav.pt"
-            path3 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p255/p255_319_mic1.flac.wav.pt"
+            path3 = "/home/cano/dataset/VCTK/wav48_silence_trimmed/p230/p230_002_mic1.flac.wav.pt"
 
         obj = torch.load(random.choice([path1, path2]))
         ref_spec = obj["spec"].unsqueeze(0).cuda()
@@ -142,7 +142,7 @@ class VitsVCTrain(TrainerModelWithDataset):
         y = obj["spec"].unsqueeze(0).cuda()
         y_lengths = torch.tensor([y.size(-1)]).cuda()
 
-        wav, _, _ = self.generator.voice_conversion_ref_wav(y, y_lengths, ref_spec=ref_spec)
+        wav, _, _ = self.generator.voice_conversion_SNAC(y, y_lengths, ref_spec=ref_spec)
 
         wav = wav[0, 0].cpu().float().numpy()
         sf.write(f"{output_path}/vc_{int(time.time())}.wav", wav, 22050)
