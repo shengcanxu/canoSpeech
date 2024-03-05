@@ -1,5 +1,4 @@
 import sys
-
 from modelscope import AutoTokenizer, AutoModel, snapshot_download
 
 chatglm_model = None

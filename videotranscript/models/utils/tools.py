@@ -4,12 +4,12 @@ import os
 import subprocess
 import sys
 import torch
-from logger import FileLogger
+from models.utils.logger import FileLogger
 
 # run ffprobe 获取视频元信息
 def runffprobe(cmd):
     try:
-        cmd[-1]=os.path.normpath(rf'{cmd[-1]}')
+        cmd[-1] = os.path.normpath(rf'{cmd[-1]}')
         p = subprocess.Popen(['ffprobe']+cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,encoding="utf-8", text=True,
                              creationflags=0 if sys.platform != 'win32' else subprocess.CREATE_NO_WINDOW)
         out, errs = p.communicate()
@@ -28,7 +28,7 @@ def runffmpeg(
         no_decode=False, # False=禁止 h264_cuvid 解码，True=尽量使用硬件解码
         de_format="nv12"): # 硬件输出格式，模型cuda兼容性差，可选nv12
     
-    arg_copy=copy.deepcopy(arg)
+    arg_copy = copy.deepcopy(arg)
     cmd = ["ffmpeg", "-hide_banner", "-ignore_unknown"]
     
     # 启用了CUDA 并且没有禁用GPU

@@ -1,6 +1,5 @@
 import datetime
 import sys
-
 import torch
 from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline
 
@@ -40,6 +39,7 @@ def init_model():
 
 # do SNR using whisper from huggingface
 def whisper_audio(audio_path:str):
+    """ ues whisper to regcognize text from audio """
     global whisper_pipe
     if whisper_pipe is None:
         whisper_pipe = init_model()
