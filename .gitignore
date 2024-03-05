@@ -12,3 +12,4 @@ monotonic_align.build
 /monotonic_align/build/*
 /preprocess/reference/vits/*
 .vscode/*
+logging.log

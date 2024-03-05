@@ -2,7 +2,6 @@ import os
 import random
 import shutil
 from concurrent.futures import ThreadPoolExecutor
-from google.colab import files
 
 basepath = os.getcwd()
 uploaded = files.upload()  # 上传文件
