@@ -4,7 +4,7 @@ import torchaudio
 from coqpit import Coqpit
 from torch import nn
 
-from speaker.losses import GE2ELoss, AngleProtoLoss, SoftmaxAngleProtoLoss
+from manager.losses import GE2ELoss, AngleProtoLoss, SoftmaxAngleProtoLoss
 from util.helper import load_fsspec
 
 class PreEmphasis(nn.Module):

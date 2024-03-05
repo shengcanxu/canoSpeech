@@ -2,9 +2,9 @@ from typing import Union, List
 import numpy as np
 import torch
 from coqpit import Coqpit
-from speaker.lstm_speaker import LSTMSpeakerEncoder
-from speaker.resnet_speaker import ResNetSpeakerEncoder
-from speaker.speaker_config import SpeakerConfig
+from manager.lstm_speaker import LSTMSpeakerEncoder
+from manager.resnet_speaker import ResNetSpeakerEncoder
+from manager.speaker_config import SpeakerConfig
 from util.mel_processing import wav_to_mel
 
 class SpeakerEncoder(object):

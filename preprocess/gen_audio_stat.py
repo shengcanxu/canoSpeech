@@ -4,7 +4,7 @@ import pickle
 import sys
 import penn
 from tqdm import tqdm
-from speaker.speaker_encoder import SpeakerEncoder
+from manager.speaker_encoder import SpeakerEncoder
 import soundfile as sf
 
 import torch

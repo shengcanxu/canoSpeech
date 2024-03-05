@@ -3,7 +3,7 @@ import math
 import numpy as np
 import torch
 from config.config import VitsConfig
-from language.language_manager import LanguageManager
+from manager.language_manager import LanguageManager
 from layers.duration_predictor import VitsDurationPredictor
 from layers.encoder import TextEncoder, AudioEncoder
 from layers.flow import ResidualCouplingBlocks
@@ -11,7 +11,7 @@ from layers.generator import HifiganGenerator
 from layers.learnable_upsampling import LearnableUpsampling
 from layers.quantizer import VAEMemoryBank
 from util.monotonic_align import maximum_path
-from speaker.speaker_manager import SpeakerManager
+from manager.speaker_manager import SpeakerManager
 from text.symbol_manager import SymbolManager
 from torch import nn
 from torch.nn import functional as F

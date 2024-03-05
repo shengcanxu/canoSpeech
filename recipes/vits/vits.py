@@ -4,8 +4,8 @@ from typing import Dict
 import numpy as np
 import torch
 import torchaudio
-from language.language_manager import LanguageManager
-from speaker.speaker_manager import SpeakerManager
+from manager.language_manager import LanguageManager
+from manager.speaker_manager import SpeakerManager
 from text.symbol_manager import SymbolManager
 from torch.nn import functional as F
 from torch import nn
@@ -15,7 +15,7 @@ from layers.flow import ResidualCouplingBlocks
 from layers.generator import HifiganGenerator
 from layers.encoder import TextEncoder, AudioEncoder, ReferenceEncoder
 from util.monotonic_align import maximum_path
-from speaker.speaker_encoder import SpeakerEncoder
+from manager.speaker_encoder import SpeakerEncoder
 from util.helper import sequence_mask, segment, rand_segments
 
 

@@ -4,13 +4,13 @@ from typing import Union
 import pickle
 
 from coqpit import coqpit
-from language.language_manager import LanguageManager
-from speaker.speaker_manager import SpeakerManager
+from manager.language_manager import LanguageManager
+from manager.speaker_manager import SpeakerManager
 from text import get_clean_text, _intersperse
 import torch
 from text.symbol_manager import SymbolManager
 from torch.utils.data import Dataset
-from util.mel_processing import wav_to_mel, wav_to_spec, spec_to_mel, load_audio
+from util.mel_processing import wav_to_spec, spec_to_mel, load_audio
 
 
 def get_metas_from_filelist(filelists: Union[str, list]):

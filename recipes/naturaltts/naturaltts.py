@@ -7,7 +7,7 @@ import soundfile as sf
 import torch
 from config.config import NaturalTTSConfig
 from coqpit import Coqpit
-from language.language_manager import LanguageManager
+from manager.language_manager import LanguageManager
 from layers.discriminator import VitsDiscriminator
 from layers.encoder import TextEncoder, AudioEncoder
 from layers.flow import AttentionFlow
@@ -18,7 +18,7 @@ from layers.quantizer import ResidualVectorQuantization
 from layers.variance_predictor import DurationPredictor, PitchPredictor
 from util.monotonic_align import maximum_path
 from recipes.trainer_model import TrainerModelWithDataset
-from speaker.speaker_manager import SpeakerManager
+from manager.speaker_manager import SpeakerManager
 from text.symbol_manager import SymbolManager
 from torch import nn
 from torch.cuda.amp import autocast
