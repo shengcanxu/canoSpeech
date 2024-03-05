@@ -1,0 +1,24 @@
+{
+    "dataset_config": {
+        "datasets": [
+            {
+                "dataset_name": "wenetspeech",
+                "meta_file_train": "D:/project/canoSpeech/filelists/wenetspeech_train_filelist.txt",
+                "meta_file_val": "D:/project/canoSpeech/filelists/wenetspeech_test_filelist.txt",
+                "path": "D:/dataset/WenetSpeech",
+                "language": "zh"
+            }
+        ],
+        "num_loader_workers": 4,
+        "num_eval_loader_workers": 4,
+        "use_cache": true,
+        "add_preprocess_data": true
+    },
+    "text": {
+        "min_text_len": 1,
+        "max_text_len": 190,
+        "add_blank": true,
+        "cleaned_text": true,
+        "text_cleaners": {"zh": "chinese_cleaners"}
+    }
+}

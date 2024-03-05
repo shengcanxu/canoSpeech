@@ -4,6 +4,7 @@ from multiprocessing import Pool
 import text
 from config.config import VitsConfig
 from dataset.VCTK import load_vctk_metas as load_vctk_metas
+from dataset.WenetSpeech import load_wenet_train_metas, load_wenet_test_metas
 from dataset.aishell3 import load_aishell3_metas
 from dataset.baker import load_baker_metas
 from dataset.cmltts import load_cmlpt_metas
@@ -18,32 +19,39 @@ from collections import Counter
 generate train and test filelist. 
 """
 def load_file_metas(config):
-    metas = []
+    train_metas = []
+    test_metas = []
     for dataset in config.datasets:
         dataset_name = dataset.dataset_name
         dataset_path = dataset.path
         if dataset_name.lower() == "vctk":
-            items = load_vctk_metas(root_path=dataset_path, ignored_speakers=config.ignored_speakers)
-            metas.extend(items)
+            train_items = load_vctk_metas(root_path=dataset_path, ignored_speakers=config.ignored_speakers)
+            train_metas.extend(train_items)
         elif dataset_name.lower() == "ljspeech":
-            items = load_ljspeech_metas(root_path=dataset_path)
-            metas.extend(items)
+            train_items = load_ljspeech_metas(root_path=dataset_path)
+            train_metas.extend(train_items)
         elif dataset_name.lower() == "baker":
-            items = load_baker_metas(root_path=dataset_path)
-            metas.extend(items)
+            train_items = load_baker_metas(root_path=dataset_path)
+            train_metas.extend(train_items)
         elif dataset_name.lower() == "libritts":
-            items = load_libritts_metas(root_path=dataset_path)
-            metas.extend(items)
+            train_items = load_libritts_metas(root_path=dataset_path)
+            train_metas.extend(train_items)
         elif dataset_name.lower() == "cmlpt":
-            items = load_cmlpt_metas(root_path=dataset_path)
-            metas.extend(items)
+            train_items = load_cmlpt_metas(root_path=dataset_path)
+            train_metas.extend(train_items)
         elif dataset_name.lower() == "kokoro":
-            items = load_kokoro_metas(root_path=dataset_path)
-            metas.extend(items)
+            train_items = load_kokoro_metas(root_path=dataset_path)
+            train_metas.extend(train_items)
         elif dataset_name.lower() == "aishell":
-            items = load_aishell3_metas(root_path=dataset_path)
-            metas.extend(items)
-    return metas
+            train_items = load_aishell3_metas(root_path=dataset_path)
+            train_metas.extend(train_items)
+        elif dataset_name.lower() == "wenetspeech":
+            train_items = load_wenet_train_metas(root_path=dataset_path)
+            train_metas.extend(train_items)
+            test_metas = load_wenet_test_metas(root_path=dataset_path)
+            test_metas.extend(test_metas)
+
+    return train_metas, test_metas
 
 def split_dataset_metas(items, eval_split_max_size=None, eval_split_size=0.01):
     """Split a dataset into train and eval. Consider speaker distribution in multi-speaker training.
@@ -88,6 +96,7 @@ def split_dataset_metas(items, eval_split_max_size=None, eval_split_size=0.01):
     return items[:eval_split_size], items[eval_split_size:]
 
 def gen_filelist(config_path:str):
+    """generate filelist file"""
     config = VitsConfig()
     config.load_json(config_path)
     datasets = config.dataset_config.datasets
@@ -110,13 +119,15 @@ def _gen_filelist(train_filelist:str, test_filelist:str, config):
     if not os.path.exists(train_filelist) and not os.path.exists(test_filelist):
         # load dataset metas
         print("load and split metas....")
-        data_items = load_file_metas(config.dataset_config)
+        train_metas, test_metas = load_file_metas(config.dataset_config)
+
         # split train and eval dataset
-        test_datas, train_datas = split_dataset_metas(
-            items=data_items,
-            eval_split_max_size=config.eval_split_max_size,
-            eval_split_size=config.eval_split_size
-        )
+        if test_metas is None or len(test_metas) == 0:
+            test_datas, train_datas = split_dataset_metas(
+                items=train_metas,
+                eval_split_max_size=config.eval_split_max_size,
+                eval_split_size=config.eval_split_size
+            )
 
         with open(train_filelist, "w", encoding="utf-8") as f:
             f.writelines([x["audio"] + "|" + x["speaker"] + "|" + x["language"] + "|" + x["text"].strip() + "\n" for x in train_datas])
@@ -179,6 +190,7 @@ def check_symbol_coverage(config_path):
     print("done!")
 
 def gen_other_filelists(config_path):
+    """ generate train, test file list for windows and linux, for save manual efforts"""
     config = VitsConfig()
     config.load_json(config_path)
     dataset_config = config.dataset_config.datasets[0]
@@ -232,9 +244,10 @@ def gen_other_filelists(config_path):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default="../config/vits_aishell.json")
+    parser.add_argument("--config", type=str, default="../config/base_wenetspeech.json")
     args = parser.parse_args()
 
-    # gen_filelist(args.config)
+    gen_filelist(args.config)
+
     # check_symbol_coverage(args.config)
-    gen_other_filelists(args.config)
+    # gen_other_filelists(args.config)
