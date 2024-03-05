@@ -16,7 +16,7 @@ from layers.learnable_upsampling import LearnableUpsampling
 from layers.losses import NaturalSpeechDiscriminatorLoss, NaturalSpeechGeneratorLoss
 from layers.quantizer import ResidualVectorQuantization
 from layers.variance_predictor import DurationPredictor, PitchPredictor
-from monotonic_align.maximum_path import maximum_path
+from util.monotonic_align import maximum_path
 from recipes.trainer_model import TrainerModelWithDataset
 from speaker.speaker_manager import SpeakerManager
 from text.symbol_manager import SymbolManager

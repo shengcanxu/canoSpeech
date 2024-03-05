@@ -14,7 +14,7 @@ from layers.duration_predictor import VitsDurationPredictor, generate_path, Stoc
 from layers.flow import ResidualCouplingBlocks
 from layers.generator import HifiganGenerator
 from layers.encoder import TextEncoder, AudioEncoder, ReferenceEncoder
-from monotonic_align.maximum_path import maximum_path
+from util.monotonic_align import maximum_path
 from speaker.speaker_encoder import SpeakerEncoder
 from util.helper import sequence_mask, segment, rand_segments
 

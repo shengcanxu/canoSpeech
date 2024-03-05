@@ -2,7 +2,7 @@ import numpy as np
 import torch
 
 try:
-    from monotonic_align.core import maximum_path_c
+    from util.monotonic_align import maximum_path_c
 
     CYTHON = True
 except ModuleNotFoundError:

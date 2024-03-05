@@ -10,7 +10,7 @@ from layers.flow import ResidualCouplingBlocks
 from layers.generator import HifiganGenerator
 from layers.learnable_upsampling import LearnableUpsampling
 from layers.quantizer import VAEMemoryBank
-from monotonic_align.maximum_path import maximum_path
+from util.monotonic_align import maximum_path
 from speaker.speaker_manager import SpeakerManager
 from text.symbol_manager import SymbolManager
 from torch import nn
