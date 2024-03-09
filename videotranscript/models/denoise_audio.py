@@ -2,7 +2,7 @@ import torch as th
 import torch.cuda
 from demucs.api import Separator, save_audio
 from demucs.pretrained import ModelLoadingError
-from models.utils.logger import FileLogger
+from videotranscript.models.utils.logger import FileLogger
 
 separator = None
 def separate_audio(from_audio:str, vocal_path:str, novocal_path:str):
