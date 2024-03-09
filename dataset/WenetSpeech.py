@@ -2,9 +2,14 @@ import argparse
 import json
 import os
 import glob
+import time
 from multiprocessing import Pool
 from pydub import AudioSegment
 from tqdm import tqdm
+import soundfile as sf
+
+from preprocess.speaker_diarization import speaker_diarization
+
 
 def load_wenet_train_metas(root_path:str):
     return _load_wenet_metas(root_path, wavs_path="train")
@@ -35,28 +40,28 @@ def _load_wenet_metas(root_path: str, wavs_path="train"):
 
 def create_json_file(audio_json:dict):
     audio, root_path = audio_json
-    json_path = audio["path"].replace(".opus", ".json").replace("audio/", "text/")
+    json_path = audio["path"].replace(".opus", ".json").replace("audio", "json", 1)
     json_path = os.path.join(root_path,  json_path)
     os.makedirs(os.path.dirname(json_path), exist_ok=True)
 
-    groups = []
-    group = []
-    total_duration = 0
-    for segment in audio["segments"]:
-        group.append(segment)
-        duration = segment["end_time"] - segment["begin_time"]
-        total_duration += duration
-        if total_duration >= 10:
-            total_duration = 0
-            groups.append({
-                'text': '，'.join([s["text"] for s in group]),
-                'begin_time': group[0]["begin_time"],
-                'end_time': group[-1]["end_time"],
-                'segments': group
-            })
-            group = []
-
-    audio["segments"] = groups
+    # groups = []
+    # group = []
+    # total_duration = 0
+    # for segment in audio["segments"]:
+    #     group.append(segment)
+    #     duration = segment["end_time"] - segment["begin_time"]
+    #     total_duration += duration
+    #     if total_duration >= 10:
+    #         total_duration = 0
+    #         groups.append({
+    #             'text': '，'.join([s["text"] for s in group]),
+    #             'begin_time': group[0]["begin_time"],
+    #             'end_time': group[-1]["end_time"],
+    #             'segments': group
+    #         })
+    #         group = []
+    #
+    # audio["segments"] = groups
     with open(json_path, "w", encoding="utf-8") as fp:
         fp.write(json.dumps(audio, indent=2, ensure_ascii=False))
 
@@ -118,6 +123,30 @@ def split_audios(root_path:str, sample_rate:int, n_jobs=10):
                 pbar.update()
     # split_audio(func_args[0])
 
+def change_to_mp3(func_arg):
+    audio_path, root_path = func_arg
+    data, sr = sf.read(audio_path, dtype='float32')
+    sf.write(audio_path.replace(".opus", ".mp3"), data, samplerate=16000, format="mp3")
+
+def change_to_mp3s(root_path:str, n_jobs=10):
+    audio_paths = glob.glob(os.path.join(root_path, f"audio/**/*.opus"), recursive=True)
+    func_args = list(zip(audio_paths, [root_path] * len(audio_paths)))
+    with Pool(processes=n_jobs) as p:
+        with tqdm(total=len(audio_paths)) as pbar:
+            for _, _ in enumerate(p.imap_unordered(change_to_mp3, func_args)):
+                pbar.update()
+    # change_to_mp3(func_args[0])
+
+def create_speaker_diarization(root_path:str):
+    audio_paths = glob.glob(os.path.join(root_path, f"audio/**/*.opus"), recursive=True)
+    for audio_path in audio_paths:
+        speaker_list = speaker_diarization(audio_path)
+
+        json_path = audio_path.replace(".opus", "_spk.json").replace("audio", "text", 1)
+        print(f"save to {json_path}")
+        with open(json_path, "w", encoding="utf-8") as fp:
+            fp.write(json.dumps(speaker_list, indent=2, ensure_ascii=False))
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="create json and split mp3 for WenetSpeech dataset", formatter_class=argparse.RawTextHelpFormatter, )
     parser.add_argument("--db_path", type=str, default=None, required=False, help="Path of the folder containing the audio files to resample", )
@@ -125,8 +154,8 @@ if __name__ == "__main__":
     parser.add_argument("--threads", type=int, default=8, required=False, help="Define the number of threads used during the audio resampling")
     args = parser.parse_args()
 
-    Wenet_PATH = "D:\\dataset\\WenetSpeech"
-    # Wenet_PATH = "/home/cano/dataset/WenetSpeech"
+    # Wenet_PATH = "D:\\dataset\\WenetSpeech"
+    Wenet_PATH = "/home/cano/dataset/WenetSpeech"
 
     # print("create audio json file...")
     # create_json_files(Wenet_PATH, n_jobs=args.threads)
@@ -134,8 +163,11 @@ if __name__ == "__main__":
     # print("split files... ")
     # split_audios(Wenet_PATH, args.sample_rate, n_jobs=args.threads)
 
-    items = load_wenet_train_metas(Wenet_PATH)
-    print(items)
+    print("combine mp3")
+    change_to_mp3s(Wenet_PATH, n_jobs=args.threads)
+
+
+    # create_speaker_diarization(Wenet_PATH)
 
 
 # ffmpeg -i Y0000000000_--5llN02F84.opus -ar 16000 -ac 1 -b:a 32k -acodec libmp3lame test.mp3
