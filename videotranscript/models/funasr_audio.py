@@ -9,17 +9,6 @@ import sys
 funasr_model = None
 def init_model():
     print("initialize funasr model...")
-    # model = AutoModel(
-    #     model="paraformer-zh",
-    #     model_revision="v2.0.4",
-    #     vad_model="fsmn-vad",
-    #     vad_model_revision="v2.0.4",
-    #     punc_model="ct-punc-c",
-    #     punc_model_revision="v2.0.4",
-    #     spk_model="cam++",
-    #     spk_model_revision="v2.0.2",
-    # )
-
     if sys.platform == "win32":
         model_id = "D:/models/funasr/speech_seaco_paraformer_large_asr_nat-zh-cn-16k-common-vocab8404-pytorch"
         vad_model_id = "D:/models/funasr/speech_fsmn_vad_zh-cn-16k-common-pytorch"

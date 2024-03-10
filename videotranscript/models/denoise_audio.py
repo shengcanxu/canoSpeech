@@ -4,31 +4,40 @@ from demucs.api import Separator, save_audio
 from demucs.pretrained import ModelLoadingError
 from videotranscript.models.utils.logger import FileLogger
 
-separator = None
+denoiser = None
+def init_model():
+    try:
+        # document: https://github.com/adefossez/demucs/blob/main/docs/api.md
+        print("initialize demucs model...")
+        denoiser = Separator(
+            model="mdx_extra",
+            repo=None,
+            device= 'cuda' if torch.cuda.is_available() else 'cpu',
+            shifts=1,
+            split=True,
+            overlap=0.25,
+            progress=True,
+            jobs=0,
+            segment=None
+        )
+        return denoiser
+    except ModelLoadingError as error:
+        FileLogger.error(error)
+        return None
+
 def separate_audio(from_audio:str, vocal_path:str, novocal_path:str):
     """ use demucs to separate audio and non-audio  """
-    global separator
-    if separator is None:
-        try:
-            # document: https://github.com/adefossez/demucs/blob/main/docs/api.md
-            print("initialize demucs model...")
-            separator = Separator(model="mdx_extra",
-                                  repo=None,
-                                  device= 'cuda' if torch.cuda.is_available() else 'cpu',
-                                  shifts=1,
-                                  split=True,
-                                  overlap=0.25,
-                                  progress=True,
-                                  jobs=0,
-                                  segment=None)
-        except ModelLoadingError as error:
-            FileLogger.error(error)
-            return False
+    global denoiser
+    if denoiser is None:
+        denoiser = init_model()
+    if denoiser is None:
+        FileLogger.error("initialize demucs model failed")
+        return False
 
     # do the separation
-    origin, res = separator.separate_audio_file(from_audio)
+    origin, res = denoiser.separate_audio_file(from_audio)
     kwargs = {
-        "samplerate": separator.samplerate,
+        "samplerate": denoiser.samplerate,
         "bitrate": 320,
         "preset": 2,
         "clip": "rescale",

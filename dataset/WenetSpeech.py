@@ -162,6 +162,8 @@ def label_audio_with_speaker(root_path:str):
     audio_jsons = glob.glob(os.path.join(root_path, f"json/**/*.json"), recursive=True)
     speaker_jsons = [j for j in audio_jsons if j.find("_spk.json") >= 0]
     audio_jsons = [j for j in audio_jsons if j.find("_spk.json") < 0]
+    print(len(speaker_jsons))
+    print(len(audio_jsons))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="create json and split mp3 for WenetSpeech dataset", formatter_class=argparse.RawTextHelpFormatter, )
