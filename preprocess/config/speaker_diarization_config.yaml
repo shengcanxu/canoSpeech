@@ -1,0 +1,20 @@
+version: 3.1.0
+
+pipeline:
+  name: pyannote.audio.pipelines.SpeakerDiarization
+  params:
+    clustering: AgglomerativeClustering
+    embedding: C:/Users/CanoLaptop/.cache/torch/pyannote/models--pyannote--wespeaker-voxceleb-resnet34-LM/snapshots/76bad8b0aadd8f951530dd6e543c59d1dcd7c62c/pytorch_model.bin
+    embedding_batch_size: 32
+    embedding_exclude_overlap: true
+    segmentation: C:/Users/CanoLaptop/.cache/torch/pyannote/models--pyannote--segmentation-3.0/snapshots/f47575fb2e9be1f0b93981209ea5cba0512b3acb/pytorch_model.bin
+    segmentation_batch_size: 32
+    segmentation_step: 0.2
+
+params:
+  clustering:
+    method: centroid
+    min_cluster_size: 12
+    threshold: 0.7045654963945799
+  segmentation:
+    min_duration_off: 0.0

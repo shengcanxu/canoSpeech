@@ -32,10 +32,10 @@ def init_model():
 
     if sys.platform == "win32":
         cache_dir = "D:/models/pyannote"
-        config_path = "D:/models/pyannote/models--pyannote--speaker-diarization-3.1/snapshots/0c6d72ac70c2dca2b11b236f5ca3d54d0c133109/config.yaml"
+        config_path = os.path.join(os.path.dirname(__file__), "config/speaker_diarization_config.yaml")
     else:
         cache_dir = "/home/cano/models/pyannote"
-        config_path = "/home/cano/models/pyannote/models--pyannote--speaker-diarization-3.1/snapshots/0c6d72ac70c2dca2b11b236f5ca3d54d0c133109/config.yaml"
+        config_path = os.path.join(os.path.dirname(__file__), "config/speaker_diarization_config_linux.yaml")
 
     diarization_pipe = Pipeline.from_pretrained(
         config_path,
@@ -67,10 +67,10 @@ def speaker_diarization(audio_path:str):
 
 if __name__ == "__main__":
     print(time.time())
-    speaker_list = speaker_diarization("D:/dataset/WenetSpeech/audio/train/youtube/B00000/Y0000000000_--5llN02F84.mp3")
-    json_path = "D:/dataset/WenetSpeech/audio/train/youtube/B00000/speaker.json"
-    # speaker_list = speaker_diarization("/home/cano/dataset/WenetSpeech/audio/train/youtube/B00000/Y0000000000_--5llN02F84.opus")
-    # json_path = "/home/cano/dataset/WenetSpeech/audio/train/youtube/B00000/speaker.json"
+    # speaker_list = speaker_diarization("D:/dataset/WenetSpeech/audio/train/youtube/B00000/Y0000000000_--5llN02F84.mp3")
+    # json_path = "D:/dataset/WenetSpeech/audio/train/youtube/B00000/speaker.json"
+    speaker_list = speaker_diarization("/home/cano/dataset/WenetSpeech/audio/train/youtube/B00000/Y0000000000_--5llN02F84.mp3")
+    json_path = "/home/cano/dataset/WenetSpeech/audio/train/youtube/B00000/speaker.json"
     with open(json_path, "w", encoding="utf-8") as fp:
         fp.write(json.dumps(speaker_list, indent=2, ensure_ascii=False))
     print(time.time())
