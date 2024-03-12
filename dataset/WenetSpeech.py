@@ -156,14 +156,65 @@ def create_speaker_diarization(root_path:str):
             speaker_list = speaker_diarization(audio_path)
             with open(json_path, "w", encoding="utf-8") as fp:
                 fp.write(json.dumps(speaker_list, indent=2, ensure_ascii=False))
+                print(f" [!] {json_path} created!")
             pbar.update()
 
 def label_audio_with_speaker(root_path:str):
+    """
+    add speaker info to audio json
+    """
     audio_jsons = glob.glob(os.path.join(root_path, f"json/**/*.json"), recursive=True)
-    speaker_jsons = [j for j in audio_jsons if j.find("_spk.json") >= 0]
     audio_jsons = [j for j in audio_jsons if j.find("_spk.json") < 0]
-    print(len(speaker_jsons))
-    print(len(audio_jsons))
+
+    # add speaker label to audio json
+    for audio_path in audio_jsons:
+        speaker_path = audio_path.replace(".json", "_spk.json")
+        if not os.path.exists(speaker_path):
+            print(f" [!] {speaker_path} not found, skip!")
+            continue
+
+        with open(audio_path, "r", encoding="utf-8") as fp:
+            audio_json = json.load(fp)
+        if "all_speakers" in audio_json:
+            print(f"[!] {audio_path} is finished, skip!")
+            continue
+
+        with open(speaker_path, "r", encoding="utf-8") as fp:
+            speaker_list = json.load(fp)
+        if speaker_list is None or len(speaker_list) == 0:
+            print(f" [!] {speaker_path} is empty, skip!")
+            continue
+
+        speaker_list.sort(key=lambda x: x["start"])
+        speaker_pos = 0
+        segments = audio_json["segments"]
+        segments.sort(key=lambda x: x["begin_time"])
+        for segment in segments:
+            if speaker_pos > len(speaker_list): break
+
+            # find speaker list
+            speakers = []
+            while speaker_list[speaker_pos]["stop"] < segment["begin_time"]:
+                speaker_pos += 1
+            pos = speaker_pos
+            while speaker_list[pos]["start"] <= segment["end_time"]:
+                if speaker_list[pos]["stop"] - speaker_list[pos]["start"] >= 0.3:  # at least 0.2s
+                    speakers.append(speaker_list[pos])
+                pos += 1
+            segment["speaker_list"] = speakers
+
+            speaker_names = set([s["speaker"] for s in speakers])
+            segment["speaker_names"] = list(speaker_names)
+
+        # add all speakers to audio json
+        all_speakers = set([s["speaker"] for s in speaker_list])
+        all_speakers = list(all_speakers)
+        all_speakers.sort()
+        audio_json["all_speakers"] = all_speakers
+
+        # save back audio json to file
+        with open(audio_path, "w", encoding="utf-8") as fp:
+            json.dump(audio_json, fp, indent=2, ensure_ascii=False)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="create json and split mp3 for WenetSpeech dataset", formatter_class=argparse.RawTextHelpFormatter, )
