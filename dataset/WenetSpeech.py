@@ -280,6 +280,7 @@ def _gen_split_audio(audio_json:dict):
         speakers[name]['audios'] += 1
         speakers[name]['duration'] += segment["duration"]
     audio_json["segments"] = segments
+    audio_json["split_duration"] = round(sum([s["duration"] for s in audio_json["segments"]]), 2)
     audio_json["all_speakers"] = speakers
 
     return audio_json
