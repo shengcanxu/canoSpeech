@@ -3,13 +3,13 @@ import os
 from models.chatglm_translate import chatglm_translation
 from models.config import VTConfig
 from models.denoise_audio import separate_audio
-from models.funasr_audio import funasr_audio
+from models import funasr_audio
 from models.opus_translate import opus_translate
 from models.whisper_audio import whisper_audio
 from models.utils.tools import get_video_info
 import shutil
 import json
-from models.utils.logger import FileLogger
+from models import FileLogger
 from models.utils.tools import conver_mp4, m4a2wav
 
 def create_task(type:str, source_folder:str, target_folder:str, filename:str, task_folder:str):

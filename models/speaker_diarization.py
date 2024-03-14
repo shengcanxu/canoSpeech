@@ -13,15 +13,16 @@
 # 例如：C:/Users/CanoLaptop/.cache/torch/pyannote/models--pyannote--segmentation-3.0/snapshots/f47575fb2e9be1f0b93981209ea5cba0512b3acb/pytorch_model.bin
 # 3. 将config.yaml的embedding改成指向本地的embedding下面的pytorch_model.bin文件
 # 例如：C:/Users/CanoLaptop/.cache/torch/pyannote/models--pyannote--wespeaker-voxceleb-resnet34-LM/snapshots/76bad8b0aadd8f951530dd6e543c59d1dcd7c62c/pytorch_model.bin
-
+import argparse
 import json
 import sys
 import time
-
 import torchaudio
 from pyannote.audio import Pipeline
 import torch
 import os
+
+from util.decorator import get_time
 
 diarization_pipe = None
 
@@ -47,6 +48,7 @@ def init_model():
     print(f"model loaded at {time.time()}")
     return diarization_pipe
 
+@get_time
 def speaker_diarization(audio_path:str):
     global diarization_pipe
     if diarization_pipe is None:
@@ -66,11 +68,18 @@ def speaker_diarization(audio_path:str):
     return speaker_list
 
 if __name__ == "__main__":
-    print(time.time())
-    # speaker_list = speaker_diarization("D:/dataset/WenetSpeech/audio/train/youtube/B00000/Y0000000000_--5llN02F84.mp3")
-    # json_path = "D:/dataset/WenetSpeech/audio/train/youtube/B00000/speaker.json"
-    speaker_list = speaker_diarization("/home/cano/dataset/WenetSpeech/audio/train/youtube/B00000/Y0000000000_--5llN02F84.mp3")
-    json_path = "/home/cano/dataset/WenetSpeech/audio/train/youtube/B00000/speaker.json"
-    with open(json_path, "w", encoding="utf-8") as fp:
+    parser = argparse.ArgumentParser(description="对音频做人物识别和分离")
+    parser.add_argument("speaker_path", type=str, help="指向mp3文件的路径")
+    parser.add_argument("out_json_path", type=str, help="指向包含speaker信息的输出JSON文件路径")
+    args = parser.parse_args()
+
+    if sys.platform == "win32":
+        args.speaker_path = "D:/dataset/WenetSpeech/audio/train/youtube/B00000/Y0000000000_--5llN02F84.mp3"
+        args.json_path = "D:/dataset/WenetSpeech/audio/train/youtube/B00000/speaker.json"
+    else:
+        args.speaker_path = "/home/cano/dataset/WenetSpeech/audio/train/youtube/B00000/Y0000000000_--5llN02F84.mp3"
+        args.json_path = "/home/cano/dataset/WenetSpeech/audio/train/youtube/B00000/speaker.json"
+
+    speaker_list = speaker_diarization(args.speaker_path)
+    with open(args.json_path, "w", encoding="utf-8") as fp:
         fp.write(json.dumps(speaker_list, indent=2, ensure_ascii=False))
-    print(time.time())

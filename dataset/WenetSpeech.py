@@ -2,13 +2,12 @@ import argparse
 import json
 import os
 import glob
-import time
 from multiprocessing import Pool
 from pydub import AudioSegment
 from tqdm import tqdm
 import soundfile as sf
 
-from preprocess.speaker_diarization import speaker_diarization
+from models.speaker_diarization import speaker_diarization
 
 
 def load_wenet_train_metas(root_path:str):

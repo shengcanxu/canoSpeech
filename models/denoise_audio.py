@@ -1,8 +1,11 @@
+import argparse
+import sys
+
 import torch as th
 import torch.cuda
 from demucs.api import Separator, save_audio
 from demucs.pretrained import ModelLoadingError
-from videotranscript.models.utils.logger import FileLogger
+from models.utils.logger import FileLogger
 
 denoiser = None
 def init_model():
@@ -25,7 +28,7 @@ def init_model():
         FileLogger.error(error)
         return None
 
-def separate_audio(from_audio:str, vocal_path:str, novocal_path:str):
+def separate_audio(from_audio:str, vocal_path:str, novocal_path:str = None):
     """ use demucs to separate audio and non-audio  """
     global denoiser
     if denoiser is None:
@@ -47,14 +50,27 @@ def separate_audio(from_audio:str, vocal_path:str, novocal_path:str):
     vocals = res.pop("vocals")
     save_audio(vocals, vocal_path, **kwargs)
 
-    novocals = th.zeros_like(next(iter(res.values())))
-    for v in res.values():
-        novocals += v
-    save_audio(novocals, novocal_path, **kwargs)
+    if novocal_path is None:
+        novocals = th.zeros_like(next(iter(res.values())))
+        for v in res.values():
+            novocals += v
+        save_audio(novocals, novocal_path, **kwargs)
     return True
 
 if __name__ == "__main__":
-    import sys
-    print(sys.path)
+    parser = argparse.ArgumentParser(description="将音频的人声和背景音乐分离")
+    parser.add_argument("audio_path", type=str, help="需要分离的音频文件的路径")
+    parser.add_argument("vocal_path", type=str, help="输出分离后人声文件路径")
+    parser.add_argument("novocal_path", type=str, default=None, help="输出分离后非人声文件路径")
+    args = parser.parse_args()
 
-    file = "D:/dataset/bilibili/translate/transformat/102805877/102805877_BV1Pw411e7Zo.wav"
+    if sys.platform == "win32":
+        args.audio_path = "D:/dataset/bilibili/translate/transformat/102805877/102805877_BV1Pw411e7Zo.wav"
+        args.vocal_path = "D:/dataset/bilibili/translate/transformat/102805877/vocal.wav"
+    else:
+        args.audio_path = "D:/dataset/bilibili/translate/transformat/102805877/102805877_BV1Pw411e7Zo.wav"
+        args.vocal_path = "D:/dataset/bilibili/translate/transformat/102805877/vocal.wav"
+
+    separate_audio(args.audio_path, args.vocal_path, args.noval_path)
+
+
