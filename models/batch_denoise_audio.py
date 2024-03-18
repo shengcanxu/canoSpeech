@@ -45,8 +45,7 @@ def _load_audio(track: Path, samplerate=44100, audio_channels=2):
     wav = None
 
     try:
-        wav = AudioFile(track).read(streams=0, samplerate=samplerate,
-                                    channels=audio_channels)
+        wav = AudioFile(track).read(streams=0, samplerate=samplerate, channels=audio_channels)
     except FileNotFoundError:
         errors["ffmpeg"] = "FFmpeg is not installed."
     except subprocess.CalledProcessError:
@@ -62,10 +61,7 @@ def _load_audio(track: Path, samplerate=44100, audio_channels=2):
 
     if wav is None:
         raise LoadAudioError(
-            "\n".join(
-                "When trying to load using {}, got the following error: {}".format(
-                    backend, error
-                )
+            "\n".join("When trying to load using {}, got the following error: {}".format( backend, error)
                 for backend, error in errors.items()
             )
         )
@@ -210,6 +206,6 @@ if __name__ == "__main__":
         args.audio_path = "/home/cano/dataset/WenetSpeech/audio/train/youtube/B00000/Y0000000000_--5llN02F84.mp3"
         args.vocal_path = "/home/cano/dataset/WenetSpeech/audio/train/youtube/B00000/vocal.wav"
 
-    separate_audios_manager([args.audio_path] * 10, args.batch_size, args.load_threads, args.save_threads)
+    separate_audios_manager([args.audio_path] * 20, args.batch_size, args.load_threads, args.save_threads)
 
 

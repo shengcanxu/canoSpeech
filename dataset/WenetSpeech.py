@@ -152,12 +152,15 @@ def separate_vocals(root_path:str):
 
         paths_to_separate = []
         for audio_path in audio_paths:
+            audio_path = audio_path.strip()
             vocal_path = audio_path.replace(".mp3", "_vocal.mp3")
             if os.path.exists(vocal_path):
                 print(f" [!] {vocal_path} already exists, skip!")
             else:
                 paths_to_separate.append(audio_path)
 
+        print(f"there are {len(paths_to_separate)} files")
+        print(f"{paths_to_separate[0]}")
         separate_audios_manager(paths_to_separate, 16, load_threads=2, save_threads=5)
 
 def label_audio_with_speaker(root_path:str):
