@@ -8,6 +8,7 @@ from pydub import AudioSegment
 from tqdm import tqdm
 import soundfile as sf
 
+from models.batch_denoise_audio import separate_audios_manager
 from models.denoise_audio import separate_audio
 from models.speaker_diarization import speaker_diarization
 
@@ -45,24 +46,6 @@ def create_json_file(audio_json:dict):
     json_path = os.path.join(root_path,  json_path)
     os.makedirs(os.path.dirname(json_path), exist_ok=True)
 
-    # groups = []
-    # group = []
-    # total_duration = 0
-    # for segment in audio["segments"]:
-    #     group.append(segment)
-    #     duration = segment["end_time"] - segment["begin_time"]
-    #     total_duration += duration
-    #     if total_duration >= 10:
-    #         total_duration = 0
-    #         groups.append({
-    #             'text': '，'.join([s["text"] for s in group]),
-    #             'begin_time': group[0]["begin_time"],
-    #             'end_time': group[-1]["end_time"],
-    #             'segments': group
-    #         })
-    #         group = []
-    #
-    # audio["segments"] = groups
     with open(json_path, "w", encoding="utf-8") as fp:
         fp.write(json.dumps(audio, indent=2, ensure_ascii=False))
 
@@ -111,13 +94,15 @@ def split_audios(root_path:str, sample_rate:int, n_jobs=10):
     """
     split audio files to multiple audios
     """
-    json_files = glob.glob(os.path.join(root_path, f"text/**/*.json"), recursive=True)
-    func_args = list(zip(json_files, [root_path] * len(json_files)))
-    # with Pool(processes=n_jobs) as p:
-    #     with tqdm(total=len(json_files)) as pbar:
-    #         for _, _ in enumerate(p.imap_unordered(split_audio, func_args)):
-    #             pbar.update()
-    split_audio(func_args[0])
+    with open(os.path.join(root_path, "json_list.txt"), "r", encoding="utf-8") as fp:
+        json_files = fp.readlines()
+
+        func_args = list(zip(json_files, [root_path] * len(json_files)))
+        # with Pool(processes=n_jobs) as p:
+        #     with tqdm(total=len(json_files)) as pbar:
+        #         for _, _ in enumerate(p.imap_unordered(split_audio, func_args)):
+        #             pbar.update()
+        split_audio(func_args[0])
 
 def change_to_mp3(func_arg):
     audio_path, root_path = func_arg
@@ -139,73 +124,72 @@ def change_to_mp3s(root_path:str, n_jobs=10):
     # change_to_mp3(func_args[0])
 
 def create_speaker_diarization(root_path:str):
-    paths = glob.glob(os.path.join(root_path, f"audio/**/*.mp3"), recursive=True)
-    audio_paths = []
-    for audio_path in paths:
-        json_path = audio_path.replace(".mp3", "_spk.json").replace("audio", "json", 1)
-        if os.path.exists(json_path):
-            print(f" [!] {json_path} already exists, skip!")
-            continue
-        audio_paths.append(audio_path)
+    with open(os.path.join(root_path, "mp3_list.txt"), "r", encoding="utf-8") as fp:
+        mp3_paths = fp.readlines()
 
-    with tqdm(total=len(audio_paths)) as pbar:
-        for audio_path in audio_paths:
-            pbar.update()
-
+        audio_paths = []
+        for audio_path in mp3_paths:
             json_path = audio_path.replace(".mp3", "_spk.json").replace("audio", "json", 1)
-            os.makedirs(os.path.dirname(json_path), exist_ok=True)
-            speaker_list = speaker_diarization(audio_path)
-            with open(json_path, "w", encoding="utf-8") as fp:
-                fp.write(json.dumps(speaker_list, indent=2, ensure_ascii=False))
-                print(f" [!] {json_path} created!")
+            if os.path.exists(json_path):
+                print(f" [!] {json_path} already exists, skip!")
+                continue
+            audio_paths.append(audio_path)
 
-def separate_vocal(func_arg):
-    audio_path, root_path = func_arg
-    vocal_path = audio_path.replace(".mp3", "_vocal.mp3")
-    if os.path.exists(vocal_path):
-        print(f" [!] {vocal_path} already exists, skip!")
-        return
+        with tqdm(total=len(audio_paths)) as pbar:
+            for audio_path in audio_paths:
+                pbar.update()
 
-    separate_audio(audio_path, vocal_path)
+                json_path = audio_path.replace(".mp3", "_spk.json").replace("audio", "json", 1)
+                os.makedirs(os.path.dirname(json_path), exist_ok=True)
+                speaker_list = speaker_diarization(audio_path)
+                with open(json_path, "w", encoding="utf-8") as fp:
+                    fp.write(json.dumps(speaker_list, indent=2, ensure_ascii=False))
+                    print(f" [!] {json_path} created!")
 
 def separate_vocals(root_path:str):
-    audio_paths = glob.glob(os.path.join(root_path, f"audio/**/*.mp3"), recursive=True)
-    func_args = list(zip(audio_paths, [root_path] * len(audio_paths)))
-    # with Pool(processes=10) as p:
-    #     with tqdm(total=len(audio_paths)) as pbar:
-    #         for _, _ in enumerate(p.imap_unordered(separate_vocal, func_args)):
-    #             pbar.update()
-    separate_vocal(func_args[0])
+    with open(os.path.join(root_path, "mp3_list.txt"), "r", encoding="utf-8") as fp:
+        audio_paths = fp.readlines()
+
+        paths_to_separate = []
+        for audio_path in audio_paths:
+            vocal_path = audio_path.replace(".mp3", "_vocal.mp3")
+            if os.path.exists(vocal_path):
+                print(f" [!] {vocal_path} already exists, skip!")
+            else:
+                paths_to_separate.append(audio_path)
+
+        separate_audios_manager(paths_to_separate, 16, load_threads=2, save_threads=5)
 
 def label_audio_with_speaker(root_path:str):
     """
     add speaker info to audio json
     """
-    speaker_paths = glob.glob(os.path.join(root_path, f"json/**/*_spk.json"), recursive=True)
+    with open(os.path.join(root_path, "speaker_json_list.txt"), "r", encoding="utf-8") as fp:
+        speaker_paths = fp.readlines()
 
-    with tqdm(total=len(speaker_paths)) as pbar:
-        pbar.update()
+        with tqdm(total=len(speaker_paths)) as pbar:
+            pbar.update()
 
-        # add speaker label to audio json
-        for speaker_path in speaker_paths:
-            audio_path = speaker_path.replace("_spk.json", ".json")
-            with open(audio_path, "r", encoding="utf-8") as fp:
-                audio_json = json.load(fp)
-            if "all_speakers" in audio_json:
-                print(f"[!] {audio_path} is finished, skip!")
-                continue
+            # add speaker label to audio json
+            for speaker_path in speaker_paths:
+                audio_path = speaker_path.replace("_spk.json", ".json")
+                with open(audio_path, "r", encoding="utf-8") as fp:
+                    audio_json = json.load(fp)
+                if "all_speakers" in audio_json:
+                    print(f"[!] {audio_path} is finished, skip!")
+                    continue
 
-            with open(speaker_path, "r", encoding="utf-8") as fp:
-                speaker_list = json.load(fp)
-            if speaker_list is None or len(speaker_list) == 0:
-                print(f" [!] {speaker_path} is empty, skip!")
-                continue
+                with open(speaker_path, "r", encoding="utf-8") as fp:
+                    speaker_list = json.load(fp)
+                if speaker_list is None or len(speaker_list) == 0:
+                    print(f" [!] {speaker_path} is empty, skip!")
+                    continue
 
-            audio_json = _align_audio_speakers(audio_json, speaker_list)
+                audio_json = _align_audio_speakers(audio_json, speaker_list)
 
-            # save back audio json to file
-            with open(audio_path, "w", encoding="utf-8") as fp:
-                json.dump(audio_json, fp, indent=2, ensure_ascii=False)
+                # save back audio json to file
+                with open(audio_path, "w", encoding="utf-8") as fp:
+                    json.dump(audio_json, fp, indent=2, ensure_ascii=False)
 
 def _align_audio_speakers(audio_json:dict, speaker_list:list):
     speaker_list.sort(key=lambda x: x["start"])
@@ -237,24 +221,25 @@ def _align_audio_speakers(audio_json:dict, speaker_list:list):
     return audio_json
 
 def gen_split_audios_json(root_path:str):
-    speaker_paths = glob.glob(os.path.join(root_path, f"json/**/*_spk.json"), recursive=True)
+    with open(os.path.join(root_path, "speaker_json_list.txt"), "r", encoding="utf-8") as fp:
+        speaker_paths = fp.readlines()
 
-    with tqdm(total=len(speaker_paths)) as pbar:
-        pbar.update()
-        for speaker_path in speaker_paths:
-            audio_path = speaker_path.replace("_spk.json", ".json")
-            split_path = audio_path.replace(".json", "_split.json")
-            if os.path.exists(split_path):
-                print(f" [!] {split_path} already exists, skip!")
-                pbar.update()
-                continue
+        with tqdm(total=len(speaker_paths)) as pbar:
+            pbar.update()
+            for speaker_path in speaker_paths:
+                audio_path = speaker_path.replace("_spk.json", ".json")
+                split_path = audio_path.replace(".json", "_split.json")
+                if os.path.exists(split_path):
+                    print(f" [!] {split_path} already exists, skip!")
+                    pbar.update()
+                    continue
 
-            with open(audio_path, "r", encoding="utf-8") as fp:
-                audio_json = json.load(fp)
-                if len(audio_json["segments"]) > 0:
-                    split_json = _gen_split_audio(audio_json)
-                    with open(split_path, "w", encoding="utf-8") as fp:
-                        json.dump(split_json, fp, indent=2, ensure_ascii=False)
+                with open(audio_path, "r", encoding="utf-8") as fp:
+                    audio_json = json.load(fp)
+                    if len(audio_json["segments"]) > 0:
+                        split_json = _gen_split_audio(audio_json)
+                        with open(split_path, "w", encoding="utf-8") as fp:
+                            json.dump(split_json, fp, indent=2, ensure_ascii=False)
 
 def _gen_split_audio(audio_json:dict):
     """ 根据发言者和持续时间进行分组。分组的规则是：首先根据发言者对片段进行初步分组，然后将长度不超过10秒的片段组合成一个大段。 """
@@ -322,12 +307,23 @@ if __name__ == "__main__":
 
     # print("create audio json file...")
     # create_json_files(Wenet_PATH, n_jobs=args.threads)
+    # paths = glob.glob(os.path.join(Wenet_PATH, f"json/**/*.json"), recursive=True)
+    # paths = [p for p in paths if "_spk.json" not in p]
+    # with open(os.path.join(Wenet_PATH, "json_list.txt"), "w", encoding="utf-8") as fp:
+    #     fp.write("\n".join(paths))
 
     # print("change to mp3")
     # change_to_mp3s(Wenet_PATH, n_jobs=args.threads)
+    # paths = glob.glob(os.path.join(Wenet_PATH, f"audio/**/*.mp3"), recursive=True)
+    # paths = [p for p in paths if "_vocals.mp3" not in p]
+    # with open(os.path.join(Wenet_PATH, "mp3_list.txt"), "w", encoding="utf-8") as fp:
+    #     fp.write("\n".join(paths))
 
     # print("speaker diarization")
     # create_speaker_diarization(Wenet_PATH)
+    # paths = glob.glob(os.path.join(Wenet_PATH, f"json/**/*_spk.json"), recursive=True)
+    # with open(os.path.join(Wenet_PATH, "speaker_json_list.txt"), "w", encoding="utf-8") as fp:
+    #     fp.write("\n".join(paths))
 
     print("spearate vocal and non-vocal")
     separate_vocals(Wenet_PATH)
