@@ -8,7 +8,7 @@ import subprocess
 import sys
 import time
 from pathlib import Path
-from multiprocessing import Process, Manager
+from multiprocessing import Process, Manager, get_context
 from demucs.apply import apply_model
 from torch.nn import functional as F
 import torch as th
@@ -31,7 +31,7 @@ def init_model():
             shifts=0,
             split=True,
             overlap=0.25,
-            progress=False,
+            progress=True,
             jobs=1,
             segment=7.8
         )
@@ -95,6 +95,7 @@ def separate_wav(separator, wav:torch.Tensor, batch_size:int):
 def load_audios(path_queue:queue.Queue, load_queue:queue.Queue):
     while not path_queue.empty():
         if load_queue.full():
+            print("load queue is full")
             time.sleep(1)
             continue
 
@@ -114,6 +115,7 @@ def separate_audios(load_finished, load_queue:queue.Queue, save_queue:queue.Queu
         while True:
             if load_queue.empty():
                 if load_finished.value is False:
+                    print("load queue is empty")
                     time.sleep(1)
                     continue
                 else:
@@ -125,6 +127,9 @@ def separate_audios(load_finished, load_queue:queue.Queue, save_queue:queue.Queu
             novocals = th.zeros_like(next(iter(res.values())))
             for v in res.values():
                 novocals += v
+
+            vocals = vocals.cpu()
+            novocals = novocals.cpu()
             save_queue.put((audio_path, vocals, novocals))
             pbar.update()
 
@@ -158,6 +163,7 @@ def save_audios(separate_finished, save_queue:queue.Queue):
 
 
 def separate_audios_manager(file_paths:list, batch_size:int, load_threads:int, save_threads:int):
+    ctx = get_context('spawn')
     manager = Manager()
     path_queue = manager.Queue()
     for path in file_paths:
@@ -169,24 +175,27 @@ def separate_audios_manager(file_paths:list, batch_size:int, load_threads:int, s
 
     load_processes = []
     for i in range(load_threads):
-        load_process = Process(target=load_audios, args=(path_queue, load_queue))
+        load_process = ctx.Process(target=load_audios, args=(path_queue, load_queue))
         load_process.start()
         load_processes.append(load_process)
-    separate_process = Process(target=separate_audios, args=(load_finished, load_queue, save_queue, batch_size, len(file_paths)))
+    separate_process = ctx.Process(target=separate_audios, args=(load_finished, load_queue, save_queue, batch_size, len(file_paths)))
     separate_process.start()
     save_processes = []
     for i in range(save_threads):
-        save_process = Process(target=save_audios, args=(separate_finished, save_queue))
+        save_process = ctx.Process(target=save_audios, args=(separate_finished, save_queue))
         save_process.start()
         save_processes.append(save_process)
 
     for p in load_processes:
         p.join()
+    print("all load processes finished")
     load_finished.value = True
     separate_process.join()
+    print("all separate processes finished")
     separate_finished.value = True
     for p in save_processes:
         p.join()
+    print("all save processes finished")
 
 
 if __name__ == "__main__":
