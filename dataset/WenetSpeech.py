@@ -161,7 +161,7 @@ def separate_vocals(root_path:str):
 
         print(f"there are {len(paths_to_separate)} files")
         print(f"{paths_to_separate[0]}")
-        separate_audios_manager(paths_to_separate, 16, load_threads=2, save_threads=5)
+        separate_audios_manager(Wenet_PATH, paths_to_separate, 16, load_threads=3, save_threads=4)
 
 def label_audio_with_speaker(root_path:str):
     """

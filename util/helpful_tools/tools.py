@@ -41,4 +41,3 @@ if __name__ == '__main__':
     # remove_backup_dataset_pt_file('/home/cano/dataset/VCTK/wav48_silence_trimmed')
     # remove_backup_dataset_pt_file('/home/cano/dataset/baker')
     remove_backup_dataset_pt_file('/home/cano/dataset/LJSpeech')
-
